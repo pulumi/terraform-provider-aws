@@ -432,7 +432,7 @@ func resourceAwsSecurityGroupDelete(d *schema.ResourceData, meta interface{}) er
 
 	log.Printf("[DEBUG] Security Group destroy: %v", d.Id())
 
-	if err := deleteLingeringLambdaENIs(conn, d); err != nil {
+	if err := deleteLingeringLambdaENIs(conn, "group-id", d.Id()); err != nil {
 		return fmt.Errorf("Failed to delete Lambda ENIs: %s", err)
 	}
 
@@ -1244,13 +1244,13 @@ func sgProtocolIntegers() map[string]int {
 
 // The AWS Lambda service creates ENIs behind the scenes and keeps these around for a while
 // which would prevent SGs attached to such ENIs from being destroyed
-func deleteLingeringLambdaENIs(conn *ec2.EC2, d *schema.ResourceData) error {
+func deleteLingeringLambdaENIs(conn *ec2.EC2, filterName string, filterValue string) error {
 	// Here we carefully find the offenders
 	params := &ec2.DescribeNetworkInterfacesInput{
 		Filters: []*ec2.Filter{
 			{
-				Name:   aws.String("group-id"),
-				Values: []*string{aws.String(d.Id())},
+				Name:   aws.String(filterName),
+				Values: []*string{aws.String(filterValue)},
 			},
 			{
 				Name:   aws.String("description"),
