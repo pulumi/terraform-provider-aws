@@ -210,7 +210,20 @@ func instanceProfileSetRoles(d *schema.ResourceData, iamconn *iam.IAM) error {
 }
 
 func instanceProfileRemoveAllRoles(d *schema.ResourceData, iamconn *iam.IAM) error {
+	removedSingleRole := ""
+	if role, ok := d.GetOk("role"); ok {
+		err := instanceProfileRemoveRole(iamconn, d.Id(), role.(string))
+		if err != nil {
+			return fmt.Errorf("Error removing role %s from IAM instance profile %s: %s", role, d.Id(), err)
+		}
+		removedSingleRole = role.(string)
+	}
+
 	for _, role := range d.Get("roles").(*schema.Set).List() {
+		if role.(string) == removedSingleRole {
+			continue
+		}
+
 		err := instanceProfileRemoveRole(iamconn, d.Id(), role.(string))
 		if err != nil {
 			return fmt.Errorf("Error removing role %s from IAM instance profile %s: %s", role, d.Id(), err)
