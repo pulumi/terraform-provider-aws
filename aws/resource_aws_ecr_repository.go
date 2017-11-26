@@ -65,28 +65,43 @@ func resourceAwsEcrRepositoryCreate(d *schema.ResourceData, meta interface{}) er
 	d.Set("arn", repository.RepositoryArn)
 	d.Set("registry_id", repository.RegistryId)
 
-	return resourceAwsEcrRepositoryRead(d, meta)
+	// Ensure AWS will give us back the registry info before calling read.
+	log.Printf("[DEBUG] Waiting for ECR repository (%s) to exist", *repository.RepositoryArn)
+	stateConf := &resource.StateChangeConf{
+		Pending: []string{""},
+		Target:  []string{"exists"},
+		Refresh: resourceAwsEcrRepositoryRefreshFunc(conn, d.Id()),
+	}
+	repRaw, err := stateConf.WaitForState()
+	if err != nil {
+		return fmt.Errorf(
+			"Error waiting for ECR repository (%s) to become available: %s", d.Id(), err)
+	}
+
+	log.Printf("[DEBUG] ECR repository (%s) exists", *repository.RepositoryArn)
+	resourceAwsEcrRepositoryReadData(d, repRaw.(*ecr.Repository), meta)
+	return nil
 }
 
 func resourceAwsEcrRepositoryRead(d *schema.ResourceData, meta interface{}) error {
-	conn := meta.(*AWSClient).ecrconn
-
 	log.Printf("[DEBUG] Reading repository %s", d.Id())
-	out, err := conn.DescribeRepositories(&ecr.DescribeRepositoriesInput{
-		RepositoryNames: []*string{aws.String(d.Id())},
-	})
+
+	conn := meta.(*AWSClient).ecrconn
+	repRaw, _, err := resourceAwsEcrRepositoryRefreshFunc(conn, d.Id())()
 	if err != nil {
-		if ecrerr, ok := err.(awserr.Error); ok && ecrerr.Code() == "RepositoryNotFoundException" {
-			d.SetId("")
-			return nil
-		}
 		return err
 	}
+	if repRaw == nil {
+		d.SetId("")
+		return nil
+	}
 
-	repository := out.Repositories[0]
+	log.Printf("[DEBUG] Received repository %s", repRaw)
+	resourceAwsEcrRepositoryReadData(d, repRaw.(*ecr.Repository), meta)
+	return nil
+}
 
-	log.Printf("[DEBUG] Received repository %s", out)
-
+func resourceAwsEcrRepositoryReadData(d *schema.ResourceData, repository *ecr.Repository, meta interface{}) {
 	d.SetId(*repository.RepositoryName)
 	d.Set("arn", repository.RepositoryArn)
 	d.Set("registry_id", repository.RegistryId)
@@ -95,12 +110,31 @@ func resourceAwsEcrRepositoryRead(d *schema.ResourceData, meta interface{}) erro
 	repositoryUrl := buildRepositoryUrl(repository, meta.(*AWSClient).region)
 	log.Printf("[INFO] Setting the repository url to be %s", repositoryUrl)
 	d.Set("repository_url", repositoryUrl)
-
-	return nil
 }
 
 func buildRepositoryUrl(repo *ecr.Repository, region string) string {
 	return fmt.Sprintf("%s.dkr.ecr.%s.amazonaws.com/%s", *repo.RegistryId, region, *repo.RepositoryName)
+}
+
+func resourceAwsEcrRepositoryRefreshFunc(conn *ecr.ECR, id string) resource.StateRefreshFunc {
+	return func() (interface{}, string, error) {
+		resp, err := conn.DescribeRepositories(&ecr.DescribeRepositoriesInput{
+			RepositoryNames: []*string{aws.String(id)},
+		})
+		if err != nil {
+			if ecrerr, ok := err.(awserr.Error); ok && ecrerr.Code() == "RepositoryNotFoundException" {
+				resp = nil
+				err = nil
+			} else {
+				return nil, "", err
+			}
+		}
+		if resp == nil {
+			return nil, "", nil
+		}
+
+		return resp.Repositories[0], "exists", nil
+	}
 }
 
 func resourceAwsEcrRepositoryDelete(d *schema.ResourceData, meta interface{}) error {
