@@ -149,30 +149,41 @@ func resourceAwsLbListenerCreate(d *schema.ResourceData, meta interface{}) error
 
 	d.SetId(*resp.Listeners[0].ListenerArn)
 
-	return resourceAwsLbListenerRead(d, meta)
+	// Ensure that the listener is available from the describe call, since AWS may not return it right away.
+	log.Printf("[DEBUG] Waiting for the LB Listener (%s) to exist", d.Id())
+	stateConf := &resource.StateChangeConf{
+		Pending: []string{""},
+		Target:  []string{"exists"},
+		Refresh: resourceAwsLbListenerRefreshFunc(elbconn, d.Id()),
+	}
+	lbRaw, err := stateConf.WaitForState()
+	if err != nil {
+		return fmt.Errorf(
+			"Error waiting for LB Listener (%s) to exist", d.Id())
+	}
+
+	log.Printf("[DEBUG] LB Listener (%s) exists", d.Id())
+	resourceAwsLbListenerReadData(d, lbRaw.(*elbv2.Listener), meta)
+	return nil
 }
 
 func resourceAwsLbListenerRead(d *schema.ResourceData, meta interface{}) error {
 	elbconn := meta.(*AWSClient).elbv2conn
-
-	resp, err := elbconn.DescribeListeners(&elbv2.DescribeListenersInput{
-		ListenerArns: []*string{aws.String(d.Id())},
-	})
+	lbRaw, _, err := resourceAwsLbListenerRefreshFunc(elbconn, d.Id())()
 	if err != nil {
-		if isListenerNotFound(err) {
-			log.Printf("[WARN] DescribeListeners - removing %s from state", d.Id())
-			d.SetId("")
-			return nil
-		}
-		return errwrap.Wrapf("Error retrieving Listener: {{err}}", err)
+		return err
+	}
+	if lbRaw == nil {
+		log.Printf("[WARN] DescribeListeners - removing %s from state", d.Id())
+		d.SetId("")
+		return nil
 	}
 
-	if len(resp.Listeners) != 1 {
-		return fmt.Errorf("Error retrieving Listener %q", d.Id())
-	}
+	resourceAwsLbListenerReadData(d, lbRaw.(*elbv2.Listener), meta)
+	return nil
+}
 
-	listener := resp.Listeners[0]
-
+func resourceAwsLbListenerReadData(d *schema.ResourceData, listener *elbv2.Listener, meta interface{}) {
 	d.Set("arn", listener.ListenerArn)
 	d.Set("load_balancer_arn", listener.LoadBalancerArn)
 	d.Set("port", listener.Port)
@@ -194,8 +205,33 @@ func resourceAwsLbListenerRead(d *schema.ResourceData, meta interface{}) error {
 		}
 	}
 	d.Set("default_action", defaultActions)
+}
 
-	return nil
+func resourceAwsLbListenerRefreshFunc(conn *elbv2.ELBV2, id string) resource.StateRefreshFunc {
+	return func() (interface{}, string, error) {
+		resp, err := conn.DescribeListeners(&elbv2.DescribeListenersInput{
+			ListenerArns: []*string{aws.String(id)},
+		})
+		if err != nil {
+			if isListenerNotFound(err) {
+				resp = nil
+				err = nil
+			} else {
+				return nil, "", errwrap.Wrapf("Error retrieving Listener: {{err}}", err)
+			}
+		}
+
+		if resp == nil {
+			return nil, "", nil
+		}
+
+		if len(resp.Listeners) != 1 {
+			return nil, "", fmt.Errorf("Error retrieving Listener %q (expected 1, got %d)",
+				id, len(resp.Listeners))
+		}
+
+		return resp.Listeners[0], "exists", nil
+	}
 }
 
 func resourceAwsLbListenerUpdate(d *schema.ResourceData, meta interface{}) error {
