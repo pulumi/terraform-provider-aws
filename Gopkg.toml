@@ -1,6 +1,26 @@
 [[constraint]]
+  name = "cloud.google.com/go"
+  revision = "8c4ed1f54434ff9ea67929c91a4a10db57a52780"
+
+[[constraint]]
+  name = "github.com/Azure/azure-sdk-for-go"
+  revision = "f7bb4db3ea4c73dc58bd284c38ea644a79324be0"
+
+[[constraint]]
+  name = "github.com/Azure/go-autorest"
+  revision = "c0eb859387e57a164bf64171da307e2ef8168b58"
+
+[[constraint]]
+  name = "github.com/Azure/go-ntlmssp"
+  revision = "c92175d540060095c69ced311f76aea56c83ecdb"
+
+[[constraint]]
+  name = "github.com/Unknwon/com"
+  revision = "7677a1d7c1137cd3dd5ba7a076d0c898a1ef4520"
+
+[[constraint]]
   name = "github.com/agext/levenshtein"
-  version = "v1.2.1"
+  revision = "5f10fee965225ac1eecdc234c09daf5cd9e7f7b6"
 
 [[constraint]]
   name = "github.com/agl/ed25519"
@@ -11,8 +31,16 @@
   revision = "7e4b007599d4e2076d9a81be723b3912852dda2c"
 
 [[constraint]]
+  name = "github.com/apparentlymart/go-rundeck-api"
+  revision = "f6af74d34d1ef69a511c59173876fc1174c11f0d"
+
+[[constraint]]
   name = "github.com/apparentlymart/go-textseg"
   revision = "b836f5c4d331d1945a2fead7188db25432d73b69"
+
+[[constraint]]
+  name = "github.com/armon/circbuf"
+  revision = "bbbad097214e2918d8543d5201d12bfd7bca254d"
 
 [[constraint]]
   name = "github.com/armon/go-radix"
@@ -28,27 +56,75 @@
 
 [[constraint]]
   name = "github.com/bgentry/speakeasy"
-  version = "v0.1.0"
+  revision = "4aabc24848ce5fd31929f7d1e4ea74d3709c14cd"
 
 [[constraint]]
   name = "github.com/blang/semver"
-  version = "v3.5.1"
+  revision = "2ee87856327ba09384cabd113bc6b5d174e9ec0f"
+
+[[constraint]]
+  name = "github.com/chzyer/readline"
+  revision = "41eea22f717c616615e1e59aa06cf831f9901f35"
+
+[[constraint]]
+  name = "github.com/coreos/etcd"
+  revision = "20f2914e1301abde233b2039e110f2be57b91f89"
+
+[[constraint]]
+  name = "github.com/coreos/go-semver"
+  revision = "1817cd4bea52af76542157eeabd74b057d1a199e"
 
 [[constraint]]
   name = "github.com/davecgh/go-spew"
-  version = "v1.1.0"
+  revision = "346938d642f2ec3594ed81d874461961cd0faa76"
+
+[[constraint]]
+  name = "github.com/dgrijalva/jwt-go"
+  revision = "dbeaa9332f19a944acb5736b4456cfcc02140e29"
+
+[[constraint]]
+  name = "github.com/dylanmei/iso8601"
+  revision = "2075bf119b58e5576c6ed9f867b8f3d17f2e54d4"
+
+[[constraint]]
+  name = "github.com/dylanmei/winrmtest"
+  revision = "025617847eb2cf9bd1d851bc3b22ed28e6245ce5"
+
+[[constraint]]
+  name = "github.com/fsouza/go-dockerclient"
+  revision = "1d4f4ae73768d3ca16a6fb964694f58dc5eba601"
 
 [[constraint]]
   name = "github.com/go-ini/ini"
-  version = "v1.32.0"
+  revision = "766e555c68dc8bda90d197ee8946c37519c19409"
 
 [[constraint]]
   name = "github.com/golang/protobuf"
   revision = "1643683e1b54a9e88ad26d98f81400c8c9d9f4f9"
 
 [[constraint]]
+  name = "github.com/googleapis/gax-go"
+  revision = "317e0006254c44a0ac427cc52a0e083ff0b9622f"
+
+[[constraint]]
+  name = "github.com/gophercloud/gophercloud"
+  revision = "22606ab5bb8999ef1dc7435304e252d302a931ea"
+
+[[constraint]]
+  name = "github.com/hashicorp/atlas-go"
+  revision = "1ea2527d6a49b4c9f18753aa21627aae6a7c26a1"
+
+[[constraint]]
+  name = "github.com/hashicorp/consul"
+  revision = "b31cfaaf2ac5ddd6ddee1d2e1041466e939dc097"
+
+[[constraint]]
   name = "github.com/hashicorp/errwrap"
   revision = "7554cd9344cec97297fa6649b055a8c98c2a1e55"
+
+[[constraint]]
+  name = "github.com/hashicorp/go-checkpoint"
+  revision = "a8d0786e7fa88adb6b3bcaa341a99af7f9740671"
 
 [[constraint]]
   name = "github.com/hashicorp/go-cleanhttp"
@@ -71,6 +147,14 @@
   revision = "a5174f84d7f8ff00fb07ab4ef1f380d32eee0e63"
 
 [[constraint]]
+  name = "github.com/hashicorp/go-retryablehttp"
+  revision = "794af36148bf63c118d6db80eb902a136b907e71"
+
+[[constraint]]
+  name = "github.com/hashicorp/go-rootcerts"
+  revision = "6bb64b370b90e7ef1fa532be9e591a81c3493e00"
+
+[[constraint]]
   name = "github.com/hashicorp/go-uuid"
   revision = "36289988d83ca270bc07c234c36f364b0dd9c9a7"
 
@@ -80,7 +164,7 @@
 
 [[constraint]]
   name = "github.com/hashicorp/hcl"
-  revision = "a4b07c25de5ff55ad3b8936cea69a79a3d95a855"
+  revision = "392dba7d905ed5d04a5794ba89f558b27e2ba1ca"
 
 [[constraint]]
   name = "github.com/hashicorp/hcl2"
@@ -93,6 +177,10 @@
 [[constraint]]
   name = "github.com/hashicorp/logutils"
   revision = "0dc08b1671f34c4250ce212759ebd880f743d883"
+
+[[constraint]]
+  name = "github.com/hashicorp/serf"
+  revision = "c20a0b1b1ea9eb8168bcdec0116688fa9254e449"
 
 [[constraint]]
   name = "github.com/hashicorp/terraform"
@@ -112,19 +200,71 @@
 
 [[constraint]]
   name = "github.com/jmespath/go-jmespath"
-  revision = "0b12d6b5"
+  revision = "bd40a432e4c76585ef6b72d3fd96fb9b6dc7b68d"
+
+[[constraint]]
+  name = "github.com/joyent/gocommon"
+  revision = "b78708995d1c2ebdb64a3061b0bca5d8ccdf0fc2"
+
+[[constraint]]
+  name = "github.com/joyent/gomanta"
+  revision = "41c8bc3faef9789454337062b5fac84699f75834"
+
+[[constraint]]
+  name = "github.com/joyent/gosign"
+  revision = "9abcee278795b82b36858cdfc857c8a0e7de797c"
+
+[[constraint]]
+  name = "github.com/joyent/triton-go"
+  revision = "8f217b9dcc618ec8ca755a027a3666c021dd0d16"
+
+[[constraint]]
+  name = "github.com/kardianos/osext"
+  revision = "ae77be60afb1dcacde03767a8c37337fad28ac14"
 
 [[constraint]]
   name = "github.com/keybase/go-crypto"
   revision = "93f5b35093ba15e0f86e412cc5c767d5c10c15fd"
 
 [[constraint]]
+  name = "github.com/lusis/go-artifactory"
+  revision = "da4b7cd952125757a375908730ba9445adc5ba99"
+
+[[constraint]]
+  name = "github.com/masterzen/azure-sdk-for-go"
+  revision = "ee4f0065d00cd12b542f18f5bc45799e88163b12"
+
+[[constraint]]
+  name = "github.com/masterzen/simplexml"
+  revision = "4572e39b1ab9fe03ee513ce6fc7e289e98482190"
+
+[[constraint]]
+  name = "github.com/masterzen/winrm"
+  revision = "1ca0ba637a877ee12b69abc73c6161fccb77b70a"
+
+[[constraint]]
+  name = "github.com/masterzen/xmlpath"
+  revision = "13f4951698adc0fa9c1dda3e275d489a24201161"
+
+[[constraint]]
+  name = "github.com/mattn/go-colorable"
+  revision = "6c0fd4aa6ec5818d5e3ea9e03ae436972a6c5a9a"
+
+[[constraint]]
   name = "github.com/mattn/go-isatty"
-  version = "v0.0.2"
+  revision = "fc9e8d8ef48496124e79ae0df75490096eccf6fe"
+
+[[constraint]]
+  name = "github.com/mattn/go-shellwords"
+  revision = "9858af9cca4c73576f0b8c6609a396eb0878023c"
 
 [[constraint]]
   name = "github.com/mitchellh/cli"
   revision = "8a539dbef410aa4191e0bcc7a6246c104b313009"
+
+[[constraint]]
+  name = "github.com/mitchellh/colorstring"
+  revision = "8631ce90f28644f54aeedcb3e389a85174e067d1"
 
 [[constraint]]
   name = "github.com/mitchellh/copystructure"
@@ -133,6 +273,10 @@
 [[constraint]]
   name = "github.com/mitchellh/go-homedir"
   revision = "b8bc1bf767474819792c23f32d8286a45736f1c6"
+
+[[constraint]]
+  name = "github.com/mitchellh/go-linereader"
+  revision = "07bab5fdd9580500aea6ada0e09df4aa28e68abd"
 
 [[constraint]]
   name = "github.com/mitchellh/go-testing-interface"
@@ -151,12 +295,36 @@
   revision = "53818660ed4955e899c0bcafa97299a388bd7c8e"
 
 [[constraint]]
+  name = "github.com/mitchellh/panicwrap"
+  revision = "fce601fe55579125e1b3cb0b992287e7290f7b83"
+
+[[constraint]]
+  name = "github.com/mitchellh/prefixedio"
+  revision = "6e6954073784f7ee67b28f2d22749d6479151ed7"
+
+[[constraint]]
   name = "github.com/mitchellh/reflectwalk"
   revision = "92573fe8d000a145bfebc03a16bc22b34945867f"
 
 [[constraint]]
+  name = "github.com/nu7hatch/gouuid"
+  revision = "179d4d0c4d8d407a32af483c2354df1d2c91e6c3"
+
+[[constraint]]
+  name = "github.com/packer-community/winrmcp"
+  revision = "078cc0a785c9da54158c0775f06f505fc1e867f8"
+
+[[constraint]]
   name = "github.com/posener/complete"
   revision = "f4461a52b6329c11190f11fe3384ec8aa964e21c"
+
+[[constraint]]
+  name = "github.com/rancher/go-rancher"
+  revision = "ec24b7f12fca9f78fbfcd62a0ea8bce14ade8792"
+
+[[constraint]]
+  name = "github.com/ryanuber/columnize"
+  revision = "abc90934186a77966e2beeac62ed966aac0561d5"
 
 [[constraint]]
   name = "github.com/satori/go.uuid"
@@ -167,8 +335,8 @@
   revision = "b061729afc07e77a8aa4fad0a2fd840958f1942a"
 
 [[constraint]]
-  name = "github.com/terraform-providers/terraform-provider-aws"
-  version = "v1.3.1"
+  name = "github.com/terraform-providers/terraform-provider-openstack"
+  revision = "635bc49af8a8270ec645f085e0652ea3b1bb200e"
 
 [[constraint]]
   name = "github.com/terraform-providers/terraform-provider-template"
@@ -179,8 +347,20 @@
   version = "v0.1.0"
 
 [[constraint]]
+  name = "github.com/ugorji/go"
+  revision = "16373bd7016380b084e8a4e8f9560efe82cbc98c"
+
+[[constraint]]
   name = "github.com/ulikunitz/xz"
-  version = "v0.5.4"
+  revision = "0c6b41e72360850ca4f98dc341fd999726ea007f"
+
+[[constraint]]
+  name = "github.com/xanzy/ssh-agent"
+  revision = "ba9c9e33906f58169366275e3450db66139a31a9"
+
+[[constraint]]
+  name = "github.com/xlab/treeprint"
+  revision = "1d6e342255576c977e946a2384fc487a22d3fceb"
 
 [[constraint]]
   name = "github.com/zclconf/go-cty"
@@ -188,11 +368,15 @@
 
 [[constraint]]
   name = "golang.org/x/crypto"
-  revision = "9477e0b78b9ac3d0b03822fd95422e2fe07627cd"
+  revision = "76c7c60c071b310d16774257b879b9d476db77f3"
 
 [[constraint]]
   name = "golang.org/x/net"
   revision = "4b14673ba32bee7f5ac0f990a48f033919fd418b"
+
+[[constraint]]
+  name = "golang.org/x/oauth2"
+  revision = "bb50c06baba3d0c76f9d125c0719093e315b5b44"
 
 [[constraint]]
   name = "golang.org/x/sys"
@@ -201,6 +385,14 @@
 [[constraint]]
   name = "golang.org/x/text"
   revision = "6eab0e8f74e86c598ec3b6fad4888e0c11482d48"
+
+[[constraint]]
+  name = "google.golang.org/api"
+  revision = "9fdb53e0c633e09f7df19c7745ee0e39ce3f5e6a"
+
+[[constraint]]
+  name = "google.golang.org/appengine"
+  revision = "a2e0dc829727a4f957a7428b1f322805cfc1f362"
 
 [[constraint]]
   name = "google.golang.org/genproto"
@@ -214,3 +406,6 @@
   name = "gopkg.in/yaml.v2"
   revision = "cd8b52f8269e0feb286dfeef29f8fe4d5b397e0b"
 
+[[constraint]]
+  name = "k8s.io/kubernetes"
+  version = "v1.6.1"
