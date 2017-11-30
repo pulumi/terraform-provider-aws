@@ -71,6 +71,7 @@ func resourceAwsEcrRepositoryCreate(d *schema.ResourceData, meta interface{}) er
 		Pending: []string{""},
 		Target:  []string{"exists"},
 		Refresh: resourceAwsEcrRepositoryRefreshFunc(conn, d.Id()),
+		Timeout: 3 * time.Minute,
 	}
 	repRaw, err := stateConf.WaitForState()
 	if err != nil {

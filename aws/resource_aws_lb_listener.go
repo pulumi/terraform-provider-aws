@@ -155,6 +155,7 @@ func resourceAwsLbListenerCreate(d *schema.ResourceData, meta interface{}) error
 		Pending: []string{""},
 		Target:  []string{"exists"},
 		Refresh: resourceAwsLbListenerRefreshFunc(elbconn, d.Id()),
+		Timeout: 3 * time.Minute,
 	}
 	lbRaw, err := stateConf.WaitForState()
 	if err != nil {
