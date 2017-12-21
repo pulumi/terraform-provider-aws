@@ -48,7 +48,11 @@
 
 [[constraint]]
   name = "github.com/aws/aws-sdk-go"
-  version = "v1.12.27"
+  version = "v1.12.48"
+
+[[constraint]]
+  name = "github.com/beevik/etree"
+  revision = "af219c0c7ea1b67ec263c0b1b1b96d284a9181ce"
 
 [[constraint]]
   name = "github.com/bgentry/go-netrc"
