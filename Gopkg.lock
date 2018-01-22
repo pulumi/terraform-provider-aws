@@ -31,9 +31,9 @@
 
 [[projects]]
   name = "github.com/aws/aws-sdk-go"
-  packages = ["aws","aws/arn","aws/awserr","aws/awsutil","aws/client","aws/client/metadata","aws/corehandlers","aws/credentials","aws/credentials/ec2rolecreds","aws/credentials/endpointcreds","aws/credentials/stscreds","aws/defaults","aws/ec2metadata","aws/endpoints","aws/request","aws/session","aws/signer/v4","internal/shareddefaults","private/protocol","private/protocol/ec2query","private/protocol/json/jsonutil","private/protocol/jsonrpc","private/protocol/query","private/protocol/query/queryutil","private/protocol/rest","private/protocol/restjson","private/protocol/restxml","private/protocol/xml/xmlutil","private/signer/v2","service/acm","service/apigateway","service/applicationautoscaling","service/athena","service/autoscaling","service/batch","service/cloudformation","service/cloudfront","service/cloudtrail","service/cloudwatch","service/cloudwatchevents","service/cloudwatchlogs","service/codebuild","service/codecommit","service/codedeploy","service/codepipeline","service/cognitoidentity","service/cognitoidentityprovider","service/configservice","service/databasemigrationservice","service/devicefarm","service/directconnect","service/directoryservice","service/dynamodb","service/ec2","service/ecr","service/ecs","service/efs","service/elasticache","service/elasticbeanstalk","service/elasticsearchservice","service/elastictranscoder","service/elb","service/elbv2","service/emr","service/firehose","service/glacier","service/iam","service/inspector","service/iot","service/kinesis","service/kms","service/lambda","service/lightsail","service/mediastore","service/mq","service/opsworks","service/rds","service/redshift","service/route53","service/s3","service/servicecatalog","service/servicediscovery","service/ses","service/sfn","service/simpledb","service/sns","service/sqs","service/ssm","service/sts","service/waf","service/wafregional"]
-  revision = "03f37be7b3c2cec3a839ff74dea774c63819d45d"
-  version = "v1.12.50"
+  packages = ["aws","aws/arn","aws/awserr","aws/awsutil","aws/client","aws/client/metadata","aws/corehandlers","aws/credentials","aws/credentials/ec2rolecreds","aws/credentials/endpointcreds","aws/credentials/stscreds","aws/defaults","aws/ec2metadata","aws/endpoints","aws/request","aws/session","aws/signer/v4","internal/shareddefaults","private/protocol","private/protocol/ec2query","private/protocol/json/jsonutil","private/protocol/jsonrpc","private/protocol/query","private/protocol/query/queryutil","private/protocol/rest","private/protocol/restjson","private/protocol/restxml","private/protocol/xml/xmlutil","private/signer/v2","service/acm","service/apigateway","service/applicationautoscaling","service/athena","service/autoscaling","service/batch","service/cloudformation","service/cloudfront","service/cloudtrail","service/cloudwatch","service/cloudwatchevents","service/cloudwatchlogs","service/codebuild","service/codecommit","service/codedeploy","service/codepipeline","service/cognitoidentity","service/cognitoidentityprovider","service/configservice","service/databasemigrationservice","service/devicefarm","service/directconnect","service/directoryservice","service/dynamodb","service/ec2","service/ecr","service/ecs","service/efs","service/elasticache","service/elasticbeanstalk","service/elasticsearchservice","service/elastictranscoder","service/elb","service/elbv2","service/emr","service/firehose","service/glacier","service/glue","service/guardduty","service/iam","service/inspector","service/iot","service/kinesis","service/kms","service/lambda","service/lightsail","service/mediastore","service/mq","service/opsworks","service/rds","service/redshift","service/route53","service/s3","service/servicecatalog","service/servicediscovery","service/ses","service/sfn","service/simpledb","service/sns","service/sqs","service/ssm","service/sts","service/waf","service/wafregional"]
+  revision = "9ed0c8de252f04ac45a65358377103d5a1aa2d92"
+  version = "v1.12.66"
 
 [[projects]]
   name = "github.com/beevik/etree"
@@ -139,9 +139,9 @@
 
 [[projects]]
   name = "github.com/hashicorp/terraform"
-  packages = ["config","config/configschema","config/hcl2shim","config/module","dag","flatmap","helper/acctest","helper/config","helper/encryption","helper/hashcode","helper/hilmapstructure","helper/logging","helper/mutexkv","helper/pathorcontents","helper/resource","helper/schema","helper/structure","helper/validation","moduledeps","plugin","plugin/discovery","registry/regsrc","registry/response","svchost","svchost/auth","svchost/disco","terraform","tfdiags","version"]
-  revision = "23caaf9feb50d566329f5b4aa07a57da8cd6f448"
-  version = "v0.11.0-beta1"
+  packages = ["config","config/configschema","config/hcl2shim","config/module","dag","flatmap","helper/acctest","helper/config","helper/encryption","helper/hashcode","helper/hilmapstructure","helper/logging","helper/mutexkv","helper/pathorcontents","helper/resource","helper/schema","helper/structure","helper/validation","moduledeps","plugin","plugin/discovery","registry","registry/regsrc","registry/response","svchost","svchost/auth","svchost/disco","terraform","tfdiags","version"]
+  revision = "a6008b8a48a749c7c167453b9cf55ffd572b9a5d"
+  version = "v0.11.2"
 
 [[projects]]
   name = "github.com/hashicorp/vault"
@@ -293,6 +293,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "3e9a270353634c78e6ac05c83cfe446c61d2a6f7e1d01f7dde7e3c79d8c591b3"
+  inputs-digest = "f0eb9234db4b6ca21874f96d726293a20fc09a824aa8596b1d3c9eef18bbb85d"
   solver-name = "gps-cdcl"
   solver-version = 1
