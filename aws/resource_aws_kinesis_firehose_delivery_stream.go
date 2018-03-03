@@ -1312,12 +1312,10 @@ func resourceAwsKinesisFirehoseDeliveryStreamCreate(d *schema.ResourceData, meta
 		}
 	}
 
-	var lastError error
 	err := resource.Retry(1*time.Minute, func() *resource.RetryError {
 		_, err := conn.CreateDeliveryStream(createInput)
 		if err != nil {
 			log.Printf("[DEBUG] Error creating Firehose Delivery Stream: %s", err)
-			lastError = err
 
 			// Retry for IAM eventual consistency
 			if isAWSErr(err, firehose.ErrCodeInvalidArgumentException, "is not authorized to perform") {
