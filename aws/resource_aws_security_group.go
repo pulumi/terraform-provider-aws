@@ -432,10 +432,6 @@ func resourceAwsSecurityGroupDelete(d *schema.ResourceData, meta interface{}) er
 
 	log.Printf("[DEBUG] Security Group destroy: %v", d.Id())
 
-	if err := deleteLingeringLambdaENIs(conn, "group-id", d.Id()); err != nil {
-		return fmt.Errorf("Failed to delete Lambda ENIs: %s", err)
-	}
-
 	// conditionally revoke rules first before attempting to delete the group
 	if v := d.Get("revoke_rules_on_delete").(bool); v {
 		if err := forceRevokeSecurityGroupRules(conn, d); err != nil {
@@ -444,6 +440,10 @@ func resourceAwsSecurityGroupDelete(d *schema.ResourceData, meta interface{}) er
 	}
 
 	return resource.Retry(5*time.Minute, func() *resource.RetryError {
+		if err := deleteLingeringLambdaENIs(conn, "group-id", d.Id()); err != nil {
+			return resource.NonRetryableError(fmt.Errorf("Failed to delete Lambda ENIs: %s", err))
+		}
+
 		_, err := conn.DeleteSecurityGroup(&ec2.DeleteSecurityGroupInput{
 			GroupId: aws.String(d.Id()),
 		})
