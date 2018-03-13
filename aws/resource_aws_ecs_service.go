@@ -338,6 +338,12 @@ func resourceAwsEcsServiceCreate(d *schema.ResourceData, meta interface{}) error
 		return fmt.Errorf("%s %q", err, d.Get("name").(string))
 	}
 
+	if d.Get("wait_for_steady_state").(bool) {
+		if err = resourceAwsEcsWaitForServiceSteadyState(d, meta); err != nil {
+			return err
+		}
+	}
+
 	service := *out.Service
 
 	log.Printf("[DEBUG] ECS service created: %s", *service.ServiceArn)
@@ -578,17 +584,7 @@ func resourceAwsEcsServiceUpdate(d *schema.ResourceData, meta interface{}) error
 	}
 
 	if d.Get("wait_for_steady_state").(bool) {
-		log.Println("[INFO] Waiting for service to reach a steady state")
-
-		steadyStateConf := &resource.StateChangeConf{
-			Pending:    []string{"false"},
-			Target:     []string{"true"},
-			Refresh:    resourceAwsEcsServiceIsSteadyStateFunc(d, meta),
-			Timeout:    10 * time.Minute,
-			MinTimeout: 1 * time.Second,
-		}
-
-		if _, err := steadyStateConf.WaitForState(); err != nil {
+		if err = resourceAwsEcsWaitForServiceSteadyState(d, meta); err != nil {
 			return err
 		}
 	}
@@ -733,6 +729,21 @@ func validateAwsEcsServiceHealthCheckGracePeriodSeconds(v interface{}, k string)
 		errors = append(errors, fmt.Errorf("%q must be between 0 and 1800", k))
 	}
 	return
+}
+
+func resourceAwsEcsWaitForServiceSteadyState(d *schema.ResourceData, meta interface{}) error {
+	log.Println("[INFO] Waiting for service to reach a steady state")
+
+	steadyStateConf := &resource.StateChangeConf{
+		Pending:    []string{"false"},
+		Target:     []string{"true"},
+		Refresh:    resourceAwsEcsServiceIsSteadyStateFunc(d, meta),
+		Timeout:    10 * time.Minute,
+		MinTimeout: 1 * time.Second,
+	}
+
+	_, err := steadyStateConf.WaitForState()
+	return err
 }
 
 // Returns a StateRefreshFunc for a given service. That function will return "true" if the service is in a
