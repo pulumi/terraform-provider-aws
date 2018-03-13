@@ -338,16 +338,16 @@ func resourceAwsEcsServiceCreate(d *schema.ResourceData, meta interface{}) error
 		return fmt.Errorf("%s %q", err, d.Get("name").(string))
 	}
 
+	service := *out.Service
+
+	log.Printf("[DEBUG] ECS service created: %s", *service.ServiceArn)
+	d.SetId(*service.ServiceArn)
+
 	if d.Get("wait_for_steady_state").(bool) {
 		if err = resourceAwsEcsWaitForServiceSteadyState(d, meta); err != nil {
 			return err
 		}
 	}
-
-	service := *out.Service
-
-	log.Printf("[DEBUG] ECS service created: %s", *service.ServiceArn)
-	d.SetId(*service.ServiceArn)
 
 	return resourceAwsEcsServiceRead(d, meta)
 }
