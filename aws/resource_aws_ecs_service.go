@@ -763,6 +763,13 @@ func resourceAwsEcsServiceIsSteadyStateFunc(d *schema.ResourceData, meta interfa
 		}
 
 		if len(out.Services) < 1 {
+			if d.IsNewResource() {
+				// Continue retrying. It's *possible* the newly-created service was deleted out from under us,
+				// but more likely we saw a stale read from ECS.
+				log.Printf("[INFO] New ECS service not found yet: %q", d.Id())
+				return nil, "false", nil
+			}
+
 			return nil, "", fmt.Errorf(
 				"Service %v disappeared while waiting for it to reach a steady state",
 				d.Id())
