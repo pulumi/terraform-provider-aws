@@ -366,14 +366,15 @@ func resourceAwsEcsServiceRead(d *schema.ResourceData, meta interface{}) error {
 		var err error
 		out, err = conn.DescribeServices(&input)
 		if err != nil {
-			if d.IsNewResource() && isAWSErr(err, ecs.ErrCodeServiceNotFoundException, "") {
-				return resource.RetryableError(err)
-			}
 			return resource.NonRetryableError(err)
 		}
 
-		if d.IsNewResource() && len(out.Services) < 1 {
-			return resource.RetryableError(fmt.Errorf("No ECS service found: %q", d.Id()))
+		if len(out.Services) < 1 {
+			if d.IsNewResource() {
+				return resource.RetryableError(fmt.Errorf("New ECS service not found yet: %q", d.Id()))
+			}
+
+			return resource.NonRetryableError(fmt.Errorf("ECS service disappeared: %q", d.Id()))
 		}
 
 		service := out.Services[0]
