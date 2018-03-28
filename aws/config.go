@@ -64,10 +64,12 @@ import (
 	"github.com/aws/aws-sdk-go/service/kinesis"
 	"github.com/aws/aws-sdk-go/service/kms"
 	"github.com/aws/aws-sdk-go/service/lambda"
+	"github.com/aws/aws-sdk-go/service/lexmodelbuildingservice"
 	"github.com/aws/aws-sdk-go/service/lightsail"
 	"github.com/aws/aws-sdk-go/service/mediastore"
 	"github.com/aws/aws-sdk-go/service/mq"
 	"github.com/aws/aws-sdk-go/service/opsworks"
+	"github.com/aws/aws-sdk-go/service/organizations"
 	"github.com/aws/aws-sdk-go/service/rds"
 	"github.com/aws/aws-sdk-go/service/redshift"
 	"github.com/aws/aws-sdk-go/service/route53"
@@ -118,6 +120,7 @@ type Config struct {
 	Ec2Endpoint              string
 	EcsEndpoint              string
 	EcrEndpoint              string
+	EsEndpoint               string
 	ElbEndpoint              string
 	IamEndpoint              string
 	KinesisEndpoint          string
@@ -194,6 +197,7 @@ type AWSClient struct {
 	lightsailconn         *lightsail.Lightsail
 	mqconn                *mq.MQ
 	opsworksconn          *opsworks.OpsWorks
+	organizationsconn     *organizations.Organizations
 	glacierconn           *glacier.Glacier
 	guarddutyconn         *guardduty.GuardDuty
 	codebuildconn         *codebuild.CodeBuild
@@ -212,6 +216,7 @@ type AWSClient struct {
 	dxconn                *directconnect.DirectConnect
 	mediastoreconn        *mediastore.MediaStore
 	appsyncconn           *appsync.AppSync
+	lexmodelconn          *lexmodelbuildingservice.LexModelBuildingService
 }
 
 func (c *AWSClient) S3() *s3.S3 {
@@ -345,6 +350,7 @@ func (c *Config) Client() (interface{}, error) {
 	awsEcrSess := sess.Copy(&aws.Config{Endpoint: aws.String(c.EcrEndpoint)})
 	awsEcsSess := sess.Copy(&aws.Config{Endpoint: aws.String(c.EcsEndpoint)})
 	awsElbSess := sess.Copy(&aws.Config{Endpoint: aws.String(c.ElbEndpoint)})
+	awsEsSess := sess.Copy(&aws.Config{Endpoint: aws.String(c.EsEndpoint)})
 	awsIamSess := sess.Copy(&aws.Config{Endpoint: aws.String(c.IamEndpoint)})
 	awsLambdaSess := sess.Copy(&aws.Config{Endpoint: aws.String(c.LambdaEndpoint)})
 	awsKinesisSess := sess.Copy(&aws.Config{Endpoint: aws.String(c.KinesisEndpoint)})
@@ -431,7 +437,7 @@ func (c *Config) Client() (interface{}, error) {
 	client.elbconn = elb.New(awsElbSess)
 	client.elbv2conn = elbv2.New(awsElbSess)
 	client.emrconn = emr.New(sess)
-	client.esconn = elasticsearch.New(sess)
+	client.esconn = elasticsearch.New(awsEsSess)
 	client.firehoseconn = firehose.New(sess)
 	client.inspectorconn = inspector.New(sess)
 	client.gameliftconn = gamelift.New(sess)
@@ -441,9 +447,11 @@ func (c *Config) Client() (interface{}, error) {
 	client.kinesisconn = kinesis.New(awsKinesisSess)
 	client.kmsconn = kms.New(awsKmsSess)
 	client.lambdaconn = lambda.New(awsLambdaSess)
+	client.lexmodelconn = lexmodelbuildingservice.New(sess)
 	client.lightsailconn = lightsail.New(sess)
 	client.mqconn = mq.New(sess)
 	client.opsworksconn = opsworks.New(sess)
+	client.organizationsconn = organizations.New(sess)
 	client.r53conn = route53.New(r53Sess)
 	client.rdsconn = rds.New(awsRdsSess)
 	client.redshiftconn = redshift.New(sess)
