@@ -215,7 +215,7 @@ func resourceAwsLbListenerRefreshFunc(conn *elbv2.ELBV2, id string) resource.Sta
 			ListenerArns: []*string{aws.String(id)},
 		})
 		if err != nil {
-			if isListenerNotFound(err) {
+			if isAWSErr(err, elbv2.ErrCodeListenerNotFoundException, "") {
 				resp = nil
 				err = nil
 			} else {
