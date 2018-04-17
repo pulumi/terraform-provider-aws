@@ -137,8 +137,8 @@
     "service/waf",
     "service/wafregional"
   ]
-  revision = "bb206ce0d6a50da7807694a823aed5c601c57ce0"
-  version = "v1.13.23"
+  revision = "9b0098a71f6d4d473a26ec8ad3c2feaac6eb1da6"
+  version = "v1.13.32"
 
 [[projects]]
   name = "github.com/beevik/etree"
@@ -551,6 +551,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "eee2c9c3998d78febb99284a88ae3c941217625cd34909911e1e5ac60145a026"
+  inputs-digest = "0e7187b8eac376de893c5a310f3a6550d3590e8d4e878839792487b0d76228e2"
   solver-name = "gps-cdcl"
   solver-version = 1

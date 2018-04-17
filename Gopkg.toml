@@ -20,7 +20,7 @@
 
 [[constraint]]
   name = "github.com/aws/aws-sdk-go"
-  version = "v1.13.21"
+  version = "v1.13.28"
 
 [[constraint]]
   name = "github.com/beevik/etree"
