@@ -148,7 +148,6 @@ func resourceAwsEcrRepositoryDelete(d *schema.ResourceData, meta interface{}) er
 	})
 	if err != nil {
 		if ecrerr, ok := err.(awserr.Error); ok && ecrerr.Code() == "RepositoryNotFoundException" {
-			d.SetId("")
 			return nil
 		}
 		return err
@@ -180,7 +179,6 @@ func resourceAwsEcrRepositoryDelete(d *schema.ResourceData, meta interface{}) er
 		return err
 	}
 
-	d.SetId("")
 	log.Printf("[DEBUG] repository %q deleted.", d.Get("name").(string))
 
 	return nil
