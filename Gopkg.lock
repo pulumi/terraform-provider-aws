@@ -46,6 +46,7 @@
     "aws/credentials/ec2rolecreds",
     "aws/credentials/endpointcreds",
     "aws/credentials/stscreds",
+    "aws/csm",
     "aws/defaults",
     "aws/ec2metadata",
     "aws/endpoints",
@@ -57,6 +58,8 @@
     "internal/shareddefaults",
     "private/protocol",
     "private/protocol/ec2query",
+    "private/protocol/eventstream",
+    "private/protocol/eventstream/eventstreamapi",
     "private/protocol/json/jsonutil",
     "private/protocol/jsonrpc",
     "private/protocol/query",
@@ -67,12 +70,14 @@
     "private/protocol/xml/xmlutil",
     "private/signer/v2",
     "service/acm",
+    "service/acmpca",
     "service/apigateway",
     "service/applicationautoscaling",
     "service/appsync",
     "service/athena",
     "service/autoscaling",
     "service/batch",
+    "service/budgets",
     "service/cloud9",
     "service/cloudformation",
     "service/cloudfront",
@@ -97,6 +102,7 @@
     "service/ecr",
     "service/ecs",
     "service/efs",
+    "service/eks",
     "service/elasticache",
     "service/elasticbeanstalk",
     "service/elasticsearchservice",
@@ -105,6 +111,7 @@
     "service/elbv2",
     "service/emr",
     "service/firehose",
+    "service/fms",
     "service/gamelift",
     "service/glacier",
     "service/glue",
@@ -125,6 +132,7 @@
     "service/redshift",
     "service/route53",
     "service/s3",
+    "service/secretsmanager",
     "service/servicecatalog",
     "service/servicediscovery",
     "service/ses",
@@ -137,8 +145,8 @@
     "service/waf",
     "service/wafregional"
   ]
-  revision = "9b0098a71f6d4d473a26ec8ad3c2feaac6eb1da6"
-  version = "v1.13.32"
+  revision = "60a85d13d02126d8d15ea3f21fd57ac3a2774f37"
+  version = "v1.14.0"
 
 [[projects]]
   name = "github.com/beevik/etree"
@@ -309,8 +317,8 @@
     "tfdiags",
     "version"
   ]
-  revision = "342c529aa58d824f2f2ed1f6ec6118059876aad0"
-  version = "v0.11.5"
+  revision = "41e50bd32a8825a84535e353c3674af8ce799161"
+  version = "v0.11.7"
 
 [[projects]]
   name = "github.com/hashicorp/vault"
@@ -365,7 +373,7 @@
 [[projects]]
   name = "github.com/mitchellh/copystructure"
   packages = ["."]
-  revision = "5af94aef99f597e6a9e1f6ac6be6ce0f3c96b49d"
+  revision = "d23ffcb85de31694d6ccaa23ccb4a03e55c1303f"
 
 [[projects]]
   name = "github.com/mitchellh/go-homedir"
@@ -551,6 +559,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "0e7187b8eac376de893c5a310f3a6550d3590e8d4e878839792487b0d76228e2"
+  inputs-digest = "5dbbe983db33dd332a3b94a92bd4c91a9a53ddbfc086329e6a5eae8764f766f8"
   solver-name = "gps-cdcl"
   solver-version = 1
