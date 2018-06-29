@@ -28,7 +28,7 @@ More information creating webhooks with GitHub Enterprise can be found in the [C
 
 ```hcl
 resource "aws_codebuild_webhook" "example" {
-  name = "${aws_codebuild_project.example.name}"
+  project_name = "${aws_codebuild_project.example.name}"
 }
 
 resource "github_repository_webhook" "example" {
@@ -39,7 +39,7 @@ resource "github_repository_webhook" "example" {
 
   configuration {
     url          = "${aws_codebuild_webhook.example.payload_url}"
-    secret       = "${aws_codebulld_webhook.example.secret}"
+    secret       = "${aws_codebuild_webhook.example.secret}"
     content_type = "json"
     insecure_ssl = false
   }
@@ -50,7 +50,7 @@ resource "github_repository_webhook" "example" {
 
 The following arguments are supported:
 
-* `name` - (Required) The name of the build project.
+* `project_name` - (Required) The name of the build project.
 * `branch_filter` - (Optional) A regular expression used to determine which branches get built. Default is all branches are built.
 
 ## Attributes Reference
@@ -61,6 +61,8 @@ In addition to all arguments above, the following attributes are exported:
 * `payload_url` - The CodeBuild endpoint where webhook events are sent.
 * `secret` - The secret token of the associated repository. Not returned for all source types.
 * `url` - The URL to the webhook.
+
+~> **Note:** The `secret` attribute is only set on resource creation, so if the secret is manually rotated, terraform will not pick up the change on subsequent runs.  In that case, the webhook resource should be tainted and re-created to get the secret back in sync.
 
 ## Import
 
