@@ -225,6 +225,7 @@ func resourceAwsLaunchTemplate() *schema.Resource {
 									"valid_until": {
 										Type:         schema.TypeString,
 										Optional:     true,
+										Computed:     true,
 										ValidateFunc: validation.ValidateRFC3339TimeString,
 									},
 								},
@@ -388,6 +389,10 @@ func resourceAwsLaunchTemplate() *schema.Resource {
 						"resource_type": {
 							Type:     schema.TypeString,
 							Optional: true,
+							ValidateFunc: validation.StringInSlice([]string{
+								"instance",
+								"volume",
+							}, false),
 						},
 						"tags": tagsSchema(),
 					},
@@ -398,6 +403,8 @@ func resourceAwsLaunchTemplate() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 			},
+
+			"tags": tagsSchema(),
 		},
 	}
 }
@@ -470,6 +477,7 @@ func resourceAwsLaunchTemplateRead(d *schema.ResourceData, meta interface{}) err
 	d.Set("name", lt.LaunchTemplateName)
 	d.Set("latest_version", lt.LatestVersionNumber)
 	d.Set("default_version", lt.DefaultVersionNumber)
+	d.Set("tags", tagsToMap(lt.Tags))
 
 	version := strconv.Itoa(int(*lt.LatestVersionNumber))
 	dltv, err := conn.DescribeLaunchTemplateVersions(&ec2.DescribeLaunchTemplateVersionsInput{
@@ -555,6 +563,16 @@ func resourceAwsLaunchTemplateUpdate(d *schema.ResourceData, meta interface{}) e
 			return createErr
 		}
 	}
+
+	d.Partial(true)
+
+	if err := setTags(conn, d); err != nil {
+		return err
+	} else {
+		d.SetPartial("tags")
+	}
+
+	d.Partial(false)
 
 	return resourceAwsLaunchTemplateRead(d, meta)
 }
@@ -656,7 +674,7 @@ func getInstanceMarketOptions(m *ec2.LaunchTemplateInstanceMarketOptions) []inte
 				"instance_interruption_behavior": aws.StringValue(so.InstanceInterruptionBehavior),
 				"max_price":                      aws.StringValue(so.MaxPrice),
 				"spot_instance_type":             aws.StringValue(so.SpotInstanceType),
-				"valid_until":                    aws.TimeValue(so.ValidUntil),
+				"valid_until":                    aws.TimeValue(so.ValidUntil).Format(time.RFC3339),
 			})
 			mo["spot_options"] = spot
 		}
@@ -1084,11 +1102,13 @@ func readInstanceMarketOptionsFromConfig(imo map[string]interface{}) (*ec2.Launc
 				spotOptions.SpotInstanceType = aws.String(v)
 			}
 
-			t, err := time.Parse(time.RFC3339, so["valid_until"].(string))
-			if err != nil {
-				return nil, fmt.Errorf("Error Parsing Launch Template Spot Options valid until: %s", err.Error())
+			if v, ok := so["valid_until"].(string); ok && v != "" {
+				t, err := time.Parse(time.RFC3339, v)
+				if err != nil {
+					return nil, fmt.Errorf("Error Parsing Launch Template Spot Options valid until: %s", err.Error())
+				}
+				spotOptions.ValidUntil = aws.Time(t)
 			}
-			spotOptions.ValidUntil = aws.Time(t)
 		}
 		instanceMarketOptions.SpotOptions = spotOptions
 	}
