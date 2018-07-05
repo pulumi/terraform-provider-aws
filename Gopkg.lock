@@ -425,12 +425,6 @@
   revision = "b061729afc07e77a8aa4fad0a2fd840958f1942a"
 
 [[projects]]
-  name = "github.com/terraform-providers/terraform-provider-aws"
-  packages = ["aws"]
-  revision = "34d3d23fa5f6db073e3bba4903e582ad905e1e94"
-  version = "v1.25.0"
-
-[[projects]]
   name = "github.com/terraform-providers/terraform-provider-template"
   packages = ["template"]
   revision = "38db8c17785b8a21666fe6c784682186f0c172ed"
@@ -567,6 +561,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "6c6589a466cf48524b55b4432d543a457fd7c9d32092338aaa7be103053f53a5"
+  inputs-digest = "e14be669830b60e78cd949b32b90c5fbfff9665873757b7b4c3a0fee2cf73a20"
   solver-name = "gps-cdcl"
   solver-version = 1
