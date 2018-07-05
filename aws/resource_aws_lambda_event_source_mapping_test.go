@@ -433,7 +433,6 @@ resource "aws_lambda_event_source_mapping" "lambda_event_source_mapping_test" {
 
 func testAccAWSLambdaEventSourceMappingConfigUpdate_kinesis_removeBatchSize(roleName, policyName, attName, streamName,
 	funcName, uFuncName string) string {
-
 	return fmt.Sprintf(`
 resource "aws_iam_role" "iam_for_lambda" {
 	name = "%s"
