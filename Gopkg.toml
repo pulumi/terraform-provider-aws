@@ -20,7 +20,7 @@
 
 [[constraint]]
   name = "github.com/aws/aws-sdk-go"
-  version = "v1.14.16"
+  version = "v1.14.33"
 
 [[constraint]]
   name = "github.com/beevik/etree"
@@ -108,7 +108,7 @@
 
 [[constraint]]
   name = "github.com/hashicorp/terraform"
-  version = "v0.11.7"
+  revision = "ec998a21bc95366269fbd196e09d3a458bba8be7"
 
 [[constraint]]
   name = "github.com/hashicorp/vault"
