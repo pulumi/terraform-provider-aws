@@ -224,7 +224,7 @@ func resourceAwsLbListenerRefreshFunc(conn *elbv2.ELBV2, id string) resource.Sta
 				resp = nil
 				err = nil
 			} else {
-				return nil, "", errwrap.Wrapf("Error retrieving Listener: {{err}}", err)
+				return nil, "", fmt.Errorf("Error retrieving Listener: %s", err)
 			}
 		}
 
