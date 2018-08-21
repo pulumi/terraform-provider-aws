@@ -151,8 +151,8 @@
     "service/waf",
     "service/wafregional"
   ]
-  revision = "f70339bb6af843c8ab1974381b3f4fcaee2b1a41"
-  version = "v1.15.5"
+  revision = "66974140c322f22c1daaf95a18930ea6a9e4d21e"
+  version = "v1.15.16"
 
 [[projects]]
   name = "github.com/beevik/etree"
@@ -226,7 +226,7 @@
 [[projects]]
   name = "github.com/hashicorp/go-multierror"
   packages = ["."]
-  revision = "d30f09973e19c1dfcd120b2d9c4f168e68d6b5d5"
+  revision = "3d5d8f294aa03d8e98859feac328afbdf1ae0703"
 
 [[projects]]
   name = "github.com/hashicorp/go-plugin"
@@ -323,7 +323,7 @@
     "tfdiags",
     "version"
   ]
-  revision = "ec998a21bc95366269fbd196e09d3a458bba8be7"
+  revision = "bb37637a139151be0ff9bf00c85c448538e5b3d2"
 
 [[projects]]
   name = "github.com/hashicorp/vault"
@@ -383,7 +383,7 @@
 [[projects]]
   name = "github.com/mitchellh/go-homedir"
   packages = ["."]
-  revision = "b8bc1bf767474819792c23f32d8286a45736f1c6"
+  revision = "58046073cbffe2f25d425fe1331102f55cf719de"
 
 [[projects]]
   branch = "master"
@@ -564,6 +564,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "c9b1343533986c3385fb6b70d8111174b68821b621bbd5103724c742a7ddc7ee"
+  inputs-digest = "26397ff1c110082a6f09a3e34dfc099bbbf84e4fd63e5b79c3ecd400eb8b87fa"
   solver-name = "gps-cdcl"
   solver-version = 1

@@ -20,7 +20,7 @@
 
 [[constraint]]
   name = "github.com/aws/aws-sdk-go"
-  version = "v1.14.33"
+  version = "v1.15.9"
 
 [[constraint]]
   name = "github.com/beevik/etree"
@@ -72,7 +72,7 @@
 
 [[constraint]]
   name = "github.com/hashicorp/go-multierror"
-  revision = "d30f09973e19c1dfcd120b2d9c4f168e68d6b5d5"
+  revision = "3d5d8f294aa03d8e98859feac328afbdf1ae0703"
 
 [[constraint]]
   name = "github.com/hashicorp/go-plugin"
@@ -108,7 +108,7 @@
 
 [[constraint]]
   name = "github.com/hashicorp/terraform"
-  revision = "ec998a21bc95366269fbd196e09d3a458bba8be7"
+  revision = "bb37637a139151be0ff9bf00c85c448538e5b3d2"
 
 [[constraint]]
   name = "github.com/hashicorp/vault"
@@ -144,7 +144,7 @@
 
 [[constraint]]
   name = "github.com/mitchellh/go-homedir"
-  revision = "b8bc1bf767474819792c23f32d8286a45736f1c6"
+  revision = "58046073cbffe2f25d425fe1331102f55cf719de"
 
 [[constraint]]
   name = "github.com/mitchellh/go-testing-interface"
