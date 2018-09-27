@@ -23,20 +23,20 @@ func resourceAwsEcrRepository() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
-			"name": &schema.Schema{
+			"name": {
 				Type:     schema.TypeString,
 				Required: true,
 				ForceNew: true,
 			},
-			"arn": &schema.Schema{
+			"arn": {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
-			"registry_id": &schema.Schema{
+			"registry_id": {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
-			"repository_url": &schema.Schema{
+			"repository_url": {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
@@ -80,7 +80,7 @@ func resourceAwsEcrRepositoryCreate(d *schema.ResourceData, meta interface{}) er
 	}
 
 	log.Printf("[DEBUG] ECR repository (%s) exists", *repository.RepositoryArn)
-	resourceAwsEcrRepositoryReadData(d, repRaw.(*ecr.Repository), meta)
+	resourceAwsEcrRepositoryReadData(d, repRaw.(*ecr.Repository))
 	return nil
 }
 
@@ -98,23 +98,15 @@ func resourceAwsEcrRepositoryRead(d *schema.ResourceData, meta interface{}) erro
 	}
 
 	log.Printf("[DEBUG] Received repository %s", repRaw)
-	resourceAwsEcrRepositoryReadData(d, repRaw.(*ecr.Repository), meta)
+	resourceAwsEcrRepositoryReadData(d, repRaw.(*ecr.Repository))
 	return nil
 }
 
-func resourceAwsEcrRepositoryReadData(d *schema.ResourceData, repository *ecr.Repository, meta interface{}) {
-	d.SetId(*repository.RepositoryName)
+func resourceAwsEcrRepositoryReadData(d *schema.ResourceData, repository *ecr.Repository) {
 	d.Set("arn", repository.RepositoryArn)
-	d.Set("registry_id", repository.RegistryId)
 	d.Set("name", repository.RepositoryName)
-
-	repositoryUrl := buildRepositoryUrl(repository, meta.(*AWSClient).region)
-	log.Printf("[INFO] Setting the repository url to be %s", repositoryUrl)
-	d.Set("repository_url", repositoryUrl)
-}
-
-func buildRepositoryUrl(repo *ecr.Repository, region string) string {
-	return fmt.Sprintf("%s.dkr.ecr.%s.amazonaws.com/%s", *repo.RegistryId, region, *repo.RepositoryName)
+	d.Set("registry_id", repository.RegistryId)
+	d.Set("repository_url", repository.RepositoryUri)
 }
 
 func resourceAwsEcrRepositoryRefreshFunc(conn *ecr.ECR, id string) resource.StateRefreshFunc {
