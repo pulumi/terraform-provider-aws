@@ -93,7 +93,7 @@ func TestAccAWSEcsService_withARN(t *testing.T) {
 	tdName := fmt.Sprintf("tf-acc-td-svc-w-arn-%s", rString)
 	svcName := fmt.Sprintf("tf-acc-svc-w-arn-%s", rString)
 
-	resource.Test(t, resource.TestCase{
+	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { testAccPreCheck(t) },
 		Providers:    testAccProviders,
 		CheckDestroy: testAccCheckAWSEcsServiceDestroy,
@@ -130,7 +130,7 @@ func TestAccAWSEcsService_basicImport(t *testing.T) {
 	resourceName := "aws_ecs_service.jenkins"
 	importInput := fmt.Sprintf("%s/%s", clusterName, svcName)
 
-	resource.Test(t, resource.TestCase{
+	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { testAccPreCheck(t) },
 		Providers:    testAccProviders,
 		CheckDestroy: testAccCheckAWSEcsServiceDestroy,
@@ -154,7 +154,32 @@ func TestAccAWSEcsService_basicImport(t *testing.T) {
 				ImportStateId:     fmt.Sprintf("%s/nonexistent", clusterName),
 				ImportState:       true,
 				ImportStateVerify: false,
-				ExpectError:       regexp.MustCompile(`No ECS service found`),
+				ExpectError:       regexp.MustCompile(`Please verify the ID is correct`),
+			},
+		},
+	})
+}
+
+func TestAccAWSEcsService_disappears(t *testing.T) {
+	var service ecs.Service
+	rString := acctest.RandString(8)
+
+	clusterName := fmt.Sprintf("tf-acc-cluster-svc-w-arn-%s", rString)
+	tdName := fmt.Sprintf("tf-acc-td-svc-w-arn-%s", rString)
+	svcName := fmt.Sprintf("tf-acc-svc-w-arn-%s", rString)
+
+	resource.ParallelTest(t, resource.TestCase{
+		PreCheck:     func() { testAccPreCheck(t) },
+		Providers:    testAccProviders,
+		CheckDestroy: testAccCheckAWSEcsServiceDestroy,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccAWSEcsService(clusterName, tdName, svcName),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckAWSEcsServiceExists("aws_ecs_service.mongo", &service),
+					testAccCheckAWSEcsServiceDisappears(&service),
+				),
+				ExpectNonEmptyPlan: true,
 			},
 		},
 	})
@@ -168,7 +193,7 @@ func TestAccAWSEcsService_withUnnormalizedPlacementStrategy(t *testing.T) {
 	tdName := fmt.Sprintf("tf-acc-td-svc-w-ups-%s", rString)
 	svcName := fmt.Sprintf("tf-acc-svc-w-ups-%s", rString)
 
-	resource.Test(t, resource.TestCase{
+	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { testAccPreCheck(t) },
 		Providers:    testAccProviders,
 		CheckDestroy: testAccCheckAWSEcsServiceDestroy,
@@ -191,7 +216,7 @@ func TestAccAWSEcsService_withFamilyAndRevision(t *testing.T) {
 	tdName := fmt.Sprintf("tf-acc-td-svc-w-far-%s", rString)
 	svcName := fmt.Sprintf("tf-acc-svc-w-far-%s", rString)
 
-	resource.Test(t, resource.TestCase{
+	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { testAccPreCheck(t) },
 		Providers:    testAccProviders,
 		CheckDestroy: testAccCheckAWSEcsServiceDestroy,
@@ -228,7 +253,7 @@ func TestAccAWSEcsService_withRenamedCluster(t *testing.T) {
 	modifiedRegexp := regexp.MustCompile(
 		"^arn:aws:ecs:[^:]+:[0-9]+:cluster/" + uClusterName + "$")
 
-	resource.Test(t, resource.TestCase{
+	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { testAccPreCheck(t) },
 		Providers:    testAccProviders,
 		CheckDestroy: testAccCheckAWSEcsServiceDestroy,
@@ -268,7 +293,7 @@ func TestAccAWSEcsService_healthCheckGracePeriodSeconds(t *testing.T) {
 
 	resourceName := "aws_ecs_service.with_alb"
 
-	resource.Test(t, resource.TestCase{
+	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { testAccPreCheck(t) },
 		Providers:    testAccProviders,
 		CheckDestroy: testAccCheckAWSEcsServiceDestroy,
@@ -313,7 +338,7 @@ func TestAccAWSEcsService_withIamRole(t *testing.T) {
 	policyName := fmt.Sprintf("tf-acc-policy-svc-w-iam-role-%s", rString)
 	svcName := fmt.Sprintf("tf-acc-svc-w-iam-role-%s", rString)
 
-	resource.Test(t, resource.TestCase{
+	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { testAccPreCheck(t) },
 		Providers:    testAccProviders,
 		CheckDestroy: testAccCheckAWSEcsServiceDestroy,
@@ -336,7 +361,7 @@ func TestAccAWSEcsService_withDeploymentValues(t *testing.T) {
 	tdName := fmt.Sprintf("tf-acc-td-svc-w-dv-%s", rString)
 	svcName := fmt.Sprintf("tf-acc-svc-w-dv-%s", rString)
 
-	resource.Test(t, resource.TestCase{
+	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { testAccPreCheck(t) },
 		Providers:    testAccProviders,
 		CheckDestroy: testAccCheckAWSEcsServiceDestroy,
@@ -366,7 +391,7 @@ func TestAccAWSEcsService_withLbChanges(t *testing.T) {
 	policyName := fmt.Sprintf("tf-acc-policy-svc-w-lbc-%s", rString)
 	svcName := fmt.Sprintf("tf-acc-svc-w-lbc-%s", rString)
 
-	resource.Test(t, resource.TestCase{
+	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { testAccPreCheck(t) },
 		Providers:    testAccProviders,
 		CheckDestroy: testAccCheckAWSEcsServiceDestroy,
@@ -396,7 +421,7 @@ func TestAccAWSEcsService_withEcsClusterName(t *testing.T) {
 	tdName := fmt.Sprintf("tf-acc-td-svc-w-cluster-name-%s", rString)
 	svcName := fmt.Sprintf("tf-acc-svc-w-cluster-name-%s", rString)
 
-	resource.Test(t, resource.TestCase{
+	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { testAccPreCheck(t) },
 		Providers:    testAccProviders,
 		CheckDestroy: testAccCheckAWSEcsServiceDestroy,
@@ -424,7 +449,7 @@ func TestAccAWSEcsService_withAlb(t *testing.T) {
 	lbName := fmt.Sprintf("tf-acc-lb-svc-w-alb-%s", rString)
 	svcName := fmt.Sprintf("tf-acc-svc-w-alb-%s", rString)
 
-	resource.Test(t, resource.TestCase{
+	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { testAccPreCheck(t) },
 		Providers:    testAccProviders,
 		CheckDestroy: testAccCheckAWSEcsServiceDestroy,
@@ -448,7 +473,7 @@ func TestAccAWSEcsService_withPlacementStrategy(t *testing.T) {
 	tdName := fmt.Sprintf("tf-acc-td-svc-w-ps-%s", rString)
 	svcName := fmt.Sprintf("tf-acc-svc-w-ps-%s", rString)
 
-	resource.Test(t, resource.TestCase{
+	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { testAccPreCheck(t) },
 		Providers:    testAccProviders,
 		CheckDestroy: testAccCheckAWSEcsServiceDestroy,
@@ -467,6 +492,15 @@ func TestAccAWSEcsService_withPlacementStrategy(t *testing.T) {
 					resource.TestCheckResourceAttr("aws_ecs_service.mongo", "ordered_placement_strategy.#", "1"),
 					resource.TestCheckResourceAttr("aws_ecs_service.mongo", "ordered_placement_strategy.0.type", "binpack"),
 					resource.TestCheckResourceAttr("aws_ecs_service.mongo", "ordered_placement_strategy.0.field", "memory"),
+				),
+			},
+			{
+				Config: testAccAWSEcsServiceWithRandomPlacementStrategy(clusterName, tdName, svcName),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckAWSEcsServiceExists("aws_ecs_service.mongo", &service),
+					resource.TestCheckResourceAttr("aws_ecs_service.mongo", "ordered_placement_strategy.#", "1"),
+					resource.TestCheckResourceAttr("aws_ecs_service.mongo", "ordered_placement_strategy.0.type", "random"),
+					resource.TestCheckResourceAttr("aws_ecs_service.mongo", "ordered_placement_strategy.0.field", ""),
 				),
 			},
 			{
@@ -492,7 +526,7 @@ func TestAccAWSEcsService_withPlacementConstraints(t *testing.T) {
 	tdName := fmt.Sprintf("tf-acc-td-svc-w-pc-%s", rString)
 	svcName := fmt.Sprintf("tf-acc-svc-w-pc-%s", rString)
 
-	resource.Test(t, resource.TestCase{
+	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { testAccPreCheck(t) },
 		Providers:    testAccProviders,
 		CheckDestroy: testAccCheckAWSEcsServiceDestroy,
@@ -516,7 +550,7 @@ func TestAccAWSEcsService_withPlacementConstraints_emptyExpression(t *testing.T)
 	tdName := fmt.Sprintf("tf-acc-td-svc-w-pc-ee-%s", rString)
 	svcName := fmt.Sprintf("tf-acc-svc-w-pc-ee-%s", rString)
 
-	resource.Test(t, resource.TestCase{
+	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { testAccPreCheck(t) },
 		Providers:    testAccProviders,
 		CheckDestroy: testAccCheckAWSEcsServiceDestroy,
@@ -599,7 +633,7 @@ func TestAccAWSEcsService_withLaunchTypeEC2AndNetworkConfiguration(t *testing.T)
 	tdName := fmt.Sprintf("tf-acc-td-svc-w-nc-%s", rString)
 	svcName := fmt.Sprintf("tf-acc-svc-w-nc-%s", rString)
 
-	resource.Test(t, resource.TestCase{
+	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { testAccPreCheck(t) },
 		Providers:    testAccProviders,
 		CheckDestroy: testAccCheckAWSEcsServiceDestroy,
@@ -634,7 +668,7 @@ func TestAccAWSEcsService_withDaemonSchedulingStrategy(t *testing.T) {
 	tdName := fmt.Sprintf("tf-acc-td-svc-w-ss-daemon-%s", rString)
 	svcName := fmt.Sprintf("tf-acc-svc-w-ss-daemon-%s", rString)
 
-	resource.Test(t, resource.TestCase{
+	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { testAccPreCheck(t) },
 		Providers:    testAccProviders,
 		CheckDestroy: testAccCheckAWSEcsServiceDestroy,
@@ -658,7 +692,7 @@ func TestAccAWSEcsService_withReplicaSchedulingStrategy(t *testing.T) {
 	tdName := fmt.Sprintf("tf-acc-td-svc-w-ss-replica-%s", rString)
 	svcName := fmt.Sprintf("tf-acc-svc-w-ss-replica-%s", rString)
 
-	resource.Test(t, resource.TestCase{
+	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { testAccPreCheck(t) },
 		Providers:    testAccProviders,
 		CheckDestroy: testAccCheckAWSEcsServiceDestroy,
@@ -682,7 +716,7 @@ func TestAccAWSEcsService_withServiceRegistries(t *testing.T) {
 	tdName := fmt.Sprintf("tf-acc-td-svc-w-ups-%s", rString)
 	svcName := fmt.Sprintf("tf-acc-svc-w-ups-%s", rString)
 
-	resource.Test(t, resource.TestCase{
+	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { testAccPreCheck(t) },
 		Providers:    testAccProviders,
 		CheckDestroy: testAccCheckAWSEcsServiceDestroy,
@@ -706,7 +740,7 @@ func TestAccAWSEcsService_withServiceRegistries_container(t *testing.T) {
 	tdName := fmt.Sprintf("tf-acc-td-svc-w-ups-%s", rString)
 	svcName := fmt.Sprintf("tf-acc-svc-w-ups-%s", rString)
 
-	resource.Test(t, resource.TestCase{
+	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { testAccPreCheck(t) },
 		Providers:    testAccProviders,
 		CheckDestroy: testAccCheckAWSEcsServiceDestroy,
@@ -800,6 +834,47 @@ func testAccCheckAWSEcsServiceExists(name string, service *ecs.Service) resource
 		*service = *output.Services[0]
 
 		return nil
+	}
+}
+
+func testAccCheckAWSEcsServiceDisappears(service *ecs.Service) resource.TestCheckFunc {
+	return func(s *terraform.State) error {
+		conn := testAccProvider.Meta().(*AWSClient).ecsconn
+
+		input := &ecs.DeleteServiceInput{
+			Cluster: service.ClusterArn,
+			Service: service.ServiceName,
+			Force:   aws.Bool(true),
+		}
+
+		_, err := conn.DeleteService(input)
+
+		if err != nil {
+			return err
+		}
+
+		// Wait until it's deleted
+		wait := resource.StateChangeConf{
+			Pending:    []string{"ACTIVE", "DRAINING"},
+			Target:     []string{"INACTIVE"},
+			Timeout:    10 * time.Minute,
+			MinTimeout: 1 * time.Second,
+			Refresh: func() (interface{}, string, error) {
+				resp, err := conn.DescribeServices(&ecs.DescribeServicesInput{
+					Cluster:  service.ClusterArn,
+					Services: []*string{service.ServiceName},
+				})
+				if err != nil {
+					return resp, "FAILED", err
+				}
+
+				return resp, aws.StringValue(resp.Services[0].Status), nil
+			},
+		}
+
+		_, err = wait.WaitForState()
+
+		return err
 	}
 }
 
@@ -926,6 +1001,39 @@ resource "aws_ecs_service" "mongo" {
   ordered_placement_strategy {
     type = "binpack"
     field = "memory"
+  }
+}
+`, clusterName, tdName, svcName)
+}
+
+func testAccAWSEcsServiceWithRandomPlacementStrategy(clusterName, tdName, svcName string) string {
+	return fmt.Sprintf(`
+resource "aws_ecs_cluster" "default" {
+  name = "%s"
+}
+
+resource "aws_ecs_task_definition" "mongo" {
+  family = "%s"
+  container_definitions = <<DEFINITION
+[
+  {
+    "cpu": 128,
+    "essential": true,
+    "image": "mongo:latest",
+    "memory": 128,
+    "name": "mongodb"
+  }
+]
+DEFINITION
+}
+
+resource "aws_ecs_service" "mongo" {
+  name = "%s"
+  cluster = "${aws_ecs_cluster.default.id}"
+  task_definition = "${aws_ecs_task_definition.mongo.arn}"
+  desired_count = 1
+  ordered_placement_strategy {
+    type = "random"
   }
 }
 `, clusterName, tdName, svcName)

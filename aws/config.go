@@ -27,6 +27,7 @@ import (
 	"github.com/aws/aws-sdk-go/service/cloud9"
 	"github.com/aws/aws-sdk-go/service/cloudformation"
 	"github.com/aws/aws-sdk-go/service/cloudfront"
+	"github.com/aws/aws-sdk-go/service/cloudhsmv2"
 	"github.com/aws/aws-sdk-go/service/cloudtrail"
 	"github.com/aws/aws-sdk-go/service/cloudwatch"
 	"github.com/aws/aws-sdk-go/service/cloudwatchevents"
@@ -76,6 +77,7 @@ import (
 	"github.com/aws/aws-sdk-go/service/neptune"
 	"github.com/aws/aws-sdk-go/service/opsworks"
 	"github.com/aws/aws-sdk-go/service/organizations"
+	"github.com/aws/aws-sdk-go/service/pinpoint"
 	"github.com/aws/aws-sdk-go/service/pricing"
 	"github.com/aws/aws-sdk-go/service/rds"
 	"github.com/aws/aws-sdk-go/service/redshift"
@@ -95,6 +97,7 @@ import (
 	"github.com/aws/aws-sdk-go/service/swf"
 	"github.com/aws/aws-sdk-go/service/waf"
 	"github.com/aws/aws-sdk-go/service/wafregional"
+	"github.com/aws/aws-sdk-go/service/workspaces"
 	"github.com/davecgh/go-spew/spew"
 	"github.com/hashicorp/go-cleanhttp"
 	"github.com/hashicorp/terraform/helper/logging"
@@ -158,6 +161,7 @@ type AWSClient struct {
 	cfconn                *cloudformation.CloudFormation
 	cloud9conn            *cloud9.Cloud9
 	cloudfrontconn        *cloudfront.CloudFront
+	cloudhsmv2conn        *cloudhsmv2.CloudHSMV2
 	cloudtrailconn        *cloudtrail.CloudTrail
 	cloudwatchconn        *cloudwatch.CloudWatch
 	cloudwatchlogsconn    *cloudwatchlogs.CloudWatchLogs
@@ -239,6 +243,8 @@ type AWSClient struct {
 	budgetconn            *budgets.Budgets
 	neptuneconn           *neptune.Neptune
 	pricingconn           *pricing.Pricing
+	pinpointconn          *pinpoint.Pinpoint
+	workspacesconn        *workspaces.WorkSpaces
 }
 
 func (c *AWSClient) S3() *s3.S3 {
@@ -495,6 +501,7 @@ func (c *Config) Client() (interface{}, error) {
 	client.cloud9conn = cloud9.New(sess)
 	client.cfconn = cloudformation.New(awsCfSess)
 	client.cloudfrontconn = cloudfront.New(sess)
+	client.cloudhsmv2conn = cloudhsmv2.New(sess)
 	client.cloudtrailconn = cloudtrail.New(sess)
 	client.cloudwatchconn = cloudwatch.New(awsCwSess)
 	client.cloudwatcheventsconn = cloudwatchevents.New(awsCweSess)
@@ -563,6 +570,8 @@ func (c *Config) Client() (interface{}, error) {
 	client.appsyncconn = appsync.New(sess)
 	client.neptuneconn = neptune.New(sess)
 	client.pricingconn = pricing.New(sess)
+	client.pinpointconn = pinpoint.New(sess)
+	client.workspacesconn = workspaces.New(sess)
 
 	// Workaround for https://github.com/aws/aws-sdk-go/issues/1376
 	client.kinesisconn.Handlers.Retry.PushBack(func(r *request.Request) {

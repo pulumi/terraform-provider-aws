@@ -22,6 +22,10 @@ func resourceAwsEcrRepository() *schema.Resource {
 			State: schema.ImportStatePassthrough,
 		},
 
+		Timeouts: &schema.ResourceTimeout{
+			Delete: schema.DefaultTimeout(20 * time.Minute),
+		},
+
 		Schema: map[string]*schema.Schema{
 			"name": {
 				Type:     schema.TypeString,
@@ -65,69 +69,48 @@ func resourceAwsEcrRepositoryCreate(d *schema.ResourceData, meta interface{}) er
 	d.Set("arn", repository.RepositoryArn)
 	d.Set("registry_id", repository.RegistryId)
 
-	// Ensure AWS will give us back the registry info before calling read.
-	log.Printf("[DEBUG] Waiting for ECR repository (%s) to exist", *repository.RepositoryArn)
-	stateConf := &resource.StateChangeConf{
-		Pending: []string{""},
-		Target:  []string{"exists"},
-		Refresh: resourceAwsEcrRepositoryRefreshFunc(conn, d.Id()),
-		Timeout: 3 * time.Minute,
-	}
-	repRaw, err := stateConf.WaitForState()
-	if err != nil {
-		return fmt.Errorf(
-			"Error waiting for ECR repository (%s) to become available: %s", d.Id(), err)
-	}
-
-	log.Printf("[DEBUG] ECR repository (%s) exists", *repository.RepositoryArn)
-	resourceAwsEcrRepositoryReadData(d, repRaw.(*ecr.Repository))
-	return nil
+	return resourceAwsEcrRepositoryRead(d, meta)
 }
 
 func resourceAwsEcrRepositoryRead(d *schema.ResourceData, meta interface{}) error {
-	log.Printf("[DEBUG] Reading repository %s", d.Id())
-
 	conn := meta.(*AWSClient).ecrconn
-	repRaw, _, err := resourceAwsEcrRepositoryRefreshFunc(conn, d.Id())()
-	if err != nil {
-		return err
+
+	log.Printf("[DEBUG] Reading repository %s", d.Id())
+	var out *ecr.DescribeRepositoriesOutput
+	input := &ecr.DescribeRepositoriesInput{
+		RepositoryNames: []*string{aws.String(d.Id())},
 	}
-	if repRaw == nil {
+
+	err := resource.Retry(1*time.Minute, func() *resource.RetryError {
+		var err error
+		out, err = conn.DescribeRepositories(input)
+		if d.IsNewResource() && isAWSErr(err, ecr.ErrCodeRepositoryNotFoundException, "") {
+			return resource.RetryableError(err)
+		}
+		if err != nil {
+			return resource.NonRetryableError(err)
+		}
+		return nil
+	})
+
+	if isAWSErr(err, ecr.ErrCodeRepositoryNotFoundException, "") {
+		log.Printf("[WARN] ECR Repository (%s) not found, removing from state", d.Id())
 		d.SetId("")
 		return nil
 	}
 
-	log.Printf("[DEBUG] Received repository %s", repRaw)
-	resourceAwsEcrRepositoryReadData(d, repRaw.(*ecr.Repository))
-	return nil
-}
+	if err != nil {
+		return err
+	}
 
-func resourceAwsEcrRepositoryReadData(d *schema.ResourceData, repository *ecr.Repository) {
+	repository := out.Repositories[0]
+
 	d.Set("arn", repository.RepositoryArn)
 	d.Set("name", repository.RepositoryName)
 	d.Set("registry_id", repository.RegistryId)
 	d.Set("repository_url", repository.RepositoryUri)
-}
 
-func resourceAwsEcrRepositoryRefreshFunc(conn *ecr.ECR, id string) resource.StateRefreshFunc {
-	return func() (interface{}, string, error) {
-		resp, err := conn.DescribeRepositories(&ecr.DescribeRepositoriesInput{
-			RepositoryNames: []*string{aws.String(id)},
-		})
-		if err != nil {
-			if ecrerr, ok := err.(awserr.Error); ok && ecrerr.Code() == "RepositoryNotFoundException" {
-				resp = nil
-				err = nil
-			} else {
-				return nil, "", err
-			}
-		}
-		if resp == nil {
-			return nil, "", nil
-		}
-
-		return resp.Repositories[0], "exists", nil
-	}
+	return nil
 }
 
 func resourceAwsEcrRepositoryDelete(d *schema.ResourceData, meta interface{}) error {
@@ -146,7 +129,7 @@ func resourceAwsEcrRepositoryDelete(d *schema.ResourceData, meta interface{}) er
 	}
 
 	log.Printf("[DEBUG] Waiting for ECR Repository %q to be deleted", d.Id())
-	err = resource.Retry(20*time.Minute, func() *resource.RetryError {
+	err = resource.Retry(d.Timeout(schema.TimeoutDelete), func() *resource.RetryError {
 		_, err := conn.DescribeRepositories(&ecr.DescribeRepositoriesInput{
 			RepositoryNames: []*string{aws.String(d.Id())},
 		})

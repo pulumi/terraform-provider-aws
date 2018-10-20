@@ -177,6 +177,11 @@ func resourceAwsCodeBuildProject() *schema.Resource {
 							Optional: true,
 							Default:  false,
 						},
+						"certificate": {
+							Type:         schema.TypeString,
+							Optional:     true,
+							ValidateFunc: validation.StringMatch(regexp.MustCompile(`\.(pem|zip)$`), "must end in .pem or .zip"),
+						},
 					},
 				},
 				Set: resourceAwsCodeBuildProjectEnvironmentHash,
@@ -351,6 +356,7 @@ func resourceAwsCodeBuildProject() *schema.Resource {
 								codebuild.SourceTypeS3,
 								codebuild.SourceTypeBitbucket,
 								codebuild.SourceTypeGithubEnterprise,
+								codebuild.SourceTypeNoSource,
 							}, false),
 						},
 						"git_clone_depth": {
@@ -447,6 +453,16 @@ func resourceAwsCodeBuildProjectCreate(d *schema.ResourceData, meta interface{})
 	projectArtifacts := expandProjectArtifacts(d)
 	projectSecondaryArtifacts := expandProjectSecondaryArtifacts(d)
 	projectSecondarySources := expandProjectSecondarySources(d)
+
+	if aws.StringValue(projectSource.Type) == codebuild.SourceTypeNoSource {
+		if aws.StringValue(projectSource.Buildspec) == "" {
+			return fmt.Errorf("`build_spec` must be set when source's `type` is `NO_SOURCE`")
+		}
+
+		if aws.StringValue(projectSource.Location) != "" {
+			return fmt.Errorf("`location` must be empty when source's `type` is `NO_SOURCE`")
+		}
+	}
 
 	params := &codebuild.CreateProjectInput{
 		Environment:        projectEnv,
@@ -619,6 +635,10 @@ func expandProjectEnvironment(d *schema.ResourceData) *codebuild.ProjectEnvironm
 		projectEnv.Type = aws.String(v.(string))
 	}
 
+	if v, ok := envConfig["certificate"]; ok && v.(string) != "" {
+		projectEnv.Certificate = aws.String(v.(string))
+	}
+
 	if v := envConfig["environment_variable"]; v != nil {
 		envVariables := v.([]interface{})
 		if len(envVariables) > 0 {
@@ -696,12 +716,15 @@ func expandProjectSourceData(data map[string]interface{}) codebuild.ProjectSourc
 		Buildspec:     aws.String(data["buildspec"].(string)),
 		GitCloneDepth: aws.Int64(int64(data["git_clone_depth"].(int))),
 		InsecureSsl:   aws.Bool(data["insecure_ssl"].(bool)),
-		Location:      aws.String(data["location"].(string)),
 		Type:          aws.String(sourceType),
 	}
 
 	if data["source_identifier"] != nil {
 		projectSource.SourceIdentifier = aws.String(data["source_identifier"].(string))
+	}
+
+	if data["location"].(string) != "" {
+		projectSource.Location = aws.String(data["location"].(string))
 	}
 
 	// Only valid for GITHUB source type, e.g.
@@ -984,6 +1007,7 @@ func flattenAwsCodeBuildProjectEnvironment(environment *codebuild.ProjectEnviron
 	envConfig["type"] = *environment.Type
 	envConfig["compute_type"] = *environment.ComputeType
 	envConfig["image"] = *environment.Image
+	envConfig["certificate"] = aws.StringValue(environment.Certificate)
 	envConfig["privileged_mode"] = *environment.PrivilegedMode
 
 	if environment.EnvironmentVariables != nil {
@@ -1071,6 +1095,9 @@ func resourceAwsCodeBuildProjectEnvironmentHash(v interface{}) int {
 	buf.WriteString(fmt.Sprintf("%s-", computeType))
 	buf.WriteString(fmt.Sprintf("%s-", image))
 	buf.WriteString(fmt.Sprintf("%t-", privilegedMode))
+	if v, ok := m["certificate"]; ok && v.(string) != "" {
+		buf.WriteString(fmt.Sprintf("%s-", v.(string)))
+	}
 	for _, e := range environmentVariables {
 		if e != nil { // Old statefiles might have nil values in them
 			ev := e.(map[string]interface{})

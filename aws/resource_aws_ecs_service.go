@@ -497,8 +497,9 @@ func resourceAwsEcsServiceRead(d *schema.ResourceData, meta interface{}) error {
 			if d.IsNewResource() {
 				return resource.RetryableError(fmt.Errorf("New ECS service not found yet: %q", d.Id()))
 			}
-
-			return resource.NonRetryableError(fmt.Errorf("ECS service disappeared: %q", d.Id()))
+			log.Printf("[WARN] ECS Service %s not found, removing from state.", d.Id())
+			d.SetId("")
+			return nil
 		}
 
 		service := out.Services[0]
@@ -657,11 +658,14 @@ func flattenPlacementStrategyDeprecated(pss []*ecs.PlacementStrategy) []map[stri
 	for _, ps := range pss {
 		c := make(map[string]interface{})
 		c["type"] = *ps.Type
-		c["field"] = *ps.Field
 
-		// for some fields the API requires lowercase for creation but will return uppercase on query
-		if *ps.Field == "MEMORY" || *ps.Field == "CPU" {
-			c["field"] = strings.ToLower(*ps.Field)
+		if ps.Field != nil {
+			c["field"] = *ps.Field
+
+			// for some fields the API requires lowercase for creation but will return uppercase on query
+			if *ps.Field == "MEMORY" || *ps.Field == "CPU" {
+				c["field"] = strings.ToLower(*ps.Field)
+			}
 		}
 
 		results = append(results, c)
@@ -673,7 +677,7 @@ func expandPlacementStrategy(s []interface{}) ([]*ecs.PlacementStrategy, error) 
 	if len(s) == 0 {
 		return nil, nil
 	}
-	ps := make([]*ecs.PlacementStrategy, 0)
+	pss := make([]*ecs.PlacementStrategy, 0)
 	for _, raw := range s {
 		p := raw.(map[string]interface{})
 		t := p["type"].(string)
@@ -681,19 +685,23 @@ func expandPlacementStrategy(s []interface{}) ([]*ecs.PlacementStrategy, error) 
 		if err := validateAwsEcsPlacementStrategy(t, f); err != nil {
 			return nil, err
 		}
-		ps = append(ps, &ecs.PlacementStrategy{
-			Type:  aws.String(t),
-			Field: aws.String(f),
-		})
+		ps := &ecs.PlacementStrategy{
+			Type: aws.String(t),
+		}
+		if f != "" {
+			// Field must be omitted (i.e. not empty string) for random strategy
+			ps.Field = aws.String(f)
+		}
+		pss = append(pss, ps)
 	}
-	return ps, nil
+	return pss, nil
 }
 
 func expandPlacementStrategyDeprecated(s *schema.Set) ([]*ecs.PlacementStrategy, error) {
 	if len(s.List()) == 0 {
 		return nil, nil
 	}
-	ps := make([]*ecs.PlacementStrategy, 0)
+	pss := make([]*ecs.PlacementStrategy, 0)
 	for _, raw := range s.List() {
 		p := raw.(map[string]interface{})
 		t := p["type"].(string)
@@ -701,12 +709,16 @@ func expandPlacementStrategyDeprecated(s *schema.Set) ([]*ecs.PlacementStrategy,
 		if err := validateAwsEcsPlacementStrategy(t, f); err != nil {
 			return nil, err
 		}
-		ps = append(ps, &ecs.PlacementStrategy{
-			Type:  aws.String(t),
-			Field: aws.String(f),
-		})
+		ps := &ecs.PlacementStrategy{
+			Type: aws.String(t),
+		}
+		if f != "" {
+			// Field must be omitted (i.e. not empty string) for random strategy
+			ps.Field = aws.String(f)
+		}
+		pss = append(pss, ps)
 	}
-	return ps, nil
+	return pss, nil
 }
 
 func flattenPlacementStrategy(pss []*ecs.PlacementStrategy) []interface{} {
@@ -717,11 +729,14 @@ func flattenPlacementStrategy(pss []*ecs.PlacementStrategy) []interface{} {
 	for _, ps := range pss {
 		c := make(map[string]interface{})
 		c["type"] = *ps.Type
-		c["field"] = *ps.Field
 
-		// for some fields the API requires lowercase for creation but will return uppercase on query
-		if *ps.Field == "MEMORY" || *ps.Field == "CPU" {
-			c["field"] = strings.ToLower(*ps.Field)
+		if ps.Field != nil {
+			c["field"] = *ps.Field
+
+			// for some fields the API requires lowercase for creation but will return uppercase on query
+			if *ps.Field == "MEMORY" || *ps.Field == "CPU" {
+				c["field"] = strings.ToLower(*ps.Field)
+			}
 		}
 
 		results = append(results, c)
