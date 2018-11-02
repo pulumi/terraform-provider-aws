@@ -53,6 +53,8 @@
     "aws/request",
     "aws/session",
     "aws/signer/v4",
+    "internal/ini",
+    "internal/s3err",
     "internal/sdkio",
     "internal/sdkrand",
     "internal/sdkuri",
@@ -82,6 +84,7 @@
     "service/cloud9",
     "service/cloudformation",
     "service/cloudfront",
+    "service/cloudhsmv2",
     "service/cloudtrail",
     "service/cloudwatch",
     "service/cloudwatchevents",
@@ -131,6 +134,7 @@
     "service/neptune",
     "service/opsworks",
     "service/organizations",
+    "service/pinpoint",
     "service/pricing",
     "service/rds",
     "service/redshift",
@@ -149,15 +153,17 @@
     "service/sts",
     "service/swf",
     "service/waf",
-    "service/wafregional"
+    "service/wafregional",
+    "service/workspaces"
   ]
-  revision = "66974140c322f22c1daaf95a18930ea6a9e4d21e"
-  version = "v1.15.16"
+  revision = "97a47d14fbb0744966b484d5b089cdc9814b493b"
+  version = "v1.15.67"
 
 [[projects]]
   name = "github.com/beevik/etree"
   packages = ["."]
-  revision = "af219c0c7ea1b67ec263c0b1b1b96d284a9181ce"
+  revision = "9d7e8feddccb4ed1b8afb54e368bd323d2ff652c"
+  version = "v1.0.1"
 
 [[projects]]
   branch = "master"
@@ -180,13 +186,8 @@
 [[projects]]
   name = "github.com/davecgh/go-spew"
   packages = ["spew"]
-  revision = "346938d642f2ec3594ed81d874461961cd0faa76"
-
-[[projects]]
-  name = "github.com/go-ini/ini"
-  packages = ["."]
-  revision = "32e4c1e6bc4e7d0d8451aa6b75200d19e37a536a"
-  version = "v1.32.0"
+  revision = "8991bc29aa16c548c550c7ff78260e27b9ab7c73"
+  version = "v1.1.1"
 
 [[projects]]
   name = "github.com/golang/protobuf"
@@ -200,6 +201,12 @@
   revision = "1643683e1b54a9e88ad26d98f81400c8c9d9f4f9"
 
 [[projects]]
+  branch = "master"
+  name = "github.com/golang/snappy"
+  packages = ["."]
+  revision = "2e65f85255dbc3072edf28d6b5b8efc472979f5a"
+
+[[projects]]
   name = "github.com/hashicorp/errwrap"
   packages = ["."]
   revision = "7554cd9344cec97297fa6649b055a8c98c2a1e55"
@@ -207,7 +214,8 @@
 [[projects]]
   name = "github.com/hashicorp/go-cleanhttp"
   packages = ["."]
-  revision = "3573b8b52aa7b37b9358d966a898feb387f62437"
+  revision = "e8ab9daed8d1ddd2d3c4efba338fe2eeae2e4f18"
+  version = "v0.5.0"
 
 [[projects]]
   name = "github.com/hashicorp/go-getter"
@@ -226,7 +234,8 @@
 [[projects]]
   name = "github.com/hashicorp/go-multierror"
   packages = ["."]
-  revision = "3d5d8f294aa03d8e98859feac328afbdf1ae0703"
+  revision = "886a7fbe3eb1c874d46f623bfa70af45f425b3d1"
+  version = "v1.0.0"
 
 [[projects]]
   name = "github.com/hashicorp/go-plugin"
@@ -241,7 +250,8 @@
 [[projects]]
   name = "github.com/hashicorp/go-version"
   packages = ["."]
-  revision = "e96d3840402619007766590ecea8dd7af1292276"
+  revision = "b5a281d3160aa11950a6182bd9a9dc2cb1e02d50"
+  version = "v1.0.0"
 
 [[projects]]
   name = "github.com/hashicorp/hcl"
@@ -323,7 +333,8 @@
     "tfdiags",
     "version"
   ]
-  revision = "bb37637a139151be0ff9bf00c85c448538e5b3d2"
+  revision = "17850e9a55d33c43d7c31fd6ac122ba97a51d899"
+  version = "v0.11.10"
 
 [[projects]]
   name = "github.com/hashicorp/vault"
@@ -332,7 +343,8 @@
     "helper/jsonutil",
     "helper/pgpkeys"
   ]
-  revision = "9a60bf2a50e4dd1ba4b929a3ccf8072435cbdd0a"
+  revision = "e21712a687889de1125e0a12a980420b1a4f72d3"
+  version = "v0.10.4"
 
 [[projects]]
   name = "github.com/hashicorp/yamux"
@@ -342,7 +354,8 @@
 [[projects]]
   name = "github.com/jen20/awspolicyequivalence"
   packages = ["."]
-  revision = "9fbcaca9f9f868b9560463d0790aae33b2322945"
+  revision = "9ebbf3c225b2b9da629263e13c3015a5de7965d1"
+  version = "v1.0.0"
 
 [[projects]]
   name = "github.com/jmespath/go-jmespath"
@@ -378,12 +391,14 @@
 [[projects]]
   name = "github.com/mitchellh/copystructure"
   packages = ["."]
-  revision = "d23ffcb85de31694d6ccaa23ccb4a03e55c1303f"
+  revision = "9a1b6f44e8da0e0e374624fb0a825a231b00c537"
+  version = "v1.0.0"
 
 [[projects]]
   name = "github.com/mitchellh/go-homedir"
   packages = ["."]
-  revision = "58046073cbffe2f25d425fe1331102f55cf719de"
+  revision = "ae18d6b8b3205b561c79e8e5f69bff09736185f4"
+  version = "v1.0.0"
 
 [[projects]]
   branch = "master"
@@ -421,11 +436,6 @@
     "match"
   ]
   revision = "f4461a52b6329c11190f11fe3384ec8aa964e21c"
-
-[[projects]]
-  name = "github.com/satori/uuid"
-  packages = ["."]
-  revision = "b061729afc07e77a8aa4fad0a2fd840958f1942a"
 
 [[projects]]
   name = "github.com/terraform-providers/terraform-provider-template"
@@ -559,11 +569,12 @@
 [[projects]]
   name = "gopkg.in/yaml.v2"
   packages = ["."]
-  revision = "cd8b52f8269e0feb286dfeef29f8fe4d5b397e0b"
+  revision = "5420a8b6744d3b0345ab293f6fcba19c978f1183"
+  version = "v2.2.1"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "26397ff1c110082a6f09a3e34dfc099bbbf84e4fd63e5b79c3ecd400eb8b87fa"
+  inputs-digest = "0d69c49973624c2bfd2fb6e9d546e760ba364431e6c3585a2fd395df591a5ede"
   solver-name = "gps-cdcl"
   solver-version = 1
