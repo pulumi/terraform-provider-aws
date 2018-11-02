@@ -22,6 +22,25 @@ import (
 	"github.com/hashicorp/terraform/helper/validation"
 )
 
+// validateAny returns a SchemaValidateFunc which tests if the provided value
+// passes any of the provided SchemaValidateFunc
+// Temporarily added into AWS provider, but will be submitted upstream into provider SDK
+func validateAny(validators ...schema.SchemaValidateFunc) schema.SchemaValidateFunc {
+	return func(i interface{}, k string) ([]string, []error) {
+		var allErrors []error
+		var allWarnings []string
+		for _, validator := range validators {
+			validatorWarnings, validatorErrors := validator(i, k)
+			if len(validatorWarnings) == 0 && len(validatorErrors) == 0 {
+				return []string{}, []error{}
+			}
+			allWarnings = append(allWarnings, validatorWarnings...)
+			allErrors = append(allErrors, validatorErrors...)
+		}
+		return allWarnings, allErrors
+	}
+}
+
 // validateTypeStringNullableBoolean provides custom error messaging for TypeString booleans
 // Some arguments require three values: true, false, and "" (unspecified).
 // This ValidateFunc returns a custom message since the message with
@@ -340,6 +359,23 @@ func validateCloudWatchLogResourcePolicyDocument(v interface{}, k string) (ws []
 	return
 }
 
+func validateIntegerInSlice(valid []int) schema.SchemaValidateFunc {
+	return func(i interface{}, k string) (s []string, es []error) {
+		v, ok := i.(int)
+		if !ok {
+			es = append(es, fmt.Errorf("expected type of %s to be int", k))
+			return
+		}
+		for _, in := range valid {
+			if v == in {
+				return
+			}
+		}
+		es = append(es, fmt.Errorf("expected %s to be one of %v, got %d", k, valid, v))
+		return
+	}
+}
+
 func validateCloudWatchEventTargetId(v interface{}, k string) (ws []string, errors []error) {
 	value := v.(string)
 	if len(value) > 64 {
@@ -450,6 +486,20 @@ func validateArn(v interface{}, k string) (ws []string, errors []error) {
 	if !regexp.MustCompile(pattern).MatchString(value) {
 		errors = append(errors, fmt.Errorf(
 			"%q doesn't look like a valid ARN (%q): %q",
+			k, pattern, value))
+	}
+
+	return
+}
+
+func validateEC2AutomateARN(v interface{}, k string) (ws []string, errors []error) {
+	value := v.(string)
+
+	// https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_PutMetricAlarm.html
+	pattern := `^arn:[\w-]+:automate:[\w-]+:ec2:(recover|stop|terminate)$`
+	if !regexp.MustCompile(pattern).MatchString(value) {
+		errors = append(errors, fmt.Errorf(
+			"%q does not match EC2 automation ARN (%q): %q",
 			k, pattern, value))
 	}
 
@@ -1678,15 +1728,6 @@ func validateCognitoRoles(v map[string]interface{}, k string) (errors []error) {
 	return
 }
 
-func validateCognitoUserPoolDomain(v interface{}, k string) (ws []string, errors []error) {
-	value := v.(string)
-	if !regexp.MustCompile(`^[a-z0-9](?:[a-z0-9\-]{0,61}[a-z0-9])?$`).MatchString(value) {
-		errors = append(errors, fmt.Errorf(
-			"only lowercase alphanumeric characters and hyphens (max length 63 chars) allowed in %q", k))
-	}
-	return
-}
-
 func validateDxConnectionBandWidth() schema.SchemaValidateFunc {
 	return validation.StringInSlice([]string{
 		"1Gbps",
@@ -1743,7 +1784,7 @@ func validateDynamoDbStreamSpec(d *schema.ResourceDiff) error {
 	return nil
 }
 
-func validateVpnGatewayAmazonSideAsn(v interface{}, k string) (ws []string, errors []error) {
+func validateAmazonSideAsn(v interface{}, k string) (ws []string, errors []error) {
 	value := v.(string)
 
 	// http://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateVpnGateway.html
@@ -1760,22 +1801,6 @@ func validateVpnGatewayAmazonSideAsn(v interface{}, k string) (ws []string, erro
 
 	if !isLegacyAsn(asn) && ((asn < 64512) || (asn > 65534 && asn < 4200000000) || (asn > 4294967294)) {
 		errors = append(errors, fmt.Errorf("%q (%q) must be 7224, 9059, 10124 or 17493 or in the range 64512 to 65534 or 4200000000 to 4294967294", k, v))
-	}
-	return
-}
-
-func validateDxGatewayAmazonSideAsn(v interface{}, k string) (ws []string, errors []error) {
-	value := v.(string)
-
-	// https://docs.aws.amazon.com/directconnect/latest/APIReference/API_CreateDirectConnectGateway.html
-	asn, err := strconv.ParseInt(value, 10, 64)
-	if err != nil {
-		errors = append(errors, fmt.Errorf("%q (%q) must be a 64-bit integer", k, v))
-		return
-	}
-
-	if (asn < 64512) || (asn > 65534 && asn < 4200000000) || (asn > 4294967294) {
-		errors = append(errors, fmt.Errorf("%q (%q) must be in the range 64512 to 65534 or 4200000000 to 4294967294", k, v))
 	}
 	return
 }
@@ -1986,6 +2011,72 @@ func validateCloudFrontPublicKeyNamePrefix(v interface{}, k string) (ws []string
 			"only alphanumeric characters, underscores and hyphens allowed in %q", k))
 	}
 	prefixMaxLength := 128 - resource.UniqueIDSuffixLength
+	if len(value) > prefixMaxLength {
+		errors = append(errors, fmt.Errorf(
+			"%q cannot be greater than %d characters", k, prefixMaxLength))
+	}
+	return
+}
+
+func validateLbTargetGroupName(v interface{}, k string) (ws []string, errors []error) {
+	value := v.(string)
+	if len(value) > 32 {
+		errors = append(errors, fmt.Errorf(
+			"%q cannot be longer than 32 characters", k))
+	}
+	if !regexp.MustCompile(`^[0-9A-Za-z-]+$`).MatchString(value) {
+		errors = append(errors, fmt.Errorf(
+			"only alphanumeric characters and hyphens allowed in %q", k))
+	}
+	if regexp.MustCompile(`^-`).MatchString(value) {
+		errors = append(errors, fmt.Errorf(
+			"%q cannot begin with a hyphen", k))
+	}
+	if regexp.MustCompile(`-$`).MatchString(value) {
+		errors = append(errors, fmt.Errorf(
+			"%q cannot end with a hyphen", k))
+	}
+	return
+}
+
+func validateSecretManagerSecretName(v interface{}, k string) (ws []string, errors []error) {
+	value := v.(string)
+	if !regexp.MustCompile(`^[0-9A-Za-z/_+=.@-]+$`).MatchString(value) {
+		errors = append(errors, fmt.Errorf(
+			"only alphanumeric characters and /_+=.@- special characters are allowed in %q", k))
+	}
+	if len(value) > 512 {
+		errors = append(errors, fmt.Errorf(
+			"%q cannot be greater than 512 characters", k))
+	}
+	return
+}
+
+func validateLbTargetGroupNamePrefix(v interface{}, k string) (ws []string, errors []error) {
+	value := v.(string)
+	prefixMaxLength := 32 - resource.UniqueIDSuffixLength
+	if len(value) > prefixMaxLength {
+		errors = append(errors, fmt.Errorf(
+			"%q cannot be longer than %d characters", k, prefixMaxLength))
+	}
+	if !regexp.MustCompile(`^[0-9A-Za-z-]+$`).MatchString(value) {
+		errors = append(errors, fmt.Errorf(
+			"only alphanumeric characters and hyphens allowed in %q", k))
+	}
+	if regexp.MustCompile(`^-`).MatchString(value) {
+		errors = append(errors, fmt.Errorf(
+			"%q cannot begin with a hyphen", k))
+	}
+	return
+}
+
+func validateSecretManagerSecretNamePrefix(v interface{}, k string) (ws []string, errors []error) {
+	value := v.(string)
+	if !regexp.MustCompile(`^[0-9A-Za-z/_+=.@-]+$`).MatchString(value) {
+		errors = append(errors, fmt.Errorf(
+			"only alphanumeric characters and /_+=.@- special characters are allowed in %q", k))
+	}
+	prefixMaxLength := 512 - resource.UniqueIDSuffixLength
 	if len(value) > prefixMaxLength {
 		errors = append(errors, fmt.Errorf(
 			"%q cannot be greater than %d characters", k, prefixMaxLength))
