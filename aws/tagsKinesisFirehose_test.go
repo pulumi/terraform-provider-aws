@@ -1,17 +1,15 @@
 package aws
 
 import (
-	"fmt"
 	"reflect"
 	"testing"
 
 	"github.com/aws/aws-sdk-go/aws"
-	"github.com/aws/aws-sdk-go/service/codebuild"
-	"github.com/hashicorp/terraform/helper/resource"
-	"github.com/hashicorp/terraform/terraform"
+	"github.com/aws/aws-sdk-go/service/firehose"
 )
 
-func TestDiffTagsCodeBuild(t *testing.T) {
+// go test -v -run="TestDiffKinesisFirehoseTags"
+func TestDiffKinesisFirehoseTags(t *testing.T) {
 	cases := []struct {
 		Old, New       map[string]interface{}
 		Create, Remove map[string]string
@@ -50,9 +48,9 @@ func TestDiffTagsCodeBuild(t *testing.T) {
 	}
 
 	for i, tc := range cases {
-		c, r := diffTagsCodeBuild(tagsFromMapCodeBuild(tc.Old), tagsFromMapCodeBuild(tc.New))
-		cm := tagsToMapCodeBuild(c)
-		rm := tagsToMapCodeBuild(r)
+		c, r := diffTagsKinesisFirehose(tagsFromMapKinesisFirehose(tc.Old), tagsFromMapKinesisFirehose(tc.New))
+		cm := tagsToMapKinesisFirehose(c)
+		rm := tagsToMapKinesisFirehose(r)
 		if !reflect.DeepEqual(cm, tc.Create) {
 			t.Fatalf("%d: bad create: %#v", i, cm)
 		}
@@ -62,42 +60,20 @@ func TestDiffTagsCodeBuild(t *testing.T) {
 	}
 }
 
-func TestIgnoringTagsCodeBuild(t *testing.T) {
-	var ignoredTags []*codebuild.Tag
-	ignoredTags = append(ignoredTags, &codebuild.Tag{
+// go test -v -run="TestIgnoringTagsKinesisFirehose"
+func TestIgnoringTagsKinesisFirehose(t *testing.T) {
+	var ignoredTags []*firehose.Tag
+	ignoredTags = append(ignoredTags, &firehose.Tag{
 		Key:   aws.String("aws:cloudformation:logical-id"),
 		Value: aws.String("foo"),
 	})
-	ignoredTags = append(ignoredTags, &codebuild.Tag{
+	ignoredTags = append(ignoredTags, &firehose.Tag{
 		Key:   aws.String("aws:foo:bar"),
 		Value: aws.String("baz"),
 	})
 	for _, tag := range ignoredTags {
-		if !tagIgnoredCodeBuild(tag) {
+		if !tagIgnoredKinesisFirehose(tag) {
 			t.Fatalf("Tag %v with value %v not ignored, but should be!", *tag.Key, *tag.Value)
 		}
-	}
-}
-
-// testAccCheckTags can be used to check the tags on a resource.
-func testAccCheckTagsCodeBuild(
-	ts *[]*codebuild.Tag, key string, value string) resource.TestCheckFunc {
-	return func(s *terraform.State) error {
-		m := tagsToMapCodeBuild(*ts)
-		v, ok := m[key]
-		if value != "" && !ok {
-			return fmt.Errorf("Missing tag: %s", key)
-		} else if value == "" && ok {
-			return fmt.Errorf("Extra tag: %s", key)
-		}
-		if value == "" {
-			return nil
-		}
-
-		if v != value {
-			return fmt.Errorf("%s: bad value: %s", key, v)
-		}
-
-		return nil
 	}
 }
