@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"log"
+	"regexp"
 	"strconv"
 	"strings"
 	"time"
@@ -16,6 +17,8 @@ import (
 	"github.com/hashicorp/terraform/helper/schema"
 	"github.com/hashicorp/terraform/helper/validation"
 )
+
+var taskDefinitionRE = regexp.MustCompile("^([a-zA-Z0-9_-]+):([0-9]+)$")
 
 func resourceAwsEcsService() *schema.Resource {
 	return &schema.Resource{
@@ -890,7 +893,7 @@ func resourceAwsEcsServiceUpdate(d *schema.ResourceData, meta interface{}) error
 	}
 
 	if d.Get("wait_for_steady_state").(bool) {
-		if err = resourceAwsEcsWaitForServiceSteadyState(d, meta); err != nil {
+		if err := resourceAwsEcsWaitForServiceSteadyState(d, meta); err != nil {
 			return err
 		}
 	}
