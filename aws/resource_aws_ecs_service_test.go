@@ -13,78 +13,6 @@ import (
 	"github.com/hashicorp/terraform/terraform"
 )
 
-func TestParseTaskDefinition(t *testing.T) {
-	cases := map[string]map[string]interface{}{
-		"invalid": {
-			"family":   "",
-			"revision": "",
-			"isValid":  false,
-		},
-		"invalidWithColon:": {
-			"family":   "",
-			"revision": "",
-			"isValid":  false,
-		},
-		"1234": {
-			"family":   "",
-			"revision": "",
-			"isValid":  false,
-		},
-		"invalid:aaa": {
-			"family":   "",
-			"revision": "",
-			"isValid":  false,
-		},
-		"invalid=family:1": {
-			"family":   "",
-			"revision": "",
-			"isValid":  false,
-		},
-		"invalid:name:1": {
-			"family":   "",
-			"revision": "",
-			"isValid":  false,
-		},
-		"valid:1": {
-			"family":   "valid",
-			"revision": "1",
-			"isValid":  true,
-		},
-		"abc12-def:54": {
-			"family":   "abc12-def",
-			"revision": "54",
-			"isValid":  true,
-		},
-		"lorem_ip-sum:123": {
-			"family":   "lorem_ip-sum",
-			"revision": "123",
-			"isValid":  true,
-		},
-		"lorem-ipsum:1": {
-			"family":   "lorem-ipsum",
-			"revision": "1",
-			"isValid":  true,
-		},
-	}
-
-	for input, expectedOutput := range cases {
-		family, revision, err := parseTaskDefinition(input)
-		isValid := expectedOutput["isValid"].(bool)
-		if !isValid && err == nil {
-			t.Fatalf("Task definition %s should fail", input)
-		}
-
-		expectedFamily := expectedOutput["family"].(string)
-		if family != expectedFamily {
-			t.Fatalf("Unexpected family (%#v) for task definition %s\n%#v", family, input, err)
-		}
-		expectedRevision := expectedOutput["revision"].(string)
-		if revision != expectedRevision {
-			t.Fatalf("Unexpected revision (%#v) for task definition %s\n%#v", revision, input, err)
-		}
-	}
-}
-
 func TestAccAWSEcsService_withARN(t *testing.T) {
 	var service ecs.Service
 	rString := acctest.RandString(8)
@@ -374,6 +302,29 @@ func TestAccAWSEcsService_withDeploymentValues(t *testing.T) {
 						"aws_ecs_service.mongo", "deployment_maximum_percent", "200"),
 					resource.TestCheckResourceAttr(
 						"aws_ecs_service.mongo", "deployment_minimum_healthy_percent", "100"),
+				),
+			},
+		},
+	})
+}
+
+// Regression for https://github.com/terraform-providers/terraform-provider-aws/issues/6315
+func TestAccAWSEcsService_withDeploymentMinimumZeroMaximumOneHundred(t *testing.T) {
+	var service ecs.Service
+	rName := acctest.RandomWithPrefix("tf-acc-test")
+	resourceName := "aws_ecs_service.test"
+
+	resource.ParallelTest(t, resource.TestCase{
+		PreCheck:     func() { testAccPreCheck(t) },
+		Providers:    testAccProviders,
+		CheckDestroy: testAccCheckAWSEcsServiceDestroy,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccAWSEcsServiceConfigDeploymentPercents(rName, 0, 100),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckAWSEcsServiceExists(resourceName, &service),
+					resource.TestCheckResourceAttr(resourceName, "deployment_maximum_percent", "100"),
+					resource.TestCheckResourceAttr(resourceName, "deployment_minimum_healthy_percent", "0"),
 				),
 			},
 		},
@@ -692,7 +643,7 @@ func TestAccAWSEcsService_withDaemonSchedulingStrategySetDeploymentMinimum(t *te
 	tdName := fmt.Sprintf("tf-acc-td-svc-w-ss-daemon-%s", rString)
 	svcName := fmt.Sprintf("tf-acc-svc-w-ss-daemon-%s", rString)
 
-	resource.Test(t, resource.TestCase{
+	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { testAccPreCheck(t) },
 		Providers:    testAccProviders,
 		CheckDestroy: testAccCheckAWSEcsServiceDestroy,
@@ -774,6 +725,75 @@ func TestAccAWSEcsService_withServiceRegistries_container(t *testing.T) {
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckAWSEcsServiceExists("aws_ecs_service.test", &service),
 					resource.TestCheckResourceAttr("aws_ecs_service.test", "service_registries.#", "1"),
+				),
+			},
+		},
+	})
+}
+
+func TestAccAWSEcsService_Tags(t *testing.T) {
+	var service ecs.Service
+	rName := acctest.RandomWithPrefix("tf-acc-test")
+	resourceName := "aws_ecs_service.test"
+
+	resource.ParallelTest(t, resource.TestCase{
+		PreCheck:     func() { testAccPreCheck(t) },
+		Providers:    testAccProviders,
+		CheckDestroy: testAccCheckAWSEcsServiceDestroy,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccAWSEcsServiceConfigTags1(rName, "key1", "value1"),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckAWSEcsServiceExists(resourceName, &service),
+					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
+					resource.TestCheckResourceAttr(resourceName, "tags.key1", "value1"),
+				),
+			},
+			{
+				ResourceName:      resourceName,
+				ImportStateId:     fmt.Sprintf("%s/%s", rName, rName),
+				ImportState:       true,
+				ImportStateVerify: true,
+				// Resource currently defaults to importing task_definition as family:revision
+				ImportStateVerifyIgnore: []string{"task_definition"},
+			},
+			{
+				Config: testAccAWSEcsServiceConfigTags2(rName, "key1", "value1updated", "key2", "value2"),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckAWSEcsServiceExists(resourceName, &service),
+					resource.TestCheckResourceAttr(resourceName, "tags.%", "2"),
+					resource.TestCheckResourceAttr(resourceName, "tags.key1", "value1updated"),
+					resource.TestCheckResourceAttr(resourceName, "tags.key2", "value2"),
+				),
+			},
+			{
+				Config: testAccAWSEcsServiceConfigTags1(rName, "key2", "value2"),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckAWSEcsServiceExists(resourceName, &service),
+					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
+					resource.TestCheckResourceAttr(resourceName, "tags.key2", "value2"),
+				),
+			},
+		},
+	})
+}
+
+func TestAccAWSEcsService_ManagedTags(t *testing.T) {
+	var service ecs.Service
+	rName := acctest.RandomWithPrefix("tf-acc-test")
+	resourceName := "aws_ecs_service.test"
+
+	resource.ParallelTest(t, resource.TestCase{
+		PreCheck:     func() { testAccPreCheck(t) },
+		Providers:    testAccProviders,
+		CheckDestroy: testAccCheckAWSEcsServiceDestroy,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccAWSEcsServiceConfigManagedTags(rName),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckAWSEcsServiceExists(resourceName, &service),
+					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
+					resource.TestCheckResourceAttr(resourceName, "enable_ecs_managed_tags", "true"),
 				),
 			},
 		},
@@ -2189,6 +2209,146 @@ resource "aws_ecs_service" "ghost" {
   deployment_minimum_healthy_percent = "50"
 }
 `, clusterName, tdName, svcName)
+}
+
+func testAccAWSEcsServiceConfigDeploymentPercents(rName string, deploymentMinimumHealthyPercent, deploymentMaximumPercent int) string {
+	return fmt.Sprintf(`
+resource "aws_ecs_cluster" "test" {
+  name = %q
+}
+
+resource "aws_ecs_task_definition" "test" {
+  family = %q
+
+  container_definitions = <<DEFINITION
+[
+  {
+    "cpu": 128,
+    "essential": true,
+    "image": "mongo:latest",
+    "memory": 128,
+    "name": "mongodb"
+  }
+]
+DEFINITION
+}
+
+resource "aws_ecs_service" "test" {
+  cluster                            = "${aws_ecs_cluster.test.id}"
+  deployment_maximum_percent         = %d
+  deployment_minimum_healthy_percent = %d
+  desired_count                      = 1
+  name                               = %q
+  task_definition                    = "${aws_ecs_task_definition.test.arn}"
+}
+`, rName, rName, deploymentMaximumPercent, deploymentMinimumHealthyPercent, rName)
+}
+
+func testAccAWSEcsServiceConfigTags1(rName, tag1Key, tag1Value string) string {
+	return fmt.Sprintf(`
+resource "aws_ecs_cluster" "test" {
+  name = %q
+}
+
+resource "aws_ecs_task_definition" "test" {
+  family = %q
+
+  container_definitions = <<DEFINITION
+[
+  {
+    "cpu": 128,
+    "essential": true,
+    "image": "mongo:latest",
+    "memory": 128,
+    "name": "mongodb"
+  }
+]
+DEFINITION
+}
+
+resource "aws_ecs_service" "test" {
+  cluster                            = "${aws_ecs_cluster.test.id}"
+  desired_count                      = 0
+  name                               = %q
+  task_definition                    = "${aws_ecs_task_definition.test.arn}"
+
+  tags {
+    %q = %q
+  }
+}
+`, rName, rName, rName, tag1Key, tag1Value)
+}
+
+func testAccAWSEcsServiceConfigTags2(rName, tag1Key, tag1Value, tag2Key, tag2Value string) string {
+	return fmt.Sprintf(`
+resource "aws_ecs_cluster" "test" {
+  name = %q
+}
+
+resource "aws_ecs_task_definition" "test" {
+  family = %q
+
+  container_definitions = <<DEFINITION
+[
+  {
+    "cpu": 128,
+    "essential": true,
+    "image": "mongo:latest",
+    "memory": 128,
+    "name": "mongodb"
+  }
+]
+DEFINITION
+}
+
+resource "aws_ecs_service" "test" {
+  cluster                            = "${aws_ecs_cluster.test.id}"
+  desired_count                      = 0
+  name                               = %q
+  task_definition                    = "${aws_ecs_task_definition.test.arn}"
+
+  tags {
+    %q = %q
+    %q = %q
+  }
+}
+`, rName, rName, rName, tag1Key, tag1Value, tag2Key, tag2Value)
+}
+
+func testAccAWSEcsServiceConfigManagedTags(rName string) string {
+	return fmt.Sprintf(`
+resource "aws_ecs_cluster" "test" {
+  name = %q
+}
+
+resource "aws_ecs_task_definition" "test" {
+  family = %q
+
+  container_definitions = <<DEFINITION
+[
+  {
+    "cpu": 128,
+    "essential": true,
+    "image": "mongo:latest",
+    "memory": 128,
+    "name": "mongodb"
+  }
+]
+DEFINITION
+}
+
+resource "aws_ecs_service" "test" {
+  cluster                            = "${aws_ecs_cluster.test.id}"
+  desired_count                      = 0
+  name                               = %q
+  task_definition                    = "${aws_ecs_task_definition.test.arn}"
+  enable_ecs_managed_tags            = true
+
+  tags {
+    tag-key = "tag-value"
+  }
+}
+`, rName, rName, rName)
 }
 
 func testAccAWSEcsServiceWithReplicaSchedulingStrategy(clusterName, tdName, svcName string) string {

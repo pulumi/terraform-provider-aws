@@ -164,6 +164,7 @@ func Provider() terraform.ResourceProvider {
 			"aws_acmpca_certificate_authority":     dataSourceAwsAcmpcaCertificateAuthority(),
 			"aws_ami":                              dataSourceAwsAmi(),
 			"aws_ami_ids":                          dataSourceAwsAmiIds(),
+			"aws_api_gateway_api_key":              dataSourceAwsApiGatewayApiKey(),
 			"aws_api_gateway_resource":             dataSourceAwsApiGatewayResource(),
 			"aws_api_gateway_rest_api":             dataSourceAwsApiGatewayRestApi(),
 			"aws_arn":                              dataSourceAwsArn(),
@@ -248,6 +249,7 @@ func Provider() terraform.ResourceProvider {
 			"aws_route":                            dataSourceAwsRoute(),
 			"aws_route_table":                      dataSourceAwsRouteTable(),
 			"aws_route_tables":                     dataSourceAwsRouteTables(),
+			"aws_route53_delegation_set":           dataSourceAwsDelegationSet(),
 			"aws_route53_zone":                     dataSourceAwsRoute53Zone(),
 			"aws_s3_bucket":                        dataSourceAwsS3Bucket(),
 			"aws_s3_bucket_object":                 dataSourceAwsS3BucketObject(),
@@ -255,6 +257,7 @@ func Provider() terraform.ResourceProvider {
 			"aws_secretsmanager_secret_version":    dataSourceAwsSecretsManagerSecretVersion(),
 			"aws_sns_topic":                        dataSourceAwsSnsTopic(),
 			"aws_sqs_queue":                        dataSourceAwsSqsQueue(),
+			"aws_ssm_document":                     dataSourceAwsSsmDocument(),
 			"aws_ssm_parameter":                    dataSourceAwsSsmParameter(),
 			"aws_storagegateway_local_disk":        dataSourceAwsStorageGatewayLocalDisk(),
 			"aws_subnet":                           dataSourceAwsSubnet(),
@@ -370,6 +373,11 @@ func Provider() terraform.ResourceProvider {
 			"aws_codepipeline":                                 resourceAwsCodePipeline(),
 			"aws_codepipeline_webhook":                         resourceAwsCodePipelineWebhook(),
 			"aws_customer_gateway":                             resourceAwsCustomerGateway(),
+			"aws_datasync_agent":                               resourceAwsDataSyncAgent(),
+			"aws_datasync_location_efs":                        resourceAwsDataSyncLocationEfs(),
+			"aws_datasync_location_nfs":                        resourceAwsDataSyncLocationNfs(),
+			"aws_datasync_location_s3":                         resourceAwsDataSyncLocationS3(),
+			"aws_datasync_task":                                resourceAwsDataSyncTask(),
 			"aws_dax_cluster":                                  resourceAwsDaxCluster(),
 			"aws_dax_parameter_group":                          resourceAwsDaxParameterGroup(),
 			"aws_dax_subnet_group":                             resourceAwsDaxSubnetGroup(),
@@ -384,6 +392,7 @@ func Provider() terraform.ResourceProvider {
 			"aws_devicefarm_project":                           resourceAwsDevicefarmProject(),
 			"aws_directory_service_directory":                  resourceAwsDirectoryServiceDirectory(),
 			"aws_directory_service_conditional_forwarder":      resourceAwsDirectoryServiceConditionalForwarder(),
+			"aws_dlm_lifecycle_policy":                         resourceAwsDlmLifecyclePolicy(),
 			"aws_dms_certificate":                              resourceAwsDmsCertificate(),
 			"aws_dms_endpoint":                                 resourceAwsDmsEndpoint(),
 			"aws_dms_replication_instance":                     resourceAwsDmsReplicationInstance(),
@@ -443,7 +452,9 @@ func Provider() terraform.ResourceProvider {
 			"aws_gamelift_alias":                               resourceAwsGameliftAlias(),
 			"aws_gamelift_build":                               resourceAwsGameliftBuild(),
 			"aws_gamelift_fleet":                               resourceAwsGameliftFleet(),
+			"aws_gamelift_game_session_queue":                  resourceAwsGameliftGameSessionQueue(),
 			"aws_glacier_vault":                                resourceAwsGlacierVault(),
+			"aws_glacier_vault_lock":                           resourceAwsGlacierVaultLock(),
 			"aws_glue_catalog_database":                        resourceAwsGlueCatalogDatabase(),
 			"aws_glue_catalog_table":                           resourceAwsGlueCatalogTable(),
 			"aws_glue_classifier":                              resourceAwsGlueClassifier(),
@@ -494,6 +505,7 @@ func Provider() terraform.ResourceProvider {
 			"aws_key_pair":                                     resourceAwsKeyPair(),
 			"aws_kinesis_firehose_delivery_stream":             resourceAwsKinesisFirehoseDeliveryStream(),
 			"aws_kinesis_stream":                               resourceAwsKinesisStream(),
+			"aws_kinesis_analytics_application":                resourceAwsKinesisAnalyticsApplication(),
 			"aws_kms_alias":                                    resourceAwsKmsAlias(),
 			"aws_kms_grant":                                    resourceAwsKmsGrant(),
 			"aws_kms_key":                                      resourceAwsKmsKey(),
@@ -762,6 +774,8 @@ func init() {
 		"kinesis_endpoint": "Use this to override the default endpoint URL constructed from the `region`.\n" +
 			"It's typically used to connect to kinesalite.",
 
+		"kinesis_analytics_endpoint": "Use this to override the default endpoint URL constructed from the `region`.\n",
+
 		"kms_endpoint": "Use this to override the default endpoint URL constructed from the `region`.\n",
 
 		"iam_endpoint": "Use this to override the default endpoint URL constructed from the `region`.\n",
@@ -887,6 +901,7 @@ func providerConfigure(d *schema.ResourceData) (interface{}, error) {
 		config.EsEndpoint = endpoints["es"].(string)
 		config.IamEndpoint = endpoints["iam"].(string)
 		config.KinesisEndpoint = endpoints["kinesis"].(string)
+		config.KinesisAnalyticsEndpoint = endpoints["kinesis_analytics"].(string)
 		config.KmsEndpoint = endpoints["kms"].(string)
 		config.LambdaEndpoint = endpoints["lambda"].(string)
 		config.R53Endpoint = endpoints["r53"].(string)
@@ -1060,6 +1075,12 @@ func endpointsSchema() *schema.Schema {
 					Optional:    true,
 					Default:     "",
 					Description: descriptions["kinesis_endpoint"],
+				},
+				"kinesis_analytics": {
+					Type:        schema.TypeString,
+					Optional:    true,
+					Default:     "",
+					Description: descriptions["kinesis_analytics_endpoint"],
 				},
 				"kms": {
 					Type:        schema.TypeString,
