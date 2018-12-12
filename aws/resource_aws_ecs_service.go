@@ -306,6 +306,24 @@ func resourceAwsEcsService() *schema.Resource {
 					},
 				},
 			},
+
+			"propagate_tags": {
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+				DiffSuppressFunc: func(k, old, new string, d *schema.ResourceData) bool {
+					if old == "NONE" && new == "" {
+						return true
+					}
+					return false
+				},
+				ValidateFunc: validation.StringInSlice([]string{
+					ecs.PropagateTagsService,
+					ecs.PropagateTagsTaskDefinition,
+					"",
+				}, false),
+			},
+
 			"service_registries": {
 				Type:     schema.TypeSet,
 				Optional: true,
@@ -403,6 +421,10 @@ func resourceAwsEcsServiceCreate(d *schema.ResourceData, meta interface{}) error
 
 	if v, ok := d.GetOk("launch_type"); ok {
 		input.LaunchType = aws.String(v.(string))
+	}
+
+	if v, ok := d.GetOk("propagate_tags"); ok {
+		input.PropagateTags = aws.String(v.(string))
 	}
 
 	loadBalancers := expandEcsLoadBalancers(d.Get("load_balancer").(*schema.Set).List())
@@ -587,6 +609,7 @@ func resourceAwsEcsServiceRead(d *schema.ResourceData, meta interface{}) error {
 	d.Set("health_check_grace_period_seconds", service.HealthCheckGracePeriodSeconds)
 	d.Set("launch_type", service.LaunchType)
 	d.Set("enable_ecs_managed_tags", service.EnableECSManagedTags)
+	d.Set("propagate_tags", service.PropagateTags)
 
 	// Save cluster in the same format
 	if strings.HasPrefix(d.Get("cluster").(string), "arn:"+meta.(*AWSClient).partition+":ecs:") {

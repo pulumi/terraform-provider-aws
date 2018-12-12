@@ -13,6 +13,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/private/protocol/json/jsonutil"
 	"github.com/aws/aws-sdk-go/service/apigateway"
+	"github.com/aws/aws-sdk-go/service/appmesh"
 	"github.com/aws/aws-sdk-go/service/autoscaling"
 	"github.com/aws/aws-sdk-go/service/cloudformation"
 	"github.com/aws/aws-sdk-go/service/cloudwatchlogs"
@@ -4154,6 +4155,11 @@ func flattenDynamoDbPitr(pitrDesc *dynamodb.DescribeContinuousBackupsOutput) []i
 }
 
 func flattenAwsDynamoDbTableResource(d *schema.ResourceData, table *dynamodb.TableDescription) error {
+	d.Set("billing_mode", dynamodb.BillingModeProvisioned)
+	if table.BillingModeSummary != nil {
+		d.Set("billing_mode", table.BillingModeSummary.BillingMode)
+	}
+
 	d.Set("write_capacity", table.ProvisionedThroughput.WriteCapacityUnits)
 	d.Set("read_capacity", table.ProvisionedThroughput.ReadCapacityUnits)
 
@@ -4673,6 +4679,37 @@ func flattenRdsScalingConfigurationInfo(scalingConfigurationInfo *rds.ScalingCon
 		"max_capacity":             aws.Int64Value(scalingConfigurationInfo.MaxCapacity),
 		"min_capacity":             aws.Int64Value(scalingConfigurationInfo.MinCapacity),
 		"seconds_until_auto_pause": aws.Int64Value(scalingConfigurationInfo.SecondsUntilAutoPause),
+	}
+
+	return []interface{}{m}
+}
+
+func expandAppmeshVirtualRouterSpec(v []interface{}) *appmesh.VirtualRouterSpec {
+	if len(v) == 0 || v[0] == nil {
+		return nil
+	}
+
+	m := v[0].(map[string]interface{})
+	spec := &appmesh.VirtualRouterSpec{}
+
+	if s, ok := m["service_names"].(*schema.Set); ok && s.Len() > 0 {
+		serviceNames := []string{}
+		for _, n := range s.List() {
+			serviceNames = append(serviceNames, n.(string))
+		}
+		spec.ServiceNames = aws.StringSlice(serviceNames)
+	}
+
+	return spec
+}
+
+func flattenAppmeshVirtualRouterSpec(spec *appmesh.VirtualRouterSpec) []interface{} {
+	if spec == nil || len(spec.ServiceNames) == 0 {
+		return []interface{}{}
+	}
+
+	m := map[string]interface{}{
+		"service_names": schema.NewSet(schema.HashString, flattenStringList(spec.ServiceNames)),
 	}
 
 	return []interface{}{m}
