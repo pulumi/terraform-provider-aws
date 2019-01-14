@@ -47,6 +47,7 @@ import (
 	"github.com/aws/aws-sdk-go/service/directconnect"
 	"github.com/aws/aws-sdk-go/service/directoryservice"
 	"github.com/aws/aws-sdk-go/service/dlm"
+	"github.com/aws/aws-sdk-go/service/docdb"
 	"github.com/aws/aws-sdk-go/service/dynamodb"
 	"github.com/aws/aws-sdk-go/service/ec2"
 	"github.com/aws/aws-sdk-go/service/ecr"
@@ -77,6 +78,7 @@ import (
 	"github.com/aws/aws-sdk-go/service/licensemanager"
 	"github.com/aws/aws-sdk-go/service/lightsail"
 	"github.com/aws/aws-sdk-go/service/macie"
+	"github.com/aws/aws-sdk-go/service/mediapackage"
 	"github.com/aws/aws-sdk-go/service/mediastore"
 	"github.com/aws/aws-sdk-go/service/mq"
 	"github.com/aws/aws-sdk-go/service/neptune"
@@ -86,6 +88,7 @@ import (
 	"github.com/aws/aws-sdk-go/service/pricing"
 	"github.com/aws/aws-sdk-go/service/rds"
 	"github.com/aws/aws-sdk-go/service/redshift"
+	"github.com/aws/aws-sdk-go/service/resourcegroups"
 	"github.com/aws/aws-sdk-go/service/route53"
 	"github.com/aws/aws-sdk-go/service/s3"
 	"github.com/aws/aws-sdk-go/service/s3control"
@@ -211,6 +214,7 @@ type AWSClient struct {
 	snsconn               *sns.SNS
 	stsconn               *sts.STS
 	redshiftconn          *redshift.Redshift
+	resourcegroupsconn    *resourcegroups.ResourceGroups
 	r53conn               *route53.Route53
 	partition             string
 	accountid             string
@@ -253,6 +257,7 @@ type AWSClient struct {
 	glueconn              *glue.Glue
 	athenaconn            *athena.Athena
 	dxconn                *directconnect.DirectConnect
+	mediapackageconn      *mediapackage.MediaPackage
 	mediastoreconn        *mediastore.MediaStore
 	appsyncconn           *appsync.AppSync
 	lexmodelconn          *lexmodelbuildingservice.LexModelBuildingService
@@ -263,6 +268,7 @@ type AWSClient struct {
 	workspacesconn        *workspaces.WorkSpaces
 	appmeshconn           *appmesh.AppMesh
 	transferconn          *transfer.Transfer
+	docdbconn             *docdb.DocDB
 }
 
 func (c *AWSClient) S3() *s3.S3 {
@@ -572,6 +578,7 @@ func (c *Config) Client() (interface{}, error) {
 	client.r53conn = route53.New(r53Sess)
 	client.rdsconn = rds.New(awsRdsSess)
 	client.redshiftconn = redshift.New(sess)
+	client.resourcegroupsconn = resourcegroups.New(sess)
 	client.simpledbconn = simpledb.New(sess)
 	client.s3conn = s3.New(awsS3Sess)
 	client.s3controlconn = s3control.New(awsS3ControlSess)
@@ -592,6 +599,7 @@ func (c *Config) Client() (interface{}, error) {
 	client.glueconn = glue.New(sess)
 	client.athenaconn = athena.New(sess)
 	client.dxconn = directconnect.New(sess)
+	client.mediapackageconn = mediapackage.New(sess)
 	client.mediastoreconn = mediastore.New(sess)
 	client.appsyncconn = appsync.New(sess)
 	client.neptuneconn = neptune.New(sess)
@@ -600,6 +608,7 @@ func (c *Config) Client() (interface{}, error) {
 	client.workspacesconn = workspaces.New(sess)
 	client.appmeshconn = appmesh.New(sess)
 	client.transferconn = transfer.New(sess)
+	client.docdbconn = docdb.New(sess)
 
 	// Workaround for https://github.com/aws/aws-sdk-go/issues/1376
 	client.kinesisconn.Handlers.Retry.PushBack(func(r *request.Request) {
