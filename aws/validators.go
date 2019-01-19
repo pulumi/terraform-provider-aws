@@ -727,6 +727,24 @@ func validateS3BucketLifecycleTransitionStorageClass() schema.SchemaValidateFunc
 	}, false)
 }
 
+func validateSagemakerName(v interface{}, k string) (ws []string, errors []error) {
+	value := v.(string)
+	if !regexp.MustCompile(`^[0-9A-Za-z-]+$`).MatchString(value) {
+		errors = append(errors, fmt.Errorf(
+			"only alphanumeric characters and hyphens allowed in %q: %q",
+			k, value))
+	}
+	if len(value) > 63 {
+		errors = append(errors, fmt.Errorf(
+			"%q cannot be longer than 63 characters: %q", k, value))
+	}
+	if regexp.MustCompile(`^-`).MatchString(value) {
+		errors = append(errors, fmt.Errorf(
+			"%q cannot begin with a hyphen: %q", k, value))
+	}
+	return
+}
+
 func validateDbEventSubscriptionName(v interface{}, k string) (ws []string, errors []error) {
 	value := v.(string)
 	if !regexp.MustCompile(`^[0-9A-Za-z-]+$`).MatchString(value) {
@@ -1125,6 +1143,23 @@ func validateDbSubnetGroupName(v interface{}, k string) (ws []string, errors []e
 	return
 }
 
+func validateDocDBSubnetGroupName(v interface{}, k string) (ws []string, errors []error) {
+	value := v.(string)
+	if !regexp.MustCompile(`^[ .0-9a-z-_]+$`).MatchString(value) {
+		errors = append(errors, fmt.Errorf(
+			"only lowercase alphanumeric characters, hyphens, underscores, periods, and spaces allowed in %q", k))
+	}
+	if len(value) > 255 {
+		errors = append(errors, fmt.Errorf(
+			"%q cannot be longer than 255 characters", k))
+	}
+	if value == "default" {
+		errors = append(errors, fmt.Errorf(
+			"%q is not allowed as %q", "Default", k))
+	}
+	return
+}
+
 func validateNeptuneSubnetGroupName(v interface{}, k string) (ws []string, errors []error) {
 	value := v.(string)
 	if !regexp.MustCompile(`^[ .0-9a-z-_]+$`).MatchString(value) {
@@ -1151,6 +1186,20 @@ func validateDbSubnetGroupNamePrefix(v interface{}, k string) (ws []string, erro
 	if len(value) > 229 {
 		errors = append(errors, fmt.Errorf(
 			"%q cannot be longer than 229 characters", k))
+	}
+	return
+}
+
+func validateDocDBSubnetGroupNamePrefix(v interface{}, k string) (ws []string, errors []error) {
+	value := v.(string)
+	if !regexp.MustCompile(`^[ .0-9a-z-_]+$`).MatchString(value) {
+		errors = append(errors, fmt.Errorf(
+			"only lowercase alphanumeric characters, hyphens, underscores, periods, and spaces allowed in %q", k))
+	}
+	prefixMaxLength := 255 - resource.UniqueIDSuffixLength
+	if len(value) > prefixMaxLength {
+		errors = append(errors, fmt.Errorf(
+			"%q cannot be longer than %d characters", k, prefixMaxLength))
 	}
 	return
 }
