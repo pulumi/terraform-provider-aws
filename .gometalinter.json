@@ -7,10 +7,10 @@
         "ineffassign",
         "interfacer",
         "misspell",
+        "staticcheck",
         "structcheck",
         "unconvert",
         "unparam",
-        "unused",
         "varcheck",
         "vet"
     ],
