@@ -263,9 +263,6 @@
                         <li<%= sidebar_current("docs-aws-datasource-kms-key") %>>
                           <a href="/docs/providers/aws/d/kms_key.html">aws_kms_key</a>
                         </li>
-                        <li<%= sidebar_current("docs-aws-datasource-kms-secret-x") %>>
-                            <a href="/docs/providers/aws/d/kms_secret.html">aws_kms_secret</a>
-                        </li>
                         <li<%= sidebar_current("docs-aws-datasource-kms-secrets") %>>
                             <a href="/docs/providers/aws/d/kms_secrets.html">aws_kms_secrets</a>
                         </li>
@@ -1466,6 +1463,11 @@
                             <a href="/docs/providers/aws/r/globalaccelerator_accelerator.html">aws_globalaccelerator_accelerator</a>
                         </li>
                     </ul>
+                    <ul class="nav nav-visible">
+                        <li<%= sidebar_current("docs-aws-resource-globalaccelerator-listener") %>>
+                            <a href="/docs/providers/aws/r/globalaccelerator_listener.html">aws_globalaccelerator_listener</a>
+                        </li>
+                    </ul>
                  </li>
 
                  <li<%= sidebar_current("docs-aws-resource-glue") %>>
@@ -1503,6 +1505,10 @@
                     <ul class="nav nav-visible">
                         <li<%= sidebar_current("docs-aws-resource-guardduty-detector") %>>
                             <a href="/docs/providers/aws/r/guardduty_detector.html">aws_guardduty_detector</a>
+                        </li>
+
+                        <li<%= sidebar_current("docs-aws-resource-guardduty-invite-accepter") %>>
+                            <a href="/docs/providers/aws/r/guardduty_invite_accepter.html">aws_guardduty_invite_accepter</a>
                         </li>
 
                         <li<%= sidebar_current("docs-aws-resource-guardduty-ipset") %>>
@@ -2264,6 +2270,26 @@
 
                         <li<%= sidebar_current("docs-aws-resource-route53-zone-association") %>>
                             <a href="/docs/providers/aws/r/route53_zone_association.html">aws_route53_zone_association</a>
+                        </li>
+
+                    </ul>
+                </li>
+
+
+                <li<%= sidebar_current("docs-aws-resource-route53-resolver") %>>
+                    <a href="#">Route53 Resolver Resources</a>
+                    <ul class="nav nav-visible">
+
+                        <li<%= sidebar_current("docs-aws-resource-route53-resolver-endpoint") %>>
+                            <a href="/docs/providers/aws/r/route53_resolver_endpoint.html">aws_route53_resolver_endpoint</a>
+                        </li>
+
+                        <li<%= sidebar_current("docs-aws-resource-route53-resolver-rule") %>>
+                            <a href="/docs/providers/aws/r/route53_resolver_rule.html">aws_route53_resolver_rule</a>
+                        </li>
+
+                        <li<%= sidebar_current("docs-aws-resource-route53-resolver-rule-association") %>>
+                            <a href="/docs/providers/aws/r/route53_resolver_rule_association.html">aws_route53_resolver_rule_association</a>
                         </li>
 
                     </ul>

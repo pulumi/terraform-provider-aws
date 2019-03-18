@@ -91,22 +91,6 @@ func Provider() terraform.ResourceProvider {
 				Set:           schema.HashString,
 			},
 
-			"dynamodb_endpoint": {
-				Type:        schema.TypeString,
-				Optional:    true,
-				Default:     "",
-				Description: descriptions["dynamodb_endpoint"],
-				Removed:     "Use `dynamodb` inside `endpoints` block instead",
-			},
-
-			"kinesis_endpoint": {
-				Type:        schema.TypeString,
-				Optional:    true,
-				Default:     "",
-				Description: descriptions["kinesis_endpoint"],
-				Removed:     "Use `kinesis` inside `endpoints` block instead",
-			},
-
 			"endpoints": endpointsSchema(),
 
 			"insecure": {
@@ -483,6 +467,7 @@ func Provider() terraform.ResourceProvider {
 			"aws_glacier_vault":                                resourceAwsGlacierVault(),
 			"aws_glacier_vault_lock":                           resourceAwsGlacierVaultLock(),
 			"aws_globalaccelerator_accelerator":                resourceAwsGlobalAcceleratorAccelerator(),
+			"aws_globalaccelerator_listener":                   resourceAwsGlobalAcceleratorListener(),
 			"aws_glue_catalog_database":                        resourceAwsGlueCatalogDatabase(),
 			"aws_glue_catalog_table":                           resourceAwsGlueCatalogTable(),
 			"aws_glue_classifier":                              resourceAwsGlueClassifier(),
@@ -492,6 +477,7 @@ func Provider() terraform.ResourceProvider {
 			"aws_glue_security_configuration":                  resourceAwsGlueSecurityConfiguration(),
 			"aws_glue_trigger":                                 resourceAwsGlueTrigger(),
 			"aws_guardduty_detector":                           resourceAwsGuardDutyDetector(),
+			"aws_guardduty_invite_accepter":                    resourceAwsGuardDutyInviteAccepter(),
 			"aws_guardduty_ipset":                              resourceAwsGuardDutyIpset(),
 			"aws_guardduty_member":                             resourceAwsGuardDutyMember(),
 			"aws_guardduty_threatintelset":                     resourceAwsGuardDutyThreatintelset(),
@@ -621,6 +607,9 @@ func Provider() terraform.ResourceProvider {
 			"aws_route53_zone_association":                     resourceAwsRoute53ZoneAssociation(),
 			"aws_route53_zone":                                 resourceAwsRoute53Zone(),
 			"aws_route53_health_check":                         resourceAwsRoute53HealthCheck(),
+			"aws_route53_resolver_endpoint":                    resourceAwsRoute53ResolverEndpoint(),
+			"aws_route53_resolver_rule_association":            resourceAwsRoute53ResolverRuleAssociation(),
+			"aws_route53_resolver_rule":                        resourceAwsRoute53ResolverRule(),
 			"aws_route":                                        resourceAwsRoute(),
 			"aws_route_table":                                  resourceAwsRouteTable(),
 			"aws_default_route_table":                          resourceAwsDefaultRouteTable(),
@@ -968,11 +957,15 @@ func providerConfigure(d *schema.ResourceData) (interface{}, error) {
 	}
 
 	if v, ok := d.GetOk("allowed_account_ids"); ok {
-		config.AllowedAccountIds = v.(*schema.Set).List()
+		for _, accountIDRaw := range v.(*schema.Set).List() {
+			config.AllowedAccountIds = append(config.AllowedAccountIds, accountIDRaw.(string))
+		}
 	}
 
 	if v, ok := d.GetOk("forbidden_account_ids"); ok {
-		config.ForbiddenAccountIds = v.(*schema.Set).List()
+		for _, accountIDRaw := range v.(*schema.Set).List() {
+			config.ForbiddenAccountIds = append(config.ForbiddenAccountIds, accountIDRaw.(string))
+		}
 	}
 
 	return config.Client()
