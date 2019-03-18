@@ -64,7 +64,7 @@ resource "aws_cloudwatch_metric_alarm" "foobar" {
   alarm_name                = "terraform-test-foobar%d"
   comparison_operator       = "GreaterThanOrEqualToThreshold"
   evaluation_periods        = "2"
-	threshold                 = "0.1"
+	threshold                 = "10"
   alarm_description         = "Request error rate has exceeded 10%"
   insufficient_data_actions = []
 	metric_query {
@@ -113,7 +113,6 @@ for details about valid values.
 The following arguments are supported:
 
 * `alarm_name` - (Required) The descriptive name for the alarm. This name must be unique within the user's AWS account
-* `arn` - The ARN of the cloudwatch metric alarm.
 * `comparison_operator` - (Required) The arithmetic operation to use when comparing the specified Statistic and Threshold. The specified Statistic value is used as the first operand. Either of the following is supported: `GreaterThanOrEqualToThreshold`, `GreaterThanThreshold`, `LessThanThreshold`, `LessThanOrEqualToThreshold`.
 * `evaluation_periods` - (Required) The number of periods over which data is compared to the specified threshold.
 * `metric_name` - (Optional) The name for the alarm's associated metric.
@@ -125,12 +124,12 @@ The following arguments are supported:
    Either of the following is supported: `SampleCount`, `Average`, `Sum`, `Minimum`, `Maximum`
 * `threshold` - (Required) The value against which the specified statistic is compared.
 * `actions_enabled` - (Optional) Indicates whether or not actions should be executed during any changes to the alarm's state. Defaults to `true`.
-* `alarm_actions` - (Optional) The list of actions to execute when this alarm transitions into an ALARM state from any other state. Each action is specified as an Amazon Resource Number (ARN).
+* `alarm_actions` - (Optional) The list of actions to execute when this alarm transitions into an ALARM state from any other state. Each action is specified as an Amazon Resource Name (ARN).
 * `alarm_description` - (Optional) The description for the alarm.
 * `datapoints_to_alarm` - (Optional) The number of datapoints that must be breaching to trigger the alarm.
 * `dimensions` - (Optional) The dimensions for the alarm's associated metric.  For the list of available dimensions see the AWS documentation [here](http://docs.aws.amazon.com/AmazonCloudWatch/latest/DeveloperGuide/CW_Support_For_AWS.html).
-* `insufficient_data_actions` - (Optional) The list of actions to execute when this alarm transitions into an INSUFFICIENT_DATA state from any other state. Each action is specified as an Amazon Resource Number (ARN).
-* `ok_actions` - (Optional) The list of actions to execute when this alarm transitions into an OK state from any other state. Each action is specified as an Amazon Resource Number (ARN).
+* `insufficient_data_actions` - (Optional) The list of actions to execute when this alarm transitions into an INSUFFICIENT_DATA state from any other state. Each action is specified as an Amazon Resource Name (ARN).
+* `ok_actions` - (Optional) The list of actions to execute when this alarm transitions into an OK state from any other state. Each action is specified as an Amazon Resource Name (ARN).
 * `unit` - (Optional) The unit for the alarm's associated metric.
 * `extended_statistic` - (Optional) The percentile statistic for the metric associated with the alarm. Specify a value between p0.0 and p100.
 * `treat_missing_data` - (Optional) Sets how this alarm is to handle missing data points. The following values are supported: `missing`, `ignore`, `breaching` and `notBreaching`. Defaults to `missing`.
@@ -173,6 +172,7 @@ The following values are supported: `ignore`, and `evaluate`.
 
 In addition to all arguments above, the following attributes are exported:
 
+* `arn` - The ARN of the cloudwatch metric alarm.
 * `id` - The ID of the health check
 
 ## Import
