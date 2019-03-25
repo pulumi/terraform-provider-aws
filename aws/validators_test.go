@@ -130,42 +130,53 @@ func TestValidateTypeStringNullableBoolean(t *testing.T) {
 	}
 }
 
-func TestValidateEcrRepositoryName(t *testing.T) {
-	validNames := []string{
-		"nginx-web-app",
-		"project-a/nginx-web-app",
-		"domain.ltd/nginx-web-app",
-		"3chosome-thing.com/01different-pattern",
-		"0123456789/999999999",
-		"double/forward/slash",
-		"000000000000000",
-	}
-	for _, v := range validNames {
-		_, errors := validateEcrRepositoryName(v, "name")
-		if len(errors) != 0 {
-			t.Fatalf("%q should be a valid ECR repository name: %q", v, errors)
-		}
+func TestValidateTypeStringNullableFloat(t *testing.T) {
+	testCases := []struct {
+		val         interface{}
+		expectedErr *regexp.Regexp
+	}{
+		{
+			val: "",
+		},
+		{
+			val: "0",
+		},
+		{
+			val: "1",
+		},
+		{
+			val: "42.0",
+		},
+		{
+			val:         "threeve",
+			expectedErr: regexp.MustCompile(`cannot parse`),
+		},
 	}
 
-	invalidNames := []string{
-		// length > 256
-		"3cho_some-thing.com/01different.-_pattern01different.-_pattern01diff" +
-			"erent.-_pattern01different.-_pattern01different.-_pattern01different" +
-			".-_pattern01different.-_pattern01different.-_pattern01different.-_pa" +
-			"ttern01different.-_pattern01different.-_pattern234567",
-		// length < 2
-		"i",
-		"special@character",
-		"different+special=character",
-		"double//slash",
-		"double..dot",
-		"/slash-at-the-beginning",
-		"slash-at-the-end/",
+	matchErr := func(errs []error, r *regexp.Regexp) bool {
+		// err must match one provided
+		for _, err := range errs {
+			if r.MatchString(err.Error()) {
+				return true
+			}
+		}
+
+		return false
 	}
-	for _, v := range invalidNames {
-		_, errors := validateEcrRepositoryName(v, "name")
-		if len(errors) == 0 {
-			t.Fatalf("%q should be an invalid ECR repository name", v)
+
+	for i, tc := range testCases {
+		_, errs := validateTypeStringNullableFloat(tc.val, "test_property")
+
+		if len(errs) == 0 && tc.expectedErr == nil {
+			continue
+		}
+
+		if len(errs) != 0 && tc.expectedErr == nil {
+			t.Fatalf("expected test case %d to produce no errors, got %v", i, errs)
+		}
+
+		if !matchErr(errs, tc.expectedErr) {
+			t.Fatalf("expected test case %d to produce error matching \"%s\", got %v", i, tc.expectedErr, errs)
 		}
 	}
 }
@@ -409,6 +420,7 @@ func TestValidateArn(t *testing.T) {
 
 func TestValidateEC2AutomateARN(t *testing.T) {
 	validNames := []string{
+		"arn:aws:automate:us-east-1:ec2:reboot",
 		"arn:aws:automate:us-east-1:ec2:recover",
 		"arn:aws:automate:us-east-1:ec2:stop",
 		"arn:aws:automate:us-east-1:ec2:terminate",
@@ -656,6 +668,35 @@ func TestValidateS3BucketLifecycleTimestamp(t *testing.T) {
 	}
 }
 
+func TestValidateSagemakerName(t *testing.T) {
+	validNames := []string{
+		"ValidSageMakerName",
+		"Valid-5a63Mak3r-Name",
+		"123-456-789",
+		"1234",
+		strings.Repeat("W", 63),
+	}
+	for _, v := range validNames {
+		_, errors := validateSagemakerName(v, "name")
+		if len(errors) != 0 {
+			t.Fatalf("%q should be a valid SageMaker name with maximum length 63 chars: %q", v, errors)
+		}
+	}
+
+	invalidNames := []string{
+		"Invalid name",          // blanks are not allowed
+		"1#{}nook",              // other non-alphanumeric chars
+		"-nook",                 // cannot start with hyphen
+		strings.Repeat("W", 64), // length > 63
+	}
+	for _, v := range invalidNames {
+		_, errors := validateSagemakerName(v, "name")
+		if len(errors) == 0 {
+			t.Fatalf("%q should be an invalid SageMaker name", v)
+		}
+	}
+}
+
 func TestValidateIntegerInSlice(t *testing.T) {
 	cases := []struct {
 		val         interface{}
@@ -669,12 +710,12 @@ func TestValidateIntegerInSlice(t *testing.T) {
 		{
 			val:         42,
 			f:           validateIntegerInSlice([]int{0, 43}),
-			expectedErr: regexp.MustCompile("expected [\\w]+ to be one of \\[0 43\\], got 42"),
+			expectedErr: regexp.MustCompile(`expected [\w]+ to be one of \[0 43\], got 42`),
 		},
 		{
 			val:         "42",
 			f:           validateIntegerInSlice([]int{0, 42}),
-			expectedErr: regexp.MustCompile("expected type of [\\w]+ to be int"),
+			expectedErr: regexp.MustCompile(`expected type of [\w]+ to be int`),
 		},
 	}
 	matchErr := func(errs []error, r *regexp.Regexp) bool {
@@ -890,11 +931,11 @@ func TestValidateSQSQueueName(t *testing.T) {
 		strings.Repeat("W", 80),
 	}
 	for _, v := range validNames {
-		if _, errors := validateSQSQueueName(v, "name"); len(errors) > 0 {
+		if _, errors := validateSQSQueueName(v, "test_attribute"); len(errors) > 0 {
 			t.Fatalf("%q should be a valid SQS queue Name", v)
 		}
 
-		if errors := validateSQSNonFifoQueueName(v, "name"); len(errors) > 0 {
+		if errors := validateSQSNonFifoQueueName(v); len(errors) > 0 {
 			t.Fatalf("%q should be a valid SQS non-fifo queue Name", v)
 		}
 	}
@@ -911,11 +952,11 @@ func TestValidateSQSQueueName(t *testing.T) {
 		strings.Repeat("W", 81), // length > 80
 	}
 	for _, v := range invalidNames {
-		if _, errors := validateSQSQueueName(v, "name"); len(errors) == 0 {
+		if _, errors := validateSQSQueueName(v, "test_attribute"); len(errors) == 0 {
 			t.Fatalf("%q should be an invalid SQS queue Name", v)
 		}
 
-		if errors := validateSQSNonFifoQueueName(v, "name"); len(errors) == 0 {
+		if errors := validateSQSNonFifoQueueName(v); len(errors) == 0 {
 			t.Fatalf("%q should be an invalid SQS non-fifo queue Name", v)
 		}
 	}
@@ -934,11 +975,11 @@ func TestValidateSQSFifoQueueName(t *testing.T) {
 		fmt.Sprintf("%s.fifo", strings.Repeat("W", 75)),
 	}
 	for _, v := range validNames {
-		if _, errors := validateSQSQueueName(v, "name"); len(errors) > 0 {
+		if _, errors := validateSQSQueueName(v, "test_attribute"); len(errors) > 0 {
 			t.Fatalf("%q should be a valid SQS queue Name", v)
 		}
 
-		if errors := validateSQSFifoQueueName(v, "name"); len(errors) > 0 {
+		if errors := validateSQSFifoQueueName(v); len(errors) > 0 {
 			t.Fatalf("%q should be a valid SQS FIFO queue Name: %v", v, errors)
 		}
 	}
@@ -956,11 +997,11 @@ func TestValidateSQSFifoQueueName(t *testing.T) {
 		strings.Repeat("W", 81), // length > 80
 	}
 	for _, v := range invalidNames {
-		if _, errors := validateSQSQueueName(v, "name"); len(errors) == 0 {
+		if _, errors := validateSQSQueueName(v, "test_attribute"); len(errors) == 0 {
 			t.Fatalf("%q should be an invalid SQS queue Name", v)
 		}
 
-		if errors := validateSQSFifoQueueName(v, "name"); len(errors) == 0 {
+		if errors := validateSQSFifoQueueName(v); len(errors) == 0 {
 			t.Fatalf("%q should be an invalid SQS FIFO queue Name: %v", v, errors)
 		}
 	}
@@ -2474,7 +2515,7 @@ func TestValidateCognitoRoles(t *testing.T) {
 	}
 
 	for _, s := range validValues {
-		errors := validateCognitoRoles(s, "roles")
+		errors := validateCognitoRoles(s)
 		if len(errors) > 0 {
 			t.Fatalf("%q should be a valid Cognito Roles: %v", s, errors)
 		}
@@ -2486,7 +2527,7 @@ func TestValidateCognitoRoles(t *testing.T) {
 	}
 
 	for _, s := range invalidValues {
-		errors := validateCognitoRoles(s, "roles")
+		errors := validateCognitoRoles(s)
 		if len(errors) == 0 {
 			t.Fatalf("%q should not be a valid Cognito Roles: %v", s, errors)
 		}
@@ -3054,6 +3095,44 @@ func TestValidateSecretManagerSecretNamePrefix(t *testing.T) {
 		_, errors := validateSecretManagerSecretNamePrefix(tc.Value, "aws_secretsmanager_secret")
 		if len(errors) != tc.ErrCount {
 			t.Fatalf("Expected the AWS Secretsmanager Secret Name to not trigger a validation error for %q", tc.Value)
+		}
+	}
+}
+
+func TestValidateRoute53ResolverName(t *testing.T) {
+	cases := []struct {
+		Value    string
+		ErrCount int
+	}{
+		{
+			Value:    "testing123!",
+			ErrCount: 1,
+		},
+		{
+			Value:    "testing - 123__",
+			ErrCount: 0,
+		},
+		{
+			Value:    randomString(65),
+			ErrCount: 1,
+		},
+		{
+			Value:    "1",
+			ErrCount: 1,
+		},
+		{
+			Value:    "10",
+			ErrCount: 0,
+		},
+		{
+			Value:    "A",
+			ErrCount: 0,
+		},
+	}
+	for _, tc := range cases {
+		_, errors := validateRoute53ResolverName(tc.Value, "aws_route53_resolver_endpoint")
+		if len(errors) != tc.ErrCount {
+			t.Fatalf("Expected the AWS Route 53 Resolver Endpoint Name to not trigger a validation error for %q", tc.Value)
 		}
 	}
 }

@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"log"
 	"regexp"
-	"strings"
 	"testing"
 
 	"github.com/aws/aws-sdk-go/aws"
@@ -18,6 +17,9 @@ func init() {
 	resource.AddTestSweepers("aws_cloudwatch_event_rule", &resource.Sweeper{
 		Name: "aws_cloudwatch_event_rule",
 		F:    testSweepCloudWatchEventRules,
+		Dependencies: []string{
+			"aws_cloudwatch_event_target",
+		},
 	})
 }
 
@@ -47,10 +49,6 @@ func testSweepCloudWatchEventRules(region string) error {
 
 		for _, rule := range output.Rules {
 			name := aws.StringValue(rule.Name)
-
-			if !strings.HasPrefix(name, "tf") {
-				continue
-			}
 
 			log.Printf("[INFO] Deleting CloudWatch Event Rule %s", name)
 			_, err := conn.DeleteRule(&events.DeleteRuleInput{
@@ -269,31 +267,27 @@ func testAccCheckAWSCloudWatchEventRuleDestroy(s *terraform.State) error {
 
 func TestResourceAWSCloudWatchEventRule_validateEventPatternValue(t *testing.T) {
 	type testCases struct {
-		Length   int
 		Value    string
 		ErrCount int
 	}
 
 	invalidCases := []testCases{
 		{
-			Length:   8,
-			Value:    acctest.RandString(16),
+			Value:    acctest.RandString(2049),
 			ErrCount: 1,
 		},
 		{
-			Length:   123,
-			Value:    `{"abc":}`,
+			Value:    `not-json`,
 			ErrCount: 1,
 		},
 		{
-			Length:   1,
-			Value:    `{"abc":["1","2"]}`,
+			Value:    fmt.Sprintf("{%q:[1, 2]}", acctest.RandString(2049)),
 			ErrCount: 1,
 		},
 	}
 
 	for _, tc := range invalidCases {
-		_, errors := validateEventPatternValue(tc.Length)(tc.Value, "event_pattern")
+		_, errors := validateEventPatternValue()(tc.Value, "event_pattern")
 		if len(errors) != tc.ErrCount {
 			t.Fatalf("Expected %q to trigger a validation error.", tc.Value)
 		}
@@ -301,24 +295,21 @@ func TestResourceAWSCloudWatchEventRule_validateEventPatternValue(t *testing.T) 
 
 	validCases := []testCases{
 		{
-			Length:   0,
 			Value:    ``,
 			ErrCount: 0,
 		},
 		{
-			Length:   2,
 			Value:    `{}`,
 			ErrCount: 0,
 		},
 		{
-			Length:   18,
 			Value:    `{"abc":["1","2"]}`,
 			ErrCount: 0,
 		},
 	}
 
 	for _, tc := range validCases {
-		_, errors := validateEventPatternValue(tc.Length)(tc.Value, "event_pattern")
+		_, errors := validateEventPatternValue()(tc.Value, "event_pattern")
 		if len(errors) != tc.ErrCount {
 			t.Fatalf("Expected %q not to trigger a validation error.", tc.Value)
 		}

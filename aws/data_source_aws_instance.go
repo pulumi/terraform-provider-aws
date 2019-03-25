@@ -51,6 +51,10 @@ func dataSourceAwsInstance() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"host_id": {
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"key_name": {
 				Type:     schema.TypeString,
 				Computed: true,
@@ -108,7 +112,16 @@ func dataSourceAwsInstance() *schema.Resource {
 				Type:     schema.TypeBool,
 				Computed: true,
 			},
+			"get_user_data": {
+				Type:     schema.TypeBool,
+				Optional: true,
+				Default:  false,
+			},
 			"user_data": {
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"user_data_base64": {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
@@ -255,7 +268,7 @@ func dataSourceAwsInstanceRead(d *schema.ResourceData, meta interface{}) error {
 	instanceID, instanceIDOk := d.GetOk("instance_id")
 	tags, tagsOk := d.GetOk("instance_tags")
 
-	if filtersOk == false && instanceIDOk == false && tagsOk == false {
+	if !filtersOk && !instanceIDOk && !tagsOk {
 		return fmt.Errorf("One of filters, instance_tags, or instance_id must be assigned")
 	}
 
@@ -349,6 +362,9 @@ func instanceDescriptionAttributes(d *schema.ResourceData, instance *ec2.Instanc
 	if instance.Placement.Tenancy != nil {
 		d.Set("tenancy", instance.Placement.Tenancy)
 	}
+	if instance.Placement.HostId != nil {
+		d.Set("host_id", instance.Placement.HostId)
+	}
 	d.Set("ami", instance.ImageId)
 	d.Set("instance_type", instance.InstanceType)
 	d.Set("key_name", instance.KeyName)
@@ -416,8 +432,11 @@ func instanceDescriptionAttributes(d *schema.ResourceData, instance *ec2.Instanc
 		if err != nil {
 			return err
 		}
-		if attr.UserData.Value != nil {
-			d.Set("user_data", userDataHashSum(*attr.UserData.Value))
+		if attr != nil && attr.UserData != nil && attr.UserData.Value != nil {
+			d.Set("user_data", userDataHashSum(aws.StringValue(attr.UserData.Value)))
+			if d.Get("get_user_data").(bool) {
+				d.Set("user_data_base64", aws.StringValue(attr.UserData.Value))
+			}
 		}
 	}
 	{

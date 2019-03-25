@@ -414,8 +414,8 @@ func testAccCheckAwsAcmpcaCertificateAuthorityDestroy(s *terraform.State) error 
 			return err
 		}
 
-		if output != nil {
-			return fmt.Errorf("ACMPCA Certificate Authority %q still exists", rs.Primary.ID)
+		if output != nil && output.CertificateAuthority != nil && aws.StringValue(output.CertificateAuthority.Arn) == rs.Primary.ID && aws.StringValue(output.CertificateAuthority.Status) != acmpca.CertificateAuthorityStatusDeleted {
+			return fmt.Errorf("ACMPCA Certificate Authority %q still exists in non-DELETED state: %s", rs.Primary.ID, aws.StringValue(output.CertificateAuthority.Status))
 		}
 	}
 
@@ -449,6 +449,25 @@ func testAccCheckAwsAcmpcaCertificateAuthorityExists(resourceName string, certif
 
 		return nil
 	}
+}
+
+func listAcmpcaCertificateAuthorities(conn *acmpca.ACMPCA) ([]*acmpca.CertificateAuthority, error) {
+	certificateAuthorities := []*acmpca.CertificateAuthority{}
+	input := &acmpca.ListCertificateAuthoritiesInput{}
+
+	for {
+		output, err := conn.ListCertificateAuthorities(input)
+		if err != nil {
+			return certificateAuthorities, err
+		}
+		certificateAuthorities = append(certificateAuthorities, output.CertificateAuthorities...)
+		if output.NextToken == nil {
+			break
+		}
+		input.NextToken = output.NextToken
+	}
+
+	return certificateAuthorities, nil
 }
 
 func testAccAwsAcmpcaCertificateAuthorityConfig_Enabled(enabled bool) string {
