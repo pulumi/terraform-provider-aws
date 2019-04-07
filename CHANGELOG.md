@@ -1,3 +1,29 @@
+## 2.5.0 (April 05, 2019)
+
+FEATURES:
+
+* **New Guide:** `Custom Service Endpoints` ([#8092](https://github.com/terraform-providers/terraform-provider-aws/issues/8092))
+* **New Resource:** `aws_backup_selection` ([#7382](https://github.com/terraform-providers/terraform-provider-aws/issues/7382))
+* **New Resource:** `aws_sagemaker_endpoint` ([#2479](https://github.com/terraform-providers/terraform-provider-aws/issues/2479))
+* **New Resource:** `aws_sagemaker_notebook_instance_lifecycle_configuration` ([#7585](https://github.com/terraform-providers/terraform-provider-aws/issues/7585))
+
+ENHANCEMENTS:
+
+* provider: Support customization of all service endpoints ([#8096](https://github.com/terraform-providers/terraform-provider-aws/issues/8096))
+* resource/aws_acmpca_certificate_authority: Add `permanent_deletion_time_in_days` argument ([#7366](https://github.com/terraform-providers/terraform-provider-aws/issues/7366))
+* resource/aws_budgets_budget: Add `notification` configuration block (support notifications) ([#4523](https://github.com/terraform-providers/terraform-provider-aws/issues/4523))
+* resource/aws_cloudfront_distribution: Add `wait_for_deployment` argument ([#8116](https://github.com/terraform-providers/terraform-provider-aws/issues/8116))
+* resource/aws_cloudwatch_log_subscription_filter: Support resource import ([#8147](https://github.com/terraform-providers/terraform-provider-aws/issues/8147))
+* resource/aws_cloudwatch_metric_alarm: Add `tags` argument ([#8168](https://github.com/terraform-providers/terraform-provider-aws/issues/8168))
+* resource/aws_ecr_repository: Tag on creation (support tag limiting IAM policies) ([#8198](https://github.com/terraform-providers/terraform-provider-aws/issues/8198))
+* resource/aws_lb_target_group: Add `enabled` argument to target group health checks [[#7570](https://github.com/terraform-providers/terraform-provider-aws/issues/7570)]  
+* resource/aws_sagemaker_notebook_instance: Add `lifecycle_config_name` argument ([#7586](https://github.com/terraform-providers/terraform-provider-aws/issues/7586))
+* service/ec2: Automatically retry `CreateVpnConnection` and `CreateVpnGateway` requests for concurrency errors ([#8161](https://github.com/terraform-providers/terraform-provider-aws/issues/8161))
+
+BUG FIXES:
+
+* resource/aws_cloudfront_distribution: Ignore attribute ordering of cache behavior forwarded values `headers` and cookies `whitelisted_names` arguments ([#8150](https://github.com/terraform-providers/terraform-provider-aws/issues/8150))
+
 ## 2.4.0 (March 29, 2019)
 
 NOTES:
