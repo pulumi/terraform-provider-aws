@@ -6,7 +6,7 @@ description: |-
   Provides a CloudFront web distribution resource.
 ---
 
-# aws_cloudfront_distribution
+# Resource: aws_cloudfront_distribution
 
 Creates an Amazon CloudFront web distribution.
 
@@ -254,6 +254,10 @@ of several sub-resources - these resources are laid out below.
   * `retain_on_delete` (Optional) - Disables the distribution instead of
     deleting it when destroying the resource through Terraform. If this is set,
     the distribution needs to be deleted manually afterwards. Default: `false`.
+
+  * `wait_for_deployment` (Optional) - If enabled, the resource will wait for
+    the distribution status to change from `InProgress` to `Deployed`. Setting
+    this to`false` will skip the process. Default: `true`.
 
 #### Cache Behavior Arguments
 

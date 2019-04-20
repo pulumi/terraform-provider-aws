@@ -269,6 +269,56 @@ func TestAccAWSCodeBuildProject_EncryptionKey(t *testing.T) {
 	})
 }
 
+func TestAccAWSCodeBuildProject_Environment_EnvironmentVariable(t *testing.T) {
+	var project1, project2, project3 codebuild.Project
+	rName := acctest.RandomWithPrefix("tf-acc-test")
+	resourceName := "aws_codebuild_project.test"
+
+	resource.ParallelTest(t, resource.TestCase{
+		PreCheck:     func() { testAccPreCheck(t); testAccPreCheckAWSCodeBuild(t) },
+		Providers:    testAccProviders,
+		CheckDestroy: testAccCheckAWSCodeBuildProjectDestroy,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccAWSCodeBuildProjectConfig_Environment_EnvironmentVariable_One(rName),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckAWSCodeBuildProjectExists(resourceName, &project1),
+					resource.TestCheckResourceAttr(resourceName, "environment.1380979031.environment_variable.#", "1"),
+				),
+			},
+			{
+				ResourceName:      resourceName,
+				ImportState:       true,
+				ImportStateVerify: true,
+			},
+			{
+				Config: testAccAWSCodeBuildProjectConfig_Environment_EnvironmentVariable_Two(rName),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckAWSCodeBuildProjectExists(resourceName, &project2),
+					resource.TestCheckResourceAttr(resourceName, "environment.4178155002.environment_variable.#", "2"),
+				),
+			},
+			{
+				ResourceName:      resourceName,
+				ImportState:       true,
+				ImportStateVerify: true,
+			},
+			{
+				Config: testAccAWSCodeBuildProjectConfig_Environment_EnvironmentVariable_Zero(rName),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckAWSCodeBuildProjectExists(resourceName, &project3),
+					resource.TestCheckResourceAttr(resourceName, "environment.2300252877.environment_variable.#", "0"),
+				),
+			},
+			{
+				ResourceName:      resourceName,
+				ImportState:       true,
+				ImportStateVerify: true,
+			},
+		},
+	})
+}
+
 func TestAccAWSCodeBuildProject_Environment_EnvironmentVariable_Type(t *testing.T) {
 	var project codebuild.Project
 	rName := acctest.RandomWithPrefix("tf-acc-test")
@@ -587,7 +637,6 @@ func TestAccAWSCodeBuildProject_Source_Type_S3(t *testing.T) {
 				Config: testAccAWSCodeBuildProjectConfig_Source_Type_S3(rName),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckAWSCodeBuildProjectExists(resourceName, &project),
-					resource.TestCheckResourceAttr(resourceName, "source.2751363124.type", "S3"),
 				),
 			},
 		},
@@ -1155,6 +1204,93 @@ resource "aws_codebuild_project" "test" {
 `, rName)
 }
 
+func testAccAWSCodeBuildProjectConfig_Environment_EnvironmentVariable_One(rName string) string {
+	return testAccAWSCodeBuildProjectConfig_Base_ServiceRole(rName) + fmt.Sprintf(`
+resource "aws_codebuild_project" "test" {
+  name         = %[1]q
+  service_role = "${aws_iam_role.test.arn}"
+
+  artifacts {
+    type = "NO_ARTIFACTS"
+  }
+
+  environment {
+    compute_type = "BUILD_GENERAL1_SMALL"
+    image        = "2"
+    type         = "LINUX_CONTAINER"
+
+    environment_variable {
+      name  = "SOME_KEY"
+      value = "SOME_VALUE"
+    }
+  }
+
+  source {
+    type     = "GITHUB"
+    location = "https://github.com/hashicorp/packer.git"
+  }
+}
+`, rName)
+}
+
+func testAccAWSCodeBuildProjectConfig_Environment_EnvironmentVariable_Two(rName string) string {
+	return testAccAWSCodeBuildProjectConfig_Base_ServiceRole(rName) + fmt.Sprintf(`
+resource "aws_codebuild_project" "test" {
+  name         = %[1]q
+  service_role = "${aws_iam_role.test.arn}"
+
+  artifacts {
+    type = "NO_ARTIFACTS"
+  }
+
+  environment {
+    compute_type = "BUILD_GENERAL1_SMALL"
+    image        = "2"
+    type         = "LINUX_CONTAINER"
+
+    environment_variable {
+      name  = "SOME_KEY"
+      value = "SOME_VALUE"
+    }
+
+    environment_variable {
+      name  = "SOME_KEY2"
+      value = "SOME_VALUE2"
+    }
+  }
+
+  source {
+    type     = "GITHUB"
+    location = "https://github.com/hashicorp/packer.git"
+  }
+}
+`, rName)
+}
+
+func testAccAWSCodeBuildProjectConfig_Environment_EnvironmentVariable_Zero(rName string) string {
+	return testAccAWSCodeBuildProjectConfig_Base_ServiceRole(rName) + fmt.Sprintf(`
+resource "aws_codebuild_project" "test" {
+  name         = %[1]q
+  service_role = "${aws_iam_role.test.arn}"
+
+  artifacts {
+    type = "NO_ARTIFACTS"
+  }
+
+  environment {
+    compute_type = "BUILD_GENERAL1_SMALL"
+    image        = "2"
+    type         = "LINUX_CONTAINER"
+  }
+
+  source {
+    type     = "GITHUB"
+    location = "https://github.com/hashicorp/packer.git"
+  }
+}
+`, rName)
+}
+
 func testAccAWSCodeBuildProjectConfig_Environment_EnvironmentVariable_Type(rName, environmentVariableType string) string {
 	return testAccAWSCodeBuildProjectConfig_Base_ServiceRole(rName) + fmt.Sprintf(`
 resource "aws_codebuild_project" "test" {
@@ -1472,8 +1608,18 @@ resource "aws_codebuild_project" "test" {
 
 func testAccAWSCodeBuildProjectConfig_Source_Type_S3(rName string) string {
 	return testAccAWSCodeBuildProjectConfig_Base_ServiceRole(rName) + fmt.Sprintf(`
+resource "aws_s3_bucket" "test" {
+  bucket = %[1]q
+}
+
+resource "aws_s3_bucket_object" "test" {
+  bucket  = "${aws_s3_bucket.test.bucket}"
+  content = "test"
+  key     = "test.txt"
+}
+
 resource "aws_codebuild_project" "test" {
-  name         = %q
+  name         = %[1]q
   service_role = "${aws_iam_role.test.arn}"
 
   artifacts {
@@ -1487,7 +1633,7 @@ resource "aws_codebuild_project" "test" {
   }
 
   source {
-    location = "bucket-name/object-name.zip"
+    location = "${aws_s3_bucket.test.bucket}/${aws_s3_bucket_object.test.key}"
     type     = "S3"
   }
 }

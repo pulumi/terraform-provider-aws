@@ -2017,9 +2017,9 @@ func (c *EC2) AuthorizeSecurityGroupEgressRequest(input *AuthorizeSecurityGroupE
 
 // AuthorizeSecurityGroupEgress API operation for Amazon Elastic Compute Cloud.
 //
-// [EC2-VPC only] Adds one or more egress rules to a security group for use
+// [EC2-VPC only] Adds the specified egress rules to a security group for use
 // with a VPC. Specifically, this action permits instances to send traffic to
-// one or more destination IPv4 or IPv6 CIDR address ranges, or to one or more
+// the specified destination IPv4 or IPv6 CIDR address ranges, or to the specified
 // destination security groups for the same VPC. This action doesn't apply to
 // security groups for use in EC2-Classic. For more information, see Security
 // Groups for Your VPC (https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_SecurityGroups.html)
@@ -2109,19 +2109,19 @@ func (c *EC2) AuthorizeSecurityGroupIngressRequest(input *AuthorizeSecurityGroup
 
 // AuthorizeSecurityGroupIngress API operation for Amazon Elastic Compute Cloud.
 //
-// Adds one or more ingress rules to a security group.
+// Adds the specified ingress rules to a security group.
 //
 // Rule changes are propagated to instances within the security group as quickly
 // as possible. However, a small delay might occur.
 //
-// [EC2-Classic] This action gives one or more IPv4 CIDR address ranges permission
-// to access a security group in your account, or gives one or more security
-// groups (called the source groups) permission to access a security group for
-// your account. A source group can be for your own AWS account, or another.
-// You can have up to 100 rules per group.
+// [EC2-Classic] This action gives the IPv4 CIDR address ranges permission to
+// access a security group in your account, or gives the security groups (called
+// the source groups) permission to access a security group for your account.
+// A source group can be for your own AWS account, or another. You can have
+// up to 100 rules per group.
 //
-// [EC2-VPC] This action gives one or more IPv4 or IPv6 CIDR address ranges
-// permission to access a security group in your VPC, or gives one or more other
+// [EC2-VPC] This action gives the specified IPv4 or IPv6 CIDR address ranges
+// permission to access a security group in your VPC, or gives the specified
 // security groups (called the source groups) permission to access a security
 // group for your VPC. The security groups must all be for the same VPC or a
 // peer VPC in a VPC peering connection. For more information about VPC security
@@ -5805,7 +5805,7 @@ func (c *EC2) CreateTagsRequest(input *CreateTagsInput) (req *request.Request, o
 
 // CreateTags API operation for Amazon Elastic Compute Cloud.
 //
-// Adds or overwrites one or more tags for the specified Amazon EC2 resource
+// Adds or overwrites the specified tags for the specified Amazon EC2 resource
 // or resources. Each resource can have a maximum of 50 tags. Each tag consists
 // of a key and optional value. Tag keys must be unique per resource.
 //
@@ -10167,7 +10167,7 @@ func (c *EC2) DescribeAddressesRequest(input *DescribeAddressesInput) (req *requ
 
 // DescribeAddresses API operation for Amazon Elastic Compute Cloud.
 //
-// Describes one or more of your Elastic IP addresses.
+// Describes the specified Elastic IP addresses or all of your Elastic IP addresses.
 //
 // An Elastic IP address is for use in either the EC2-Classic platform or in
 // a VPC. For more information, see Elastic IP Addresses (https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html)
@@ -10333,10 +10333,10 @@ func (c *EC2) DescribeAvailabilityZonesRequest(input *DescribeAvailabilityZonesI
 
 // DescribeAvailabilityZones API operation for Amazon Elastic Compute Cloud.
 //
-// Describes one or more of the Availability Zones that are available to you.
-// The results include zones only for the region you're currently using. If
-// there is an event impacting an Availability Zone, you can use this request
-// to view the state and any provided message for that Availability Zone.
+// Describes the Availability Zones that are available to you. The results include
+// zones only for the region you're currently using. If there is an event impacting
+// an Availability Zone, you can use this request to view the state and any
+// provided message for that Availability Zone.
 //
 // For more information, see Regions and Availability Zones (https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html)
 // in the Amazon Elastic Compute Cloud User Guide.
@@ -10413,7 +10413,7 @@ func (c *EC2) DescribeBundleTasksRequest(input *DescribeBundleTasksInput) (req *
 
 // DescribeBundleTasks API operation for Amazon Elastic Compute Cloud.
 //
-// Describes one or more of your bundling tasks.
+// Describes the specified bundle tasks or all of your bundle tasks.
 //
 // Completed bundle tasks are listed for only a limited time. If your bundle
 // task is no longer in the list, you can still register an AMI from it. Just
@@ -10479,6 +10479,12 @@ func (c *EC2) DescribeByoipCidrsRequest(input *DescribeByoipCidrsInput) (req *re
 		Name:       opDescribeByoipCidrs,
 		HTTPMethod: "POST",
 		HTTPPath:   "/",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
@@ -10525,6 +10531,56 @@ func (c *EC2) DescribeByoipCidrsWithContext(ctx aws.Context, input *DescribeByoi
 	return out, req.Send()
 }
 
+// DescribeByoipCidrsPages iterates over the pages of a DescribeByoipCidrs operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See DescribeByoipCidrs method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//    // Example iterating over at most 3 pages of a DescribeByoipCidrs operation.
+//    pageNum := 0
+//    err := client.DescribeByoipCidrsPages(params,
+//        func(page *DescribeByoipCidrsOutput, lastPage bool) bool {
+//            pageNum++
+//            fmt.Println(page)
+//            return pageNum <= 3
+//        })
+//
+func (c *EC2) DescribeByoipCidrsPages(input *DescribeByoipCidrsInput, fn func(*DescribeByoipCidrsOutput, bool) bool) error {
+	return c.DescribeByoipCidrsPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// DescribeByoipCidrsPagesWithContext same as DescribeByoipCidrsPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *EC2) DescribeByoipCidrsPagesWithContext(ctx aws.Context, input *DescribeByoipCidrsInput, fn func(*DescribeByoipCidrsOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *DescribeByoipCidrsInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.DescribeByoipCidrsRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	cont := true
+	for p.Next() && cont {
+		cont = fn(p.Page().(*DescribeByoipCidrsOutput), !p.HasNextPage())
+	}
+	return p.Err()
+}
+
 const opDescribeCapacityReservations = "DescribeCapacityReservations"
 
 // DescribeCapacityReservationsRequest generates a "aws/request.Request" representing the
@@ -10556,6 +10612,12 @@ func (c *EC2) DescribeCapacityReservationsRequest(input *DescribeCapacityReserva
 		Name:       opDescribeCapacityReservations,
 		HTTPMethod: "POST",
 		HTTPPath:   "/",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
@@ -10600,6 +10662,56 @@ func (c *EC2) DescribeCapacityReservationsWithContext(ctx aws.Context, input *De
 	return out, req.Send()
 }
 
+// DescribeCapacityReservationsPages iterates over the pages of a DescribeCapacityReservations operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See DescribeCapacityReservations method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//    // Example iterating over at most 3 pages of a DescribeCapacityReservations operation.
+//    pageNum := 0
+//    err := client.DescribeCapacityReservationsPages(params,
+//        func(page *DescribeCapacityReservationsOutput, lastPage bool) bool {
+//            pageNum++
+//            fmt.Println(page)
+//            return pageNum <= 3
+//        })
+//
+func (c *EC2) DescribeCapacityReservationsPages(input *DescribeCapacityReservationsInput, fn func(*DescribeCapacityReservationsOutput, bool) bool) error {
+	return c.DescribeCapacityReservationsPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// DescribeCapacityReservationsPagesWithContext same as DescribeCapacityReservationsPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *EC2) DescribeCapacityReservationsPagesWithContext(ctx aws.Context, input *DescribeCapacityReservationsInput, fn func(*DescribeCapacityReservationsOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *DescribeCapacityReservationsInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.DescribeCapacityReservationsRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	cont := true
+	for p.Next() && cont {
+		cont = fn(p.Page().(*DescribeCapacityReservationsOutput), !p.HasNextPage())
+	}
+	return p.Err()
+}
+
 const opDescribeClassicLinkInstances = "DescribeClassicLinkInstances"
 
 // DescribeClassicLinkInstancesRequest generates a "aws/request.Request" representing the
@@ -10631,6 +10743,12 @@ func (c *EC2) DescribeClassicLinkInstancesRequest(input *DescribeClassicLinkInst
 		Name:       opDescribeClassicLinkInstances,
 		HTTPMethod: "POST",
 		HTTPPath:   "/",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
@@ -10677,6 +10795,56 @@ func (c *EC2) DescribeClassicLinkInstancesWithContext(ctx aws.Context, input *De
 	return out, req.Send()
 }
 
+// DescribeClassicLinkInstancesPages iterates over the pages of a DescribeClassicLinkInstances operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See DescribeClassicLinkInstances method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//    // Example iterating over at most 3 pages of a DescribeClassicLinkInstances operation.
+//    pageNum := 0
+//    err := client.DescribeClassicLinkInstancesPages(params,
+//        func(page *DescribeClassicLinkInstancesOutput, lastPage bool) bool {
+//            pageNum++
+//            fmt.Println(page)
+//            return pageNum <= 3
+//        })
+//
+func (c *EC2) DescribeClassicLinkInstancesPages(input *DescribeClassicLinkInstancesInput, fn func(*DescribeClassicLinkInstancesOutput, bool) bool) error {
+	return c.DescribeClassicLinkInstancesPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// DescribeClassicLinkInstancesPagesWithContext same as DescribeClassicLinkInstancesPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *EC2) DescribeClassicLinkInstancesPagesWithContext(ctx aws.Context, input *DescribeClassicLinkInstancesInput, fn func(*DescribeClassicLinkInstancesOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *DescribeClassicLinkInstancesInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.DescribeClassicLinkInstancesRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	cont := true
+	for p.Next() && cont {
+		cont = fn(p.Page().(*DescribeClassicLinkInstancesOutput), !p.HasNextPage())
+	}
+	return p.Err()
+}
+
 const opDescribeClientVpnAuthorizationRules = "DescribeClientVpnAuthorizationRules"
 
 // DescribeClientVpnAuthorizationRulesRequest generates a "aws/request.Request" representing the
@@ -10708,6 +10876,12 @@ func (c *EC2) DescribeClientVpnAuthorizationRulesRequest(input *DescribeClientVp
 		Name:       opDescribeClientVpnAuthorizationRules,
 		HTTPMethod: "POST",
 		HTTPPath:   "/",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
@@ -10751,6 +10925,56 @@ func (c *EC2) DescribeClientVpnAuthorizationRulesWithContext(ctx aws.Context, in
 	return out, req.Send()
 }
 
+// DescribeClientVpnAuthorizationRulesPages iterates over the pages of a DescribeClientVpnAuthorizationRules operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See DescribeClientVpnAuthorizationRules method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//    // Example iterating over at most 3 pages of a DescribeClientVpnAuthorizationRules operation.
+//    pageNum := 0
+//    err := client.DescribeClientVpnAuthorizationRulesPages(params,
+//        func(page *DescribeClientVpnAuthorizationRulesOutput, lastPage bool) bool {
+//            pageNum++
+//            fmt.Println(page)
+//            return pageNum <= 3
+//        })
+//
+func (c *EC2) DescribeClientVpnAuthorizationRulesPages(input *DescribeClientVpnAuthorizationRulesInput, fn func(*DescribeClientVpnAuthorizationRulesOutput, bool) bool) error {
+	return c.DescribeClientVpnAuthorizationRulesPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// DescribeClientVpnAuthorizationRulesPagesWithContext same as DescribeClientVpnAuthorizationRulesPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *EC2) DescribeClientVpnAuthorizationRulesPagesWithContext(ctx aws.Context, input *DescribeClientVpnAuthorizationRulesInput, fn func(*DescribeClientVpnAuthorizationRulesOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *DescribeClientVpnAuthorizationRulesInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.DescribeClientVpnAuthorizationRulesRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	cont := true
+	for p.Next() && cont {
+		cont = fn(p.Page().(*DescribeClientVpnAuthorizationRulesOutput), !p.HasNextPage())
+	}
+	return p.Err()
+}
+
 const opDescribeClientVpnConnections = "DescribeClientVpnConnections"
 
 // DescribeClientVpnConnectionsRequest generates a "aws/request.Request" representing the
@@ -10782,6 +11006,12 @@ func (c *EC2) DescribeClientVpnConnectionsRequest(input *DescribeClientVpnConnec
 		Name:       opDescribeClientVpnConnections,
 		HTTPMethod: "POST",
 		HTTPPath:   "/",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
@@ -10826,6 +11056,56 @@ func (c *EC2) DescribeClientVpnConnectionsWithContext(ctx aws.Context, input *De
 	return out, req.Send()
 }
 
+// DescribeClientVpnConnectionsPages iterates over the pages of a DescribeClientVpnConnections operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See DescribeClientVpnConnections method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//    // Example iterating over at most 3 pages of a DescribeClientVpnConnections operation.
+//    pageNum := 0
+//    err := client.DescribeClientVpnConnectionsPages(params,
+//        func(page *DescribeClientVpnConnectionsOutput, lastPage bool) bool {
+//            pageNum++
+//            fmt.Println(page)
+//            return pageNum <= 3
+//        })
+//
+func (c *EC2) DescribeClientVpnConnectionsPages(input *DescribeClientVpnConnectionsInput, fn func(*DescribeClientVpnConnectionsOutput, bool) bool) error {
+	return c.DescribeClientVpnConnectionsPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// DescribeClientVpnConnectionsPagesWithContext same as DescribeClientVpnConnectionsPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *EC2) DescribeClientVpnConnectionsPagesWithContext(ctx aws.Context, input *DescribeClientVpnConnectionsInput, fn func(*DescribeClientVpnConnectionsOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *DescribeClientVpnConnectionsInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.DescribeClientVpnConnectionsRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	cont := true
+	for p.Next() && cont {
+		cont = fn(p.Page().(*DescribeClientVpnConnectionsOutput), !p.HasNextPage())
+	}
+	return p.Err()
+}
+
 const opDescribeClientVpnEndpoints = "DescribeClientVpnEndpoints"
 
 // DescribeClientVpnEndpointsRequest generates a "aws/request.Request" representing the
@@ -10857,6 +11137,12 @@ func (c *EC2) DescribeClientVpnEndpointsRequest(input *DescribeClientVpnEndpoint
 		Name:       opDescribeClientVpnEndpoints,
 		HTTPMethod: "POST",
 		HTTPPath:   "/",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
@@ -10900,6 +11186,56 @@ func (c *EC2) DescribeClientVpnEndpointsWithContext(ctx aws.Context, input *Desc
 	return out, req.Send()
 }
 
+// DescribeClientVpnEndpointsPages iterates over the pages of a DescribeClientVpnEndpoints operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See DescribeClientVpnEndpoints method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//    // Example iterating over at most 3 pages of a DescribeClientVpnEndpoints operation.
+//    pageNum := 0
+//    err := client.DescribeClientVpnEndpointsPages(params,
+//        func(page *DescribeClientVpnEndpointsOutput, lastPage bool) bool {
+//            pageNum++
+//            fmt.Println(page)
+//            return pageNum <= 3
+//        })
+//
+func (c *EC2) DescribeClientVpnEndpointsPages(input *DescribeClientVpnEndpointsInput, fn func(*DescribeClientVpnEndpointsOutput, bool) bool) error {
+	return c.DescribeClientVpnEndpointsPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// DescribeClientVpnEndpointsPagesWithContext same as DescribeClientVpnEndpointsPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *EC2) DescribeClientVpnEndpointsPagesWithContext(ctx aws.Context, input *DescribeClientVpnEndpointsInput, fn func(*DescribeClientVpnEndpointsOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *DescribeClientVpnEndpointsInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.DescribeClientVpnEndpointsRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	cont := true
+	for p.Next() && cont {
+		cont = fn(p.Page().(*DescribeClientVpnEndpointsOutput), !p.HasNextPage())
+	}
+	return p.Err()
+}
+
 const opDescribeClientVpnRoutes = "DescribeClientVpnRoutes"
 
 // DescribeClientVpnRoutesRequest generates a "aws/request.Request" representing the
@@ -10931,6 +11267,12 @@ func (c *EC2) DescribeClientVpnRoutesRequest(input *DescribeClientVpnRoutesInput
 		Name:       opDescribeClientVpnRoutes,
 		HTTPMethod: "POST",
 		HTTPPath:   "/",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
@@ -10974,6 +11316,56 @@ func (c *EC2) DescribeClientVpnRoutesWithContext(ctx aws.Context, input *Describ
 	return out, req.Send()
 }
 
+// DescribeClientVpnRoutesPages iterates over the pages of a DescribeClientVpnRoutes operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See DescribeClientVpnRoutes method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//    // Example iterating over at most 3 pages of a DescribeClientVpnRoutes operation.
+//    pageNum := 0
+//    err := client.DescribeClientVpnRoutesPages(params,
+//        func(page *DescribeClientVpnRoutesOutput, lastPage bool) bool {
+//            pageNum++
+//            fmt.Println(page)
+//            return pageNum <= 3
+//        })
+//
+func (c *EC2) DescribeClientVpnRoutesPages(input *DescribeClientVpnRoutesInput, fn func(*DescribeClientVpnRoutesOutput, bool) bool) error {
+	return c.DescribeClientVpnRoutesPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// DescribeClientVpnRoutesPagesWithContext same as DescribeClientVpnRoutesPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *EC2) DescribeClientVpnRoutesPagesWithContext(ctx aws.Context, input *DescribeClientVpnRoutesInput, fn func(*DescribeClientVpnRoutesOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *DescribeClientVpnRoutesInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.DescribeClientVpnRoutesRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	cont := true
+	for p.Next() && cont {
+		cont = fn(p.Page().(*DescribeClientVpnRoutesOutput), !p.HasNextPage())
+	}
+	return p.Err()
+}
+
 const opDescribeClientVpnTargetNetworks = "DescribeClientVpnTargetNetworks"
 
 // DescribeClientVpnTargetNetworksRequest generates a "aws/request.Request" representing the
@@ -11005,6 +11397,12 @@ func (c *EC2) DescribeClientVpnTargetNetworksRequest(input *DescribeClientVpnTar
 		Name:       opDescribeClientVpnTargetNetworks,
 		HTTPMethod: "POST",
 		HTTPPath:   "/",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
@@ -11046,6 +11444,56 @@ func (c *EC2) DescribeClientVpnTargetNetworksWithContext(ctx aws.Context, input 
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
+}
+
+// DescribeClientVpnTargetNetworksPages iterates over the pages of a DescribeClientVpnTargetNetworks operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See DescribeClientVpnTargetNetworks method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//    // Example iterating over at most 3 pages of a DescribeClientVpnTargetNetworks operation.
+//    pageNum := 0
+//    err := client.DescribeClientVpnTargetNetworksPages(params,
+//        func(page *DescribeClientVpnTargetNetworksOutput, lastPage bool) bool {
+//            pageNum++
+//            fmt.Println(page)
+//            return pageNum <= 3
+//        })
+//
+func (c *EC2) DescribeClientVpnTargetNetworksPages(input *DescribeClientVpnTargetNetworksInput, fn func(*DescribeClientVpnTargetNetworksOutput, bool) bool) error {
+	return c.DescribeClientVpnTargetNetworksPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// DescribeClientVpnTargetNetworksPagesWithContext same as DescribeClientVpnTargetNetworksPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *EC2) DescribeClientVpnTargetNetworksPagesWithContext(ctx aws.Context, input *DescribeClientVpnTargetNetworksInput, fn func(*DescribeClientVpnTargetNetworksOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *DescribeClientVpnTargetNetworksInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.DescribeClientVpnTargetNetworksRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	cont := true
+	for p.Next() && cont {
+		cont = fn(p.Page().(*DescribeClientVpnTargetNetworksOutput), !p.HasNextPage())
+	}
+	return p.Err()
 }
 
 const opDescribeConversionTasks = "DescribeConversionTasks"
@@ -11311,6 +11759,12 @@ func (c *EC2) DescribeEgressOnlyInternetGatewaysRequest(input *DescribeEgressOnl
 		Name:       opDescribeEgressOnlyInternetGateways,
 		HTTPMethod: "POST",
 		HTTPPath:   "/",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
@@ -11352,6 +11806,56 @@ func (c *EC2) DescribeEgressOnlyInternetGatewaysWithContext(ctx aws.Context, inp
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
+}
+
+// DescribeEgressOnlyInternetGatewaysPages iterates over the pages of a DescribeEgressOnlyInternetGateways operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See DescribeEgressOnlyInternetGateways method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//    // Example iterating over at most 3 pages of a DescribeEgressOnlyInternetGateways operation.
+//    pageNum := 0
+//    err := client.DescribeEgressOnlyInternetGatewaysPages(params,
+//        func(page *DescribeEgressOnlyInternetGatewaysOutput, lastPage bool) bool {
+//            pageNum++
+//            fmt.Println(page)
+//            return pageNum <= 3
+//        })
+//
+func (c *EC2) DescribeEgressOnlyInternetGatewaysPages(input *DescribeEgressOnlyInternetGatewaysInput, fn func(*DescribeEgressOnlyInternetGatewaysOutput, bool) bool) error {
+	return c.DescribeEgressOnlyInternetGatewaysPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// DescribeEgressOnlyInternetGatewaysPagesWithContext same as DescribeEgressOnlyInternetGatewaysPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *EC2) DescribeEgressOnlyInternetGatewaysPagesWithContext(ctx aws.Context, input *DescribeEgressOnlyInternetGatewaysInput, fn func(*DescribeEgressOnlyInternetGatewaysOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *DescribeEgressOnlyInternetGatewaysInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.DescribeEgressOnlyInternetGatewaysRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	cont := true
+	for p.Next() && cont {
+		cont = fn(p.Page().(*DescribeEgressOnlyInternetGatewaysOutput), !p.HasNextPage())
+	}
+	return p.Err()
 }
 
 const opDescribeElasticGpus = "DescribeElasticGpus"
@@ -11683,6 +12187,12 @@ func (c *EC2) DescribeFleetsRequest(input *DescribeFleetsInput) (req *request.Re
 		Name:       opDescribeFleets,
 		HTTPMethod: "POST",
 		HTTPPath:   "/",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
@@ -11726,6 +12236,56 @@ func (c *EC2) DescribeFleetsWithContext(ctx aws.Context, input *DescribeFleetsIn
 	return out, req.Send()
 }
 
+// DescribeFleetsPages iterates over the pages of a DescribeFleets operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See DescribeFleets method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//    // Example iterating over at most 3 pages of a DescribeFleets operation.
+//    pageNum := 0
+//    err := client.DescribeFleetsPages(params,
+//        func(page *DescribeFleetsOutput, lastPage bool) bool {
+//            pageNum++
+//            fmt.Println(page)
+//            return pageNum <= 3
+//        })
+//
+func (c *EC2) DescribeFleetsPages(input *DescribeFleetsInput, fn func(*DescribeFleetsOutput, bool) bool) error {
+	return c.DescribeFleetsPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// DescribeFleetsPagesWithContext same as DescribeFleetsPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *EC2) DescribeFleetsPagesWithContext(ctx aws.Context, input *DescribeFleetsInput, fn func(*DescribeFleetsOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *DescribeFleetsInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.DescribeFleetsRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	cont := true
+	for p.Next() && cont {
+		cont = fn(p.Page().(*DescribeFleetsOutput), !p.HasNextPage())
+	}
+	return p.Err()
+}
+
 const opDescribeFlowLogs = "DescribeFlowLogs"
 
 // DescribeFlowLogsRequest generates a "aws/request.Request" representing the
@@ -11757,6 +12317,12 @@ func (c *EC2) DescribeFlowLogsRequest(input *DescribeFlowLogsInput) (req *reques
 		Name:       opDescribeFlowLogs,
 		HTTPMethod: "POST",
 		HTTPPath:   "/",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
@@ -11800,6 +12366,56 @@ func (c *EC2) DescribeFlowLogsWithContext(ctx aws.Context, input *DescribeFlowLo
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
+}
+
+// DescribeFlowLogsPages iterates over the pages of a DescribeFlowLogs operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See DescribeFlowLogs method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//    // Example iterating over at most 3 pages of a DescribeFlowLogs operation.
+//    pageNum := 0
+//    err := client.DescribeFlowLogsPages(params,
+//        func(page *DescribeFlowLogsOutput, lastPage bool) bool {
+//            pageNum++
+//            fmt.Println(page)
+//            return pageNum <= 3
+//        })
+//
+func (c *EC2) DescribeFlowLogsPages(input *DescribeFlowLogsInput, fn func(*DescribeFlowLogsOutput, bool) bool) error {
+	return c.DescribeFlowLogsPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// DescribeFlowLogsPagesWithContext same as DescribeFlowLogsPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *EC2) DescribeFlowLogsPagesWithContext(ctx aws.Context, input *DescribeFlowLogsInput, fn func(*DescribeFlowLogsOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *DescribeFlowLogsInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.DescribeFlowLogsRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	cont := true
+	for p.Next() && cont {
+		cont = fn(p.Page().(*DescribeFlowLogsOutput), !p.HasNextPage())
+	}
+	return p.Err()
 }
 
 const opDescribeFpgaImageAttribute = "DescribeFpgaImageAttribute"
@@ -11907,6 +12523,12 @@ func (c *EC2) DescribeFpgaImagesRequest(input *DescribeFpgaImagesInput) (req *re
 		Name:       opDescribeFpgaImages,
 		HTTPMethod: "POST",
 		HTTPPath:   "/",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
@@ -11952,6 +12574,56 @@ func (c *EC2) DescribeFpgaImagesWithContext(ctx aws.Context, input *DescribeFpga
 	return out, req.Send()
 }
 
+// DescribeFpgaImagesPages iterates over the pages of a DescribeFpgaImages operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See DescribeFpgaImages method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//    // Example iterating over at most 3 pages of a DescribeFpgaImages operation.
+//    pageNum := 0
+//    err := client.DescribeFpgaImagesPages(params,
+//        func(page *DescribeFpgaImagesOutput, lastPage bool) bool {
+//            pageNum++
+//            fmt.Println(page)
+//            return pageNum <= 3
+//        })
+//
+func (c *EC2) DescribeFpgaImagesPages(input *DescribeFpgaImagesInput, fn func(*DescribeFpgaImagesOutput, bool) bool) error {
+	return c.DescribeFpgaImagesPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// DescribeFpgaImagesPagesWithContext same as DescribeFpgaImagesPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *EC2) DescribeFpgaImagesPagesWithContext(ctx aws.Context, input *DescribeFpgaImagesInput, fn func(*DescribeFpgaImagesOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *DescribeFpgaImagesInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.DescribeFpgaImagesRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	cont := true
+	for p.Next() && cont {
+		cont = fn(p.Page().(*DescribeFpgaImagesOutput), !p.HasNextPage())
+	}
+	return p.Err()
+}
+
 const opDescribeHostReservationOfferings = "DescribeHostReservationOfferings"
 
 // DescribeHostReservationOfferingsRequest generates a "aws/request.Request" representing the
@@ -11983,6 +12655,12 @@ func (c *EC2) DescribeHostReservationOfferingsRequest(input *DescribeHostReserva
 		Name:       opDescribeHostReservationOfferings,
 		HTTPMethod: "POST",
 		HTTPPath:   "/",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
@@ -12034,6 +12712,56 @@ func (c *EC2) DescribeHostReservationOfferingsWithContext(ctx aws.Context, input
 	return out, req.Send()
 }
 
+// DescribeHostReservationOfferingsPages iterates over the pages of a DescribeHostReservationOfferings operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See DescribeHostReservationOfferings method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//    // Example iterating over at most 3 pages of a DescribeHostReservationOfferings operation.
+//    pageNum := 0
+//    err := client.DescribeHostReservationOfferingsPages(params,
+//        func(page *DescribeHostReservationOfferingsOutput, lastPage bool) bool {
+//            pageNum++
+//            fmt.Println(page)
+//            return pageNum <= 3
+//        })
+//
+func (c *EC2) DescribeHostReservationOfferingsPages(input *DescribeHostReservationOfferingsInput, fn func(*DescribeHostReservationOfferingsOutput, bool) bool) error {
+	return c.DescribeHostReservationOfferingsPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// DescribeHostReservationOfferingsPagesWithContext same as DescribeHostReservationOfferingsPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *EC2) DescribeHostReservationOfferingsPagesWithContext(ctx aws.Context, input *DescribeHostReservationOfferingsInput, fn func(*DescribeHostReservationOfferingsOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *DescribeHostReservationOfferingsInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.DescribeHostReservationOfferingsRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	cont := true
+	for p.Next() && cont {
+		cont = fn(p.Page().(*DescribeHostReservationOfferingsOutput), !p.HasNextPage())
+	}
+	return p.Err()
+}
+
 const opDescribeHostReservations = "DescribeHostReservations"
 
 // DescribeHostReservationsRequest generates a "aws/request.Request" representing the
@@ -12065,6 +12793,12 @@ func (c *EC2) DescribeHostReservationsRequest(input *DescribeHostReservationsInp
 		Name:       opDescribeHostReservations,
 		HTTPMethod: "POST",
 		HTTPPath:   "/",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
@@ -12108,6 +12842,56 @@ func (c *EC2) DescribeHostReservationsWithContext(ctx aws.Context, input *Descri
 	return out, req.Send()
 }
 
+// DescribeHostReservationsPages iterates over the pages of a DescribeHostReservations operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See DescribeHostReservations method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//    // Example iterating over at most 3 pages of a DescribeHostReservations operation.
+//    pageNum := 0
+//    err := client.DescribeHostReservationsPages(params,
+//        func(page *DescribeHostReservationsOutput, lastPage bool) bool {
+//            pageNum++
+//            fmt.Println(page)
+//            return pageNum <= 3
+//        })
+//
+func (c *EC2) DescribeHostReservationsPages(input *DescribeHostReservationsInput, fn func(*DescribeHostReservationsOutput, bool) bool) error {
+	return c.DescribeHostReservationsPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// DescribeHostReservationsPagesWithContext same as DescribeHostReservationsPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *EC2) DescribeHostReservationsPagesWithContext(ctx aws.Context, input *DescribeHostReservationsInput, fn func(*DescribeHostReservationsOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *DescribeHostReservationsInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.DescribeHostReservationsRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	cont := true
+	for p.Next() && cont {
+		cont = fn(p.Page().(*DescribeHostReservationsOutput), !p.HasNextPage())
+	}
+	return p.Err()
+}
+
 const opDescribeHosts = "DescribeHosts"
 
 // DescribeHostsRequest generates a "aws/request.Request" representing the
@@ -12139,6 +12923,12 @@ func (c *EC2) DescribeHostsRequest(input *DescribeHostsInput) (req *request.Requ
 		Name:       opDescribeHosts,
 		HTTPMethod: "POST",
 		HTTPPath:   "/",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
@@ -12186,6 +12976,56 @@ func (c *EC2) DescribeHostsWithContext(ctx aws.Context, input *DescribeHostsInpu
 	return out, req.Send()
 }
 
+// DescribeHostsPages iterates over the pages of a DescribeHosts operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See DescribeHosts method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//    // Example iterating over at most 3 pages of a DescribeHosts operation.
+//    pageNum := 0
+//    err := client.DescribeHostsPages(params,
+//        func(page *DescribeHostsOutput, lastPage bool) bool {
+//            pageNum++
+//            fmt.Println(page)
+//            return pageNum <= 3
+//        })
+//
+func (c *EC2) DescribeHostsPages(input *DescribeHostsInput, fn func(*DescribeHostsOutput, bool) bool) error {
+	return c.DescribeHostsPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// DescribeHostsPagesWithContext same as DescribeHostsPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *EC2) DescribeHostsPagesWithContext(ctx aws.Context, input *DescribeHostsInput, fn func(*DescribeHostsOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *DescribeHostsInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.DescribeHostsRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	cont := true
+	for p.Next() && cont {
+		cont = fn(p.Page().(*DescribeHostsOutput), !p.HasNextPage())
+	}
+	return p.Err()
+}
+
 const opDescribeIamInstanceProfileAssociations = "DescribeIamInstanceProfileAssociations"
 
 // DescribeIamInstanceProfileAssociationsRequest generates a "aws/request.Request" representing the
@@ -12217,6 +13057,12 @@ func (c *EC2) DescribeIamInstanceProfileAssociationsRequest(input *DescribeIamIn
 		Name:       opDescribeIamInstanceProfileAssociations,
 		HTTPMethod: "POST",
 		HTTPPath:   "/",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
@@ -12258,6 +13104,56 @@ func (c *EC2) DescribeIamInstanceProfileAssociationsWithContext(ctx aws.Context,
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
+}
+
+// DescribeIamInstanceProfileAssociationsPages iterates over the pages of a DescribeIamInstanceProfileAssociations operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See DescribeIamInstanceProfileAssociations method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//    // Example iterating over at most 3 pages of a DescribeIamInstanceProfileAssociations operation.
+//    pageNum := 0
+//    err := client.DescribeIamInstanceProfileAssociationsPages(params,
+//        func(page *DescribeIamInstanceProfileAssociationsOutput, lastPage bool) bool {
+//            pageNum++
+//            fmt.Println(page)
+//            return pageNum <= 3
+//        })
+//
+func (c *EC2) DescribeIamInstanceProfileAssociationsPages(input *DescribeIamInstanceProfileAssociationsInput, fn func(*DescribeIamInstanceProfileAssociationsOutput, bool) bool) error {
+	return c.DescribeIamInstanceProfileAssociationsPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// DescribeIamInstanceProfileAssociationsPagesWithContext same as DescribeIamInstanceProfileAssociationsPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *EC2) DescribeIamInstanceProfileAssociationsPagesWithContext(ctx aws.Context, input *DescribeIamInstanceProfileAssociationsInput, fn func(*DescribeIamInstanceProfileAssociationsOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *DescribeIamInstanceProfileAssociationsInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.DescribeIamInstanceProfileAssociationsRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	cont := true
+	for p.Next() && cont {
+		cont = fn(p.Page().(*DescribeIamInstanceProfileAssociationsOutput), !p.HasNextPage())
+	}
+	return p.Err()
 }
 
 const opDescribeIdFormat = "DescribeIdFormat"
@@ -12561,9 +13457,11 @@ func (c *EC2) DescribeImagesRequest(input *DescribeImagesInput) (req *request.Re
 
 // DescribeImages API operation for Amazon Elastic Compute Cloud.
 //
-// Describes one or more of the images (AMIs, AKIs, and ARIs) available to you.
-// Images available to you include public images, private images that you own,
-// and private images owned by other AWS accounts but for which you have explicit
+// Describes the specified images (AMIs, AKIs, and ARIs) available to you or
+// all of the images available to you.
+//
+// The images available to you include public images, private images that you
+// own, and private images owned by other AWS accounts for which you have explicit
 // launch permissions.
 //
 // Deregistered images are included in the returned results for an unspecified
@@ -12628,6 +13526,12 @@ func (c *EC2) DescribeImportImageTasksRequest(input *DescribeImportImageTasksInp
 		Name:       opDescribeImportImageTasks,
 		HTTPMethod: "POST",
 		HTTPPath:   "/",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
@@ -12672,6 +13576,56 @@ func (c *EC2) DescribeImportImageTasksWithContext(ctx aws.Context, input *Descri
 	return out, req.Send()
 }
 
+// DescribeImportImageTasksPages iterates over the pages of a DescribeImportImageTasks operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See DescribeImportImageTasks method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//    // Example iterating over at most 3 pages of a DescribeImportImageTasks operation.
+//    pageNum := 0
+//    err := client.DescribeImportImageTasksPages(params,
+//        func(page *DescribeImportImageTasksOutput, lastPage bool) bool {
+//            pageNum++
+//            fmt.Println(page)
+//            return pageNum <= 3
+//        })
+//
+func (c *EC2) DescribeImportImageTasksPages(input *DescribeImportImageTasksInput, fn func(*DescribeImportImageTasksOutput, bool) bool) error {
+	return c.DescribeImportImageTasksPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// DescribeImportImageTasksPagesWithContext same as DescribeImportImageTasksPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *EC2) DescribeImportImageTasksPagesWithContext(ctx aws.Context, input *DescribeImportImageTasksInput, fn func(*DescribeImportImageTasksOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *DescribeImportImageTasksInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.DescribeImportImageTasksRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	cont := true
+	for p.Next() && cont {
+		cont = fn(p.Page().(*DescribeImportImageTasksOutput), !p.HasNextPage())
+	}
+	return p.Err()
+}
+
 const opDescribeImportSnapshotTasks = "DescribeImportSnapshotTasks"
 
 // DescribeImportSnapshotTasksRequest generates a "aws/request.Request" representing the
@@ -12703,6 +13657,12 @@ func (c *EC2) DescribeImportSnapshotTasksRequest(input *DescribeImportSnapshotTa
 		Name:       opDescribeImportSnapshotTasks,
 		HTTPMethod: "POST",
 		HTTPPath:   "/",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
@@ -12744,6 +13704,56 @@ func (c *EC2) DescribeImportSnapshotTasksWithContext(ctx aws.Context, input *Des
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
+}
+
+// DescribeImportSnapshotTasksPages iterates over the pages of a DescribeImportSnapshotTasks operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See DescribeImportSnapshotTasks method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//    // Example iterating over at most 3 pages of a DescribeImportSnapshotTasks operation.
+//    pageNum := 0
+//    err := client.DescribeImportSnapshotTasksPages(params,
+//        func(page *DescribeImportSnapshotTasksOutput, lastPage bool) bool {
+//            pageNum++
+//            fmt.Println(page)
+//            return pageNum <= 3
+//        })
+//
+func (c *EC2) DescribeImportSnapshotTasksPages(input *DescribeImportSnapshotTasksInput, fn func(*DescribeImportSnapshotTasksOutput, bool) bool) error {
+	return c.DescribeImportSnapshotTasksPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// DescribeImportSnapshotTasksPagesWithContext same as DescribeImportSnapshotTasksPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *EC2) DescribeImportSnapshotTasksPagesWithContext(ctx aws.Context, input *DescribeImportSnapshotTasksInput, fn func(*DescribeImportSnapshotTasksOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *DescribeImportSnapshotTasksInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.DescribeImportSnapshotTasksRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	cont := true
+	for p.Next() && cont {
+		cont = fn(p.Page().(*DescribeImportSnapshotTasksOutput), !p.HasNextPage())
+	}
+	return p.Err()
 }
 
 const opDescribeInstanceAttribute = "DescribeInstanceAttribute"
@@ -12855,6 +13865,12 @@ func (c *EC2) DescribeInstanceCreditSpecificationsRequest(input *DescribeInstanc
 		Name:       opDescribeInstanceCreditSpecifications,
 		HTTPMethod: "POST",
 		HTTPPath:   "/",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
@@ -12868,8 +13884,8 @@ func (c *EC2) DescribeInstanceCreditSpecificationsRequest(input *DescribeInstanc
 
 // DescribeInstanceCreditSpecifications API operation for Amazon Elastic Compute Cloud.
 //
-// Describes the credit option for CPU usage of one or more of your T2 or T3
-// instances. The credit options are standard and unlimited.
+// Describes the credit option for CPU usage of the specified T2 or T3 instances.
+// The credit options are standard and unlimited.
 //
 // If you do not specify an instance ID, Amazon EC2 returns T2 and T3 instances
 // with the unlimited credit option, as well as instances that were previously
@@ -12919,6 +13935,56 @@ func (c *EC2) DescribeInstanceCreditSpecificationsWithContext(ctx aws.Context, i
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
+}
+
+// DescribeInstanceCreditSpecificationsPages iterates over the pages of a DescribeInstanceCreditSpecifications operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See DescribeInstanceCreditSpecifications method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//    // Example iterating over at most 3 pages of a DescribeInstanceCreditSpecifications operation.
+//    pageNum := 0
+//    err := client.DescribeInstanceCreditSpecificationsPages(params,
+//        func(page *DescribeInstanceCreditSpecificationsOutput, lastPage bool) bool {
+//            pageNum++
+//            fmt.Println(page)
+//            return pageNum <= 3
+//        })
+//
+func (c *EC2) DescribeInstanceCreditSpecificationsPages(input *DescribeInstanceCreditSpecificationsInput, fn func(*DescribeInstanceCreditSpecificationsOutput, bool) bool) error {
+	return c.DescribeInstanceCreditSpecificationsPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// DescribeInstanceCreditSpecificationsPagesWithContext same as DescribeInstanceCreditSpecificationsPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *EC2) DescribeInstanceCreditSpecificationsPagesWithContext(ctx aws.Context, input *DescribeInstanceCreditSpecificationsInput, fn func(*DescribeInstanceCreditSpecificationsOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *DescribeInstanceCreditSpecificationsInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.DescribeInstanceCreditSpecificationsRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	cont := true
+	for p.Next() && cont {
+		cont = fn(p.Page().(*DescribeInstanceCreditSpecificationsOutput), !p.HasNextPage())
+	}
+	return p.Err()
 }
 
 const opDescribeInstanceStatus = "DescribeInstanceStatus"
@@ -12971,9 +14037,9 @@ func (c *EC2) DescribeInstanceStatusRequest(input *DescribeInstanceStatusInput) 
 
 // DescribeInstanceStatus API operation for Amazon Elastic Compute Cloud.
 //
-// Describes the status of one or more instances. By default, only running instances
-// are described, unless you specifically indicate to return the status of all
-// instances.
+// Describes the status of the specified instances or all of your instances.
+// By default, only running instances are described, unless you specifically
+// indicate to return the status of all instances.
 //
 // Instance status includes the following components:
 //
@@ -13122,7 +14188,7 @@ func (c *EC2) DescribeInstancesRequest(input *DescribeInstancesInput) (req *requ
 
 // DescribeInstances API operation for Amazon Elastic Compute Cloud.
 //
-// Describes one or more of your instances.
+// Describes the specified instances or all of your instances.
 //
 // If you specify one or more instance IDs, Amazon EC2 returns information for
 // those instances. If you do not specify instance IDs, Amazon EC2 returns information
@@ -13391,7 +14457,7 @@ func (c *EC2) DescribeKeyPairsRequest(input *DescribeKeyPairsInput) (req *reques
 
 // DescribeKeyPairs API operation for Amazon Elastic Compute Cloud.
 //
-// Describes one or more of your key pairs.
+// Describes the specified key pairs or all of your key pairs.
 //
 // For more information about key pairs, see Key Pairs (https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html)
 // in the Amazon Elastic Compute Cloud User Guide.
@@ -13455,6 +14521,12 @@ func (c *EC2) DescribeLaunchTemplateVersionsRequest(input *DescribeLaunchTemplat
 		Name:       opDescribeLaunchTemplateVersions,
 		HTTPMethod: "POST",
 		HTTPPath:   "/",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
@@ -13499,6 +14571,56 @@ func (c *EC2) DescribeLaunchTemplateVersionsWithContext(ctx aws.Context, input *
 	return out, req.Send()
 }
 
+// DescribeLaunchTemplateVersionsPages iterates over the pages of a DescribeLaunchTemplateVersions operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See DescribeLaunchTemplateVersions method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//    // Example iterating over at most 3 pages of a DescribeLaunchTemplateVersions operation.
+//    pageNum := 0
+//    err := client.DescribeLaunchTemplateVersionsPages(params,
+//        func(page *DescribeLaunchTemplateVersionsOutput, lastPage bool) bool {
+//            pageNum++
+//            fmt.Println(page)
+//            return pageNum <= 3
+//        })
+//
+func (c *EC2) DescribeLaunchTemplateVersionsPages(input *DescribeLaunchTemplateVersionsInput, fn func(*DescribeLaunchTemplateVersionsOutput, bool) bool) error {
+	return c.DescribeLaunchTemplateVersionsPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// DescribeLaunchTemplateVersionsPagesWithContext same as DescribeLaunchTemplateVersionsPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *EC2) DescribeLaunchTemplateVersionsPagesWithContext(ctx aws.Context, input *DescribeLaunchTemplateVersionsInput, fn func(*DescribeLaunchTemplateVersionsOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *DescribeLaunchTemplateVersionsInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.DescribeLaunchTemplateVersionsRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	cont := true
+	for p.Next() && cont {
+		cont = fn(p.Page().(*DescribeLaunchTemplateVersionsOutput), !p.HasNextPage())
+	}
+	return p.Err()
+}
+
 const opDescribeLaunchTemplates = "DescribeLaunchTemplates"
 
 // DescribeLaunchTemplatesRequest generates a "aws/request.Request" representing the
@@ -13530,6 +14652,12 @@ func (c *EC2) DescribeLaunchTemplatesRequest(input *DescribeLaunchTemplatesInput
 		Name:       opDescribeLaunchTemplates,
 		HTTPMethod: "POST",
 		HTTPPath:   "/",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
@@ -13573,6 +14701,56 @@ func (c *EC2) DescribeLaunchTemplatesWithContext(ctx aws.Context, input *Describ
 	return out, req.Send()
 }
 
+// DescribeLaunchTemplatesPages iterates over the pages of a DescribeLaunchTemplates operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See DescribeLaunchTemplates method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//    // Example iterating over at most 3 pages of a DescribeLaunchTemplates operation.
+//    pageNum := 0
+//    err := client.DescribeLaunchTemplatesPages(params,
+//        func(page *DescribeLaunchTemplatesOutput, lastPage bool) bool {
+//            pageNum++
+//            fmt.Println(page)
+//            return pageNum <= 3
+//        })
+//
+func (c *EC2) DescribeLaunchTemplatesPages(input *DescribeLaunchTemplatesInput, fn func(*DescribeLaunchTemplatesOutput, bool) bool) error {
+	return c.DescribeLaunchTemplatesPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// DescribeLaunchTemplatesPagesWithContext same as DescribeLaunchTemplatesPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *EC2) DescribeLaunchTemplatesPagesWithContext(ctx aws.Context, input *DescribeLaunchTemplatesInput, fn func(*DescribeLaunchTemplatesOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *DescribeLaunchTemplatesInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.DescribeLaunchTemplatesRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	cont := true
+	for p.Next() && cont {
+		cont = fn(p.Page().(*DescribeLaunchTemplatesOutput), !p.HasNextPage())
+	}
+	return p.Err()
+}
+
 const opDescribeMovingAddresses = "DescribeMovingAddresses"
 
 // DescribeMovingAddressesRequest generates a "aws/request.Request" representing the
@@ -13604,6 +14782,12 @@ func (c *EC2) DescribeMovingAddressesRequest(input *DescribeMovingAddressesInput
 		Name:       opDescribeMovingAddresses,
 		HTTPMethod: "POST",
 		HTTPPath:   "/",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
@@ -13647,6 +14831,56 @@ func (c *EC2) DescribeMovingAddressesWithContext(ctx aws.Context, input *Describ
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
+}
+
+// DescribeMovingAddressesPages iterates over the pages of a DescribeMovingAddresses operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See DescribeMovingAddresses method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//    // Example iterating over at most 3 pages of a DescribeMovingAddresses operation.
+//    pageNum := 0
+//    err := client.DescribeMovingAddressesPages(params,
+//        func(page *DescribeMovingAddressesOutput, lastPage bool) bool {
+//            pageNum++
+//            fmt.Println(page)
+//            return pageNum <= 3
+//        })
+//
+func (c *EC2) DescribeMovingAddressesPages(input *DescribeMovingAddressesInput, fn func(*DescribeMovingAddressesOutput, bool) bool) error {
+	return c.DescribeMovingAddressesPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// DescribeMovingAddressesPagesWithContext same as DescribeMovingAddressesPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *EC2) DescribeMovingAddressesPagesWithContext(ctx aws.Context, input *DescribeMovingAddressesInput, fn func(*DescribeMovingAddressesOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *DescribeMovingAddressesInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.DescribeMovingAddressesRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	cont := true
+	for p.Next() && cont {
+		cont = fn(p.Page().(*DescribeMovingAddressesOutput), !p.HasNextPage())
+	}
+	return p.Err()
 }
 
 const opDescribeNatGateways = "DescribeNatGateways"
@@ -14018,6 +15252,12 @@ func (c *EC2) DescribeNetworkInterfacePermissionsRequest(input *DescribeNetworkI
 		Name:       opDescribeNetworkInterfacePermissions,
 		HTTPMethod: "POST",
 		HTTPPath:   "/",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
@@ -14059,6 +15299,56 @@ func (c *EC2) DescribeNetworkInterfacePermissionsWithContext(ctx aws.Context, in
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
+}
+
+// DescribeNetworkInterfacePermissionsPages iterates over the pages of a DescribeNetworkInterfacePermissions operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See DescribeNetworkInterfacePermissions method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//    // Example iterating over at most 3 pages of a DescribeNetworkInterfacePermissions operation.
+//    pageNum := 0
+//    err := client.DescribeNetworkInterfacePermissionsPages(params,
+//        func(page *DescribeNetworkInterfacePermissionsOutput, lastPage bool) bool {
+//            pageNum++
+//            fmt.Println(page)
+//            return pageNum <= 3
+//        })
+//
+func (c *EC2) DescribeNetworkInterfacePermissionsPages(input *DescribeNetworkInterfacePermissionsInput, fn func(*DescribeNetworkInterfacePermissionsOutput, bool) bool) error {
+	return c.DescribeNetworkInterfacePermissionsPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// DescribeNetworkInterfacePermissionsPagesWithContext same as DescribeNetworkInterfacePermissionsPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *EC2) DescribeNetworkInterfacePermissionsPagesWithContext(ctx aws.Context, input *DescribeNetworkInterfacePermissionsInput, fn func(*DescribeNetworkInterfacePermissionsOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *DescribeNetworkInterfacePermissionsInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.DescribeNetworkInterfacePermissionsRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	cont := true
+	for p.Next() && cont {
+		cont = fn(p.Page().(*DescribeNetworkInterfacePermissionsOutput), !p.HasNextPage())
+	}
+	return p.Err()
 }
 
 const opDescribeNetworkInterfaces = "DescribeNetworkInterfaces"
@@ -14235,8 +15525,8 @@ func (c *EC2) DescribePlacementGroupsRequest(input *DescribePlacementGroupsInput
 
 // DescribePlacementGroups API operation for Amazon Elastic Compute Cloud.
 //
-// Describes one or more of your placement groups. For more information, see
-// Placement Groups (https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html)
+// Describes the specified placement groups or all of your placement groups.
+// For more information, see Placement Groups (https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html)
 // in the Amazon Elastic Compute Cloud User Guide.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
@@ -14298,6 +15588,12 @@ func (c *EC2) DescribePrefixListsRequest(input *DescribePrefixListsInput) (req *
 		Name:       opDescribePrefixLists,
 		HTTPMethod: "POST",
 		HTTPPath:   "/",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
@@ -14346,6 +15642,56 @@ func (c *EC2) DescribePrefixListsWithContext(ctx aws.Context, input *DescribePre
 	return out, req.Send()
 }
 
+// DescribePrefixListsPages iterates over the pages of a DescribePrefixLists operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See DescribePrefixLists method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//    // Example iterating over at most 3 pages of a DescribePrefixLists operation.
+//    pageNum := 0
+//    err := client.DescribePrefixListsPages(params,
+//        func(page *DescribePrefixListsOutput, lastPage bool) bool {
+//            pageNum++
+//            fmt.Println(page)
+//            return pageNum <= 3
+//        })
+//
+func (c *EC2) DescribePrefixListsPages(input *DescribePrefixListsInput, fn func(*DescribePrefixListsOutput, bool) bool) error {
+	return c.DescribePrefixListsPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// DescribePrefixListsPagesWithContext same as DescribePrefixListsPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *EC2) DescribePrefixListsPagesWithContext(ctx aws.Context, input *DescribePrefixListsInput, fn func(*DescribePrefixListsOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *DescribePrefixListsInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.DescribePrefixListsRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	cont := true
+	for p.Next() && cont {
+		cont = fn(p.Page().(*DescribePrefixListsOutput), !p.HasNextPage())
+	}
+	return p.Err()
+}
+
 const opDescribePrincipalIdFormat = "DescribePrincipalIdFormat"
 
 // DescribePrincipalIdFormatRequest generates a "aws/request.Request" representing the
@@ -14377,6 +15723,12 @@ func (c *EC2) DescribePrincipalIdFormatRequest(input *DescribePrincipalIdFormatI
 		Name:       opDescribePrincipalIdFormat,
 		HTTPMethod: "POST",
 		HTTPPath:   "/",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
@@ -14434,6 +15786,56 @@ func (c *EC2) DescribePrincipalIdFormatWithContext(ctx aws.Context, input *Descr
 	return out, req.Send()
 }
 
+// DescribePrincipalIdFormatPages iterates over the pages of a DescribePrincipalIdFormat operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See DescribePrincipalIdFormat method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//    // Example iterating over at most 3 pages of a DescribePrincipalIdFormat operation.
+//    pageNum := 0
+//    err := client.DescribePrincipalIdFormatPages(params,
+//        func(page *DescribePrincipalIdFormatOutput, lastPage bool) bool {
+//            pageNum++
+//            fmt.Println(page)
+//            return pageNum <= 3
+//        })
+//
+func (c *EC2) DescribePrincipalIdFormatPages(input *DescribePrincipalIdFormatInput, fn func(*DescribePrincipalIdFormatOutput, bool) bool) error {
+	return c.DescribePrincipalIdFormatPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// DescribePrincipalIdFormatPagesWithContext same as DescribePrincipalIdFormatPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *EC2) DescribePrincipalIdFormatPagesWithContext(ctx aws.Context, input *DescribePrincipalIdFormatInput, fn func(*DescribePrincipalIdFormatOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *DescribePrincipalIdFormatInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.DescribePrincipalIdFormatRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	cont := true
+	for p.Next() && cont {
+		cont = fn(p.Page().(*DescribePrincipalIdFormatOutput), !p.HasNextPage())
+	}
+	return p.Err()
+}
+
 const opDescribePublicIpv4Pools = "DescribePublicIpv4Pools"
 
 // DescribePublicIpv4PoolsRequest generates a "aws/request.Request" representing the
@@ -14465,6 +15867,12 @@ func (c *EC2) DescribePublicIpv4PoolsRequest(input *DescribePublicIpv4PoolsInput
 		Name:       opDescribePublicIpv4Pools,
 		HTTPMethod: "POST",
 		HTTPPath:   "/",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
@@ -14506,6 +15914,56 @@ func (c *EC2) DescribePublicIpv4PoolsWithContext(ctx aws.Context, input *Describ
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
+}
+
+// DescribePublicIpv4PoolsPages iterates over the pages of a DescribePublicIpv4Pools operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See DescribePublicIpv4Pools method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//    // Example iterating over at most 3 pages of a DescribePublicIpv4Pools operation.
+//    pageNum := 0
+//    err := client.DescribePublicIpv4PoolsPages(params,
+//        func(page *DescribePublicIpv4PoolsOutput, lastPage bool) bool {
+//            pageNum++
+//            fmt.Println(page)
+//            return pageNum <= 3
+//        })
+//
+func (c *EC2) DescribePublicIpv4PoolsPages(input *DescribePublicIpv4PoolsInput, fn func(*DescribePublicIpv4PoolsOutput, bool) bool) error {
+	return c.DescribePublicIpv4PoolsPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// DescribePublicIpv4PoolsPagesWithContext same as DescribePublicIpv4PoolsPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *EC2) DescribePublicIpv4PoolsPagesWithContext(ctx aws.Context, input *DescribePublicIpv4PoolsInput, fn func(*DescribePublicIpv4PoolsOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *DescribePublicIpv4PoolsInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.DescribePublicIpv4PoolsRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	cont := true
+	for p.Next() && cont {
+		cont = fn(p.Page().(*DescribePublicIpv4PoolsOutput), !p.HasNextPage())
+	}
+	return p.Err()
 }
 
 const opDescribeRegions = "DescribeRegions"
@@ -14552,7 +16010,7 @@ func (c *EC2) DescribeRegionsRequest(input *DescribeRegionsInput) (req *request.
 
 // DescribeRegions API operation for Amazon Elastic Compute Cloud.
 //
-// Describes one or more regions that are currently available to you.
+// Describes the regions that are currently available to you.
 //
 // For a list of the regions supported by Amazon EC2, see Regions and Endpoints
 // (https://docs.aws.amazon.com/general/latest/gr/rande.html#ec2_region).
@@ -15203,6 +16661,12 @@ func (c *EC2) DescribeScheduledInstanceAvailabilityRequest(input *DescribeSchedu
 		Name:       opDescribeScheduledInstanceAvailability,
 		HTTPMethod: "POST",
 		HTTPPath:   "/",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
@@ -15254,6 +16718,56 @@ func (c *EC2) DescribeScheduledInstanceAvailabilityWithContext(ctx aws.Context, 
 	return out, req.Send()
 }
 
+// DescribeScheduledInstanceAvailabilityPages iterates over the pages of a DescribeScheduledInstanceAvailability operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See DescribeScheduledInstanceAvailability method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//    // Example iterating over at most 3 pages of a DescribeScheduledInstanceAvailability operation.
+//    pageNum := 0
+//    err := client.DescribeScheduledInstanceAvailabilityPages(params,
+//        func(page *DescribeScheduledInstanceAvailabilityOutput, lastPage bool) bool {
+//            pageNum++
+//            fmt.Println(page)
+//            return pageNum <= 3
+//        })
+//
+func (c *EC2) DescribeScheduledInstanceAvailabilityPages(input *DescribeScheduledInstanceAvailabilityInput, fn func(*DescribeScheduledInstanceAvailabilityOutput, bool) bool) error {
+	return c.DescribeScheduledInstanceAvailabilityPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// DescribeScheduledInstanceAvailabilityPagesWithContext same as DescribeScheduledInstanceAvailabilityPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *EC2) DescribeScheduledInstanceAvailabilityPagesWithContext(ctx aws.Context, input *DescribeScheduledInstanceAvailabilityInput, fn func(*DescribeScheduledInstanceAvailabilityOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *DescribeScheduledInstanceAvailabilityInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.DescribeScheduledInstanceAvailabilityRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	cont := true
+	for p.Next() && cont {
+		cont = fn(p.Page().(*DescribeScheduledInstanceAvailabilityOutput), !p.HasNextPage())
+	}
+	return p.Err()
+}
+
 const opDescribeScheduledInstances = "DescribeScheduledInstances"
 
 // DescribeScheduledInstancesRequest generates a "aws/request.Request" representing the
@@ -15285,6 +16799,12 @@ func (c *EC2) DescribeScheduledInstancesRequest(input *DescribeScheduledInstance
 		Name:       opDescribeScheduledInstances,
 		HTTPMethod: "POST",
 		HTTPPath:   "/",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
@@ -15326,6 +16846,56 @@ func (c *EC2) DescribeScheduledInstancesWithContext(ctx aws.Context, input *Desc
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
+}
+
+// DescribeScheduledInstancesPages iterates over the pages of a DescribeScheduledInstances operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See DescribeScheduledInstances method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//    // Example iterating over at most 3 pages of a DescribeScheduledInstances operation.
+//    pageNum := 0
+//    err := client.DescribeScheduledInstancesPages(params,
+//        func(page *DescribeScheduledInstancesOutput, lastPage bool) bool {
+//            pageNum++
+//            fmt.Println(page)
+//            return pageNum <= 3
+//        })
+//
+func (c *EC2) DescribeScheduledInstancesPages(input *DescribeScheduledInstancesInput, fn func(*DescribeScheduledInstancesOutput, bool) bool) error {
+	return c.DescribeScheduledInstancesPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// DescribeScheduledInstancesPagesWithContext same as DescribeScheduledInstancesPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *EC2) DescribeScheduledInstancesPagesWithContext(ctx aws.Context, input *DescribeScheduledInstancesInput, fn func(*DescribeScheduledInstancesOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *DescribeScheduledInstancesInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.DescribeScheduledInstancesRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	cont := true
+	for p.Next() && cont {
+		cont = fn(p.Page().(*DescribeScheduledInstancesOutput), !p.HasNextPage())
+	}
+	return p.Err()
 }
 
 const opDescribeSecurityGroupReferences = "DescribeSecurityGroupReferences"
@@ -15453,7 +17023,7 @@ func (c *EC2) DescribeSecurityGroupsRequest(input *DescribeSecurityGroupsInput) 
 
 // DescribeSecurityGroups API operation for Amazon Elastic Compute Cloud.
 //
-// Describes one or more of your security groups.
+// Describes the specified security groups or all of your security groups.
 //
 // A security group is for use with instances either in the EC2-Classic platform
 // or in a specific VPC. For more information, see Amazon EC2 Security Groups
@@ -15668,10 +17238,12 @@ func (c *EC2) DescribeSnapshotsRequest(input *DescribeSnapshotsInput) (req *requ
 
 // DescribeSnapshots API operation for Amazon Elastic Compute Cloud.
 //
-// Describes one or more of the EBS snapshots available to you. Available snapshots
-// include public snapshots available for use by any AWS account, private snapshots
-// that you own, and private snapshots owned by another AWS account for which
-// you've been given explicit create volume permissions.
+// Describes the specified EBS snapshots available to you or all of the EBS
+// snapshots available to you.
+//
+// The snapshots available to you include public snapshots, private snapshots
+// that you own, and private snapshots owned by other AWS accounts for which
+// you have explicit create volume permissions.
 //
 // The create volume permissions fall into the following categories:
 //
@@ -16186,6 +17758,12 @@ func (c *EC2) DescribeSpotInstanceRequestsRequest(input *DescribeSpotInstanceReq
 		Name:       opDescribeSpotInstanceRequests,
 		HTTPMethod: "POST",
 		HTTPPath:   "/",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
@@ -16243,6 +17821,56 @@ func (c *EC2) DescribeSpotInstanceRequestsWithContext(ctx aws.Context, input *De
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
+}
+
+// DescribeSpotInstanceRequestsPages iterates over the pages of a DescribeSpotInstanceRequests operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See DescribeSpotInstanceRequests method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//    // Example iterating over at most 3 pages of a DescribeSpotInstanceRequests operation.
+//    pageNum := 0
+//    err := client.DescribeSpotInstanceRequestsPages(params,
+//        func(page *DescribeSpotInstanceRequestsOutput, lastPage bool) bool {
+//            pageNum++
+//            fmt.Println(page)
+//            return pageNum <= 3
+//        })
+//
+func (c *EC2) DescribeSpotInstanceRequestsPages(input *DescribeSpotInstanceRequestsInput, fn func(*DescribeSpotInstanceRequestsOutput, bool) bool) error {
+	return c.DescribeSpotInstanceRequestsPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// DescribeSpotInstanceRequestsPagesWithContext same as DescribeSpotInstanceRequestsPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *EC2) DescribeSpotInstanceRequestsPagesWithContext(ctx aws.Context, input *DescribeSpotInstanceRequestsInput, fn func(*DescribeSpotInstanceRequestsOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *DescribeSpotInstanceRequestsInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.DescribeSpotInstanceRequestsRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	cont := true
+	for p.Next() && cont {
+		cont = fn(p.Page().(*DescribeSpotInstanceRequestsOutput), !p.HasNextPage())
+	}
+	return p.Err()
 }
 
 const opDescribeSpotPriceHistory = "DescribeSpotPriceHistory"
@@ -16413,6 +18041,12 @@ func (c *EC2) DescribeStaleSecurityGroupsRequest(input *DescribeStaleSecurityGro
 		Name:       opDescribeStaleSecurityGroups,
 		HTTPMethod: "POST",
 		HTTPPath:   "/",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
@@ -16457,6 +18091,56 @@ func (c *EC2) DescribeStaleSecurityGroupsWithContext(ctx aws.Context, input *Des
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
+}
+
+// DescribeStaleSecurityGroupsPages iterates over the pages of a DescribeStaleSecurityGroups operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See DescribeStaleSecurityGroups method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//    // Example iterating over at most 3 pages of a DescribeStaleSecurityGroups operation.
+//    pageNum := 0
+//    err := client.DescribeStaleSecurityGroupsPages(params,
+//        func(page *DescribeStaleSecurityGroupsOutput, lastPage bool) bool {
+//            pageNum++
+//            fmt.Println(page)
+//            return pageNum <= 3
+//        })
+//
+func (c *EC2) DescribeStaleSecurityGroupsPages(input *DescribeStaleSecurityGroupsInput, fn func(*DescribeStaleSecurityGroupsOutput, bool) bool) error {
+	return c.DescribeStaleSecurityGroupsPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// DescribeStaleSecurityGroupsPagesWithContext same as DescribeStaleSecurityGroupsPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *EC2) DescribeStaleSecurityGroupsPagesWithContext(ctx aws.Context, input *DescribeStaleSecurityGroupsInput, fn func(*DescribeStaleSecurityGroupsOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *DescribeStaleSecurityGroupsInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.DescribeStaleSecurityGroupsRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	cont := true
+	for p.Next() && cont {
+		cont = fn(p.Page().(*DescribeStaleSecurityGroupsOutput), !p.HasNextPage())
+	}
+	return p.Err()
 }
 
 const opDescribeSubnets = "DescribeSubnets"
@@ -16586,7 +18270,7 @@ func (c *EC2) DescribeTagsRequest(input *DescribeTagsInput) (req *request.Reques
 
 // DescribeTags API operation for Amazon Elastic Compute Cloud.
 //
-// Describes one or more of the tags for your EC2 resources.
+// Describes the specified tags for your EC2 resources.
 //
 // For more information about tags, see Tagging Your Resources (https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html)
 // in the Amazon Elastic Compute Cloud User Guide.
@@ -16700,6 +18384,12 @@ func (c *EC2) DescribeTransitGatewayAttachmentsRequest(input *DescribeTransitGat
 		Name:       opDescribeTransitGatewayAttachments,
 		HTTPMethod: "POST",
 		HTTPPath:   "/",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
@@ -16746,6 +18436,56 @@ func (c *EC2) DescribeTransitGatewayAttachmentsWithContext(ctx aws.Context, inpu
 	return out, req.Send()
 }
 
+// DescribeTransitGatewayAttachmentsPages iterates over the pages of a DescribeTransitGatewayAttachments operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See DescribeTransitGatewayAttachments method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//    // Example iterating over at most 3 pages of a DescribeTransitGatewayAttachments operation.
+//    pageNum := 0
+//    err := client.DescribeTransitGatewayAttachmentsPages(params,
+//        func(page *DescribeTransitGatewayAttachmentsOutput, lastPage bool) bool {
+//            pageNum++
+//            fmt.Println(page)
+//            return pageNum <= 3
+//        })
+//
+func (c *EC2) DescribeTransitGatewayAttachmentsPages(input *DescribeTransitGatewayAttachmentsInput, fn func(*DescribeTransitGatewayAttachmentsOutput, bool) bool) error {
+	return c.DescribeTransitGatewayAttachmentsPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// DescribeTransitGatewayAttachmentsPagesWithContext same as DescribeTransitGatewayAttachmentsPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *EC2) DescribeTransitGatewayAttachmentsPagesWithContext(ctx aws.Context, input *DescribeTransitGatewayAttachmentsInput, fn func(*DescribeTransitGatewayAttachmentsOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *DescribeTransitGatewayAttachmentsInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.DescribeTransitGatewayAttachmentsRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	cont := true
+	for p.Next() && cont {
+		cont = fn(p.Page().(*DescribeTransitGatewayAttachmentsOutput), !p.HasNextPage())
+	}
+	return p.Err()
+}
+
 const opDescribeTransitGatewayRouteTables = "DescribeTransitGatewayRouteTables"
 
 // DescribeTransitGatewayRouteTablesRequest generates a "aws/request.Request" representing the
@@ -16777,6 +18517,12 @@ func (c *EC2) DescribeTransitGatewayRouteTablesRequest(input *DescribeTransitGat
 		Name:       opDescribeTransitGatewayRouteTables,
 		HTTPMethod: "POST",
 		HTTPPath:   "/",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
@@ -16821,6 +18567,56 @@ func (c *EC2) DescribeTransitGatewayRouteTablesWithContext(ctx aws.Context, inpu
 	return out, req.Send()
 }
 
+// DescribeTransitGatewayRouteTablesPages iterates over the pages of a DescribeTransitGatewayRouteTables operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See DescribeTransitGatewayRouteTables method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//    // Example iterating over at most 3 pages of a DescribeTransitGatewayRouteTables operation.
+//    pageNum := 0
+//    err := client.DescribeTransitGatewayRouteTablesPages(params,
+//        func(page *DescribeTransitGatewayRouteTablesOutput, lastPage bool) bool {
+//            pageNum++
+//            fmt.Println(page)
+//            return pageNum <= 3
+//        })
+//
+func (c *EC2) DescribeTransitGatewayRouteTablesPages(input *DescribeTransitGatewayRouteTablesInput, fn func(*DescribeTransitGatewayRouteTablesOutput, bool) bool) error {
+	return c.DescribeTransitGatewayRouteTablesPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// DescribeTransitGatewayRouteTablesPagesWithContext same as DescribeTransitGatewayRouteTablesPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *EC2) DescribeTransitGatewayRouteTablesPagesWithContext(ctx aws.Context, input *DescribeTransitGatewayRouteTablesInput, fn func(*DescribeTransitGatewayRouteTablesOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *DescribeTransitGatewayRouteTablesInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.DescribeTransitGatewayRouteTablesRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	cont := true
+	for p.Next() && cont {
+		cont = fn(p.Page().(*DescribeTransitGatewayRouteTablesOutput), !p.HasNextPage())
+	}
+	return p.Err()
+}
+
 const opDescribeTransitGatewayVpcAttachments = "DescribeTransitGatewayVpcAttachments"
 
 // DescribeTransitGatewayVpcAttachmentsRequest generates a "aws/request.Request" representing the
@@ -16852,6 +18648,12 @@ func (c *EC2) DescribeTransitGatewayVpcAttachmentsRequest(input *DescribeTransit
 		Name:       opDescribeTransitGatewayVpcAttachments,
 		HTTPMethod: "POST",
 		HTTPPath:   "/",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
@@ -16896,6 +18698,56 @@ func (c *EC2) DescribeTransitGatewayVpcAttachmentsWithContext(ctx aws.Context, i
 	return out, req.Send()
 }
 
+// DescribeTransitGatewayVpcAttachmentsPages iterates over the pages of a DescribeTransitGatewayVpcAttachments operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See DescribeTransitGatewayVpcAttachments method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//    // Example iterating over at most 3 pages of a DescribeTransitGatewayVpcAttachments operation.
+//    pageNum := 0
+//    err := client.DescribeTransitGatewayVpcAttachmentsPages(params,
+//        func(page *DescribeTransitGatewayVpcAttachmentsOutput, lastPage bool) bool {
+//            pageNum++
+//            fmt.Println(page)
+//            return pageNum <= 3
+//        })
+//
+func (c *EC2) DescribeTransitGatewayVpcAttachmentsPages(input *DescribeTransitGatewayVpcAttachmentsInput, fn func(*DescribeTransitGatewayVpcAttachmentsOutput, bool) bool) error {
+	return c.DescribeTransitGatewayVpcAttachmentsPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// DescribeTransitGatewayVpcAttachmentsPagesWithContext same as DescribeTransitGatewayVpcAttachmentsPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *EC2) DescribeTransitGatewayVpcAttachmentsPagesWithContext(ctx aws.Context, input *DescribeTransitGatewayVpcAttachmentsInput, fn func(*DescribeTransitGatewayVpcAttachmentsOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *DescribeTransitGatewayVpcAttachmentsInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.DescribeTransitGatewayVpcAttachmentsRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	cont := true
+	for p.Next() && cont {
+		cont = fn(p.Page().(*DescribeTransitGatewayVpcAttachmentsOutput), !p.HasNextPage())
+	}
+	return p.Err()
+}
+
 const opDescribeTransitGateways = "DescribeTransitGateways"
 
 // DescribeTransitGatewaysRequest generates a "aws/request.Request" representing the
@@ -16927,6 +18779,12 @@ func (c *EC2) DescribeTransitGatewaysRequest(input *DescribeTransitGatewaysInput
 		Name:       opDescribeTransitGateways,
 		HTTPMethod: "POST",
 		HTTPPath:   "/",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
@@ -16969,6 +18827,56 @@ func (c *EC2) DescribeTransitGatewaysWithContext(ctx aws.Context, input *Describ
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
+}
+
+// DescribeTransitGatewaysPages iterates over the pages of a DescribeTransitGateways operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See DescribeTransitGateways method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//    // Example iterating over at most 3 pages of a DescribeTransitGateways operation.
+//    pageNum := 0
+//    err := client.DescribeTransitGatewaysPages(params,
+//        func(page *DescribeTransitGatewaysOutput, lastPage bool) bool {
+//            pageNum++
+//            fmt.Println(page)
+//            return pageNum <= 3
+//        })
+//
+func (c *EC2) DescribeTransitGatewaysPages(input *DescribeTransitGatewaysInput, fn func(*DescribeTransitGatewaysOutput, bool) bool) error {
+	return c.DescribeTransitGatewaysPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// DescribeTransitGatewaysPagesWithContext same as DescribeTransitGatewaysPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *EC2) DescribeTransitGatewaysPagesWithContext(ctx aws.Context, input *DescribeTransitGatewaysInput, fn func(*DescribeTransitGatewaysOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *DescribeTransitGatewaysInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.DescribeTransitGatewaysRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	cont := true
+	for p.Next() && cont {
+		cont = fn(p.Page().(*DescribeTransitGatewaysOutput), !p.HasNextPage())
+	}
+	return p.Err()
 }
 
 const opDescribeVolumeAttribute = "DescribeVolumeAttribute"
@@ -17264,7 +19172,7 @@ func (c *EC2) DescribeVolumesRequest(input *DescribeVolumesInput) (req *request.
 
 // DescribeVolumes API operation for Amazon Elastic Compute Cloud.
 //
-// Describes the specified EBS volumes.
+// Describes the specified EBS volumes or all of your EBS volumes.
 //
 // If you are describing a long list of volumes, you can paginate the output
 // to make the list more manageable. The MaxResults parameter sets the maximum
@@ -17385,6 +19293,12 @@ func (c *EC2) DescribeVolumesModificationsRequest(input *DescribeVolumesModifica
 		Name:       opDescribeVolumesModifications,
 		HTTPMethod: "POST",
 		HTTPPath:   "/",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
@@ -17439,6 +19353,56 @@ func (c *EC2) DescribeVolumesModificationsWithContext(ctx aws.Context, input *De
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
+}
+
+// DescribeVolumesModificationsPages iterates over the pages of a DescribeVolumesModifications operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See DescribeVolumesModifications method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//    // Example iterating over at most 3 pages of a DescribeVolumesModifications operation.
+//    pageNum := 0
+//    err := client.DescribeVolumesModificationsPages(params,
+//        func(page *DescribeVolumesModificationsOutput, lastPage bool) bool {
+//            pageNum++
+//            fmt.Println(page)
+//            return pageNum <= 3
+//        })
+//
+func (c *EC2) DescribeVolumesModificationsPages(input *DescribeVolumesModificationsInput, fn func(*DescribeVolumesModificationsOutput, bool) bool) error {
+	return c.DescribeVolumesModificationsPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// DescribeVolumesModificationsPagesWithContext same as DescribeVolumesModificationsPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *EC2) DescribeVolumesModificationsPagesWithContext(ctx aws.Context, input *DescribeVolumesModificationsInput, fn func(*DescribeVolumesModificationsOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *DescribeVolumesModificationsInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.DescribeVolumesModificationsRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	cont := true
+	for p.Next() && cont {
+		cont = fn(p.Page().(*DescribeVolumesModificationsOutput), !p.HasNextPage())
+	}
+	return p.Err()
 }
 
 const opDescribeVpcAttribute = "DescribeVpcAttribute"
@@ -17621,6 +19585,12 @@ func (c *EC2) DescribeVpcClassicLinkDnsSupportRequest(input *DescribeVpcClassicL
 		Name:       opDescribeVpcClassicLinkDnsSupport,
 		HTTPMethod: "POST",
 		HTTPPath:   "/",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
@@ -17670,6 +19640,56 @@ func (c *EC2) DescribeVpcClassicLinkDnsSupportWithContext(ctx aws.Context, input
 	return out, req.Send()
 }
 
+// DescribeVpcClassicLinkDnsSupportPages iterates over the pages of a DescribeVpcClassicLinkDnsSupport operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See DescribeVpcClassicLinkDnsSupport method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//    // Example iterating over at most 3 pages of a DescribeVpcClassicLinkDnsSupport operation.
+//    pageNum := 0
+//    err := client.DescribeVpcClassicLinkDnsSupportPages(params,
+//        func(page *DescribeVpcClassicLinkDnsSupportOutput, lastPage bool) bool {
+//            pageNum++
+//            fmt.Println(page)
+//            return pageNum <= 3
+//        })
+//
+func (c *EC2) DescribeVpcClassicLinkDnsSupportPages(input *DescribeVpcClassicLinkDnsSupportInput, fn func(*DescribeVpcClassicLinkDnsSupportOutput, bool) bool) error {
+	return c.DescribeVpcClassicLinkDnsSupportPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// DescribeVpcClassicLinkDnsSupportPagesWithContext same as DescribeVpcClassicLinkDnsSupportPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *EC2) DescribeVpcClassicLinkDnsSupportPagesWithContext(ctx aws.Context, input *DescribeVpcClassicLinkDnsSupportInput, fn func(*DescribeVpcClassicLinkDnsSupportOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *DescribeVpcClassicLinkDnsSupportInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.DescribeVpcClassicLinkDnsSupportRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	cont := true
+	for p.Next() && cont {
+		cont = fn(p.Page().(*DescribeVpcClassicLinkDnsSupportOutput), !p.HasNextPage())
+	}
+	return p.Err()
+}
+
 const opDescribeVpcEndpointConnectionNotifications = "DescribeVpcEndpointConnectionNotifications"
 
 // DescribeVpcEndpointConnectionNotificationsRequest generates a "aws/request.Request" representing the
@@ -17701,6 +19721,12 @@ func (c *EC2) DescribeVpcEndpointConnectionNotificationsRequest(input *DescribeV
 		Name:       opDescribeVpcEndpointConnectionNotifications,
 		HTTPMethod: "POST",
 		HTTPPath:   "/",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
@@ -17745,6 +19771,56 @@ func (c *EC2) DescribeVpcEndpointConnectionNotificationsWithContext(ctx aws.Cont
 	return out, req.Send()
 }
 
+// DescribeVpcEndpointConnectionNotificationsPages iterates over the pages of a DescribeVpcEndpointConnectionNotifications operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See DescribeVpcEndpointConnectionNotifications method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//    // Example iterating over at most 3 pages of a DescribeVpcEndpointConnectionNotifications operation.
+//    pageNum := 0
+//    err := client.DescribeVpcEndpointConnectionNotificationsPages(params,
+//        func(page *DescribeVpcEndpointConnectionNotificationsOutput, lastPage bool) bool {
+//            pageNum++
+//            fmt.Println(page)
+//            return pageNum <= 3
+//        })
+//
+func (c *EC2) DescribeVpcEndpointConnectionNotificationsPages(input *DescribeVpcEndpointConnectionNotificationsInput, fn func(*DescribeVpcEndpointConnectionNotificationsOutput, bool) bool) error {
+	return c.DescribeVpcEndpointConnectionNotificationsPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// DescribeVpcEndpointConnectionNotificationsPagesWithContext same as DescribeVpcEndpointConnectionNotificationsPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *EC2) DescribeVpcEndpointConnectionNotificationsPagesWithContext(ctx aws.Context, input *DescribeVpcEndpointConnectionNotificationsInput, fn func(*DescribeVpcEndpointConnectionNotificationsOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *DescribeVpcEndpointConnectionNotificationsInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.DescribeVpcEndpointConnectionNotificationsRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	cont := true
+	for p.Next() && cont {
+		cont = fn(p.Page().(*DescribeVpcEndpointConnectionNotificationsOutput), !p.HasNextPage())
+	}
+	return p.Err()
+}
+
 const opDescribeVpcEndpointConnections = "DescribeVpcEndpointConnections"
 
 // DescribeVpcEndpointConnectionsRequest generates a "aws/request.Request" representing the
@@ -17776,6 +19852,12 @@ func (c *EC2) DescribeVpcEndpointConnectionsRequest(input *DescribeVpcEndpointCo
 		Name:       opDescribeVpcEndpointConnections,
 		HTTPMethod: "POST",
 		HTTPPath:   "/",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
@@ -17820,6 +19902,56 @@ func (c *EC2) DescribeVpcEndpointConnectionsWithContext(ctx aws.Context, input *
 	return out, req.Send()
 }
 
+// DescribeVpcEndpointConnectionsPages iterates over the pages of a DescribeVpcEndpointConnections operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See DescribeVpcEndpointConnections method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//    // Example iterating over at most 3 pages of a DescribeVpcEndpointConnections operation.
+//    pageNum := 0
+//    err := client.DescribeVpcEndpointConnectionsPages(params,
+//        func(page *DescribeVpcEndpointConnectionsOutput, lastPage bool) bool {
+//            pageNum++
+//            fmt.Println(page)
+//            return pageNum <= 3
+//        })
+//
+func (c *EC2) DescribeVpcEndpointConnectionsPages(input *DescribeVpcEndpointConnectionsInput, fn func(*DescribeVpcEndpointConnectionsOutput, bool) bool) error {
+	return c.DescribeVpcEndpointConnectionsPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// DescribeVpcEndpointConnectionsPagesWithContext same as DescribeVpcEndpointConnectionsPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *EC2) DescribeVpcEndpointConnectionsPagesWithContext(ctx aws.Context, input *DescribeVpcEndpointConnectionsInput, fn func(*DescribeVpcEndpointConnectionsOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *DescribeVpcEndpointConnectionsInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.DescribeVpcEndpointConnectionsRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	cont := true
+	for p.Next() && cont {
+		cont = fn(p.Page().(*DescribeVpcEndpointConnectionsOutput), !p.HasNextPage())
+	}
+	return p.Err()
+}
+
 const opDescribeVpcEndpointServiceConfigurations = "DescribeVpcEndpointServiceConfigurations"
 
 // DescribeVpcEndpointServiceConfigurationsRequest generates a "aws/request.Request" representing the
@@ -17851,6 +19983,12 @@ func (c *EC2) DescribeVpcEndpointServiceConfigurationsRequest(input *DescribeVpc
 		Name:       opDescribeVpcEndpointServiceConfigurations,
 		HTTPMethod: "POST",
 		HTTPPath:   "/",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
@@ -17894,6 +20032,56 @@ func (c *EC2) DescribeVpcEndpointServiceConfigurationsWithContext(ctx aws.Contex
 	return out, req.Send()
 }
 
+// DescribeVpcEndpointServiceConfigurationsPages iterates over the pages of a DescribeVpcEndpointServiceConfigurations operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See DescribeVpcEndpointServiceConfigurations method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//    // Example iterating over at most 3 pages of a DescribeVpcEndpointServiceConfigurations operation.
+//    pageNum := 0
+//    err := client.DescribeVpcEndpointServiceConfigurationsPages(params,
+//        func(page *DescribeVpcEndpointServiceConfigurationsOutput, lastPage bool) bool {
+//            pageNum++
+//            fmt.Println(page)
+//            return pageNum <= 3
+//        })
+//
+func (c *EC2) DescribeVpcEndpointServiceConfigurationsPages(input *DescribeVpcEndpointServiceConfigurationsInput, fn func(*DescribeVpcEndpointServiceConfigurationsOutput, bool) bool) error {
+	return c.DescribeVpcEndpointServiceConfigurationsPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// DescribeVpcEndpointServiceConfigurationsPagesWithContext same as DescribeVpcEndpointServiceConfigurationsPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *EC2) DescribeVpcEndpointServiceConfigurationsPagesWithContext(ctx aws.Context, input *DescribeVpcEndpointServiceConfigurationsInput, fn func(*DescribeVpcEndpointServiceConfigurationsOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *DescribeVpcEndpointServiceConfigurationsInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.DescribeVpcEndpointServiceConfigurationsRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	cont := true
+	for p.Next() && cont {
+		cont = fn(p.Page().(*DescribeVpcEndpointServiceConfigurationsOutput), !p.HasNextPage())
+	}
+	return p.Err()
+}
+
 const opDescribeVpcEndpointServicePermissions = "DescribeVpcEndpointServicePermissions"
 
 // DescribeVpcEndpointServicePermissionsRequest generates a "aws/request.Request" representing the
@@ -17925,6 +20113,12 @@ func (c *EC2) DescribeVpcEndpointServicePermissionsRequest(input *DescribeVpcEnd
 		Name:       opDescribeVpcEndpointServicePermissions,
 		HTTPMethod: "POST",
 		HTTPPath:   "/",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
@@ -17967,6 +20161,56 @@ func (c *EC2) DescribeVpcEndpointServicePermissionsWithContext(ctx aws.Context, 
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
+}
+
+// DescribeVpcEndpointServicePermissionsPages iterates over the pages of a DescribeVpcEndpointServicePermissions operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See DescribeVpcEndpointServicePermissions method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//    // Example iterating over at most 3 pages of a DescribeVpcEndpointServicePermissions operation.
+//    pageNum := 0
+//    err := client.DescribeVpcEndpointServicePermissionsPages(params,
+//        func(page *DescribeVpcEndpointServicePermissionsOutput, lastPage bool) bool {
+//            pageNum++
+//            fmt.Println(page)
+//            return pageNum <= 3
+//        })
+//
+func (c *EC2) DescribeVpcEndpointServicePermissionsPages(input *DescribeVpcEndpointServicePermissionsInput, fn func(*DescribeVpcEndpointServicePermissionsOutput, bool) bool) error {
+	return c.DescribeVpcEndpointServicePermissionsPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// DescribeVpcEndpointServicePermissionsPagesWithContext same as DescribeVpcEndpointServicePermissionsPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *EC2) DescribeVpcEndpointServicePermissionsPagesWithContext(ctx aws.Context, input *DescribeVpcEndpointServicePermissionsInput, fn func(*DescribeVpcEndpointServicePermissionsOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *DescribeVpcEndpointServicePermissionsInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.DescribeVpcEndpointServicePermissionsRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	cont := true
+	for p.Next() && cont {
+		cont = fn(p.Page().(*DescribeVpcEndpointServicePermissionsOutput), !p.HasNextPage())
+	}
+	return p.Err()
 }
 
 const opDescribeVpcEndpointServices = "DescribeVpcEndpointServices"
@@ -18074,6 +20318,12 @@ func (c *EC2) DescribeVpcEndpointsRequest(input *DescribeVpcEndpointsInput) (req
 		Name:       opDescribeVpcEndpoints,
 		HTTPMethod: "POST",
 		HTTPPath:   "/",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
@@ -18115,6 +20365,56 @@ func (c *EC2) DescribeVpcEndpointsWithContext(ctx aws.Context, input *DescribeVp
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
+}
+
+// DescribeVpcEndpointsPages iterates over the pages of a DescribeVpcEndpoints operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See DescribeVpcEndpoints method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//    // Example iterating over at most 3 pages of a DescribeVpcEndpoints operation.
+//    pageNum := 0
+//    err := client.DescribeVpcEndpointsPages(params,
+//        func(page *DescribeVpcEndpointsOutput, lastPage bool) bool {
+//            pageNum++
+//            fmt.Println(page)
+//            return pageNum <= 3
+//        })
+//
+func (c *EC2) DescribeVpcEndpointsPages(input *DescribeVpcEndpointsInput, fn func(*DescribeVpcEndpointsOutput, bool) bool) error {
+	return c.DescribeVpcEndpointsPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// DescribeVpcEndpointsPagesWithContext same as DescribeVpcEndpointsPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *EC2) DescribeVpcEndpointsPagesWithContext(ctx aws.Context, input *DescribeVpcEndpointsInput, fn func(*DescribeVpcEndpointsOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *DescribeVpcEndpointsInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.DescribeVpcEndpointsRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	cont := true
+	for p.Next() && cont {
+		cont = fn(p.Page().(*DescribeVpcEndpointsOutput), !p.HasNextPage())
+	}
+	return p.Err()
 }
 
 const opDescribeVpcPeeringConnections = "DescribeVpcPeeringConnections"
@@ -20919,6 +23219,12 @@ func (c *EC2) GetTransitGatewayAttachmentPropagationsRequest(input *GetTransitGa
 		Name:       opGetTransitGatewayAttachmentPropagations,
 		HTTPMethod: "POST",
 		HTTPPath:   "/",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
@@ -20963,6 +23269,56 @@ func (c *EC2) GetTransitGatewayAttachmentPropagationsWithContext(ctx aws.Context
 	return out, req.Send()
 }
 
+// GetTransitGatewayAttachmentPropagationsPages iterates over the pages of a GetTransitGatewayAttachmentPropagations operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See GetTransitGatewayAttachmentPropagations method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//    // Example iterating over at most 3 pages of a GetTransitGatewayAttachmentPropagations operation.
+//    pageNum := 0
+//    err := client.GetTransitGatewayAttachmentPropagationsPages(params,
+//        func(page *GetTransitGatewayAttachmentPropagationsOutput, lastPage bool) bool {
+//            pageNum++
+//            fmt.Println(page)
+//            return pageNum <= 3
+//        })
+//
+func (c *EC2) GetTransitGatewayAttachmentPropagationsPages(input *GetTransitGatewayAttachmentPropagationsInput, fn func(*GetTransitGatewayAttachmentPropagationsOutput, bool) bool) error {
+	return c.GetTransitGatewayAttachmentPropagationsPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// GetTransitGatewayAttachmentPropagationsPagesWithContext same as GetTransitGatewayAttachmentPropagationsPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *EC2) GetTransitGatewayAttachmentPropagationsPagesWithContext(ctx aws.Context, input *GetTransitGatewayAttachmentPropagationsInput, fn func(*GetTransitGatewayAttachmentPropagationsOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *GetTransitGatewayAttachmentPropagationsInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.GetTransitGatewayAttachmentPropagationsRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	cont := true
+	for p.Next() && cont {
+		cont = fn(p.Page().(*GetTransitGatewayAttachmentPropagationsOutput), !p.HasNextPage())
+	}
+	return p.Err()
+}
+
 const opGetTransitGatewayRouteTableAssociations = "GetTransitGatewayRouteTableAssociations"
 
 // GetTransitGatewayRouteTableAssociationsRequest generates a "aws/request.Request" representing the
@@ -20994,6 +23350,12 @@ func (c *EC2) GetTransitGatewayRouteTableAssociationsRequest(input *GetTransitGa
 		Name:       opGetTransitGatewayRouteTableAssociations,
 		HTTPMethod: "POST",
 		HTTPPath:   "/",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
@@ -21038,6 +23400,56 @@ func (c *EC2) GetTransitGatewayRouteTableAssociationsWithContext(ctx aws.Context
 	return out, req.Send()
 }
 
+// GetTransitGatewayRouteTableAssociationsPages iterates over the pages of a GetTransitGatewayRouteTableAssociations operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See GetTransitGatewayRouteTableAssociations method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//    // Example iterating over at most 3 pages of a GetTransitGatewayRouteTableAssociations operation.
+//    pageNum := 0
+//    err := client.GetTransitGatewayRouteTableAssociationsPages(params,
+//        func(page *GetTransitGatewayRouteTableAssociationsOutput, lastPage bool) bool {
+//            pageNum++
+//            fmt.Println(page)
+//            return pageNum <= 3
+//        })
+//
+func (c *EC2) GetTransitGatewayRouteTableAssociationsPages(input *GetTransitGatewayRouteTableAssociationsInput, fn func(*GetTransitGatewayRouteTableAssociationsOutput, bool) bool) error {
+	return c.GetTransitGatewayRouteTableAssociationsPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// GetTransitGatewayRouteTableAssociationsPagesWithContext same as GetTransitGatewayRouteTableAssociationsPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *EC2) GetTransitGatewayRouteTableAssociationsPagesWithContext(ctx aws.Context, input *GetTransitGatewayRouteTableAssociationsInput, fn func(*GetTransitGatewayRouteTableAssociationsOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *GetTransitGatewayRouteTableAssociationsInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.GetTransitGatewayRouteTableAssociationsRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	cont := true
+	for p.Next() && cont {
+		cont = fn(p.Page().(*GetTransitGatewayRouteTableAssociationsOutput), !p.HasNextPage())
+	}
+	return p.Err()
+}
+
 const opGetTransitGatewayRouteTablePropagations = "GetTransitGatewayRouteTablePropagations"
 
 // GetTransitGatewayRouteTablePropagationsRequest generates a "aws/request.Request" representing the
@@ -21069,6 +23481,12 @@ func (c *EC2) GetTransitGatewayRouteTablePropagationsRequest(input *GetTransitGa
 		Name:       opGetTransitGatewayRouteTablePropagations,
 		HTTPMethod: "POST",
 		HTTPPath:   "/",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
@@ -21111,6 +23529,56 @@ func (c *EC2) GetTransitGatewayRouteTablePropagationsWithContext(ctx aws.Context
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
+}
+
+// GetTransitGatewayRouteTablePropagationsPages iterates over the pages of a GetTransitGatewayRouteTablePropagations operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See GetTransitGatewayRouteTablePropagations method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//    // Example iterating over at most 3 pages of a GetTransitGatewayRouteTablePropagations operation.
+//    pageNum := 0
+//    err := client.GetTransitGatewayRouteTablePropagationsPages(params,
+//        func(page *GetTransitGatewayRouteTablePropagationsOutput, lastPage bool) bool {
+//            pageNum++
+//            fmt.Println(page)
+//            return pageNum <= 3
+//        })
+//
+func (c *EC2) GetTransitGatewayRouteTablePropagationsPages(input *GetTransitGatewayRouteTablePropagationsInput, fn func(*GetTransitGatewayRouteTablePropagationsOutput, bool) bool) error {
+	return c.GetTransitGatewayRouteTablePropagationsPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// GetTransitGatewayRouteTablePropagationsPagesWithContext same as GetTransitGatewayRouteTablePropagationsPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *EC2) GetTransitGatewayRouteTablePropagationsPagesWithContext(ctx aws.Context, input *GetTransitGatewayRouteTablePropagationsInput, fn func(*GetTransitGatewayRouteTablePropagationsOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *GetTransitGatewayRouteTablePropagationsInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.GetTransitGatewayRouteTablePropagationsRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	cont := true
+	for p.Next() && cont {
+		cont = fn(p.Page().(*GetTransitGatewayRouteTablePropagationsOutput), !p.HasNextPage())
+	}
+	return p.Err()
 }
 
 const opImportClientVpnClientCertificateRevocationList = "ImportClientVpnClientCertificateRevocationList"
@@ -24512,7 +26980,7 @@ func (c *EC2) RebootInstancesRequest(input *RebootInstancesInput) (req *request.
 
 // RebootInstances API operation for Amazon Elastic Compute Cloud.
 //
-// Requests a reboot of one or more instances. This operation is asynchronous;
+// Requests a reboot of the specified instances. This operation is asynchronous;
 // it only queues a request to reboot the specified instances. The operation
 // succeeds if the instances are valid and belong to you. Requests to reboot
 // terminated instances are ignored.
@@ -26378,7 +28846,7 @@ func (c *EC2) RevokeSecurityGroupEgressRequest(input *RevokeSecurityGroupEgressI
 
 // RevokeSecurityGroupEgress API operation for Amazon Elastic Compute Cloud.
 //
-// [EC2-VPC only] Removes one or more egress rules from a security group for
+// [EC2-VPC only] Removes the specified egress rules from a security group for
 // EC2-VPC. This action doesn't apply to security groups for use in EC2-Classic.
 // To remove a rule, the values that you specify (for example, ports) must match
 // the existing rule's values exactly.
@@ -26465,7 +28933,7 @@ func (c *EC2) RevokeSecurityGroupIngressRequest(input *RevokeSecurityGroupIngres
 
 // RevokeSecurityGroupIngress API operation for Amazon Elastic Compute Cloud.
 //
-// Removes one or more ingress rules from a security group. To remove a rule,
+// Removes the specified ingress rules from a security group. To remove a rule,
 // the values that you specify (for example, ports) must match the existing
 // rule's values exactly.
 //
@@ -27128,8 +29596,8 @@ func (c *EC2) TerminateInstancesRequest(input *TerminateInstancesInput) (req *re
 
 // TerminateInstances API operation for Amazon Elastic Compute Cloud.
 //
-// Shuts down one or more instances. This operation is idempotent; if you terminate
-// an instance more than once, each call succeeds.
+// Shuts down the specified instances. This operation is idempotent; if you
+// terminate an instance more than once, each call succeeds.
 //
 // If you specify multiple instances and the request fails (for example, because
 // of a single incorrect instance ID), none of the instances are terminated.
@@ -27970,7 +30438,7 @@ type AccountAttribute struct {
 	// The name of the account attribute.
 	AttributeName *string `locationName:"attributeName" type:"string"`
 
-	// One or more values for the account attribute.
+	// The values for the account attribute.
 	AttributeValues []*AccountAttributeValue `locationName:"attributeValueSet" locationNameList:"item" type:"list"`
 }
 
@@ -30300,8 +32768,8 @@ type AuthorizeSecurityGroupEgressInput struct {
 	// GroupId is a required field
 	GroupId *string `locationName:"groupId" type:"string" required:"true"`
 
-	// One or more sets of IP permissions. You can't specify a destination security
-	// group and a CIDR IP address range in the same set of permissions.
+	// The sets of IP permissions. You can't specify a destination security group
+	// and a CIDR IP address range in the same set of permissions.
 	IpPermissions []*IpPermission `locationName:"ipPermissions" locationNameList:"item" type:"list"`
 
 	// Not supported. Use a set of IP permissions to specify the protocol name or
@@ -30438,8 +32906,8 @@ type AuthorizeSecurityGroupIngressInput struct {
 	// either the security group ID or the security group name in the request.
 	GroupName *string `type:"string"`
 
-	// One or more sets of IP permissions. Can be used to specify multiple rules
-	// in a single command.
+	// The sets of IP permissions. Can be used to specify multiple rules in a single
+	// command.
 	IpPermissions []*IpPermission `locationNameList:"item" type:"list"`
 
 	// The IP protocol name (tcp, udp, icmp) or number (see Protocol Numbers (http://www.iana.org/assignments/protocol-numbers/protocol-numbers.xhtml)).
@@ -33594,7 +36062,9 @@ type CopyImageInput struct {
 	//
 	//    * Key ID
 	//
-	//    * Key alias, in the form alias/ExampleAlias
+	//    * Key alias. The alias ARN contains the arn:aws:kms namespace, followed
+	//    by the region of the CMK, the AWS account ID of the CMK owner, the alias
+	//    namespace, and then the CMK alias. For example, arn:aws:kms:us-east-1:012345678910:alias/ExampleAlias.
 	//
 	//    * ARN using key ID. The ID ARN contains the arn:aws:kms namespace, followed
 	//    by the region of the CMK, the AWS account ID of the CMK owner, the key
@@ -33772,7 +36242,9 @@ type CopySnapshotInput struct {
 	//
 	//    * Key ID
 	//
-	//    * Key alias
+	//    * Key alias. The alias ARN contains the arn:aws:kms namespace, followed
+	//    by the region of the CMK, the AWS account ID of the CMK owner, the alias
+	//    namespace, and then the CMK alias. For example, arn:aws:kms:us-east-1:012345678910:alias/ExampleAlias.
 	//
 	//    * ARN using key ID. The ID ARN contains the arn:aws:kms namespace, followed
 	//    by the region of the CMK, the AWS account ID of the CMK owner, the key
@@ -35588,13 +38060,12 @@ func (s *CreateFpgaImageOutput) SetFpgaImageId(v string) *CreateFpgaImageOutput 
 	return s
 }
 
-// Contains the parameters for CreateImage.
 type CreateImageInput struct {
 	_ struct{} `type:"structure"`
 
-	// Information about one or more block device mappings. This parameter cannot
-	// be used to modify the encryption status of existing volumes or snapshots.
-	// To create an AMI with encrypted snapshots, use the CopyImage action.
+	// Tthe block device mappings. This parameter cannot be used to modify the encryption
+	// status of existing volumes or snapshots. To create an AMI with encrypted
+	// snapshots, use the CopyImage action.
 	BlockDeviceMappings []*BlockDeviceMapping `locationName:"blockDeviceMapping" locationNameList:"BlockDeviceMapping" type:"list"`
 
 	// A description for the new image.
@@ -35689,7 +38160,6 @@ func (s *CreateImageInput) SetNoReboot(v bool) *CreateImageInput {
 	return s
 }
 
-// Contains the output of CreateImage.
 type CreateImageOutput struct {
 	_ struct{} `type:"structure"`
 
@@ -37599,7 +40069,7 @@ type CreateTagsInput struct {
 	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
-	// The IDs of one or more resources, separated by spaces.
+	// The IDs of the resources, separated by spaces.
 	//
 	// Constraints: Up to 1000 resource IDs. We recommend breaking up this request
 	// into smaller batches.
@@ -38138,7 +40608,9 @@ type CreateVolumeInput struct {
 	//
 	//    * Key ID
 	//
-	//    * Key alias
+	//    * Key alias. The alias ARN contains the arn:aws:kms namespace, followed
+	//    by the region of the CMK, the AWS account ID of the CMK owner, the alias
+	//    namespace, and then the CMK alias. For example, arn:aws:kms:us-east-1:012345678910:alias/ExampleAlias.
 	//
 	//    * ARN using key ID. The ID ARN contains the arn:aws:kms namespace, followed
 	//    by the region of the CMK, the AWS account ID of the CMK owner, the key
@@ -41300,7 +43772,7 @@ type DeleteTagsInput struct {
 	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
-	// The IDs of one or more resources, separated by spaces.
+	// The IDs of the resources, separated by spaces.
 	//
 	// Constraints: Up to 1000 resource IDs. We recommend breaking up this request
 	// into smaller batches.
@@ -42442,7 +44914,7 @@ func (s DeregisterImageOutput) GoString() string {
 type DescribeAccountAttributesInput struct {
 	_ struct{} `type:"structure"`
 
-	// One or more account attribute names.
+	// The account attribute names.
 	AttributeNames []*string `locationName:"attributeName" locationNameList:"attributeName" type:"list"`
 
 	// Checks whether you have the required permissions for the action, without
@@ -42477,7 +44949,7 @@ func (s *DescribeAccountAttributesInput) SetDryRun(v bool) *DescribeAccountAttri
 type DescribeAccountAttributesOutput struct {
 	_ struct{} `type:"structure"`
 
-	// Information about one or more account attributes.
+	// Information about the account attributes.
 	AccountAttributes []*AccountAttribute `locationName:"accountAttributeSet" locationNameList:"item" type:"list"`
 }
 
@@ -42500,9 +44972,7 @@ func (s *DescribeAccountAttributesOutput) SetAccountAttributes(v []*AccountAttri
 type DescribeAddressesInput struct {
 	_ struct{} `type:"structure"`
 
-	// [EC2-VPC] One or more allocation IDs.
-	//
-	// Default: Describes all your Elastic IP addresses.
+	// [EC2-VPC] Information about the allocation IDs.
 	AllocationIds []*string `locationName:"AllocationId" locationNameList:"AllocationId" type:"list"`
 
 	// Checks whether you have the required permissions for the action, without
@@ -42587,7 +45057,7 @@ func (s *DescribeAddressesInput) SetPublicIps(v []*string) *DescribeAddressesInp
 type DescribeAddressesOutput struct {
 	_ struct{} `type:"structure"`
 
-	// Information about one or more Elastic IP addresses.
+	// Information about the Elastic IP addresses.
 	Addresses []*Address `locationName:"addressesSet" locationNameList:"item" type:"list"`
 }
 
@@ -42676,7 +45146,7 @@ type DescribeAvailabilityZonesInput struct {
 	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
-	// One or more filters.
+	// The filters.
 	//
 	//    * message - Information about the Availability Zone.
 	//
@@ -42691,10 +45161,10 @@ type DescribeAvailabilityZonesInput struct {
 	//    * zone-name - The name of the Availability Zone (for example, us-east-1a).
 	Filters []*Filter `locationName:"Filter" locationNameList:"Filter" type:"list"`
 
-	// The IDs of one or more Availability Zones.
+	// The IDs of the Availability Zones.
 	ZoneIds []*string `locationName:"ZoneId" locationNameList:"ZoneId" type:"list"`
 
-	// The names of one or more Availability Zones.
+	// The names of the Availability Zones.
 	ZoneNames []*string `locationName:"ZoneName" locationNameList:"ZoneName" type:"list"`
 }
 
@@ -42735,7 +45205,7 @@ func (s *DescribeAvailabilityZonesInput) SetZoneNames(v []*string) *DescribeAvai
 type DescribeAvailabilityZonesOutput struct {
 	_ struct{} `type:"structure"`
 
-	// Information about one or more Availability Zones.
+	// Information about the Availability Zones.
 	AvailabilityZones []*AvailabilityZone `locationName:"availabilityZoneInfo" locationNameList:"item" type:"list"`
 }
 
@@ -42755,7 +45225,6 @@ func (s *DescribeAvailabilityZonesOutput) SetAvailabilityZones(v []*Availability
 	return s
 }
 
-// Contains the parameters for DescribeBundleTasks.
 type DescribeBundleTasksInput struct {
 	_ struct{} `type:"structure"`
 
@@ -42824,11 +45293,10 @@ func (s *DescribeBundleTasksInput) SetFilters(v []*Filter) *DescribeBundleTasksI
 	return s
 }
 
-// Contains the output of DescribeBundleTasks.
 type DescribeBundleTasksOutput struct {
 	_ struct{} `type:"structure"`
 
-	// Information about one or more bundle tasks.
+	// Information about the bundle tasks.
 	BundleTasks []*BundleTask `locationName:"bundleInstanceTasksSet" locationNameList:"item" type:"list"`
 }
 
@@ -45840,7 +48308,6 @@ func (s *DescribeImageAttributeOutput) SetSriovNetSupport(v *AttributeValue) *De
 	return s
 }
 
-// Contains the parameters for DescribeImages.
 type DescribeImagesInput struct {
 	_ struct{} `type:"structure"`
 
@@ -45988,11 +48455,10 @@ func (s *DescribeImagesInput) SetOwners(v []*string) *DescribeImagesInput {
 	return s
 }
 
-// Contains the output of DescribeImages.
 type DescribeImagesOutput struct {
 	_ struct{} `type:"structure"`
 
-	// Information about one or more images.
+	// Information about the images.
 	Images []*Image `locationName:"imagesSet" locationNameList:"item" type:"list"`
 }
 
@@ -46441,12 +48907,12 @@ type DescribeInstanceCreditSpecificationsInput struct {
 	// it is UnauthorizedOperation.
 	DryRun *bool `type:"boolean"`
 
-	// One or more filters.
+	// The filters.
 	//
 	//    * instance-id - The ID of the instance.
 	Filters []*Filter `locationName:"Filter" locationNameList:"Filter" type:"list"`
 
-	// One or more instance IDs.
+	// The instance IDs.
 	//
 	// Default: Describes all your instances.
 	//
@@ -46558,7 +49024,7 @@ type DescribeInstanceStatusInput struct {
 	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
-	// One or more filters.
+	// The filters.
 	//
 	//    * availability-zone - The Availability Zone of the instance.
 	//
@@ -46607,7 +49073,7 @@ type DescribeInstanceStatusInput struct {
 	// Default: false
 	IncludeAllInstances *bool `locationName:"includeAllInstances" type:"boolean"`
 
-	// One or more instance IDs.
+	// The instance IDs.
 	//
 	// Default: Describes all your instances.
 	//
@@ -46673,7 +49139,7 @@ func (s *DescribeInstanceStatusInput) SetNextToken(v string) *DescribeInstanceSt
 type DescribeInstanceStatusOutput struct {
 	_ struct{} `type:"structure"`
 
-	// One or more instance status descriptions.
+	// Information about the status of the instances.
 	InstanceStatuses []*InstanceStatus `locationName:"instanceStatusSet" locationNameList:"item" type:"list"`
 
 	// The token to use to retrieve the next page of results. This value is null
@@ -46712,7 +49178,7 @@ type DescribeInstancesInput struct {
 	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
-	// One or more filters.
+	// The filters.
 	//
 	//    * affinity - The affinity setting for an instance running on a Dedicated
 	//    Host (default | host).
@@ -46954,7 +49420,7 @@ type DescribeInstancesInput struct {
 	//    * vpc-id - The ID of the VPC that the instance is running in.
 	Filters []*Filter `locationName:"Filter" locationNameList:"Filter" type:"list"`
 
-	// One or more instance IDs.
+	// The instance IDs.
 	//
 	// Default: Describes all your instances.
 	InstanceIds []*string `locationName:"InstanceId" locationNameList:"InstanceId" type:"list"`
@@ -47016,7 +49482,7 @@ type DescribeInstancesOutput struct {
 	// when there are no more results to return.
 	NextToken *string `locationName:"nextToken" type:"string"`
 
-	// Zero or more reservations.
+	// Information about the reservations.
 	Reservations []*Reservation `locationName:"reservationSet" locationNameList:"item" type:"list"`
 }
 
@@ -47181,14 +49647,14 @@ type DescribeKeyPairsInput struct {
 	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
-	// One or more filters.
+	// The filters.
 	//
 	//    * fingerprint - The fingerprint of the key pair.
 	//
 	//    * key-name - The name of the key pair.
 	Filters []*Filter `locationName:"Filter" locationNameList:"Filter" type:"list"`
 
-	// One or more key pair names.
+	// The key pair names.
 	//
 	// Default: Describes all your key pairs.
 	KeyNames []*string `locationName:"KeyName" locationNameList:"KeyName" type:"list"`
@@ -47225,7 +49691,7 @@ func (s *DescribeKeyPairsInput) SetKeyNames(v []*string) *DescribeKeyPairsInput 
 type DescribeKeyPairsOutput struct {
 	_ struct{} `type:"structure"`
 
-	// Information about one or more key pairs.
+	// Information about the key pairs.
 	KeyPairs []*KeyPairInfo `locationName:"keySet" locationNameList:"item" type:"list"`
 }
 
@@ -48329,7 +50795,7 @@ type DescribePlacementGroupsInput struct {
 	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
-	// One or more filters.
+	// The filters.
 	//
 	//    * group-name - The name of the placement group.
 	//
@@ -48339,7 +50805,7 @@ type DescribePlacementGroupsInput struct {
 	//    * strategy - The strategy of the placement group (cluster | spread | partition).
 	Filters []*Filter `locationName:"Filter" locationNameList:"Filter" type:"list"`
 
-	// One or more placement group names.
+	// The names of the placement groups.
 	//
 	// Default: Describes all your placement groups, or only those otherwise specified.
 	GroupNames []*string `locationName:"groupName" type:"list"`
@@ -48376,7 +50842,7 @@ func (s *DescribePlacementGroupsInput) SetGroupNames(v []*string) *DescribePlace
 type DescribePlacementGroupsOutput struct {
 	_ struct{} `type:"structure"`
 
-	// One or more placement groups.
+	// Information about the placement groups.
 	PlacementGroups []*PlacementGroup `locationName:"placementGroupSet" locationNameList:"item" type:"list"`
 }
 
@@ -48689,14 +51155,14 @@ type DescribeRegionsInput struct {
 	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
-	// One or more filters.
+	// The filters.
 	//
 	//    * endpoint - The endpoint of the region (for example, ec2.us-east-1.amazonaws.com).
 	//
 	//    * region-name - The name of the region (for example, us-east-1).
 	Filters []*Filter `locationName:"Filter" locationNameList:"Filter" type:"list"`
 
-	// The names of one or more regions.
+	// The names of the regions.
 	RegionNames []*string `locationName:"RegionName" locationNameList:"RegionName" type:"list"`
 }
 
@@ -48731,7 +51197,7 @@ func (s *DescribeRegionsInput) SetRegionNames(v []*string) *DescribeRegionsInput
 type DescribeRegionsOutput struct {
 	_ struct{} `type:"structure"`
 
-	// Information about one or more regions.
+	// Information about the regions.
 	Regions []*Region `locationName:"regionInfo" locationNameList:"item" type:"list"`
 }
 
@@ -49767,7 +52233,7 @@ type DescribeSecurityGroupReferencesInput struct {
 	// it is UnauthorizedOperation.
 	DryRun *bool `type:"boolean"`
 
-	// One or more security group IDs in your account.
+	// The IDs of the security groups in your account.
 	//
 	// GroupId is a required field
 	GroupId []*string `locationNameList:"item" type:"list" required:"true"`
@@ -49840,9 +52306,9 @@ type DescribeSecurityGroupsInput struct {
 	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
-	// One or more filters. If using multiple filters for rules, the results include
-	// security groups for which any combination of rules - not necessarily a single
-	// rule - match all filters.
+	// The filters. If using multiple filters for rules, the results include security
+	// groups for which any combination of rules - not necessarily a single rule
+	// - match all filters.
 	//
 	//    * description - The description of the security group.
 	//
@@ -49919,13 +52385,13 @@ type DescribeSecurityGroupsInput struct {
 	//    * vpc-id - The ID of the VPC specified when the security group was created.
 	Filters []*Filter `locationName:"Filter" locationNameList:"Filter" type:"list"`
 
-	// One or more security group IDs. Required for security groups in a nondefault
+	// The IDs of the security groups. Required for security groups in a nondefault
 	// VPC.
 	//
 	// Default: Describes all your security groups.
 	GroupIds []*string `locationName:"GroupId" locationNameList:"groupId" type:"list"`
 
-	// [EC2-Classic and default VPC only] One or more security group names. You
+	// [EC2-Classic and default VPC only] The names of the security groups. You
 	// can specify either the security group name or the security group ID. For
 	// security groups in a nondefault VPC, use the group-name filter to describe
 	// security groups by name.
@@ -49996,7 +52462,7 @@ type DescribeSecurityGroupsOutput struct {
 	// when there are no more results to return.
 	NextToken *string `locationName:"nextToken" type:"string"`
 
-	// Information about one or more security groups.
+	// Information about the security groups.
 	SecurityGroups []*SecurityGroup `locationName:"securityGroupInfo" locationNameList:"item" type:"list"`
 }
 
@@ -50130,7 +52596,6 @@ func (s *DescribeSnapshotAttributeOutput) SetSnapshotId(v string) *DescribeSnaps
 	return s
 }
 
-// Contains the parameters for DescribeSnapshots.
 type DescribeSnapshotsInput struct {
 	_ struct{} `type:"structure"`
 
@@ -50140,13 +52605,14 @@ type DescribeSnapshotsInput struct {
 	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
-	// One or more filters.
+	// The filters.
 	//
 	//    * description - A description of the snapshot.
 	//
-	//    * owner-alias - Value from an Amazon-maintained list (amazon | aws-marketplace
-	//    | microsoft) of snapshot owners. Not to be confused with the user-configured
-	//    AWS account alias, which is set from the IAM console.
+	//    * owner-alias - Value from an Amazon-maintained list (amazon | self |
+	//    all | aws-marketplace | microsoft) of snapshot owners. Not to be confused
+	//    with the user-configured AWS account alias, which is set from the IAM
+	//    console.
 	//
 	//    * owner-id - The ID of the AWS account that owns the snapshot.
 	//
@@ -50192,13 +52658,13 @@ type DescribeSnapshotsInput struct {
 	// to return.
 	NextToken *string `type:"string"`
 
-	// Describes the snapshots owned by one or more owners.
+	// Describes the snapshots owned by these owners.
 	OwnerIds []*string `locationName:"Owner" locationNameList:"Owner" type:"list"`
 
-	// One or more AWS accounts IDs that can create volumes from the snapshot.
+	// The IDs of the AWS accounts that can create volumes from the snapshot.
 	RestorableByUserIds []*string `locationName:"RestorableBy" type:"list"`
 
-	// One or more snapshot IDs.
+	// The snapshot IDs.
 	//
 	// Default: Describes the snapshots for which you have create volume permissions.
 	SnapshotIds []*string `locationName:"SnapshotId" locationNameList:"SnapshotId" type:"list"`
@@ -50256,7 +52722,6 @@ func (s *DescribeSnapshotsInput) SetSnapshotIds(v []*string) *DescribeSnapshotsI
 	return s
 }
 
-// Contains the output of DescribeSnapshots.
 type DescribeSnapshotsOutput struct {
 	_ struct{} `type:"structure"`
 
@@ -52018,7 +54483,6 @@ func (s *DescribeVolumeAttributeOutput) SetVolumeId(v string) *DescribeVolumeAtt
 	return s
 }
 
-// Contains the parameters for DescribeVolumeStatus.
 type DescribeVolumeStatusInput struct {
 	_ struct{} `type:"structure"`
 
@@ -52028,7 +54492,7 @@ type DescribeVolumeStatusInput struct {
 	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
-	// One or more filters.
+	// The filters.
 	//
 	//    * action.code - The action code for the event (for example, enable-volume-io).
 	//
@@ -52077,7 +54541,7 @@ type DescribeVolumeStatusInput struct {
 	// more results to return.
 	NextToken *string `type:"string"`
 
-	// One or more volume IDs.
+	// The IDs of the volumes.
 	//
 	// Default: Describes all your volumes.
 	VolumeIds []*string `locationName:"VolumeId" locationNameList:"VolumeId" type:"list"`
@@ -52123,7 +54587,6 @@ func (s *DescribeVolumeStatusInput) SetVolumeIds(v []*string) *DescribeVolumeSta
 	return s
 }
 
-// Contains the output of DescribeVolumeStatus.
 type DescribeVolumeStatusOutput struct {
 	_ struct{} `type:"structure"`
 
@@ -52131,7 +54594,7 @@ type DescribeVolumeStatusOutput struct {
 	// when there are no more results to return.
 	NextToken *string `locationName:"nextToken" type:"string"`
 
-	// A list of volumes.
+	// Information about the status of the volumes.
 	VolumeStatuses []*VolumeStatusItem `locationName:"volumeStatusSet" locationNameList:"item" type:"list"`
 }
 
@@ -52157,7 +54620,6 @@ func (s *DescribeVolumeStatusOutput) SetVolumeStatuses(v []*VolumeStatusItem) *D
 	return s
 }
 
-// Contains the parameters for DescribeVolumes.
 type DescribeVolumesInput struct {
 	_ struct{} `type:"structure"`
 
@@ -52167,7 +54629,7 @@ type DescribeVolumesInput struct {
 	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
-	// One or more filters.
+	// The filters.
 	//
 	//    * attachment.attach-time - The time stamp when the attachment initiated.
 	//
@@ -52229,7 +54691,7 @@ type DescribeVolumesInput struct {
 	// NextToken value. This value is null when there are no more results to return.
 	NextToken *string `locationName:"nextToken" type:"string"`
 
-	// One or more volume IDs.
+	// The volume IDs.
 	VolumeIds []*string `locationName:"VolumeId" locationNameList:"VolumeId" type:"list"`
 }
 
@@ -52282,7 +54744,7 @@ type DescribeVolumesModificationsInput struct {
 	// it is UnauthorizedOperation.
 	DryRun *bool `type:"boolean"`
 
-	// One or more filters. Supported filters: volume-id, modification-state, target-size,
+	// The filters. Supported filters: volume-id, modification-state, target-size,
 	// target-iops, target-volume-type, original-size, original-iops, original-volume-type,
 	// start-time.
 	Filters []*Filter `locationName:"Filter" locationNameList:"Filter" type:"list"`
@@ -52294,7 +54756,7 @@ type DescribeVolumesModificationsInput struct {
 	// The nextToken value returned by a previous paginated request.
 	NextToken *string `type:"string"`
 
-	// One or more volume IDs for which in-progress modifications will be described.
+	// The IDs of the volumes for which in-progress modifications will be described.
 	VolumeIds []*string `locationName:"VolumeId" locationNameList:"VolumeId" type:"list"`
 }
 
@@ -52344,7 +54806,7 @@ type DescribeVolumesModificationsOutput struct {
 	// Token for pagination, null if there are no more results
 	NextToken *string `locationName:"nextToken" type:"string"`
 
-	// A list of returned VolumeModification objects.
+	// Information about the volume modifications.
 	VolumesModifications []*VolumeModification `locationName:"volumeModificationSet" locationNameList:"item" type:"list"`
 }
 
@@ -52370,7 +54832,6 @@ func (s *DescribeVolumesModificationsOutput) SetVolumesModifications(v []*Volume
 	return s
 }
 
-// Contains the output of DescribeVolumes.
 type DescribeVolumesOutput struct {
 	_ struct{} `type:"structure"`
 
@@ -56929,7 +59390,7 @@ type Filter struct {
 	// The name of the filter. Filter names are case-sensitive.
 	Name *string `type:"string"`
 
-	// One or more filter values. Filter values are case-sensitive.
+	// The filter values. Filter values are case-sensitive.
 	Values []*string `locationName:"Value" locationNameList:"item" type:"list"`
 }
 
@@ -60177,7 +62638,9 @@ type ImportImageInput struct {
 	//
 	//    * Key ID
 	//
-	//    * Key alias, in the form alias/ExampleAlias
+	//    * Key alias. The alias ARN contains the arn:aws:kms namespace, followed
+	//    by the region of the CMK, the AWS account ID of the CMK owner, the alias
+	//    namespace, and then the CMK alias. For example, arn:aws:kms:us-east-1:012345678910:alias/ExampleAlias.
 	//
 	//    * ARN using key ID. The ID ARN contains the arn:aws:kms namespace, followed
 	//    by the region of the CMK, the AWS account ID of the CMK owner, the key
@@ -61071,7 +63534,9 @@ type ImportSnapshotInput struct {
 	//
 	//    * Key ID
 	//
-	//    * Key alias, in the form alias/ExampleAlias
+	//    * Key alias. The alias ARN contains the arn:aws:kms namespace, followed
+	//    by the region of the CMK, the AWS account ID of the CMK owner, the alias
+	//    namespace, and then the CMK alias. For example, arn:aws:kms:us-east-1:012345678910:alias/ExampleAlias.
 	//
 	//    * ARN using key ID. The ID ARN contains the arn:aws:kms namespace, followed
 	//    by the region of the CMK, the AWS account ID of the CMK owner, the key
@@ -61497,7 +63962,7 @@ type Instance struct {
 	// The monitoring for the instance.
 	Monitoring *Monitoring `locationName:"monitoring" type:"structure"`
 
-	// [EC2-VPC] One or more network interfaces for the instance.
+	// [EC2-VPC] The network interfaces for the instance.
 	NetworkInterfaces []*InstanceNetworkInterface `locationName:"networkInterfaceSet" locationNameList:"item" type:"list"`
 
 	// The location where the instance launched, if applicable.
@@ -61540,7 +64005,7 @@ type Instance struct {
 	// instance store volume.
 	RootDeviceType *string `locationName:"rootDeviceType" type:"string" enum:"DeviceType"`
 
-	// One or more security groups for the instance.
+	// The security groups for the instance.
 	SecurityGroups []*GroupIdentifier `locationName:"groupSet" locationNameList:"item" type:"list"`
 
 	// Specifies whether to enable an instance launched in a VPC to perform NAT.
@@ -63117,13 +65582,13 @@ type IpPermission struct {
 	// for all types and codes is allowed when authorizing rules.
 	IpProtocol *string `locationName:"ipProtocol" type:"string"`
 
-	// One or more IPv4 ranges.
+	// The IPv4 ranges.
 	IpRanges []*IpRange `locationName:"ipRanges" locationNameList:"item" type:"list"`
 
-	// [EC2-VPC only] One or more IPv6 ranges.
+	// [EC2-VPC only] The IPv6 ranges.
 	Ipv6Ranges []*Ipv6Range `locationName:"ipv6Ranges" locationNameList:"item" type:"list"`
 
-	// [EC2-VPC only] One or more prefix list IDs for an AWS service. With AuthorizeSecurityGroupEgress,
+	// [EC2-VPC only] The prefix list IDs for an AWS service. With AuthorizeSecurityGroupEgress,
 	// this is the AWS service that you want to access through a VPC endpoint from
 	// instances associated with the security group.
 	PrefixListIds []*PrefixListId `locationName:"prefixListIds" locationNameList:"item" type:"list"`
@@ -63133,7 +65598,7 @@ type IpPermission struct {
 	// If you specify all ICMP/ICMPv6 types, you must specify all codes.
 	ToPort *int64 `locationName:"toPort" type:"integer"`
 
-	// One or more security group and AWS account ID pairs.
+	// The security group and AWS account ID pairs.
 	UserIdGroupPairs []*UserIdGroupPair `locationName:"groups" locationNameList:"item" type:"list"`
 }
 
@@ -68616,7 +71081,7 @@ type MonitorInstancesInput struct {
 	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
-	// One or more instance IDs.
+	// The IDs of the instances.
 	//
 	// InstanceIds is a required field
 	InstanceIds []*string `locationName:"InstanceId" locationNameList:"InstanceId" type:"list" required:"true"`
@@ -71386,7 +73851,7 @@ type RebootInstancesInput struct {
 	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
-	// One or more instance IDs.
+	// The instance IDs.
 	//
 	// InstanceIds is a required field
 	InstanceIds []*string `locationName:"InstanceId" locationNameList:"InstanceId" type:"list" required:"true"`
@@ -72749,12 +75214,12 @@ type ReportInstanceStatusInput struct {
 	// The time at which the reported instance health state ended.
 	EndTime *time.Time `locationName:"endTime" type:"timestamp"`
 
-	// One or more instances.
+	// The instances.
 	//
 	// Instances is a required field
 	Instances []*string `locationName:"instanceId" locationNameList:"InstanceId" type:"list" required:"true"`
 
-	// One or more reason codes that describe the health state of your instance.
+	// The reason codes that describe the health state of your instance.
 	//
 	//    * instance-stuck-in-state: My instance is stuck in a state.
 	//
@@ -73679,10 +76144,10 @@ func (s *RequestSpotLaunchSpecification) SetUserData(v string) *RequestSpotLaunc
 type Reservation struct {
 	_ struct{} `type:"structure"`
 
-	// [EC2-Classic only] One or more security groups.
+	// [EC2-Classic only] The security groups.
 	Groups []*GroupIdentifier `locationName:"groupSet" locationNameList:"item" type:"list"`
 
-	// One or more instances.
+	// The instances.
 	Instances []*Instance `locationName:"instancesSet" locationNameList:"item" type:"list"`
 
 	// The ID of the AWS account that owns the reservation.
@@ -75396,8 +77861,8 @@ type RevokeSecurityGroupEgressInput struct {
 	// GroupId is a required field
 	GroupId *string `locationName:"groupId" type:"string" required:"true"`
 
-	// One or more sets of IP permissions. You can't specify a destination security
-	// group and a CIDR IP address range in the same set of permissions.
+	// The sets of IP permissions. You can't specify a destination security group
+	// and a CIDR IP address range in the same set of permissions.
 	IpPermissions []*IpPermission `locationName:"ipPermissions" locationNameList:"item" type:"list"`
 
 	// Not supported. Use a set of IP permissions to specify the protocol name or
@@ -75533,8 +77998,8 @@ type RevokeSecurityGroupIngressInput struct {
 	// either the security group ID or the security group name in the request.
 	GroupName *string `type:"string"`
 
-	// One or more sets of IP permissions. You can't specify a source security group
-	// and a CIDR IP address range in the same set of permissions.
+	// The sets of IP permissions. You can't specify a source security group and
+	// a CIDR IP address range in the same set of permissions.
 	IpPermissions []*IpPermission `locationNameList:"item" type:"list"`
 
 	// The IP protocol name (tcp, udp, icmp) or number (see Protocol Numbers (http://www.iana.org/assignments/protocol-numbers/protocol-numbers.xhtml)).
@@ -75922,8 +78387,8 @@ type RunInstancesInput struct {
 	// Reserved.
 	AdditionalInfo *string `locationName:"additionalInfo" type:"string"`
 
-	// One or more block device mapping entries. You can't specify both a snapshot
-	// ID and an encryption value. This is because only blank volumes can be encrypted
+	// The block device mapping entries. You can't specify both a snapshot ID and
+	// an encryption value. This is because only blank volumes can be encrypted
 	// on creation. If a snapshot is the basis for a volume, it is not blank and
 	// its encryption status is used for the volume encryption status.
 	BlockDeviceMappings []*BlockDeviceMapping `locationName:"BlockDeviceMapping" locationNameList:"BlockDeviceMapping" type:"list"`
@@ -76024,11 +78489,10 @@ type RunInstancesInput struct {
 	// request.
 	Ipv6AddressCount *int64 `type:"integer"`
 
-	// [EC2-VPC] Specify one or more IPv6 addresses from the range of the subnet
-	// to associate with the primary network interface. You cannot specify this
-	// option and the option to assign a number of IPv6 addresses in the same request.
-	// You cannot specify this option if you've specified a minimum number of instances
-	// to launch.
+	// [EC2-VPC] The IPv6 addresses from the range of the subnet to associate with
+	// the primary network interface. You cannot specify this option and the option
+	// to assign a number of IPv6 addresses in the same request. You cannot specify
+	// this option if you've specified a minimum number of instances to launch.
 	//
 	// You cannot specify this option and the network interfaces option in the same
 	// request.
@@ -76083,7 +78547,7 @@ type RunInstancesInput struct {
 	// The monitoring for the instance.
 	Monitoring *RunInstancesMonitoringEnabled `type:"structure"`
 
-	// One or more network interfaces.
+	// The network interfaces.
 	//
 	// You cannot specify this option and the network interfaces option in the same
 	// request.
@@ -76111,7 +78575,7 @@ type RunInstancesInput struct {
 	// in the Amazon Elastic Compute Cloud User Guide.
 	RamdiskId *string `type:"string"`
 
-	// One or more security group IDs. You can create a security group using CreateSecurityGroup.
+	// The IDs of the security groups. You can create a security group using CreateSecurityGroup.
 	//
 	// Default: Amazon EC2 uses the default security group.
 	//
@@ -76119,7 +78583,7 @@ type RunInstancesInput struct {
 	// request.
 	SecurityGroupIds []*string `locationName:"SecurityGroupId" locationNameList:"SecurityGroupId" type:"list"`
 
-	// [EC2-Classic, default VPC] One or more security group names. For a nondefault
+	// [EC2-Classic, default VPC] The names of the security groups. For a nondefault
 	// VPC, you must use security group IDs instead.
 	//
 	// You cannot specify this option and the network interfaces option in the same
@@ -77792,10 +80256,10 @@ type SecurityGroup struct {
 	// The name of the security group.
 	GroupName *string `locationName:"groupName" type:"string"`
 
-	// One or more inbound rules associated with the security group.
+	// The inbound rules associated with the security group.
 	IpPermissions []*IpPermission `locationName:"ipPermissions" locationNameList:"item" type:"list"`
 
-	// [EC2-VPC] One or more outbound rules associated with the security group.
+	// [EC2-VPC] The outbound rules associated with the security group.
 	IpPermissionsEgress []*IpPermission `locationName:"ipPermissionsEgress" locationNameList:"item" type:"list"`
 
 	// The AWS account ID of the owner of the security group.
@@ -77955,6 +80419,10 @@ type ServiceConfiguration struct {
 	// The DNS names for the service.
 	BaseEndpointDnsNames []*string `locationName:"baseEndpointDnsNameSet" locationNameList:"item" type:"list"`
 
+	// Indicates whether the service manages it's VPC Endpoints. Management of the
+	// service VPC Endpoints using the VPC Endpoint API is restricted.
+	ManagesVpcEndpoints *bool `locationName:"managesVpcEndpoints" type:"boolean"`
+
 	// The Amazon Resource Names (ARNs) of the Network Load Balancers for the service.
 	NetworkLoadBalancerArns []*string `locationName:"networkLoadBalancerArnSet" locationNameList:"item" type:"list"`
 
@@ -77999,6 +80467,12 @@ func (s *ServiceConfiguration) SetAvailabilityZones(v []*string) *ServiceConfigu
 // SetBaseEndpointDnsNames sets the BaseEndpointDnsNames field's value.
 func (s *ServiceConfiguration) SetBaseEndpointDnsNames(v []*string) *ServiceConfiguration {
 	s.BaseEndpointDnsNames = v
+	return s
+}
+
+// SetManagesVpcEndpoints sets the ManagesVpcEndpoints field's value.
+func (s *ServiceConfiguration) SetManagesVpcEndpoints(v bool) *ServiceConfiguration {
+	s.ManagesVpcEndpoints = &v
 	return s
 }
 
@@ -78052,6 +80526,10 @@ type ServiceDetail struct {
 	// The DNS names for the service.
 	BaseEndpointDnsNames []*string `locationName:"baseEndpointDnsNameSet" locationNameList:"item" type:"list"`
 
+	// Indicates whether the service manages it's VPC Endpoints. Management of the
+	// service VPC Endpoints using the VPC Endpoint API is restricted.
+	ManagesVpcEndpoints *bool `locationName:"managesVpcEndpoints" type:"boolean"`
+
 	// The AWS account ID of the service owner.
 	Owner *string `locationName:"owner" type:"string"`
 
@@ -78093,6 +80571,12 @@ func (s *ServiceDetail) SetAvailabilityZones(v []*string) *ServiceDetail {
 // SetBaseEndpointDnsNames sets the BaseEndpointDnsNames field's value.
 func (s *ServiceDetail) SetBaseEndpointDnsNames(v []*string) *ServiceDetail {
 	s.BaseEndpointDnsNames = v
+	return s
+}
+
+// SetManagesVpcEndpoints sets the ManagesVpcEndpoints field's value.
+func (s *ServiceDetail) SetManagesVpcEndpoints(v bool) *ServiceDetail {
+	s.ManagesVpcEndpoints = &v
 	return s
 }
 
@@ -78262,9 +80746,9 @@ type Snapshot struct {
 	// volume.
 	KmsKeyId *string `locationName:"kmsKeyId" type:"string"`
 
-	// Value from an Amazon-maintained list (amazon | aws-marketplace | microsoft)
-	// of snapshot owners. Not to be confused with the user-configured AWS account
-	// alias, which is set from the IAM console.
+	// Value from an Amazon-maintained list (amazon | self | all | aws-marketplace
+	// | microsoft) of snapshot owners. Not to be confused with the user-configured
+	// AWS account alias, which is set from the IAM console.
 	OwnerAlias *string `locationName:"ownerAlias" type:"string"`
 
 	// The AWS account ID of the EBS snapshot owner.
@@ -79944,19 +82428,19 @@ type StaleIpPermission struct {
 	// (http://www.iana.org/assignments/protocol-numbers/protocol-numbers.xhtml).
 	IpProtocol *string `locationName:"ipProtocol" type:"string"`
 
-	// One or more IP ranges. Not applicable for stale security group rules.
+	// The IP ranges. Not applicable for stale security group rules.
 	IpRanges []*string `locationName:"ipRanges" locationNameList:"item" type:"list"`
 
-	// One or more prefix list IDs for an AWS service. Not applicable for stale
-	// security group rules.
+	// The prefix list IDs for an AWS service. Not applicable for stale security
+	// group rules.
 	PrefixListIds []*string `locationName:"prefixListIds" locationNameList:"item" type:"list"`
 
 	// The end of the port range for the TCP and UDP protocols, or an ICMP type
 	// number. A value of -1 indicates all ICMP types.
 	ToPort *int64 `locationName:"toPort" type:"integer"`
 
-	// One or more security group pairs. Returns the ID of the referenced security
-	// group and VPC, and the ID and status of the VPC peering connection.
+	// The security group pairs. Returns the ID of the referenced security group
+	// and VPC, and the ID and status of the VPC peering connection.
 	UserIdGroupPairs []*UserIdGroupPair `locationName:"groups" locationNameList:"item" type:"list"`
 }
 
@@ -80087,7 +82571,7 @@ type StartInstancesInput struct {
 	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
-	// One or more instance IDs.
+	// The IDs of the instances.
 	//
 	// InstanceIds is a required field
 	InstanceIds []*string `locationName:"InstanceId" locationNameList:"InstanceId" type:"list" required:"true"`
@@ -80137,7 +82621,7 @@ func (s *StartInstancesInput) SetInstanceIds(v []*string) *StartInstancesInput {
 type StartInstancesOutput struct {
 	_ struct{} `type:"structure"`
 
-	// Information about one or more started instances.
+	// Information about the started instances.
 	StartingInstances []*InstanceStateChange `locationName:"instancesSet" locationNameList:"item" type:"list"`
 }
 
@@ -80253,7 +82737,7 @@ type StopInstancesInput struct {
 	// Default: false
 	Hibernate *bool `type:"boolean"`
 
-	// One or more instance IDs.
+	// The IDs of the instances.
 	//
 	// InstanceIds is a required field
 	InstanceIds []*string `locationName:"InstanceId" locationNameList:"InstanceId" type:"list" required:"true"`
@@ -80309,7 +82793,7 @@ func (s *StopInstancesInput) SetInstanceIds(v []*string) *StopInstancesInput {
 type StopInstancesOutput struct {
 	_ struct{} `type:"structure"`
 
-	// Information about one or more stopped instances.
+	// Information about the stopped instances.
 	StoppingInstances []*InstanceStateChange `locationName:"instancesSet" locationNameList:"item" type:"list"`
 }
 
@@ -81292,7 +83776,7 @@ type TerminateInstancesInput struct {
 	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
-	// One or more instance IDs.
+	// The IDs of the instances.
 	//
 	// Constraints: Up to 1000 instance IDs. We recommend breaking up this request
 	// into smaller batches.
@@ -81339,7 +83823,7 @@ func (s *TerminateInstancesInput) SetInstanceIds(v []*string) *TerminateInstance
 type TerminateInstancesOutput struct {
 	_ struct{} `type:"structure"`
 
-	// Information about one or more terminated instances.
+	// Information about the terminated instances.
 	TerminatingInstances []*InstanceStateChange `locationName:"instancesSet" locationNameList:"item" type:"list"`
 }
 
@@ -82468,7 +84952,7 @@ type UnmonitorInstancesInput struct {
 	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
-	// One or more instance IDs.
+	// The IDs of the instances.
 	//
 	// InstanceIds is a required field
 	InstanceIds []*string `locationName:"InstanceId" locationNameList:"InstanceId" type:"list" required:"true"`
@@ -83994,6 +86478,9 @@ type VpcEndpoint struct {
 	// hosted zone.
 	PrivateDnsEnabled *bool `locationName:"privateDnsEnabled" type:"boolean"`
 
+	// Indicates whether the VPC Endpoint is being managed by its service.
+	RequesterManaged *bool `locationName:"requesterManaged" type:"boolean"`
+
 	// (Gateway endpoint) One or more route tables associated with the endpoint.
 	RouteTableIds []*string `locationName:"routeTableIdSet" locationNameList:"item" type:"list"`
 
@@ -84059,6 +86546,12 @@ func (s *VpcEndpoint) SetPolicyDocument(v string) *VpcEndpoint {
 // SetPrivateDnsEnabled sets the PrivateDnsEnabled field's value.
 func (s *VpcEndpoint) SetPrivateDnsEnabled(v bool) *VpcEndpoint {
 	s.PrivateDnsEnabled = &v
+	return s
+}
+
+// SetRequesterManaged sets the RequesterManaged field's value.
+func (s *VpcEndpoint) SetRequesterManaged(v bool) *VpcEndpoint {
+	s.RequesterManaged = &v
 	return s
 }
 
@@ -85951,6 +88444,30 @@ const (
 	// InstanceTypeR5dMetal is a InstanceType enum value
 	InstanceTypeR5dMetal = "r5d.metal"
 
+	// InstanceTypeR5adLarge is a InstanceType enum value
+	InstanceTypeR5adLarge = "r5ad.large"
+
+	// InstanceTypeR5adXlarge is a InstanceType enum value
+	InstanceTypeR5adXlarge = "r5ad.xlarge"
+
+	// InstanceTypeR5ad2xlarge is a InstanceType enum value
+	InstanceTypeR5ad2xlarge = "r5ad.2xlarge"
+
+	// InstanceTypeR5ad4xlarge is a InstanceType enum value
+	InstanceTypeR5ad4xlarge = "r5ad.4xlarge"
+
+	// InstanceTypeR5ad8xlarge is a InstanceType enum value
+	InstanceTypeR5ad8xlarge = "r5ad.8xlarge"
+
+	// InstanceTypeR5ad12xlarge is a InstanceType enum value
+	InstanceTypeR5ad12xlarge = "r5ad.12xlarge"
+
+	// InstanceTypeR5ad16xlarge is a InstanceType enum value
+	InstanceTypeR5ad16xlarge = "r5ad.16xlarge"
+
+	// InstanceTypeR5ad24xlarge is a InstanceType enum value
+	InstanceTypeR5ad24xlarge = "r5ad.24xlarge"
+
 	// InstanceTypeX116xlarge is a InstanceType enum value
 	InstanceTypeX116xlarge = "x1.16xlarge"
 
@@ -86232,6 +88749,30 @@ const (
 
 	// InstanceTypeM5dMetal is a InstanceType enum value
 	InstanceTypeM5dMetal = "m5d.metal"
+
+	// InstanceTypeM5adLarge is a InstanceType enum value
+	InstanceTypeM5adLarge = "m5ad.large"
+
+	// InstanceTypeM5adXlarge is a InstanceType enum value
+	InstanceTypeM5adXlarge = "m5ad.xlarge"
+
+	// InstanceTypeM5ad2xlarge is a InstanceType enum value
+	InstanceTypeM5ad2xlarge = "m5ad.2xlarge"
+
+	// InstanceTypeM5ad4xlarge is a InstanceType enum value
+	InstanceTypeM5ad4xlarge = "m5ad.4xlarge"
+
+	// InstanceTypeM5ad8xlarge is a InstanceType enum value
+	InstanceTypeM5ad8xlarge = "m5ad.8xlarge"
+
+	// InstanceTypeM5ad12xlarge is a InstanceType enum value
+	InstanceTypeM5ad12xlarge = "m5ad.12xlarge"
+
+	// InstanceTypeM5ad16xlarge is a InstanceType enum value
+	InstanceTypeM5ad16xlarge = "m5ad.16xlarge"
+
+	// InstanceTypeM5ad24xlarge is a InstanceType enum value
+	InstanceTypeM5ad24xlarge = "m5ad.24xlarge"
 
 	// InstanceTypeH12xlarge is a InstanceType enum value
 	InstanceTypeH12xlarge = "h1.2xlarge"
