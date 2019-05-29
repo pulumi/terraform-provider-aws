@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"log"
 	"math"
+	"regexp"
+	"strconv"
 	"strings"
 	"time"
 
@@ -17,6 +19,8 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
 	"github.com/terraform-providers/terraform-provider-aws/aws/internal/keyvaluetags"
 )
+
+var taskDefinitionRE = regexp.MustCompile("^([a-zA-Z0-9_-]+):([0-9]+)$")
 
 func resourceAwsEcsService() *schema.Resource {
 	return &schema.Resource{
@@ -216,6 +220,7 @@ func resourceAwsEcsService() *schema.Resource {
 				},
 				Set: resourceAwsEcsLoadBalancerHash,
 			},
+
 			"network_configuration": {
 				Type:     schema.TypeList,
 				Optional: true,
@@ -242,6 +247,7 @@ func resourceAwsEcsService() *schema.Resource {
 					},
 				},
 			},
+
 			"placement_strategy": {
 				Type:     schema.TypeSet,
 				Optional: true,
@@ -369,6 +375,11 @@ func resourceAwsEcsService() *schema.Resource {
 						},
 					},
 				},
+			},
+			"wait_for_steady_state": {
+				Type:     schema.TypeBool,
+				Optional: true,
+				Default:  false,
 			},
 			"tags": tagsSchema(),
 		},
@@ -548,6 +559,12 @@ func resourceAwsEcsServiceCreate(d *schema.ResourceData, meta interface{}) error
 	log.Printf("[DEBUG] ECS service created: %s", aws.StringValue(service.ServiceArn))
 	d.SetId(aws.StringValue(service.ServiceArn))
 
+	if d.Get("wait_for_steady_state").(bool) {
+		if err = resourceAwsEcsWaitForServiceSteadyState(d, meta); err != nil {
+			return err
+		}
+	}
+
 	return resourceAwsEcsServiceRead(d, meta)
 }
 
@@ -566,15 +583,12 @@ func resourceAwsEcsServiceRead(d *schema.ResourceData, meta interface{}) error {
 		var err error
 		out, err = conn.DescribeServices(&input)
 		if err != nil {
-			if d.IsNewResource() && isAWSErr(err, ecs.ErrCodeServiceNotFoundException, "") {
-				return resource.RetryableError(err)
-			}
 			return resource.NonRetryableError(err)
 		}
 
 		if len(out.Services) < 1 {
 			if d.IsNewResource() {
-				return resource.RetryableError(fmt.Errorf("ECS service not created yet: %q", d.Id()))
+				return resource.RetryableError(fmt.Errorf("New ECS service not found yet: %q", d.Id()))
 			}
 			log.Printf("[WARN] ECS Service %s not found, removing from state.", d.Id())
 			d.SetId("")
@@ -973,6 +987,12 @@ func resourceAwsEcsServiceUpdate(d *schema.ResourceData, meta interface{}) error
 		}
 	}
 
+	if d.Get("wait_for_steady_state").(bool) {
+		if err := resourceAwsEcsWaitForServiceSteadyState(d, meta); err != nil {
+			return err
+		}
+	}
+
 	return resourceAwsEcsServiceRead(d, meta)
 }
 
@@ -1093,4 +1113,79 @@ func buildFamilyAndRevisionFromARN(arn string) string {
 // arn:aws:ecs:us-west-2:0123456789:cluster/radek-cluster
 func getNameFromARN(arn string) string {
 	return strings.Split(arn, "/")[1]
+}
+
+func parseTaskDefinition(taskDefinition string) (string, string, error) {
+	matches := taskDefinitionRE.FindAllStringSubmatch(taskDefinition, 2)
+
+	if len(matches) == 0 || len(matches[0]) != 3 {
+		return "", "", fmt.Errorf(
+			"Invalid task definition format, family:rev or ARN expected (%#v)",
+			taskDefinition)
+	}
+
+	return matches[0][1], matches[0][2], nil
+}
+
+func resourceAwsEcsWaitForServiceSteadyState(d *schema.ResourceData, meta interface{}) error {
+	log.Println("[INFO] Waiting for service to reach a steady state")
+
+	steadyStateConf := &resource.StateChangeConf{
+		Pending:    []string{"false"},
+		Target:     []string{"true"},
+		Refresh:    resourceAwsEcsServiceIsSteadyStateFunc(d, meta),
+		Timeout:    10 * time.Minute,
+		MinTimeout: 1 * time.Second,
+	}
+
+	_, err := steadyStateConf.WaitForState()
+	return err
+}
+
+// Returns a StateRefreshFunc for a given service. That function will return "true" if the service is in a
+// steady state, "false" if the service is running but not in a steady state, and an error otherwise.
+func resourceAwsEcsServiceIsSteadyStateFunc(d *schema.ResourceData, meta interface{}) resource.StateRefreshFunc {
+	return func() (interface{}, string, error) {
+		conn := meta.(*AWSClient).ecsconn
+		in := &ecs.DescribeServicesInput{
+			Services: []*string{aws.String(d.Id())},
+			Cluster:  aws.String(d.Get("cluster").(string)),
+		}
+
+		out, err := conn.DescribeServices(in)
+		if err != nil {
+			return nil, "", err
+		}
+
+		if len(out.Services) < 1 {
+			if d.IsNewResource() {
+				// Continue retrying. It's *possible* the newly-created service was deleted out from under us,
+				// but more likely we saw a stale read from ECS.
+				log.Printf("[INFO] New ECS service not found yet: %q", d.Id())
+				return nil, "false", nil
+			}
+
+			return nil, "", fmt.Errorf(
+				"Service %v disappeared while waiting for it to reach a steady state",
+				d.Id())
+		}
+
+		service := out.Services[0]
+
+		// A service is in a steady state if:
+		// 1. It is not INACTIVE or DRAINING
+		// 2. There is only one deployment, which will be PRIMARY
+		// 3. The count of running tasks matches the desired count
+		// ref: https://github.com/boto/botocore/blob/3ac0dd53/botocore/data/ecs/2014-11-13/waiters-2.json#L42-L72
+		if *service.Status == "INACTIVE" || *service.Status == "DRAINING" {
+			return nil, "", fmt.Errorf(
+				"Service %v can't reach steady state because its status is %v",
+				d.Id(), *service.Status)
+		}
+
+		isSteadyState := len(service.Deployments) == 1 &&
+			*service.RunningCount == *service.DesiredCount
+
+		return service, strconv.FormatBool(isSteadyState), nil
+	}
 }
