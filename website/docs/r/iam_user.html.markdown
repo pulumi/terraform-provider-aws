@@ -57,8 +57,8 @@ The following arguments are supported:
 * `path` - (Optional, default "/") Path in which to create the user.
 * `permissions_boundary` - (Optional) The ARN of the policy that is used to set the permissions boundary for the user.
 * `force_destroy` - (Optional, default false) When destroying this user, destroy even if it
-  has non-Terraform-managed IAM access keys, login profile or MFA devices. Without `force_destroy`
-  a user with non-Terraform-managed access keys and login profile will fail to be destroyed.
+  has non-this provider-managed IAM access keys, login profile or MFA devices. Without `force_destroy`
+  a user with non-this provider-managed access keys and login profile will fail to be destroyed.
 * `tags` - Key-value mapping of tags for the IAM user
 
 ## Attributes Reference

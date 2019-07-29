@@ -10,7 +10,7 @@ description: |-
 
 Provides an AutoScaling Lifecycle Hook resource.
 
-~> **NOTE:** Terraform has two types of ways you can add lifecycle hooks - via
+~> **NOTE:** This provider has two types of ways you can add lifecycle hooks - via
 the `initial_lifecycle_hook` attribute from the
 [`aws_autoscaling_group`](/docs/providers/aws/r/autoscaling_group.html)
 resource, or via this one. Hooks added via this resource will not be added
@@ -27,7 +27,7 @@ but take care to not duplicate those hooks with this resource.
 ```hcl
 resource "aws_autoscaling_group" "foobar" {
   availability_zones   = ["us-west-2a"]
-  name                 = "terraform-test-foobar5"
+  name                 = "test-foobar5"
   health_check_type    = "EC2"
   termination_policies = ["OldestInstance"]
 
