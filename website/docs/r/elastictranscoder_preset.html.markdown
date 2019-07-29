@@ -53,7 +53,7 @@ resource "aws_elastictranscoder_preset" "bar" {
   }
 
   video_watermarks {
-    id                = "Terraform Test"
+    id                = "Test"
     max_width         = "20%"
     max_height        = "20%"
     sizing_policy     = "ShrinkToFit"
