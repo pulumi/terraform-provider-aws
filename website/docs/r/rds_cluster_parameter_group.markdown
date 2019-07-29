@@ -37,10 +37,10 @@ resource "aws_rds_cluster_parameter_group" "default" {
 
 The following arguments are supported:
 
-* `name` - (Optional, Forces new resource) The name of the DB cluster parameter group. If omitted, Terraform will assign a random, unique name.
+* `name` - (Optional, Forces new resource) The name of the DB cluster parameter group. If omitted, this provider will assign a random, unique name.
 * `name_prefix` - (Optional, Forces new resource) Creates a unique name beginning with the specified prefix. Conflicts with `name`.
 * `family` - (Required) The family of the DB cluster parameter group.
-* `description` - (Optional) The description of the DB cluster parameter group. Defaults to "Managed by Terraform".
+* `description` - (Optional) The description of the DB cluster parameter group. Defaults to "Managed by Pulumi".
 * `parameter` - (Optional) A list of DB parameters to apply. Note that parameters may differ from a family to an other. Full list of all parameters can be discovered via [`aws rds describe-db-cluster-parameters`](https://docs.aws.amazon.com/cli/latest/reference/rds/describe-db-cluster-parameters.html) after initial creation of the group.
 * `tags` - (Optional) A mapping of tags to assign to the resource.
 

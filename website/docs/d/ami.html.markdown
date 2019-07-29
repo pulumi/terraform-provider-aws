@@ -58,7 +58,7 @@ impact if the result is large. It is recommended to combine this with other
 options to narrow down the list AWS returns.
 
 ~> **NOTE:** If more or less than a single match is returned by the search,
-Terraform will fail. Ensure that your search is specific enough to return
+this call will fail. Ensure that your search is specific enough to return
 a single AMI ID only, or use `most_recent` to choose the most recent one. If
 you want to match multiple AMIs, use the `aws_ami_ids` data source instead.
 

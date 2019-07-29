@@ -20,7 +20,7 @@ resource "aws_opsworks_stack" "main" {
   default_instance_profile_arn = "${aws_iam_instance_profile.opsworks.arn}"
 
   tags = {
-    Name = "foobar-terraform-stack"
+    Name = "foobar-stack"
   }
 
   custom_json = <<EOT

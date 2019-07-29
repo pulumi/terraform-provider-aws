@@ -30,7 +30,7 @@ The following arguments are supported:
 
 * `name` - (Required, Forces new resource) The name of the Neptune parameter group.
 * `family` - (Required) The family of the Neptune parameter group.
-* `description` - (Optional) The description of the Neptune parameter group. Defaults to "Managed by Terraform".
+* `description` - (Optional) The description of the Neptune parameter group. Defaults to "Managed by Pulumi".
 * `parameter` - (Optional) A list of Neptune parameters to apply.
 * `tags` - (Optional) A mapping of tags to assign to the resource.
 

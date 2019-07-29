@@ -14,7 +14,7 @@ For more information on Amazon MQ, see [Amazon MQ documentation](https://docs.aw
 
 Changes to an MQ Broker can occur when you change a
 parameter, such as `configuration` or `user`, and are reflected in the next maintenance
-window. Because of this, Terraform may report a difference in its planning
+window. Because of this, this provider may report a difference in its planning
 phase because a modification has not yet taken place. You can use the
 `apply_immediately` flag to instruct the service to apply the change immediately
 (see documentation below).

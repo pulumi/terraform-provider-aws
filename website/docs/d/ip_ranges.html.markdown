@@ -46,7 +46,7 @@ omitted). Valid items are `global` (for `cloudfront`) as well as all AWS regions
 (for amazon.com), `cloudfront`, `codebuild`, `ec2`, `route53`, `route53_healthchecks` and `S3`.
 
 ~> **NOTE:** If the specified combination of regions and services does not yield any
-CIDR blocks, Terraform will fail.
+CIDR blocks, this call will fail.
 
 * `url` - (Optional) Custom URL for source JSON file. Syntax must match [AWS IP Address Ranges documention][1]. Defaults to `https://ip-ranges.amazonaws.com/ip-ranges.json`.
 

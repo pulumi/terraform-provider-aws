@@ -17,7 +17,7 @@ For more details, see the [Amazon Kinesis Documentation][1].
 
 ```hcl
 resource "aws_kinesis_stream" "test_stream" {
-  name             = "terraform-kinesis-test"
+  name             = "kinesis-test"
   shard_count      = 1
   retention_period = 48
 
@@ -66,7 +66,7 @@ Amazon has guidelines for specifying the Stream size that should be referenced w
 Kinesis Streams can be imported using the `name`, e.g.
 
 ```
-$ terraform import aws_kinesis_stream.test_stream terraform-kinesis-test
+$ terraform import aws_kinesis_stream.test_stream kinesis-test
 ```
 
 [1]: https://aws.amazon.com/documentation/kinesis/
