@@ -40,13 +40,13 @@ resource "aws_sns_topic" "example" {
 }
 
 resource "aws_autoscaling_group" "bar" {
-  name = "foobar1-terraform-test"
+  name = "foobar1-test"
 
   # ...
 }
 
 resource "aws_autoscaling_group" "foo" {
-  name = "barfoo-terraform-test"
+  name = "barfoo-test"
 
   # ...
 }

@@ -10,7 +10,7 @@ description: |-
 
 Provides a security group resource.
 
-~> **NOTE on Security Groups and Security Group Rules:** Terraform currently
+~> **NOTE on Security Groups and Security Group Rules:** This provider currently
 provides both a standalone [Security Group Rule resource](security_group_rule.html) (a single `ingress` or
 `egress` rule), and a Security Group resource with `ingress` and `egress` rules
 defined in-line. At this time you cannot use a Security Group with in-line rules
@@ -78,12 +78,12 @@ resource "aws_security_group" "allow_tls" {
 
 The following arguments are supported:
 
-* `name` - (Optional, Forces new resource) The name of the security group. If omitted, Terraform will
+* `name` - (Optional, Forces new resource) The name of the security group. If omitted, this provider will
 assign a random, unique name
 * `name_prefix` - (Optional, Forces new resource) Creates a unique name beginning with the specified
   prefix. Conflicts with `name`.
 * `description` - (Optional, Forces new resource) The security group description. Defaults to
-  "Managed by Terraform". Cannot be "". __NOTE__: This field maps to the AWS
+  "Managed by Pulumi". Cannot be "". __NOTE__: This field maps to the AWS
   `GroupDescription` attribute, for which there is no Update API. If you'd like
   to classify your security groups in a way that can be updated, use `tags`.
 * `ingress` - (Optional) Can be specified multiple times for each
@@ -92,7 +92,7 @@ assign a random, unique name
 * `egress` - (Optional, VPC only) Can be specified multiple times for each
       egress rule. Each egress block supports fields documented below.
       This argument is processed in [attribute-as-blocks mode](/docs/configuration/attr-as-blocks.html).
-* `revoke_rules_on_delete` - (Optional) Instruct Terraform to revoke all of the
+* `revoke_rules_on_delete` - (Optional) Instruct this provider to revoke all of the
 Security Groups attached ingress and egress rules before deleting the rule
 itself. This is normally not needed, however certain AWS services such as
 Elastic Map Reduce may automatically add required rules to security groups used
@@ -134,7 +134,7 @@ The `egress` block supports:
 
 ~> **NOTE on Egress rules:** By default, AWS creates an `ALLOW ALL` egress rule when creating a
 new Security Group inside of a VPC. When creating a new Security
-Group inside a VPC, **Terraform will remove this default rule**, and require you
+Group inside a VPC, **this provider will remove this default rule**, and require you
 specifically re-create it if you desire that rule. We feel this leads to fewer
 surprises in terms of controlling your egress rules. If you desire this rule to
 be in place, you can use this `egress` block:

@@ -30,7 +30,7 @@ resource "aws_sagemaker_endpoint" "e" {
 The following arguments are supported:
 
 * `endpoint_config_name` - (Required) The name of the endpoint configuration to use.
-* `name` - (Optional) The name of the endpoint. If omitted, Terraform will assign a random, unique name.
+* `name` - (Optional) The name of the endpoint. If omitted, this provider will assign a random, unique name.
 * `tags` - (Optional) A mapping of tags to assign to the resource.
 
 ## Attributes Reference

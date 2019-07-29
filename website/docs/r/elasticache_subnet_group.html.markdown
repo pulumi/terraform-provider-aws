@@ -46,7 +46,7 @@ resource "aws_elasticache_subnet_group" "bar" {
 The following arguments are supported:
 
 * `name` – (Required) Name for the cache subnet group. Elasticache converts this name to lowercase.
-* `description` – (Optional) Description for the cache subnet group. Defaults to "Managed by Terraform".
+* `description` – (Optional) Description for the cache subnet group. Defaults to "Managed by Pulumi".
 * `subnet_ids` – (Required) List of VPC Subnet IDs for the cache subnet group
 
 ## Attributes Reference
