@@ -254,7 +254,7 @@ of several sub-resources - these resources are laid out below.
     `waf:GetWebACL` permissions assigned.
 
   * `retain_on_delete` (Optional) - Disables the distribution instead of
-    deleting it when destroying the resource through Terraform. If this is set,
+    deleting it when destroying the resource. If this is set,
     the distribution needs to be deleted manually afterwards. Default: `false`.
 
   * `wait_for_deployment` (Optional) - If enabled, the resource will wait for

@@ -11,14 +11,14 @@ description: |-
 Provides a security group rule resource. Represents a single `ingress` or
 `egress` group rule, which can be added to external Security Groups.
 
-~> **NOTE on Security Groups and Security Group Rules:** Terraform currently
+~> **NOTE on Security Groups and Security Group Rules:** This provider currently
 provides both a standalone Security Group Rule resource (a single `ingress` or
 `egress` rule), and a [Security Group resource](security_group.html) with `ingress` and `egress` rules
 defined in-line. At this time you cannot use a Security Group with in-line rules
 in conjunction with any Security Group Rule resources. Doing so will cause
 a conflict of rule settings and will overwrite rules.
 
-~> **NOTE:** Setting `protocol = "all"` or `protocol = -1` with `from_port` and `to_port` will result in the EC2 API creating a security group rule with all ports open. This API behavior cannot be controlled by Terraform and may generate warnings in the future.
+~> **NOTE:** Setting `protocol = "all"` or `protocol = -1` with `from_port` and `to_port` will result in the EC2 API creating a security group rule with all ports open. This API behavior cannot be controlled by this provider and may generate warnings in the future.
 
 ~> **NOTE:** Referencing Security Groups across VPC peering has certain restrictions. More information is available in the [VPC Peering User Guide](https://docs.aws.amazon.com/vpc/latest/peering/vpc-peering-security-groups.html).
 
@@ -97,7 +97,7 @@ In addition to all arguments above, the following attributes are exported:
 
 Security Group Rules can be imported using the `security_group_id`, `type`, `protocol`, `from_port`, `to_port`, and source(s)/destination(s) (e.g. `cidr_block`) separated by underscores (`_`). All parts are required.
 
-Not all rule permissions (e.g., not all of a rule's CIDR blocks) need to be imported for Terraform to manage rule permissions. However, importing some of a rule's permissions but not others, and then making changes to the rule will result in the creation of an additional rule to capture the updated permissions. Rule permissions that were not imported are left intact in the original rule.
+Not all rule permissions (e.g., not all of a rule's CIDR blocks) need to be imported for this provider to manage rule permissions. However, importing some of a rule's permissions but not others, and then making changes to the rule will result in the creation of an additional rule to capture the updated permissions. Rule permissions that were not imported are left intact in the original rule.
 
 ### Examples
 
