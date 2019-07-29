@@ -10,7 +10,7 @@ description: |-
 # Data Source: aws_iam_account_alias
 
 The IAM Account Alias data source allows access to the account alias
-for the effective account in which Terraform is working.
+for the effective account in which this provider is working.
 
 ## Example Usage
 
