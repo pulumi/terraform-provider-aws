@@ -27,7 +27,7 @@ resource "aws_cloudwatch_log_group" "yada" {
 
 The following arguments are supported:
 
-* `name` - (Optional, Forces new resource) The name of the log group. If omitted, Terraform will assign a random, unique name.
+* `name` - (Optional, Forces new resource) The name of the log group. If omitted, this provider will assign a random, unique name.
 * `name_prefix` - (Optional, Forces new resource) Creates a unique name beginning with the specified prefix. Conflicts with `name`.
 * `retention_in_days` - (Optional) Specifies the number of days
   you want to retain log events in the specified log group.
