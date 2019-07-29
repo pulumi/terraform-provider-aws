@@ -12,7 +12,7 @@ This resource attaches a security group to an Elastic Network Interface (ENI).
 It can be used to attach a security group to any existing ENI, be it a
 secondary ENI or one attached as the primary interface on an instance.
 
-~> **NOTE on instances, interfaces, and security groups:** Terraform currently
+~> **NOTE on instances, interfaces, and security groups:** This provider currently
 provides the capability to assign security groups via the [`aws_instance`][1]
 and the [`aws_network_interface`][2] resources. Using this resource in
 conjunction with security groups provided in-line in those resources will cause
@@ -47,13 +47,13 @@ resource "aws_instance" "instance" {
   ami           = "${data.aws_ami.ami.id}"
 
   tags = {
-    "type" = "terraform-test-instance"
+    "type" = "test-instance"
   }
 }
 
 resource "aws_security_group" "sg" {
   tags = {
-    "type" = "terraform-test-security-group"
+    "type" = "test-security-group"
   }
 }
 
@@ -64,7 +64,7 @@ resource "aws_network_interface_sg_attachment" "sg_attachment" {
 ```
 
 In this example, `instance` is provided by the `aws_instance` data source,
-fetching an external instance, possibly not managed by Terraform.
+fetching an external instance, possibly not managed by this provider.
 `sg_attachment` then attaches to the output instance's `network_interface_id`:
 
 ```hcl
@@ -74,7 +74,7 @@ data "aws_instance" "instance" {
 
 resource "aws_security_group" "sg" {
   tags = {
-    "type" = "terraform-test-security-group"
+    "type" = "test-security-group"
   }
 }
 

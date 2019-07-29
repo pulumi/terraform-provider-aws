@@ -13,7 +13,7 @@ applied to the entire cluster of Neptune Cluster Instances.
 
 Changes to a Neptune Cluster can occur when you manually change a
 parameter, such as `backup_retention_period`, and are reflected in the next maintenance
-window. Because of this, Terraform may report a difference in its planning
+window. Because of this, this provider may report a difference in its planning
 phase because a modification has not yet taken place. You can use the
 `apply_immediately` flag to instruct the service to apply the change immediately
 (see documentation below).
@@ -42,7 +42,7 @@ The following arguments are supported:
 * `apply_immediately` - (Optional) Specifies whether any cluster modifications are applied immediately, or during the next maintenance window. Default is `false`.
 * `availability_zones` - (Optional) A list of EC2 Availability Zones that instances in the Neptune cluster can be created in.
 * `backup_retention_period` - (Optional) The days to retain backups for. Default `1`
-* `cluster_identifier` - (Optional, Forces new resources) The cluster identifier. If omitted, Terraform will assign a random, unique identifier.
+* `cluster_identifier` - (Optional, Forces new resources) The cluster identifier. If omitted, this provider will assign a random, unique identifier.
 * `cluster_identifier_prefix` - (Optional, Forces new resource) Creates a unique cluster identifier beginning with the specified prefix. Conflicts with `cluster_identifier`.
 * `engine` - (Optional) The name of the database engine to be used for this Neptune cluster. Defaults to `neptune`.
 * `engine_version` - (Optional) The database engine version.
