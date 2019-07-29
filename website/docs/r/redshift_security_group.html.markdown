@@ -27,7 +27,7 @@ resource "aws_redshift_security_group" "default" {
 The following arguments are supported:
 
 * `name` - (Required) The name of the Redshift security group.
-* `description` - (Optional) The description of the Redshift security group. Defaults to "Managed by Terraform".
+* `description` - (Optional) The description of the Redshift security group. Defaults to "Managed by Pulumi".
 * `ingress` - (Optional) A list of ingress rules.
 
 Ingress blocks support the following:
