@@ -13,7 +13,7 @@ Basic usage:
 
 ```hcl
 resource "aws_worklink_fleet" "example" {
-  name = "terraform-example"
+  name = "example"
 }
 ```
 
@@ -21,7 +21,7 @@ Network Configuration Usage:
 
 ```hcl
 resource "aws_worklink_fleet" "example" {
-  name = "terraform-example"
+  name = "example"
 
   network {
     vpc_id             = "${aws_vpc.test.id}"
@@ -59,7 +59,7 @@ The following arguments are supported:
 
 **network** requires the following:
 
-~> **NOTE:** `network` is cannot removed without forece recreating by `terraform taint`.
+~> **NOTE:** `network` is cannot removed without force recreating.
 
 * `vpc_id` - (Required) The VPC ID with connectivity to associated websites.
 * `subnet_ids` - (Required) A list of subnet IDs used for X-ENI connections from Amazon WorkLink rendering containers.
@@ -67,7 +67,7 @@ The following arguments are supported:
 
 **identity_provider** requires the following:
 
-~> **NOTE:** `identity_provider` is cannot removed without forece recreating by `terraform taint`.
+~> **NOTE:** `identity_provider` is cannot removed without force recreating.
 
 * `type` - (Required) The type of identity provider.
 * `saml_metadata` - (Required) The SAML metadata document provided by the customer’s identity provider.

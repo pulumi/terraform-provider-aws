@@ -50,7 +50,7 @@ resource "aws_lb_listener_rule" "host_based_routing" {
 
   condition {
     field  = "host-header"
-    values = ["my-service.*.terraform.io"]
+    values = ["my-service.*.mydomain.io"]
   }
 }
 
@@ -71,7 +71,7 @@ resource "aws_lb_listener_rule" "redirect_http_to_https" {
 
   condition {
     field  = "host-header"
-    values = ["my-service.*.terraform.io"]
+    values = ["my-service.*.mydomain.io"]
   }
 }
 
