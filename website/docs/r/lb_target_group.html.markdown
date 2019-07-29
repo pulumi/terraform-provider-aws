@@ -58,7 +58,7 @@ resource "aws_lb_target_group" "lambda-example" {
 
 The following arguments are supported:
 
-* `name` - (Optional, Forces new resource) The name of the target group. If omitted, Terraform will assign a random, unique name.
+* `name` - (Optional, Forces new resource) The name of the target group. If omitted, this provider will assign a random, unique name.
 * `name_prefix` - (Optional, Forces new resource) Creates a unique name beginning with the specified prefix. Conflicts with `name`. Cannot be longer than 6 characters.
 
 * `port` - (Optional, Forces new resource) The port on which targets receive traffic, unless overridden when registering a specific target. Required when `target_type` is `instance` or `ip`. Does not apply when `target_type` is `lambda`.

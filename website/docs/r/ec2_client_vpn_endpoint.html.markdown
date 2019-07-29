@@ -15,7 +15,7 @@ Provides an AWS Client VPN endpoint for OpenVPN clients. For more information on
 
 ```hcl
 resource "aws_ec2_client_vpn_endpoint" "example" {
-  description            = "terraform-clientvpn-example"
+  description            = "clientvpn-example"
   server_certificate_arn = "${aws_acm_certificate.cert.arn}"
   client_cidr_block      = "10.0.0.0/16"
 
