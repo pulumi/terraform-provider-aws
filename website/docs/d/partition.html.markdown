@@ -8,8 +8,7 @@ description: |-
 
 # Data Source: aws_partition
 
-Use this data source to lookup information about the current AWS partition in
-which Terraform is working.
+Use this data source to lookup current AWS partition in which this provider is working
 
 ## Example Usage
 
