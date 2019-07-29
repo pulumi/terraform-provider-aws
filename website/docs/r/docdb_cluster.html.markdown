@@ -12,7 +12,7 @@ Manages a DocDB Cluster.
 
 Changes to a DocDB Cluster can occur when you manually change a
 parameter, such as `port`, and are reflected in the next maintenance
-window. Because of this, Terraform may report a difference in its planning
+window. Because of this, this provider may report a difference in its planning
 phase because a modification has not yet taken place. You can use the
 `apply_immediately` flag to instruct the service to apply the change immediately
 (see documentation below).
@@ -49,7 +49,7 @@ The following arguments are supported:
   instances in the DB cluster can be created in.
 * `backup_retention_period` - (Optional) The days to retain backups for. Default `1`
 * `cluster_identifier_prefix` - (Optional, Forces new resource) Creates a unique cluster identifier beginning with the specified prefix. Conflicts with `cluster_identifer`.
-* `cluster_identifier` - (Optional, Forces new resources) The cluster identifier. If omitted, Terraform will assign a random, unique identifier.
+* `cluster_identifier` - (Optional, Forces new resources) The cluster identifier. If omitted, this provider will assign a random, unique identifier.
 * `db_subnet_group_name` - (Optional) A DB subnet group to associate with this DB instance.
 * `db_cluster_parameter_group_name` - (Optional) A cluster parameter group to associate with the cluster.
 * `enabled_cloudwatch_logs_exports` - (Optional) List of log types to export to cloudwatch. If omitted, no logs will be exported.
