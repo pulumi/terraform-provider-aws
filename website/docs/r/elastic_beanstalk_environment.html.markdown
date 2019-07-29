@@ -53,7 +53,7 @@ off of. Example stacks can be found in the [Amazon API documentation][1]
 * `platform_arn` – (Optional) The [ARN][2] of the Elastic Beanstalk [Platform][3]
   to use in deployment
 * `wait_for_ready_timeout` - (Default: `20m`) The maximum
-  [duration](https://golang.org/pkg/time/#ParseDuration) that Terraform should
+  [duration](https://golang.org/pkg/time/#ParseDuration) that this provider should
   wait for an Elastic Beanstalk Environment to be in a ready state before timing
   out.
 * `poll_interval` – The time between polling the AWS API to

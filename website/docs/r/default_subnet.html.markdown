@@ -12,7 +12,7 @@ Provides a resource to manage a [default AWS VPC subnet](http://docs.aws.amazon.
 in the current region.
 
 The `aws_default_subnet` behaves differently from normal resources, in that
-Terraform does not _create_ this resource, but instead "adopts" it
+this provider does not _create_ this resource, but instead "adopts" it
 into management.
 
 ## Example Usage
@@ -44,7 +44,7 @@ The following arguments are still supported:
 ### Removing `aws_default_subnet` from your configuration
 
 The `aws_default_subnet` resource allows you to manage a region's default VPC subnet,
-but Terraform cannot destroy it. Removing this resource from your configuration
+but this provider cannot destroy it. Removing this resource from your configuration
 will remove it from your statefile and management, but will not destroy the subnet.
 You can resume managing the subnet via the AWS Console.
 
