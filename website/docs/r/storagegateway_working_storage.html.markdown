@@ -10,7 +10,7 @@ description: |-
 
 Manages an AWS Storage Gateway working storage.
 
-~> **NOTE:** The Storage Gateway API provides no method to remove a working storage disk. Destroying this Terraform resource does not perform any Storage Gateway actions.
+~> **NOTE:** The Storage Gateway API provides no method to remove a working storage disk. Destroying this resource does not perform any Storage Gateway actions.
 
 ## Example Usage
 

@@ -11,13 +11,13 @@ description: |-
 ## Example Usage
 
 ```hcl
-resource "aws_sqs_queue" "terraform_queue" {
-  name                      = "terraform-example-queue"
+resource "aws_sqs_queue" "queue" {
+  name                      = "example-queue"
   delay_seconds             = 90
   max_message_size          = 2048
   message_retention_seconds = 86400
   receive_wait_time_seconds = 10
-  redrive_policy            = "{\"deadLetterTargetArn\":\"${aws_sqs_queue.terraform_queue_deadletter.arn}\",\"maxReceiveCount\":4}"
+  redrive_policy            = "{\"deadLetterTargetArn\":\"${aws_sqs_queue.queue_deadletter.arn}\",\"maxReceiveCount\":4}"
 
   tags = {
     Environment = "production"
@@ -28,8 +28,8 @@ resource "aws_sqs_queue" "terraform_queue" {
 ## FIFO queue
 
 ```hcl
-resource "aws_sqs_queue" "terraform_queue" {
-  name                        = "terraform-example-queue.fifo"
+resource "aws_sqs_queue" "queue" {
+  name                        = "example-queue.fifo"
   fifo_queue                  = true
   content_based_deduplication = true
 }
@@ -38,8 +38,8 @@ resource "aws_sqs_queue" "terraform_queue" {
 ## Server-side encryption (SSE)
 
 ```hcl
-resource "aws_sqs_queue" "terraform_queue" {
-  name                              = "terraform-example-queue"
+resource "aws_sqs_queue" "queue" {
+  name                              = "example-queue"
   kms_master_key_id                 = "alias/aws/sqs"
   kms_data_key_reuse_period_seconds = 300
 }
@@ -49,7 +49,7 @@ resource "aws_sqs_queue" "terraform_queue" {
 
 The following arguments are supported:
 
-* `name` - (Optional) This is the human-readable name of the queue. If omitted, Terraform will assign a random name.
+* `name` - (Optional) This is the human-readable name of the queue. If omitted, this provider will assign a random name.
 * `name_prefix` - (Optional) Creates a unique name beginning with the specified prefix. Conflicts with `name`.
 * `visibility_timeout_seconds` - (Optional) The visibility timeout for the queue. An integer from 0 to 43200 (12 hours). The default for this attribute is 30. For more information about visibility timeout, see [AWS docs](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/AboutVT.html).
 * `message_retention_seconds` - (Optional) The number of seconds Amazon SQS retains a message. Integer representing seconds, from 60 (1 minute) to 1209600 (14 days). The default for this attribute is 345600 (4 days).

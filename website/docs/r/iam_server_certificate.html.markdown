@@ -57,9 +57,9 @@ EOF
 **Use in combination with an AWS ELB resource:**
 
 Some properties of an IAM Server Certificates cannot be updated while they are
-in use. In order for Terraform to effectively manage a Certificate in this situation, it is
+in use. In order for this provider to effectively manage a Certificate in this situation, it is
 recommended you utilize the `name_prefix` attribute and enable the
-`create_before_destroy` [lifecycle block][lifecycle]. This will allow Terraform
+`create_before_destroy` [lifecycle block][lifecycle]. This will allow this provider
 to create a new, updated `aws_iam_server_certificate` resource and replace it in
 dependant resources before attempting to destroy the old version.
 
@@ -75,7 +75,7 @@ resource "aws_iam_server_certificate" "test_cert" {
 }
 
 resource "aws_elb" "ourapp" {
-  name                      = "terraform-asg-deployment-example"
+  name                      = "asg-deployment-example"
   availability_zones        = ["us-west-2a"]
   cross_zone_load_balancing = true
 
@@ -94,7 +94,7 @@ resource "aws_elb" "ourapp" {
 The following arguments are supported:
 
 * `name` - (Optional) The name of the Server Certificate. Do not include the
-  path in this value. If omitted, Terraform will assign a random, unique name.
+  path in this value. If omitted, this provider will assign a random, unique name.
 * `name_prefix` - (Optional) Creates a unique name beginning with the specified
   prefix. Conflicts with `name`.
 * `certificate_body` – (Required) The contents of the public key certificate in
@@ -108,7 +108,7 @@ The following arguments are supported:
     AWS CloudFront, the path must be in format `/cloudfront/your_path_here`.
     See [IAM Identifiers][1] for more details on IAM Paths.
 
-~> **NOTE:** AWS performs behind-the-scenes modifications to some certificate files if they do not adhere to a specific format. These modifications will result in terraform forever believing that it needs to update the resources since the local and AWS file contents will not match after theses modifications occur. In order to prevent this from happening you must ensure that all your PEM-encoded files use UNIX line-breaks and that `certificate_body` contains only one certificate. All other certificates should go in `certificate_chain`. It is common for some Certificate Authorities to issue certificate files that have DOS line-breaks and that are actually multiple certificates concatenated together in order to form a full certificate chain.
+~> **NOTE:** AWS performs behind-the-scenes modifications to some certificate files if they do not adhere to a specific format. These modifications will result in this provider forever believing that it needs to update the resources since the local and AWS file contents will not match after theses modifications occur. In order to prevent this from happening you must ensure that all your PEM-encoded files use UNIX line-breaks and that `certificate_body` contains only one certificate. All other certificates should go in `certificate_chain`. It is common for some Certificate Authorities to issue certificate files that have DOS line-breaks and that are actually multiple certificates concatenated together in order to form a full certificate chain.
 
 ## Attributes Reference
 

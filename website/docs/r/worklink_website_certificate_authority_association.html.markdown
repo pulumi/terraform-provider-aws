@@ -12,7 +12,7 @@ description: |-
 
 ```hcl
 resource "aws_worklink_fleet" "example" {
-  name = "terraform-example"
+  name = "example"
 }
 
 resource "aws_worklink_website_certificate_authority_association" "test" {

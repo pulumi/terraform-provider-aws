@@ -60,7 +60,7 @@ resource "aws_route53_health_check" "parent" {
 
 ```hcl
 resource "aws_cloudwatch_metric_alarm" "foobar" {
-  alarm_name          = "terraform-test-foobar5"
+  alarm_name          = "test-foobar5"
   comparison_operator = "GreaterThanOrEqualToThreshold"
   evaluation_periods  = "2"
   metric_name         = "CPUUtilization"

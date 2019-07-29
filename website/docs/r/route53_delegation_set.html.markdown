@@ -18,7 +18,7 @@ resource "aws_route53_delegation_set" "main" {
 }
 
 resource "aws_route53_zone" "primary" {
-  name              = "hashicorp.com"
+  name              = "mydomain.com"
   delegation_set_id = "${aws_route53_delegation_set.main.id}"
 }
 
