@@ -14,7 +14,7 @@ Provides a Redshift Cluster parameter group resource.
 
 ```hcl
 resource "aws_redshift_parameter_group" "bar" {
-  name   = "parameter-group-test-terraform"
+  name   = "parameter-group-test"
   family = "redshift-1.0"
 
   parameter {
@@ -40,7 +40,7 @@ The following arguments are supported:
 
 * `name` - (Required) The name of the Redshift parameter group.
 * `family` - (Required) The family of the Redshift parameter group.
-* `description` - (Optional) The description of the Redshift parameter group. Defaults to "Managed by Terraform".
+* `description` - (Optional) The description of the Redshift parameter group. Defaults to "Managed by Pulumi".
 * `parameter` - (Optional) A list of Redshift parameters to apply.
 
 Parameter blocks support the following:
@@ -63,5 +63,5 @@ In addition to all arguments above, the following attributes are exported:
 Redshift Parameter Groups can be imported using the `name`, e.g.
 
 ```
-$ terraform import aws_redshift_parameter_group.paramgroup1 parameter-group-test-terraform
+$ terraform import aws_redshift_parameter_group.paramgroup1 parameter-group-test
 ```

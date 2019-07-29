@@ -29,10 +29,10 @@ resource "aws_neptune_cluster_parameter_group" "example" {
 
 The following arguments are supported:
 
-* `name` - (Optional, Forces new resource) The name of the neptune cluster parameter group. If omitted, Terraform will assign a random, unique name.
+* `name` - (Optional, Forces new resource) The name of the neptune cluster parameter group. If omitted, this provider will assign a random, unique name.
 * `name_prefix` - (Optional, Forces new resource) Creates a unique name beginning with the specified prefix. Conflicts with `name`.
 * `family` - (Required) The family of the neptune cluster parameter group.
-* `description` - (Optional) The description of the neptune cluster parameter group. Defaults to "Managed by Terraform".
+* `description` - (Optional) The description of the neptune cluster parameter group. Defaults to "Managed by Pulumi".
 * `parameter` - (Optional) A list of neptune parameters to apply.
 * `tags` - (Optional) A mapping of tags to assign to the resource.
 
