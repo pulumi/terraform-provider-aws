@@ -146,14 +146,14 @@ with AWS from those instances. The suggested role policy template for the EMR se
 and `AmazonElasticMapReduceforEC2Role` for the EC2 profile. See the [Getting
 Started](https://docs.aws.amazon.com/ElasticMapReduce/latest/ManagementGuide/emr-gs-launch-sample-cluster.html)
 guide for more information on these IAM roles. There is also a fully-bootable
-example Terraform configuration at the bottom of this page.
+example this provider configuration at the bottom of this page.
 
 ### Enable Debug Logging
 
 [Debug logging in EMR](https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-plan-debugging.html)
 is implemented as a step. It is highly recommended to utilize the
 [lifecycle configuration block](/docs/configuration/resources.html) with `ignore_changes` if other
-steps are being managed outside of Terraform.
+steps are being managed outside of this provider.
 
 ```hcl
 resource "aws_emr_cluster" "example" {
@@ -230,7 +230,7 @@ The following arguments are supported:
 * `master_instance_group` - (Optional) Configuration block to use an [Instance Group](https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-instance-group-configuration.html#emr-plan-instance-groups) for the [master node type](https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-master-core-task-nodes.html#emr-plan-master). Cannot be specified if `master_instance_type` argument or `instance_group` configuration blocks are set. Detailed below.
 * `master_instance_type` - (Optional, **DEPRECATED**) Use the `master_instance_group` configuration block `instance_type` argument instead. The EC2 instance type of the master node. Cannot be specified if `master_instance_group` or `instance_group` configuration blocks are set.
 * `scale_down_behavior` - (Optional) The way that individual Amazon EC2 instances terminate when an automatic scale-in activity occurs or an `instance group` is resized.
-* `additional_info` - (Optional) A JSON string for selecting additional features such as adding proxy information. Note: Currently there is no API to retrieve the value of this argument after EMR cluster creation from provider, therefore Terraform cannot detect drift from the actual EMR cluster if its value is changed outside Terraform.
+* `additional_info` - (Optional) A JSON string for selecting additional features such as adding proxy information. Note: Currently there is no API to retrieve the value of this argument after EMR cluster creation from provider, therefore this provider cannot detect drift from the actual EMR cluster if its value is changed outside this provider.
 * `service_role` - (Required) IAM role that will be assumed by the Amazon EMR service to access AWS resources
 * `security_configuration` - (Optional) The security configuration name to attach to the EMR cluster. Only valid for EMR clusters with `release_label` 4.8.0 or greater
 * `core_instance_group` - (Optional) Configuration block to use an [Instance Group](https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-instance-group-configuration.html#emr-plan-instance-groups) for the [core node type](https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-master-core-task-nodes.html#emr-plan-core). Cannot be specified if `core_instance_count` argument, `core_instance_type` argument, or `instance_group` configuration blocks are set. Detailed below.
@@ -273,7 +273,7 @@ EOF
 
 * `visible_to_all_users` - (Optional) Whether the job flow is visible to all IAM users of the AWS account associated with the job flow. Default `true`
 * `autoscaling_role` - (Optional) An IAM role for automatic scaling policies. The IAM role provides permissions that the automatic scaling feature requires to launch and terminate EC2 instances in an instance group.
-* `step` - (Optional) List of steps to run when creating the cluster. Defined below. It is highly recommended to utilize the [lifecycle configuration block](/docs/configuration/resources.html) with `ignore_changes` if other steps are being managed outside of Terraform. This argument is processed in [attribute-as-blocks mode](/docs/configuration/attr-as-blocks.html).
+* `step` - (Optional) List of steps to run when creating the cluster. Defined below. It is highly recommended to utilize the [lifecycle configuration block](/docs/configuration/resources.html) with `ignore_changes` if other steps are being managed outside of this provider. This argument is processed in [attribute-as-blocks mode](/docs/configuration/attr-as-blocks.html).
 * `tags` - (Optional) list of tags to apply to the EMR Cluster
 
 ## core_instance_group Configuration Block
@@ -306,7 +306,7 @@ proper communication between instances in a cluster. The EMR service will
 maintain these rules for groups provided in `emr_managed_master_security_group`
 and `emr_managed_slave_security_group`; attempts to remove the required rules
 may succeed, only for the EMR service to re-add them in a matter of minutes.
-This may cause Terraform to fail to destroy an environment that contains an EMR
+This may cause this provider to fail to destroy an environment that contains an EMR
 cluster, because the EMR service does not revoke rules added on deletion,
 leaving a cyclic dependency between the security groups that prevents their
 deletion. To avoid this, use the `revoke_rules_on_delete` optional attribute for
@@ -319,10 +319,10 @@ for more information about the EMR-managed security group rules.
 
 Attributes for Kerberos configuration
 
-* `ad_domain_join_password` - (Optional) The Active Directory password for `ad_domain_join_user`. Terraform cannot perform drift detection of this configuration.
-* `ad_domain_join_user` - (Optional) Required only when establishing a cross-realm trust with an Active Directory domain. A user with sufficient privileges to join resources to the domain. Terraform cannot perform drift detection of this configuration.
-* `cross_realm_trust_principal_password` - (Optional) Required only when establishing a cross-realm trust with a KDC in a different realm. The cross-realm principal password, which must be identical across realms. Terraform cannot perform drift detection of this configuration.
-* `kdc_admin_password` - (Required) The password used within the cluster for the kadmin service on the cluster-dedicated KDC, which maintains Kerberos principals, password policies, and keytabs for the cluster. Terraform cannot perform drift detection of this configuration.
+* `ad_domain_join_password` - (Optional) The Active Directory password for `ad_domain_join_user`. This provider cannot perform drift detection of this configuration.
+* `ad_domain_join_user` - (Optional) Required only when establishing a cross-realm trust with an Active Directory domain. A user with sufficient privileges to join resources to the domain. This provider cannot perform drift detection of this configuration.
+* `cross_realm_trust_principal_password` - (Optional) Required only when establishing a cross-realm trust with a KDC in a different realm. The cross-realm principal password, which must be identical across realms. This provider cannot perform drift detection of this configuration.
+* `kdc_admin_password` - (Required) The password used within the cluster for the kadmin service on the cluster-dedicated KDC, which maintains Kerberos principals, password policies, and keytabs for the cluster. This provider cannot perform drift detection of this configuration.
 * `realm` - (Required) The name of the Kerberos realm to which all nodes in a cluster belong. For example, `EC2.INTERNAL`
 
 ## instance_group
@@ -344,7 +344,7 @@ Supported nested arguments for the `master_instance_group` configuration block:
 * `instance_type` - (Required) EC2 instance type for all instances in the instance group.
 * `bid_price` - (Optional) Bid price for each EC2 instance in the instance group, expressed in USD. By setting this attribute, the instance group is being declared as a Spot Instance, and will implicitly create a Spot request. Leave this blank to use On-Demand Instances.
 * `ebs_config` - (Optional) Configuration block(s) for EBS volumes attached to each instance in the instance group. Detailed below.
-* `instance_count` - (Optional) Target number of instances for the instance group. Must be 1 or 3. Defaults to 1. Launching with multiple master nodes is only supported in EMR version 5.23.0+, and requires this resource's `core_instance_group` to be configured. Public (Internet accessible) instances must be created in VPC subnets that have [map public IP on launch](/docs/providers/aws/r/subnet.html#map_public_ip_on_launch) enabled. Termination protection is automatically enabled when launched with multiple master nodes and Terraform must have the `termination_protection = false` configuration applied before destroying this resource.
+* `instance_count` - (Optional) Target number of instances for the instance group. Must be 1 or 3. Defaults to 1. Launching with multiple master nodes is only supported in EMR version 5.23.0+, and requires this resource's `core_instance_group` to be configured. Public (Internet accessible) instances must be created in VPC subnets that have [map public IP on launch](/docs/providers/aws/r/subnet.html#map_public_ip_on_launch) enabled. Termination protection is automatically enabled when launched with multiple master nodes and this provider must have the `termination_protection = false` configuration applied before destroying this resource.
 * `name` - (Optional) Friendly name given to the instance group.
 
 ## ebs_config
@@ -710,7 +710,7 @@ EMR clusters can be imported using the `id`, e.g.
 $ terraform import aws_emr_cluster.cluster j-123456ABCDEF
 ```
 
-Since the API does not return the actual values for Kerberos configurations, environments with those Terraform configurations will need to use the [`lifecycle` configuration block `ignore_changes` argument](/docs/configuration/resources.html#ignore_changes) available to all Terraform resources to prevent perpetual differences, e.g.
+Since the API does not return the actual values for Kerberos configurations, environments with those this provider configurations will need to use the [`lifecycle` configuration block `ignore_changes` argument](/docs/configuration/resources.html#ignore_changes) available to all this provider resources to prevent perpetual differences, e.g.
 
 ```hcl
 resource "aws_emr_cluster" "example" {

@@ -16,11 +16,11 @@ Because of backward incompatible API changes (read [here](https://github.com/aws
 
 * Remove service `service_names` from the `spec` argument.
 AWS has created a `aws_appmesh_virtual_service` resource for each of service names.
-These resource can be imported using `terraform import`.
+These resource can be imported using `import`.
 
 * Add a `listener` configuration block to the `spec` argument.
 
-The Terraform state associated with existing resources will automatically be migrated.
+The state associated with existing resources will automatically be migrated.
 
 ## Example Usage
 

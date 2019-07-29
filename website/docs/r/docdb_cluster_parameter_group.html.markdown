@@ -29,10 +29,10 @@ resource "aws_docdb_cluster_parameter_group" "example" {
 
 The following arguments are supported:
 
-* `name` - (Optional, Forces new resource) The name of the documentDB cluster parameter group. If omitted, Terraform will assign a random, unique name.
+* `name` - (Optional, Forces new resource) The name of the documentDB cluster parameter group. If omitted, this provider will assign a random, unique name.
 * `name_prefix` - (Optional, Forces new resource) Creates a unique name beginning with the specified prefix. Conflicts with `name`.
 * `family` - (Required, Forces new resource) The family of the documentDB cluster parameter group.
-* `description` - (Optional, Forces new resource) The description of the documentDB cluster parameter group. Defaults to "Managed by Terraform".
+* `description` - (Optional, Forces new resource) The description of the documentDB cluster parameter group. Defaults to "Managed by Pulumi".
 * `parameter` - (Optional) A list of documentDB parameters to apply.
 * `tags` - (Optional) A mapping of tags to assign to the resource.
 

@@ -47,7 +47,7 @@ several valid keys, for a full reference, check out
 ~> **NOTE:** At least one of `filter`, `instance_tags`, or `instance_id` must be specified.
 
 ~> **NOTE:** If anything other than a single match is returned by the search,
-Terraform will fail. Ensure that your search is specific enough to return
+this call will fail. Ensure that your search is specific enough to return
 a single Instance ID only.
 
 ## Attributes Reference
