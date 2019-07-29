@@ -10,8 +10,6 @@ description: |-
 
 Decrypt multiple secrets from data encrypted with the AWS KMS service.
 
-~> **NOTE**: Using this data provider will allow you to conceal secret data within your resource definitions but does not take care of protecting that data in all Terraform logging and state output. Please take care to secure your secret data beyond just the Terraform configuration.
-
 ## Example Usage
 
 If you do not already have a `CiphertextBlob` from encrypting a KMS secret, you can use the below commands to obtain one using the [AWS CLI kms encrypt](https://docs.aws.amazon.com/cli/latest/reference/kms/encrypt.html) command. This requires you to have your AWS CLI setup correctly and replace the `--key-id` with your own. Alternatively you can use `--plaintext 'password'` instead of reading from a file.
@@ -24,7 +22,7 @@ $ aws kms encrypt --key-id ab123456-c012-4567-890a-deadbeef123 --plaintext fileb
 AQECAHgaPa0J8WadplGCqqVAr4HNvDaFSQ+NaiwIBhmm6qDSFwAAAGIwYAYJKoZIhvcNAQcGoFMwUQIBADBMBgkqhkiG9w0BBwEwHgYJYIZIAWUDBAEuMBEEDI+LoLdvYv8l41OhAAIBEIAfx49FFJCLeYrkfMfAw6XlnxP23MmDBdqP8dPp28OoAQ==
 ```
 
-That encrypted output can now be inserted into Terraform configurations without exposing the plaintext secret directly.
+That encrypted output can now be inserted into configurations without exposing the plaintext secret directly.
 
 ```hcl
 data "aws_kms_secrets" "example" {

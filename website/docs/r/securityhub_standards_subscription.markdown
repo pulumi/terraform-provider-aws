@@ -10,7 +10,7 @@ description: |-
 
 Subscribes to a Security Hub standard.
 
-~> **NOTE:** This AWS service is in Preview and may change before General Availability release. Backwards compatibility is not guaranteed between Terraform AWS Provider releases.
+~> **NOTE:** This AWS service is in Preview and may change before General Availability release. Backwards compatibility is not guaranteed between AWS Provider releases.
 
 ## Example Usage
 
