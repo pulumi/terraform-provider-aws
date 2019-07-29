@@ -17,7 +17,7 @@ For more details, see the [Amazon Kinesis Firehose Documentation][1].
 
 ```hcl
 resource "aws_kinesis_firehose_delivery_stream" "extended_s3_stream" {
-  name        = "terraform-kinesis-firehose-extended-s3-test-stream"
+  name        = "kinesis-firehose-extended-s3-test-stream"
   destination = "extended_s3"
 
   extended_s3_configuration {
@@ -122,7 +122,7 @@ EOF
 }
 
 resource "aws_kinesis_firehose_delivery_stream" "test_stream" {
-  name        = "terraform-kinesis-firehose-test-stream"
+  name        = "kinesis-firehose-test-stream"
   destination = "s3"
 
   s3_configuration {
@@ -145,7 +145,7 @@ resource "aws_redshift_cluster" "test_cluster" {
 }
 
 resource "aws_kinesis_firehose_delivery_stream" "test_stream" {
-  name        = "terraform-kinesis-firehose-test-stream"
+  name        = "kinesis-firehose-test-stream"
   destination = "redshift"
 
   s3_configuration {
@@ -185,7 +185,7 @@ resource "aws_elasticsearch_domain" "test_cluster" {
 }
 
 resource "aws_kinesis_firehose_delivery_stream" "test_stream" {
-  name        = "terraform-kinesis-firehose-test-stream"
+  name        = "kinesis-firehose-test-stream"
   destination = "elasticsearch"
 
   s3_configuration {
@@ -223,7 +223,7 @@ resource "aws_kinesis_firehose_delivery_stream" "test_stream" {
 
 ```hcl
 resource "aws_kinesis_firehose_delivery_stream" "test_stream" {
-  name        = "terraform-kinesis-firehose-test-stream"
+  name        = "kinesis-firehose-test-stream"
   destination = "splunk"
 
   s3_configuration {
