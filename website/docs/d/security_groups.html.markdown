@@ -8,7 +8,7 @@ description: |-
 # Data Source: aws_security_groups
 
 Use this data source to get IDs and VPC membership of Security Groups that are created
-outside of Terraform.
+outside of this provider.
 
 ## Example Usage
 ```hcl

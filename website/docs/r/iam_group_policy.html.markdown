@@ -42,8 +42,8 @@ resource "aws_iam_group" "my_developers" {
 
 The following arguments are supported:
 
-* `policy` - (Required) The policy document. This is a JSON formatted string. For more information about building IAM policy documents with Terraform, see the [AWS IAM Policy Document Guide](/docs/providers/aws/guides/iam-policy-documents.html)
-* `name` - (Optional) The name of the policy. If omitted, Terraform will
+* `policy` - (Required) The policy document. This is a JSON formatted string.
+* `name` - (Optional) The name of the policy. If omitted, this provider will
 assign a random, unique name.
 * `name_prefix` - (Optional) Creates a unique name beginning with the specified
   prefix. Conflicts with `name`.
