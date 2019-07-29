@@ -10,7 +10,7 @@ description: |-
 
 Provides a resource to create a VPC routing table.
 
-~> **NOTE on Route Tables and Routes:** Terraform currently
+~> **NOTE on Route Tables and Routes:** This provider currently
 provides both a standalone [Route resource](route.html) and a Route Table resource with routes
 defined in-line. At this time you cannot use a Route Table with in-line routes
 in conjunction with any Route resources. Doing so will cause

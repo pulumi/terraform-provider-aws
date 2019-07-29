@@ -58,7 +58,7 @@ EOF
 
 The following arguments are supported:
 
-* `name` - (Optional) The name of the role policy. If omitted, Terraform will
+* `name` - (Optional) The name of the role policy. If omitted, this provider will
 assign a random, unique name.
 * `name_prefix` - (Optional) Creates a unique name beginning with the specified
   prefix. Conflicts with `name`.

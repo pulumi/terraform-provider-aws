@@ -44,7 +44,7 @@ data "aws_iam_policy_document" "assume_role" {
 
 The following arguments are supported:
 
-* `name` - (Optional) The name of the model (must be unique). If omitted, Terraform will assign a random, unique name.
+* `name` - (Optional) The name of the model (must be unique). If omitted, this provider will assign a random, unique name.
 * `primary_container` - (Optional) The primary docker image containing inference code that is used when the model is deployed for predictions.  If not specified, the `container` argument is required. Fields are documented below.
 * `execution_role_arn` - (Required) A role that SageMaker can assume to access model artifacts and docker images for deployment.
 * `container` (Optional) -  Specifies containers in the inference pipeline. If not specified, the `primary_container` argument is required. Fields are documented below.

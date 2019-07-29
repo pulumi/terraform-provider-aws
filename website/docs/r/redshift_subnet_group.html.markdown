@@ -52,7 +52,7 @@ resource "aws_redshift_subnet_group" "foo" {
 The following arguments are supported:
 
 * `name` - (Required) The name of the Redshift Subnet group.
-* `description` - (Optional) The description of the Redshift Subnet group. Defaults to "Managed by Terraform".
+* `description` - (Optional) The description of the Redshift Subnet group. Defaults to "Managed by Pulumi".
 * `subnet_ids` - (Required) An array of VPC subnet IDs.
 * `tags` - (Optional) A mapping of tags to assign to the resource.
 
