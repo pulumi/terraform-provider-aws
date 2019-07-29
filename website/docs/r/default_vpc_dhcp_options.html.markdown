@@ -16,7 +16,7 @@ Each AWS region comes with a default set of DHCP options.
 using it. Please read this document in its entirety before using this resource.
 
 The `aws_default_vpc_dhcp_options` behaves differently from normal resources, in that
-Terraform does not _create_ this resource, but instead "adopts" it
+this provider does not _create_ this resource, but instead "adopts" it
 into management.
 
 ## Example Usage
@@ -44,7 +44,7 @@ The following arguments are still supported:
 ### Removing `aws_default_vpc_dhcp_options` from your configuration
 
 The `aws_default_vpc_dhcp_options` resource allows you to manage a region's default DHCP Options Set,
-but Terraform cannot destroy it. Removing this resource from your configuration
+but this provider cannot destroy it. Removing this resource from your configuration
 will remove it from your statefile and management, but will not destroy the DHCP Options Set.
 You can resume managing the DHCP Options Set via the AWS Console.
 

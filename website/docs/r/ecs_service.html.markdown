@@ -45,7 +45,7 @@ resource "aws_ecs_service" "mongo" {
 
 ### Ignoring Changes to Desired Count
 
-You can utilize the generic Terraform resource [lifecycle configuration block](/docs/configuration/resources.html#lifecycle) with `ignore_changes` to create an ECS service with an initial count of running instances, then ignore any changes to that count caused externally (e.g. Application Autoscaling).
+You can utilize the generic this provider resource [lifecycle configuration block](/docs/configuration/resources.html#lifecycle) with `ignore_changes` to create an ECS service with an initial count of running instances, then ignore any changes to that count caused externally (e.g. Application Autoscaling).
 
 ```hcl
 resource "aws_ecs_service" "example" {
@@ -54,7 +54,7 @@ resource "aws_ecs_service" "example" {
   # Example: Create service with 2 instances to start
   desired_count = 2
 
-  # Optional: Allow external changes without Terraform plan difference
+  # Optional: Allow external changes without this provider plan difference
   lifecycle {
     ignore_changes = ["desired_count"]
   }
@@ -96,7 +96,7 @@ The following arguments are supported:
 * `propagate_tags` - (Optional) Specifies whether to propagate the tags from the task definition or the service to the tasks. The valid values are `SERVICE` and `TASK_DEFINITION`.
 * `scheduling_strategy` - (Optional) The scheduling strategy to use for the service. The valid values are `REPLICA` and `DAEMON`. Defaults to `REPLICA`. Note that [*Fargate tasks do not support the `DAEMON` scheduling strategy*](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/scheduling_tasks.html).
 * `service_registries` - (Optional) The service discovery registries for the service. The maximum number of `service_registries` blocks is `1`.
-* `wait_for_steady_state` - (Optional) If `true`, Terraform will wait for the service to reach a steady state (like [`aws ecs wait services-stable`](https://docs.aws.amazon.com/cli/latest/reference/ecs/wait/services-stable.html)) before continuing. Default `false`.
+* `wait_for_steady_state` - (Optional) If `true`, this provider will wait for the service to reach a steady state (like [`aws ecs wait services-stable`](https://docs.aws.amazon.com/cli/latest/reference/ecs/wait/services-stable.html)) before continuing. Default `false`.
 * `tags` - (Optional) Key-value mapping of resource tags
 * `task_definition` - (Required) The family and revision (`family:revision`) or full ARN of the task definition that you want to run in your service.
 
