@@ -17,11 +17,11 @@ of when using it. Please read this document in its entirety before using this
 resource.
 
 The `aws_default_security_group` behaves differently from normal resources, in that
-Terraform does not _create_ this resource, but instead "adopts" it
+this provider does not _create_ this resource, but instead "adopts" it
 into management. We can do this because these default security groups cannot be
 destroyed, and are created with a known set of default ingress/egress rules.
 
-When Terraform first adopts the Default Security Group, it **immediately removes all
+When this provider first adopts the Default Security Group, it **immediately removes all
 ingress and egress rules in the Security Group**. It then proceeds to create any rules specified in the
 configuration. This step is required so that only the rules specified in the
 configuration are created.
@@ -37,7 +37,7 @@ For more information about Default Security Groups, see the AWS Documentation on
 ## Basic Example Usage, with default rules
 
 The following config gives the Default Security Group the same rules that AWS
-provides by default, but pulls the resource under management by Terraform. This means that
+provides by default, but pulls the resource under management by this provider. This means that
 any ingress or egress rules added or changed will be detected as drift.
 
 ```hcl
@@ -112,7 +112,7 @@ for further usage documentation.
 
 Each AWS VPC (or region, if using EC2 Classic) comes with a Default Security
 Group that cannot be deleted. The `aws_default_security_group` allows you to
-manage this Security Group, but Terraform cannot destroy it. Removing this resource
+manage this Security Group, but this provider cannot destroy it. Removing this resource
 from your configuration will remove it from your statefile and management, but
 will not destroy the Security Group. All ingress or egress rules will be left as
 they are at the time of removal. You can resume managing them via the AWS Console.

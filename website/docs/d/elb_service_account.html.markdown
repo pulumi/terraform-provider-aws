@@ -43,7 +43,7 @@ POLICY
 }
 
 resource "aws_elb" "bar" {
-  name               = "my-foobar-terraform-elb"
+  name               = "my-foobar-elb"
   availability_zones = ["us-west-2a"]
 
   access_logs {

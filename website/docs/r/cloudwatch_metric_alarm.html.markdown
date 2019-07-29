@@ -14,7 +14,7 @@ Provides a CloudWatch Metric Alarm resource.
 
 ```hcl
 resource "aws_cloudwatch_metric_alarm" "foobar" {
-  alarm_name                = "terraform-test-foobar5"
+  alarm_name                = "test-foobar5"
   comparison_operator       = "GreaterThanOrEqualToThreshold"
   evaluation_periods        = "2"
   metric_name               = "CPUUtilization"
@@ -31,7 +31,7 @@ resource "aws_cloudwatch_metric_alarm" "foobar" {
 
 ```hcl
 resource "aws_autoscaling_policy" "bat" {
-  name                   = "foobar3-terraform-test"
+  name                   = "foobar3-test"
   scaling_adjustment     = 4
   adjustment_type        = "ChangeInCapacity"
   cooldown               = 300
@@ -39,7 +39,7 @@ resource "aws_autoscaling_policy" "bat" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "bat" {
-  alarm_name          = "terraform-test-foobar5"
+  alarm_name          = "test-foobar5"
   comparison_operator = "GreaterThanOrEqualToThreshold"
   evaluation_periods  = "2"
   metric_name         = "CPUUtilization"
@@ -61,7 +61,7 @@ resource "aws_cloudwatch_metric_alarm" "bat" {
 
 ```hcl
 resource "aws_cloudwatch_metric_alarm" "foobar" {
-  alarm_name                = "terraform-test-foobar"
+  alarm_name                = "test-foobar"
   comparison_operator       = "GreaterThanOrEqualToThreshold"
   evaluation_periods        = "2"
   threshold                 = "10"
