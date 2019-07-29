@@ -52,7 +52,7 @@ resource "aws_spot_fleet_request" "cheap_compute" {
 }
 ```
 
-~> **NOTE:** Terraform does not support the functionality where multiple `subnet_id` or `availability_zone` parameters can be specified in the same
+~> **NOTE:** This provider does not support the functionality where multiple `subnet_id` or `availability_zone` parameters can be specified in the same
 launch configuration block. If you want to specify multiple values, then separate launch configuration blocks should be used:
 
 ```hcl
@@ -99,7 +99,7 @@ across different markets and instance types.
     a additional parameter `iam_instance_profile_arn` takes `aws_iam_instance_profile` attribute `arn` as input.
 
 * `spot_price` - (Optional; Default: On-demand price) The maximum bid price per unit hour.
-* `wait_for_fulfillment` - (Optional; Default: false) If set, Terraform will
+* `wait_for_fulfillment` - (Optional; Default: false) If set, this provider will
   wait for the Spot Request to be fulfilled, and will throw an error if the
   timeout of 10m is reached.
 * `target_capacity` - The number of units to request. You can choose to set the

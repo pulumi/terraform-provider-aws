@@ -38,7 +38,7 @@ The following arguments are supported:
 
 * `production_variants` - (Required) Fields are documented below.
 * `kms_key_arn` - (Optional) Amazon Resource Name (ARN) of a AWS Key Management Service key that Amazon SageMaker uses to encrypt data on the storage volume attached to the ML compute instance that hosts the endpoint.
-* `name` - (Optional) The name of the endpoint configuration. If omitted, Terraform will assign a random, unique name.
+* `name` - (Optional) The name of the endpoint configuration. If omitted, this provider will assign a random, unique name.
 * `tags` - (Optional) A mapping of tags to assign to the resource.
 
 The `production_variants` block supports:
@@ -48,7 +48,7 @@ The `production_variants` block supports:
 * `accelerator_type` (Optional) - The size of the Elastic Inference (EI) instance to use for the production variant.
 * `initial_variant_weight` (Optional) - Determines initial traffic distribution among all of the models that you specify in the endpoint configuration. If unspecified, it defaults to 1.0.
 * `model_name` - (Required) The name of the model to use.
-* `variant_name` - (Optional) The name of the variant. If omitted, Terraform will assign a random, unique name.
+* `variant_name` - (Optional) The name of the variant. If omitted, this provider will assign a random, unique name.
 ## Attributes Reference
 
 The following attributes are exported:
