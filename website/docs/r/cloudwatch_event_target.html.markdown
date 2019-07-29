@@ -49,7 +49,7 @@ PATTERN
 }
 
 resource "aws_kinesis_stream" "test_stream" {
-  name        = "terraform-kinesis-test"
+  name        = "kinesis-test"
   shard_count = 1
 }
 ```

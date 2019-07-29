@@ -19,7 +19,7 @@ Because of backward incompatible API changes (read [here](https://github.com/aws
 * Replace the `backends` attribute of the `spec` object with one or more `backend` configuration blocks,
 setting `virtual_service_name` to the name of the service.
 
-The Terraform state associated with existing resources will automatically be migrated.
+The state associated with existing resources will automatically be migrated.
 
 ## Example Usage
 

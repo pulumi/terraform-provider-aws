@@ -14,7 +14,7 @@ databases.
 
 Changes to a DB instance can occur when you manually change a parameter, such as
 `allocated_storage`, and are reflected in the next maintenance window. Because
-of this, Terraform may report a difference in its planning phase because a
+of this, this provider may report a difference in its planning phase because a
 modification has not yet taken place. You can use the `apply_immediately` flag
 to instruct the service to apply the change immediately (see documentation
 below).
@@ -54,7 +54,7 @@ resource "aws_db_instance" "default" {
 
 ### Storage Autoscaling
 
-To enable Storage Autoscaling with instances that support the feature, define the `max_allocated_storage` argument higher than the `allocated_storage` argument. Terraform will automatically hide differences with the `allocated_storage` argument value if autoscaling occurs.
+To enable Storage Autoscaling with instances that support the feature, define the `max_allocated_storage` argument higher than the `allocated_storage` argument. This provider will automatically hide differences with the `allocated_storage` argument value if autoscaling occurs.
 
 ```hcl
 resource "aws_db_instance" "example" {
@@ -124,7 +124,7 @@ set to `false`.
 mappings of AWS Identity and Access Management (IAM) accounts to database
 accounts is enabled.
 * `identifier` - (Optional, Forces new resource) The name of the RDS instance,
-if omitted, Terraform will assign a random, unique identifier.
+if omitted, this provider will assign a random, unique identifier.
 * `identifier_prefix` - (Optional, Forces new resource) Creates a unique
 identifier beginning with the specified prefix. Conflicts with `identifier`.
 * `instance_class` - (Required) The instance type of the RDS instance.
@@ -201,7 +201,7 @@ associate.
 * `performance_insights_retention_period` - (Optional) The amount of time in days to retain Performance Insights data. Either 7 (7 days) or 731 (2 years). When specifying `performance_insights_retention_period`, `performance_insights_enabled` needs to be set to true. Defaults to '7'.
 
 ~> **NOTE:** Removing the `replicate_source_db` attribute from an existing RDS
-Replicate database managed by Terraform will promote the database to a fully
+Replicate database managed by this provider will promote the database to a fully
 standalone database.
 
 ### S3 Import Options

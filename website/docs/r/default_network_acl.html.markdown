@@ -16,11 +16,11 @@ of when using it. Please read this document in its entirety before using this
 resource.
 
 The `aws_default_network_acl` behaves differently from normal resources, in that
-Terraform does not _create_ this resource, but instead attempts to "adopt" it
+this provider does not _create_ this resource, but instead attempts to "adopt" it
 into management. We can do this because each VPC created has a Default Network
 ACL that cannot be destroyed, and is created with a known set of default rules.
 
-When Terraform first adopts the Default Network ACL, it **immediately removes all
+When this provider first adopts the Default Network ACL, it **immediately removes all
 rules in the ACL**. It then proceeds to create any rules specified in the
 configuration. This step is required so that only the rules specified in the
 configuration are created.
@@ -36,7 +36,7 @@ For more information about Network ACLs, see the AWS Documentation on
 ## Basic Example Usage, with default rules
 
 The following config gives the Default Network ACL the same rules that AWS
-includes, but pulls the resource under management by Terraform. This means that
+includes, but pulls the resource under management by this provider. This means that
 any ACL rules added or changed will be detected as drift.
 
 ```hcl
@@ -171,7 +171,7 @@ lifecycle {
 ### Removing `aws_default_network_acl` from your configuration
 
 Each AWS VPC comes with a Default Network ACL that cannot be deleted. The `aws_default_network_acl`
-allows you to manage this Network ACL, but Terraform cannot destroy it. Removing
+allows you to manage this Network ACL, but this provider cannot destroy it. Removing
 this resource from your configuration will remove it from your statefile and
 management, **but will not destroy the Network ACL.** All Subnets associations
 and ingress or egress rules will be left as they are at the time of removal. You
