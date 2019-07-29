@@ -103,7 +103,7 @@ resource "aws_launch_template" "foo" {
 
 The following arguments are supported:
 
-* `name` - The name of the launch template. If you leave this blank, Terraform will auto-generate a unique name.
+* `name` - The name of the launch template. If you leave this blank, this provider will auto-generate a unique name.
 * `name_prefix` - Creates a unique name beginning with the specified prefix. Conflicts with `name`.
 * `description` - Description of the launch template.
 * `block_device_mappings` - Specify volumes to attach to the instance besides the volumes specified by the AMI.

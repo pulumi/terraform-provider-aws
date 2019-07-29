@@ -3,7 +3,7 @@ subcategory: "ElasticSearch"
 layout: "aws"
 page_title: "AWS: aws_elasticsearch_domain"
 description: |-
-  Terraform resource for managing an AWS Elasticsearch Domain.
+  Provides a resource for managing an AWS Elasticsearch Domain.
 ---
 
 # Resource: aws_elasticsearch_domain
@@ -140,7 +140,7 @@ data "aws_caller_identity" "current" {}
 
 resource "aws_security_group" "es" {
   name        = "${var.vpc}-elasticsearch-${var.domain}"
-  description = "Managed by Terraform"
+  description = "Managed by Pulumi"
   vpc_id      = "${data.aws_vpc.selected.id}"
 
   ingress {
@@ -215,7 +215,7 @@ The following arguments are supported:
 * `access_policies` - (Optional) IAM policy document specifying the access policies for the domain
 * `advanced_options` - (Optional) Key-value string pairs to specify advanced configuration options.
    Note that the values for these configuration options must be strings (wrapped in quotes) or they
-   may be wrong and cause a perpetual diff, causing Terraform to want to recreate your Elasticsearch
+   may be wrong and cause a perpetual diff, causing this provider to want to recreate your Elasticsearch
    domain on every apply.
 * `ebs_options` - (Optional) EBS related options, may be required based on chosen [instance size](https://aws.amazon.com/elasticsearch-service/pricing/). See below.
 * `encrypt_at_rest` - (Optional) Encrypt at rest options. Only available for [certain instance types](http://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/aes-supported-instance-types.html). See below.

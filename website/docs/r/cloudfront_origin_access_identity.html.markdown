@@ -65,7 +65,7 @@ s3_origin_config {
 
 Note that the AWS API may translate the `s3_canonical_user_id` `CanonicalUser`
 principal into an `AWS` IAM ARN principal when supplied in an
-[`aws_s3_bucket`][4] bucket policy, causing spurious diffs in Terraform. If
+[`aws_s3_bucket`][4] bucket policy, causing spurious diffs. If
 you see this behaviour, use the `iam_arn` instead:
 
 ```hcl
