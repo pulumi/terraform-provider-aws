@@ -49,5 +49,5 @@ resource "aws_elb" "elb" {
 
 ## Import 
 
-The terraform import function will read in certificate body, certificate chain (if it exists), id, name, path, and arn. 
+The import function will read in certificate body, certificate chain (if it exists), id, name, path, and arn. 
 It will not retrieve the private key which is not available through the AWS API.   
