@@ -91,7 +91,7 @@ The following arguments are supported:
 
 #### Schema Attributes
 
-~> **NOTE:** When defining an `attribute_data_type` of `String` or `Number`, the respective attribute constraints configuration block (e.g `string_attribute_constraints` or `number_attribute_contraints`) is required to prevent recreation of the Terraform resource. This requirement is true for both standard (e.g. name, email) and custom schema attributes.
+~> **NOTE:** When defining an `attribute_data_type` of `String` or `Number`, the respective attribute constraints configuration block (e.g `string_attribute_constraints` or `number_attribute_contraints`) is required to prevent recreation of the resource. This requirement is true for both standard (e.g. name, email) and custom schema attributes.
 
   * `attribute_data_type` (Required) - The attribute data type. Must be one of `Boolean`, `Number`, `String`, `DateTime`.
   * `developer_only_attribute` (Optional) - Specifies whether the attribute type is developer only.

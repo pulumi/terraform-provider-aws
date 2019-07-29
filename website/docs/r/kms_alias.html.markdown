@@ -9,7 +9,7 @@ description: |-
 # Resource: aws_kms_alias
 
 Provides an alias for a KMS customer master key. AWS Console enforces 1-to-1 mapping between aliases & keys,
-but API (hence Terraform too) allows you to create as many aliases as
+but API (hence this provider too) allows you to create as many aliases as
 the [account limits](http://docs.aws.amazon.com/kms/latest/developerguide/limits.html) allow you.
 
 ## Example Usage

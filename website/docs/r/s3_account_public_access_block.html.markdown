@@ -12,7 +12,7 @@ Manages S3 account-level Public Access Block configuration. For more information
 
 ~> **NOTE:** Each AWS account may only have one S3 Public Access Block configuration. Multiple configurations of the resource against the same AWS account will cause a perpetual difference.
 
--> Advanced usage: To use a custom API endpoint for this Terraform resource, use the [`s3control` endpoint provider configuration](/docs/providers/aws/index.html#s3control), not the `s3` endpoint provider configuration.
+-> Advanced usage: To use a custom API endpoint for this resource, use the [`s3control` endpoint provider configuration](/docs/providers/aws/index.html#s3control), not the `s3` endpoint provider configuration.
 
 ## Example Usage
 
@@ -27,7 +27,7 @@ resource "aws_s3_account_public_access_block" "example" {
 
 The following arguments are supported:
 
-* `account_id` - (Optional) AWS account ID to configure. Defaults to automatically determined account ID of the Terraform AWS provider.
+* `account_id` - (Optional) AWS account ID to configure. Defaults to automatically determined account ID of the this provider AWS provider.
 * `block_public_acls` - (Optional) Whether Amazon S3 should block public ACLs for buckets in this account. Defaults to `false`. Enabling this setting does not affect existing policies or ACLs. When set to `true` causes the following behavior:
   * PUT Bucket acl and PUT Object acl calls will fail if the specified ACL allows public access.
   * PUT Object calls will fail if the request includes an object ACL.

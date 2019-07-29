@@ -30,7 +30,7 @@ by AWS. See [Elastic Beanstalk Supported Platforms][beanstalk-platforms] from
 AWS documentation for reference solution stack names.
 
 ~> **NOTE:** If more or less than a single match is returned by the search,
-Terraform will fail. Ensure that your search is specific enough to return
+this call will fail. Ensure that your search is specific enough to return
 a single solution stack, or use `most_recent` to choose the most recent one.
 
 ## Attributes Reference
