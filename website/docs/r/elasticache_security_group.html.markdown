@@ -33,7 +33,7 @@ resource "aws_elasticache_security_group" "bar" {
 The following arguments are supported:
 
 * `name` – (Required) Name for the cache security group. This value is stored as a lowercase string.
-* `description` – (Optional) description for the cache security group. Defaults to "Managed by Terraform".
+* `description` – (Optional) description for the cache security group. Defaults to "Managed by Pulumi".
 * `security_group_names` – (Required) List of EC2 security group names to be
 authorized for ingress to the cache security group
 

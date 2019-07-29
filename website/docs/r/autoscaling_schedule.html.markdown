@@ -15,7 +15,7 @@ Provides an AutoScaling Schedule resource.
 ```hcl
 resource "aws_autoscaling_group" "foobar" {
   availability_zones        = ["us-west-2a"]
-  name                      = "terraform-test-foobar5"
+  name                      = "test-foobar5"
   max_size                  = 1
   min_size                  = 1
   health_check_grace_period = 300

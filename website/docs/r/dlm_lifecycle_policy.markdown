@@ -114,7 +114,7 @@ The following arguments are supported:
 * `schedule` - (Required) See the [`schedule` configuration](#schedule-arguments) block.
 * `target_tags` (Required) A mapping of tag keys and their values. Any resources that match the `resource_types` and are tagged with _any_ of these tags will be targeted.
 
-~> Note: You cannot have overlapping lifecycle policies that share the same `target_tags`. Terraform is unable to detect this at plan time but it will fail during apply.
+~> Note: You cannot have overlapping lifecycle policies that share the same `target_tags`. This provider is unable to detect this at plan time but it will fail during apply.
 
 #### Schedule arguments
 

@@ -13,7 +13,7 @@ See [Amazon Elastic MapReduce Documentation](https://aws.amazon.com/documentatio
 
 ~> **NOTE:** At this time, Instance Groups cannot be destroyed through the API nor
 web interface. Instance Groups are destroyed when the EMR Cluster is destroyed.
-Terraform will resize any Instance Group to zero when destroying the resource.
+this provider will resize any Instance Group to zero when destroying the resource.
 
 ## Example Usage
 

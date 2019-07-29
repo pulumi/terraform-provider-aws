@@ -108,7 +108,7 @@ of which ephemeral devices are available on each type. The devices are always
 identified by the `virtual_name` in the format `"ephemeral{0..N}"`.
 
 ~> **NOTE:** Currently, changes to `*_block_device` configuration of _existing_
-resources cannot be automatically detected by Terraform. After making updates
+resources cannot be automatically detected by this provider. After making updates
 to block device configuration, resource recreation can be manually triggered by
 using the [`taint` command](/docs/commands/taint.html).
 
