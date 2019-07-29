@@ -10,14 +10,14 @@ description: |-
 
   Provides a resource for subscribing to SNS topics. Requires that an SNS topic exist for the subscription to attach to.
 This resource allows you to automatically place messages sent to SNS topics in SQS queues, send them as HTTP(S) POST requests
-to a given endpoint, send SMS messages, or notify devices / applications. The most likely use case for Terraform users will
+to a given endpoint, send SMS messages, or notify devices / applications. The most likely use case will
 probably be SQS queues.
 
-~> **NOTE:** If the SNS topic and SQS queue are in different AWS regions, it is important for the "aws_sns_topic_subscription" to use an AWS provider that is in the same region of the SNS topic. If the "aws_sns_topic_subscription" is using a provider with a different region than the SNS topic, terraform will fail to create the subscription.
+~> **NOTE:** If the SNS topic and SQS queue are in different AWS regions, it is important for the "aws_sns_topic_subscription" to use an AWS provider that is in the same region of the SNS topic. If the "aws_sns_topic_subscription" is using a provider with a different region than the SNS topic, the subscription will fail to create.
 
-~> **NOTE:** Setup of cross-account subscriptions from SNS topics to SQS queues requires Terraform to have access to BOTH accounts.
+~> **NOTE:** Setup of cross-account subscriptions from SNS topics to SQS queues requires the provider to have access to BOTH accounts.
 
-~> **NOTE:** If SNS topic and SQS queue are in different AWS accounts but the same region it is important for the "aws_sns_topic_subscription" to use the AWS provider of the account with the SQS queue. If "aws_sns_topic_subscription" is using a Provider with a different account than the SQS queue, terraform creates the subscriptions but does not keep state and tries to re-create the subscription at every apply.
+~> **NOTE:** If SNS topic and SQS queue are in different AWS accounts but the same region it is important for the "aws_sns_topic_subscription" to use the AWS provider of the account with the SQS queue. If "aws_sns_topic_subscription" is using a Provider with a different account than the SQS queue, the provider creates the subscriptions but does not keep state and tries to re-create the subscription at every apply.
 
 ~> **NOTE:** If SNS topic and SQS queue are in different AWS accounts and different AWS regions it is important to recognize that the subscription needs to be initiated from the account with the SQS queue but in the region of the SNS topic.
 
@@ -29,7 +29,7 @@ You can directly supply a topic and ARN by hand in the `topic_arn` property alon
 resource "aws_sns_topic_subscription" "user_updates_sqs_target" {
   topic_arn = "arn:aws:sns:us-west-2:432981146916:user-updates-topic"
   protocol  = "sqs"
-  endpoint  = "arn:aws:sqs:us-west-2:432981146916:terraform-queue-too"
+  endpoint  = "arn:aws:sqs:us-west-2:432981146916:queue-too"
 }
 ```
 
@@ -62,7 +62,7 @@ You can subscribe SNS topics to SQS queues in different Amazon accounts and regi
 variable "sns" {
   default = {
     account-id   = "111111111111"
-    role-name    = "service/service-hashicorp-terraform"
+    role-name    = "service/service"
     name         = "example-sns-topic"
     display_name = "example"
     region       = "us-west-1"
@@ -72,7 +72,7 @@ variable "sns" {
 variable "sqs" {
   default = {
     account-id = "222222222222"
-    role-name  = "service/service-hashicorp-terraform"
+    role-name  = "service/service"
     name       = "example-sqs-queue"
     region     = "us-east-1"
   }
@@ -266,13 +266,13 @@ Unsupported protocols include the following:
 
 These are unsupported because the endpoint needs to be authorized and does not
 generate an ARN until the target email address has been validated. This breaks
-the Terraform model and as a result are not currently supported.
+the Infrastructure as Code model and as a result these protocols are not currently supported.
 
 ### Specifying endpoints
 
 Endpoints have different format requirements according to the protocol that is chosen.
 
-* SQS endpoints come in the form of the SQS queue's ARN (not the URL of the queue) e.g: `arn:aws:sqs:us-west-2:432981146916:terraform-queue-too`
+* SQS endpoints come in the form of the SQS queue's ARN (not the URL of the queue) e.g: `arn:aws:sqs:us-west-2:432981146916:queue-too`
 * Application endpoints are also the endpoint ARN for the mobile app and device.
 
 ## Attributes Reference

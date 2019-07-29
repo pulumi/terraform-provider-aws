@@ -41,7 +41,7 @@ resource "aws_elastic_beanstalk_application" "default" {
 resource "aws_elastic_beanstalk_application_version" "default" {
   name        = "tf-test-version-label"
   application = "tf-test-name"
-  description = "application version created by terraform"
+  description = "application version"
   bucket      = "${aws_s3_bucket.default.id}"
   key         = "${aws_s3_bucket_object.default.id}"
 }

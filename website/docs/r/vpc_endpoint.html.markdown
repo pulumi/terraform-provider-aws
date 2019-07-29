@@ -10,7 +10,7 @@ description: |-
 
 Provides a VPC Endpoint resource.
 
-~> **NOTE on VPC Endpoints and VPC Endpoint Associations:** Terraform provides both standalone VPC Endpoint Associations for
+~> **NOTE on VPC Endpoints and VPC Endpoint Associations:** This provider provides both standalone VPC Endpoint Associations for
 [Route Tables](vpc_endpoint_route_table_association.html) - (an association between a VPC endpoint and a single `route_table_id`) and
 [Subnets](vpc_endpoint_subnet_association.html) - (an association between a VPC endpoint and a single `subnet_id`) and
 a VPC Endpoint resource with `route_table_ids` and `subnet_ids` attributes.
@@ -88,7 +88,7 @@ resource "aws_route53_record" "ptfe_service" {
 }
 ```
 
-~> **NOTE The `dns_entry` output is a list of maps:** Terraform interpolation support for lists of maps requires the `lookup` and `[]` until full support of lists of maps is available
+~> **NOTE The `dns_entry` output is a list of maps:** This provider interpolation support for lists of maps requires the `lookup` and `[]` until full support of lists of maps is available
 
 ## Argument Reference
 
