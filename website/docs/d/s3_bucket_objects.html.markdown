@@ -8,13 +8,13 @@ description: |-
 
 # Data Source: aws_s3_bucket_objects
 
-~> **NOTE on `max_keys`:** Retrieving very large numbers of keys can adversely affect Terraform's performance.
+~> **NOTE on `max_keys`:** Retrieving very large numbers of keys can adversely affect this provider's performance.
 
 The bucket-objects data source returns keys (i.e., file names) and other metadata about objects in an S3 bucket.
 
 ## Example Usage
 
-The following example retrieves a list of all object keys in an S3 bucket and creates corresponding Terraform object data sources:
+The following example retrieves a list of all object keys in an S3 bucket and creates corresponding object data sources:
 
 ```hcl
 data "aws_s3_bucket_objects" "my_objects" {

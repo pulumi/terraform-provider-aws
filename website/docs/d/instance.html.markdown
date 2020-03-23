@@ -106,7 +106,7 @@ interpolation.
 * `source_dest_check` - Whether the network interface performs source/destination checking (Boolean).
 * `subnet_id` - The VPC subnet ID.
 * `user_data` - SHA-1 hash of User Data supplied to the Instance.
-* `user_data_base64` - Base64 encoded contents of User Data supplied to the Instance. Valid UTF-8 contents can be decoded with the [`base64decode` function](/docs/configuration/functions/base64decode.html). This attribute is only exported if `get_user_data` is true.
+* `user_data_base64` - Base64 encoded contents of User Data supplied to the Instance. This attribute is only exported if `get_user_data` is true.
 * `tags` - A mapping of tags assigned to the Instance.
 * `tenancy` - The tenancy of the instance: `dedicated`, `default`, `host`.
 * `host_id` - The Id of the dedicated host the instance will be assigned to.

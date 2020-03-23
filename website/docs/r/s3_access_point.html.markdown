@@ -10,8 +10,6 @@ description: |-
 
 Provides a resource to manage an S3 Access Point.
 
--> Advanced usage: To use a custom API endpoint for this Terraform resource, use the [`s3control` endpoint provider configuration](/docs/providers/aws/index.html#s3control), not the `s3` endpoint provider configuration.
-
 ## Example Usage
 
 ### Basic Usage
@@ -57,7 +55,7 @@ The following arguments are required:
 
 The following arguments are optional:
 
-* `account_id` - (Optional) The AWS account ID for the owner of the bucket for which you want to create an access point. Defaults to automatically determined account ID of the Terraform AWS provider.
+* `account_id` - (Optional) The AWS account ID for the owner of the bucket for which you want to create an access point. Defaults to automatically determined account ID of the provider.
 * `policy` - (Optional) A valid JSON document that specifies the policy that you want to apply to this access point.
 * `public_access_block_configuration` - (Optional) Configuration block to manage the `PublicAccessBlock` configuration that you want to apply to this Amazon S3 bucket. You can enable the configuration options in any combination. Detailed below.
 * `vpc_configuration` - (Optional) Configuration block to restrict access to this access point to requests from the specified Virtual Private Cloud (VPC). Detailed below.

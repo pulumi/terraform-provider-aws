@@ -23,7 +23,7 @@ resource "aws_redshift_snapshot_schedule" "default" {
 
 The following arguments are supported:
 
-* `identifier` - (Optional, Forces new resource) The snapshot schedule identifier. If omitted, Terraform will assign a random, unique identifier.
+* `identifier` - (Optional, Forces new resource) The snapshot schedule identifier. If omitted, this provider will assign a random, unique identifier.
 * `identifier_prefix` - (Optional, Forces new resource) Creates a unique
 identifier beginning with the specified prefix. Conflicts with `identifier`.
 * `description` - (Optional) The description of the snapshot schedule.

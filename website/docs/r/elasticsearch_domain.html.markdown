@@ -245,7 +245,7 @@ The following arguments are supported:
 **domain_endpoint_options** supports the following attributes:
 
 * `enforce_https` - (Required) Whether or not to require HTTPS
-* `tls_security_policy` - (Optional) The name of the TLS security policy that needs to be applied to the HTTPS endpoint. Valid values:  `Policy-Min-TLS-1-0-2019-07` and `Policy-Min-TLS-1-2-2019-07`. Terraform will only perform drift detection if a configuration value is provided.
+* `tls_security_policy` - (Optional) The name of the TLS security policy that needs to be applied to the HTTPS endpoint. Valid values:  `Policy-Min-TLS-1-0-2019-07` and `Policy-Min-TLS-1-2-2019-07`. This provider will only perform drift detection if a configuration value is provided.
 
 **cluster_config** supports the following attributes:
 
