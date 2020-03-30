@@ -18,9 +18,6 @@ data "aws_ssm_parameter" "foo" {
 }
 ```
 
-~> **Note:** The unencrypted value of a SecureString will be stored in the raw state as plain-text.
-[Read more about sensitive data in state](/docs/state/sensitive-data.html).
-
 
 ~> **Note:** The data source is currently following the behavior of the [SSM API](https://docs.aws.amazon.com/sdk-for-go/api/service/ssm/#Parameter) to return a string value, regardless of parameter type.
 

@@ -78,7 +78,7 @@ EOF
 }
 
 resource "aws_kinesis_firehose_delivery_stream" "test_stream" {
-  name        = "terraform-kinesis-firehose-msk-broker-logs-stream"
+  name        = "kinesis-firehose-msk-broker-logs-stream"
   destination = "s3"
 
   s3_configuration {
