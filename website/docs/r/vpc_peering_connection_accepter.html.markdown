@@ -125,7 +125,7 @@ VPC Peering Connection Accepters can be imported by using the Peering Connection
 $ terraform import aws_vpc_peering_connection_accepter.example pcx-12345678
 ```
 
-Certain resource arguments, like `auto_accept`, do not have an EC2 API method for reading the information after peering connection creation. If the argument is set in the Terraform configuration on an imported resource, Terraform will always show a difference. To workaround this behavior, either omit the argument from theconfiguration or use [`ignoreChanges`](https://www.pulumi.com/docs/intro/concepts/programming-model/#ignorechanges) to hide the difference, e.g.
+Certain resource arguments, like `auto_accept`, do not have an EC2 API method for reading the information after peering connection creation. If the argument is set in the provider configuration on an imported resource, this provder will always show a difference. To workaround this behavior, either omit the argument from the configuration or use [`ignoreChanges`](https://www.pulumi.com/docs/intro/concepts/programming-model/#ignorechanges) to hide the difference, e.g.
 
 ```hcl
 resource "aws_vpc_peering_connection_accepter" "example" {

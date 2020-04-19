@@ -129,7 +129,7 @@ The following arguments are supported:
 
 ##### Defaults for Standard Attributes
 
-The [standard attributes](https://docs.aws.amazon.com/cognito/latest/developerguide/user-pool-settings-attributes.html#cognito-user-pools-standard-attributes) have the following defaults. Note that attributes which match the default values are not stored in Terraform state when importing.
+The [standard attributes](https://docs.aws.amazon.com/cognito/latest/developerguide/user-pool-settings-attributes.html#cognito-user-pools-standard-attributes) have the following defaults. Note that attributes which match the default values are not stored in the provider state when importing.
 
 ```hcl
 resource "aws_cognito_user_pool" "example" {

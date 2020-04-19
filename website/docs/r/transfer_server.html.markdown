@@ -97,4 +97,4 @@ Transfer Servers can be imported using the `server id`, e.g.
 $ terraform import aws_transfer_server.bar s-12345678
 ```
 
-Certain resource arguments, such as `host_key`, cannot be read via the API and imported into Terraform. Terraform will display a difference for these arguments the first run after import if declared in the Terraform configuration for an imported resource.
+Certain resource arguments, such as `host_key`, cannot be read via the API and imported into the provider. This provider will display a difference for these arguments the first run after import if declared in the provider configuration for an imported resource.

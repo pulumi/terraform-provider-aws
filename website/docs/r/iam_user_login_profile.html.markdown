@@ -48,7 +48,7 @@ In addition to all arguments above, the following attributes are exported:
 * `encrypted_password` - The encrypted password, base64 encoded. Only available if password was handled on this provider resource creation, not import.
 
 ~> **NOTE:** The encrypted password may be decrypted using the command line,
-   for example: `terraform output password | base64 --decode | keybase pgp decrypt`.
+   for example: `pulumi stack output password | base64 --decode | keybase pgp decrypt`.
 
 ## Import
 
