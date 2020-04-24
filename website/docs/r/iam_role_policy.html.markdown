@@ -8,7 +8,7 @@ description: |-
 
 # Resource: aws_iam_role_policy
 
-Provides an IAM role policy.
+Provides an IAM role inline policy.
 
 ## Example Usage
 

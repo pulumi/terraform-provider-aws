@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"net"
 	"reflect"
 	"regexp"
 	"sort"
@@ -46,6 +47,7 @@ import (
 	"github.com/aws/aws-sdk-go/service/waf"
 	"github.com/aws/aws-sdk-go/service/worklink"
 	"github.com/beevik/etree"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/hashcode"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/structure"
 	"github.com/mitchellh/copystructure"
@@ -997,6 +999,16 @@ func flattenStringList(list []*string) []interface{} {
 
 func flattenStringSet(list []*string) *schema.Set {
 	return schema.NewSet(schema.HashString, flattenStringList(list))
+}
+
+// hashStringCaseInsensitive hashes strings in a case insensitive manner.
+// If you want a Set of strings and are case inensitive, this is the SchemaSetFunc you want.
+func hashStringCaseInsensitive(v interface{}) int {
+	return hashcode.String(strings.ToLower(v.(string)))
+}
+
+func flattenCaseInsensitiveStringSet(list []*string) *schema.Set {
+	return schema.NewSet(hashStringCaseInsensitive, flattenStringList(list))
 }
 
 //Flattens an array of private ip addresses into a []string, where the elements returned are the IP strings e.g. "192.168.0.0"
@@ -5688,4 +5700,14 @@ func flattenRoute53ResolverRuleTargetIps(targetAddresses []*route53resolver.Targ
 	}
 
 	return vTargetIps
+}
+
+func isIpv6CidrsEquals(first, second string) bool {
+	if first == "" || second == "" {
+		return false
+	}
+	_, firstMask, _ := net.ParseCIDR(first)
+	_, secondMask, _ := net.ParseCIDR(second)
+
+	return firstMask.String() == secondMask.String()
 }

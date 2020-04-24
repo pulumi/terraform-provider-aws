@@ -33,7 +33,7 @@ data "aws_instance" "foo" {
 
 * `instance_id` - (Optional) Specify the exact Instance ID with which to populate the data source.
 
-* `instance_tags` - (Optional) A mapping of tags, each pair of which must
+* `instance_tags` - (Optional) A map of tags, each pair of which must
 exactly match a pair on the desired Instance.
 
 * `filter` - (Optional) One or more name/value pairs to use as filters. There are

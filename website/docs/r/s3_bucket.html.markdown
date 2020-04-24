@@ -339,7 +339,7 @@ The following arguments are supported:
 * `bucket_prefix` - (Optional, Forces new resource) Creates a unique bucket name beginning with the specified prefix. Conflicts with `bucket`.
 * `acl` - (Optional) The [canned ACL](https://docs.aws.amazon.com/AmazonS3/latest/dev/acl-overview.html#canned-acl) to apply. Defaults to "private".  Conflicts with `grant`.
 * `grant` - (Optional) An [ACL policy grant](https://docs.aws.amazon.com/AmazonS3/latest/dev/acl-overview.html#sample-acl) (documented below). Conflicts with `acl`.
-* `policy` - (Optional) A valid [bucket policy](https://docs.aws.amazon.com/AmazonS3/latest/dev/example-bucket-policies.html) JSON document.
+* `policy` - (Optional) A valid [bucket policy](https://docs.aws.amazon.com/AmazonS3/latest/dev/example-bucket-policies.html) JSON document. Note that if the policy document is not specific enough (but still valid), the provider may view the policy as constantly changing in a `pulumi up / preview / update`. In this case, please make sure you use the verbose/specific version of the policy.
 * `tags` - (Optional) A mapping of tags to assign to the bucket.
 * `force_destroy` - (Optional, Default:`false`) A boolean that indicates all objects (including any [locked objects](https://docs.aws.amazon.com/AmazonS3/latest/dev/object-lock-overview.html)) should be deleted from the bucket so that the bucket can be destroyed without error. These objects are *not* recoverable.
 * `website` - (Optional) A website object (documented below).
@@ -464,7 +464,7 @@ The `sse_kms_encrypted_objects` object supports the following:
 The `filter` object supports the following:
 
 * `prefix` - (Optional) Object keyname prefix that identifies subset of objects to which the rule applies.
-* `tags` - (Optional)  A mapping of tags that identifies subset of objects to which the rule applies.
+* `tags` - (Optional)  A map of tags that identifies subset of objects to which the rule applies.
 The rule applies only to objects having all the tags in its tagset.
 
 The `server_side_encryption_configuration` object supports the following:
