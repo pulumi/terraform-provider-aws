@@ -56,13 +56,11 @@ resource "aws_ec2_transit_gateway_peering_attachment" "example" {
 }
 ```
 
-A full example of how to create a Transit Gateway in one AWS account, share it with a second AWS account, and attach a to a Transit Gateway in the second account via the `aws_ec2_transit_gateway_peering_attachment` resource can be found in [the `./examples/transit-gateway-cross-account-peering-attachment` directory within the Github Repository](https://github.com/terraform-providers/terraform-provider-aws/tree/master/examples/transit-gateway-cross-account-peering-attachment).
-
 ## Argument Reference
 
 The following arguments are supported:
 
-* `peer_account_id` - (Optional) Account ID of EC2 Transit Gateway to peer with. Defaults to the account ID the [AWS provider][1] is currently connected to.
+* `peer_account_id` - (Optional) Account ID of EC2 Transit Gateway to peer with. Defaults to the account ID the current provider is currently connected to.
 * `peer_region` - (Required) Region of EC2 Transit Gateway to peer with.
 * `peer_transit_gateway_id` - (Required) Identifier of EC2 Transit Gateway to peer with.
 * `tags` - (Optional) Key-value tags for the EC2 Transit Gateway Peering Attachment.
@@ -81,5 +79,3 @@ In addition to all arguments above, the following attributes are exported:
 ```sh
 terraform import aws_ec2_transit_gateway_peering_attachment.example tgw-attach-12345678
 ```
-
-[1]: /docs/providers/aws/index.html

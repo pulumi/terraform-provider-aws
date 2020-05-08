@@ -10,8 +10,10 @@ description: |-
 
 Provides an API Gateway REST Deployment.
 
--> **Note:** Depends on having `aws_api_gateway_integration` inside your rest api (which in turn depends on `aws_api_gateway_method`). To avoid race conditions
-you might need to add an explicit `depends_on = ["${aws_api_gateway_integration.name}"]`.
+~> **Note:** This resource depends on having at least one `aws_api_gateway_integration` created in the REST API, which 
+itself has other dependencies. To avoid race conditions when all resources are being created together, you need to add 
+implicit resource references via the `triggers` argument or explicit resource references using the 
+[resource `dependsOn` meta-argument](https://www.pulumi.com/docs/intro/concepts/programming-model/#dependson).
 
 ## Example Usage
 
@@ -50,6 +52,29 @@ resource "aws_api_gateway_deployment" "MyDemoDeployment" {
   variables = {
     "answer" = "42"
   }
+
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+```
+
+### Redeployment Triggers
+
+```hcl
+resource "aws_api_gateway_deployment" "MyDemoDeployment" {
+  rest_api_id = aws_api_gateway_rest_api.MyDemoAPI.id
+  stage_name  = "test"
+
+  triggers = {
+    redeployment = sha1(join(",", list(
+      jsonencode(aws_api_gateway_integration.example),
+    )))
+  }
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 ```
 
@@ -61,6 +86,7 @@ The following arguments are supported:
 * `stage_name` - (Optional) The name of the stage. If the specified stage already exists, it will be updated to point to the new deployment. If the stage does not exist, a new one will be created and point to this deployment.
 * `description` - (Optional) The description of the deployment
 * `stage_description` - (Optional) The description of the stage
+* `triggers` - (Optional) A map of arbitrary keys and values that, when changed, will trigger a redeployment.
 * `variables` - (Optional) A map that defines variables for the stage
 
 ## Attribute Reference
@@ -70,7 +96,7 @@ In addition to all arguments above, the following attributes are exported:
 * `id` - The ID of the deployment
 * `invoke_url` - The URL to invoke the API pointing to the stage,
   e.g. `https://z4675bid1j.execute-api.eu-west-2.amazonaws.com/prod`
-* `execution_arn` - The execution ARN to be used in [`lambda_permission`](/docs/providers/aws/r/lambda_permission.html)'s `source_arn`
+* `execution_arn` - The execution ARN to be used in `lambda_permission` resource's `source_arn`
   when allowing API Gateway to invoke a Lambda function,
   e.g. `arn:aws:execute-api:eu-west-2:123456789012:z4675bid1j/prod`
 * `created_date` - The creation date of the deployment
