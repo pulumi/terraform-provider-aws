@@ -37,6 +37,7 @@ func resourceAwsGlueConnection() *schema.Resource {
 				Type:      schema.TypeMap,
 				Required:  true,
 				Sensitive: true,
+				Elem:      &schema.Schema{Type: schema.TypeString},
 			},
 			"connection_type": {
 				Type:     schema.TypeString,
