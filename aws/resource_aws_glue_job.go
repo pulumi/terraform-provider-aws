@@ -67,7 +67,6 @@ func resourceAwsGlueJob() *schema.Resource {
 			"default_arguments": {
 				Type:     schema.TypeMap,
 				Optional: true,
-				Elem:     &schema.Schema{Type: schema.TypeString},
 			},
 			"description": {
 				Type:     schema.TypeString,

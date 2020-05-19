@@ -115,7 +115,6 @@ func resourceAwsDlmLifecyclePolicy() *schema.Resource {
 									"tags_to_add": {
 										Type:     schema.TypeMap,
 										Optional: true,
-										Elem:     &schema.Schema{Type: schema.TypeString},
 									},
 								},
 							},
@@ -123,7 +122,6 @@ func resourceAwsDlmLifecyclePolicy() *schema.Resource {
 						"target_tags": {
 							Type:     schema.TypeMap,
 							Required: true,
-							Elem:     &schema.Schema{Type: schema.TypeString},
 						},
 					},
 				},

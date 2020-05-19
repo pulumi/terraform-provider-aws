@@ -704,7 +704,6 @@ func resourceAwsCloudFrontDistribution() *schema.Resource {
 			"active_trusted_signers": {
 				Type:     schema.TypeMap,
 				Computed: true,
-				Elem:     &schema.Schema{Type: schema.TypeString},
 			},
 			"domain_name": {
 				Type:     schema.TypeString,

@@ -69,7 +69,6 @@ func resourceAwsElasticSearchDomain() *schema.Resource {
 				Type:     schema.TypeMap,
 				Optional: true,
 				Computed: true,
-				Elem:     &schema.Schema{Type: schema.TypeString},
 			},
 			"domain_name": {
 				Type:     schema.TypeString,

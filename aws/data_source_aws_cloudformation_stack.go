@@ -46,12 +46,10 @@ func dataSourceAwsCloudFormationStack() *schema.Resource {
 			"parameters": {
 				Type:     schema.TypeMap,
 				Computed: true,
-				Elem:     &schema.Schema{Type: schema.TypeString},
 			},
 			"outputs": {
 				Type:     schema.TypeMap,
 				Computed: true,
-				Elem:     &schema.Schema{Type: schema.TypeString},
 			},
 			"timeout_in_minutes": {
 				Type:     schema.TypeInt,

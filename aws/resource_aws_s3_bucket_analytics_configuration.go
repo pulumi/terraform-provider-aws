@@ -50,7 +50,6 @@ func resourceAwsS3BucketAnalyticsConfiguration() *schema.Resource {
 							Type:         schema.TypeMap,
 							Optional:     true,
 							AtLeastOneOf: filterAtLeastOneOfKeys,
-							Elem:         &schema.Schema{Type: schema.TypeString},
 						},
 					},
 				},

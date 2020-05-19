@@ -13,7 +13,6 @@ func tagsSchema() *schema.Schema {
 	return &schema.Schema{
 		Type:     schema.TypeMap,
 		Optional: true,
-		Elem:     &schema.Schema{Type: schema.TypeString},
 	}
 }
 
@@ -22,7 +21,6 @@ func tagsSchemaComputed() *schema.Schema {
 		Type:     schema.TypeMap,
 		Optional: true,
 		Computed: true,
-		Elem:     &schema.Schema{Type: schema.TypeString},
 	}
 }
 
@@ -31,7 +29,6 @@ func tagsSchemaForceNew() *schema.Schema {
 		Type:     schema.TypeMap,
 		Optional: true,
 		ForceNew: true,
-		Elem:     &schema.Schema{Type: schema.TypeString},
 	}
 }
 
