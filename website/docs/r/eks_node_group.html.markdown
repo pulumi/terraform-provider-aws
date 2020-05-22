@@ -37,7 +37,7 @@ resource "aws_eks_node_group" "example" {
 
 ### Ignoring Changes to Desired Size
 
-You can utilize the generic Terraform resource [lifecycle configuration block](/docs/configuration/resources.html#lifecycle-lifecycle-customizations) with `ignore_changes` to create an EKS Node Group with an initial size of running instances, then ignore any changes to that count caused externally (e.g. Application Autoscaling).
+You can utilize [ignoreChanges](https://www.pulumi.com/docs/intro/concepts/programming-model/#ignorechanges) create an EKS Node Group with an initial size of running instances, then ignore any changes to that count caused externally (e.g. Application Autoscaling).
 
 ```hcl
 resource "aws_eks_node_group" "example" {
@@ -50,7 +50,6 @@ resource "aws_eks_node_group" "example" {
     # ... other configurations ...
   }
 
-  # Optional: Allow external changes without Terraform plan difference
   lifecycle {
     ignore_changes = [scaling_config[0].desired_size]
   }
