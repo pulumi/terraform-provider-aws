@@ -62,8 +62,6 @@ resource "aws_lambda_function" "test_lambda" {
 
 ### Lambda Layers
 
-~> **NOTE:** The `aws_lambda_layer_version` attribute values for `arn` and `layer_arn` were swapped in version 2.0.0 of the this provider AWS Provider. For version 1.x, use `layer_arn` references. For version 2.x, use `arn` references.
-
 ```hcl
 resource "aws_lambda_layer_version" "example" {
   # ... other configuration ...
@@ -75,7 +73,7 @@ resource "aws_lambda_function" "example" {
 }
 ```
 
-## CloudWatch Logging and Permissions
+### CloudWatch Logging and Permissions
 
 For more information about CloudWatch Logs for Lambda, see the [Lambda User Guide](https://docs.aws.amazon.com/lambda/latest/dg/monitoring-functions-logs.html).
 
