@@ -8,7 +8,7 @@ description: |-
 
 # Data Source: aws_secretsmanager_secret
 
-Retrieve metadata information about a Secrets Manager secret. To retrieve a secret value, see the [`aws_secretsmanager_secret_version` data source](/docs/providers/aws/d/secretsmanager_secret_version.html).
+Retrieve metadata information about a Secrets Manager secret. To retrieve a secret value, see the `aws_secretsmanager_secret_version`.
 
 ## Example Usage
 

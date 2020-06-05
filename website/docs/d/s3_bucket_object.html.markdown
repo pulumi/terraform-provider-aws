@@ -35,7 +35,7 @@ The following, more-complex example retrieves only the metadata for a zip
 file stored in S3, which is then used to pass the most recent `version_id`
 to AWS Lambda for use as a function implementation. More information about
 Lambda functions is available in the documentation for
-[`aws_lambda_function`](/docs/providers/aws/r/lambda_function.html).
+`aws_lambda_function`.
 
 ```hcl
 data "aws_s3_bucket_object" "lambda" {

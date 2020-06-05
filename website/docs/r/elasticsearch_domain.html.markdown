@@ -35,7 +35,7 @@ resource "aws_elasticsearch_domain" "example" {
 
 ### Access Policy
 
--> See also: [`aws_elasticsearch_domain_policy` resource](/docs/providers/aws/r/elasticsearch_domain_policy.html)
+-> See also: `aws_elasticsearch_domain_policy` resource
 
 ```hcl
 variable "domain" {

@@ -92,7 +92,7 @@ The following arguments are supported:
 * Creating a private CA issued certificate
   * `domain_name` - (Required) A domain name for which the certificate should be issued
   * `certificate_authority_arn` - (Required) ARN of an ACMPCA
-  * `subject_alternative_names` - (Optional) A list of domains that should be SANs in the issued certificate. To remove all elements of a previously configured list, set this value equal to an empty list (`[]`) or use the [`terraform taint` command](https://www.terraform.io/docs/commands/taint.html) to trigger recreation.
+  * `subject_alternative_names` - (Optional) A list of domains that should be SANs in the issued certificate. To remove all elements of a previously configured list, set this value equal to an empty list (`[]`).
 * `tags` - (Optional) A map of tags to assign to the resource.
 
 ## options Configuration Block

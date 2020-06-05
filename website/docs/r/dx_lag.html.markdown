@@ -8,7 +8,7 @@ description: |-
 
 # Resource: aws_dx_lag
 
-Provides a Direct Connect LAG. Connections can be added to the LAG via the [`aws_dx_connection`](/docs/providers/aws/r/dx_connection.html) and [`aws_dx_connection_association`](/docs/providers/aws/r/dx_connection_association.html) resources.
+Provides a Direct Connect LAG. Connections can be added to the LAG via the `aws_dx_connection` and `aws_dx_connection_association` resources.
 
 ~> *NOTE:* When creating a LAG, Direct Connect requires creating a Connection. This provider will remove this unmanaged connection during resource creation.
 

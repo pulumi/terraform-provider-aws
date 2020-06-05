@@ -11,7 +11,6 @@ description: |-
 Provides a Pinpoint APNs Sandbox Channel resource.
 
 ~> **Note:** All arguments, including certificates and tokens, will be stored in the raw state as plain-text.
-[Read more about sensitive data in state](/docs/state/sensitive-data.html).
 
 ## Example Usage
 

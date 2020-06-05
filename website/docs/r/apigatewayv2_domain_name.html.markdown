@@ -41,7 +41,7 @@ The following arguments are supported:
 The `domain_name_configuration` object supports the following:
 
 * `certificate_arn` - (Required) The ARN of an AWS-managed certificate that will be used by the endpoint for the domain name. AWS Certificate Manager is the only supported source.
-Use the [`aws_acm_certificate`](/docs/providers/aws/r/acm_certificate.html) resource to configure an ACM certificate.
+Use the `aws_acm_certificate` resource to configure an ACM certificate.
 * `endpoint_type` - (Required) The endpoint type. Valid values: `REGIONAL`.
 * `security_policy` - (Required) The Transport Layer Security (TLS) version of the [security policy](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-custom-domain-tls-version.html) for the domain name. Valid values: `TLS_1_2`.
 * `hosted_zone_id` - (Computed) The Amazon Route 53 Hosted Zone ID of the endpoint.

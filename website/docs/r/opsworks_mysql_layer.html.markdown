@@ -11,7 +11,6 @@ description: |-
 Provides an OpsWorks MySQL layer resource.
 
 ~> **Note:** All arguments including the root password will be stored in the raw state as plain-text.
-[Read more about sensitive data in state](/docs/state/sensitive-data.html).
 
 ## Example Usage
 

@@ -10,7 +10,7 @@ description: |-
 
 Provides an SES domain DKIM generation resource.
 
-Domain ownership needs to be confirmed first using [ses_domain_identity Resource](/docs/providers/aws/r/ses_domain_identity.html)
+Domain ownership needs to be confirmed first using `aws_ses_domain_identity` resource.
 
 ## Argument Reference
 

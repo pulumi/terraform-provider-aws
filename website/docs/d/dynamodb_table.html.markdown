@@ -26,5 +26,5 @@ The following arguments are supported:
 
 ## Attributes Reference
 
-See the [DynamoDB Table Resource](/docs/providers/aws/r/dynamodb_table.html) for details on the
+See the `dynamodb_table` resource for details on the
 returned attributes - they are identical.

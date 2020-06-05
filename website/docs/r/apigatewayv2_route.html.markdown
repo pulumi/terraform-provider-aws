@@ -34,7 +34,7 @@ The following arguments are supported:
 For WebSocket APIs, valid values are `NONE` for open access, `AWS_IAM` for using AWS IAM permissions, and `CUSTOM` for using a Lambda authorizer.
 For HTTP APIs, valid values are `NONE` for open access, or `JWT` for using JSON Web Tokens.
 Defaults to `NONE`.
-* `authorizer_id` - (Optional) The identifier of the [`aws_apigatewayv2_authorizer`](/docs/providers/aws/r/apigatewayv2_authorizer.html) resource to be associated with this route, if the authorizationType is `CUSTOM`.
+* `authorizer_id` - (Optional) The identifier of the `aws_apigatewayv2_authorizer` resource to be associated with this route, if the authorizationType is `CUSTOM`.
 * `model_selection_expression` - (Optional) The [model selection expression](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-websocket-api-selection-expressions.html#apigateway-websocket-api-model-selection-expressions) for the route.
 * `operation_name` - (Optional) The operation name for the route.
 * `request_models` - (Optional) The request models for the route.

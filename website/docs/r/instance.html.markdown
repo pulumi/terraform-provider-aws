@@ -9,7 +9,7 @@ description: |-
 # Resource: aws_instance
 
 Provides an EC2 instance resource. This allows instances to be created, updated,
-and deleted. Instances also support [provisioning](/docs/provisioners/index.html).
+and deleted.
 
 ## Example Usage
 
@@ -271,7 +271,7 @@ In addition to all arguments above, the following attributes are exported:
   See [GetPasswordData](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_GetPasswordData.html) for more information.
 * `public_dns` - The public DNS name assigned to the instance. For EC2-VPC, this
   is only available if you've enabled DNS hostnames for your VPC
-* `public_ip` - The public IP address assigned to the instance, if applicable. **NOTE**: If you are using an [`aws_eip`](/docs/providers/aws/r/eip.html) with your instance, you should refer to the EIP's address directly and not use `public_ip`, as this field will change after the EIP is attached.
+* `public_ip` - The public IP address assigned to the instance, if applicable. **NOTE**: If you are using an `aws_eip` with your instance, you should refer to the EIP's address directly and not use `public_ip`, as this field will change after the EIP is attached.
 * `ipv6_addresses` - A list of assigned IPv6 addresses, if any
 * `primary_network_interface_id` - The ID of the instance's primary network interface.
 * `private_dns` - The private DNS name assigned to the instance. Can only be

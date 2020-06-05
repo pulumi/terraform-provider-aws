@@ -28,7 +28,7 @@ resource "aws_apigatewayv2_integration_response" "example" {
 The following arguments are supported:
 
 * `api_id` - (Required) The API identifier.
-* `integration_id` - (Required) The identifier of the [`aws_apigatewayv2_integration`](/docs/providers/aws/r/apigatewayv2_integration.html).
+* `integration_id` - (Required) The identifier of the `aws_apigatewayv2_integration`.
 * `integration_response_key` - (Required) The integration response key.
 * `content_handling_strategy` - (Optional) How to handle response payload content type conversions. Valid values: `CONVERT_TO_BINARY`, `CONVERT_TO_TEXT`.
 * `response_templates` - (Optional) A map of Velocity templates that are applied on the request payload based on the value of the Content-Type header sent by the client.

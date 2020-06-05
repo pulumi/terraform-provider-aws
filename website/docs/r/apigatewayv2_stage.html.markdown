@@ -29,9 +29,9 @@ The following arguments are supported:
 * `api_id` - (Required) The API identifier.
 * `name` - (Required) The name of the stage.
 * `access_log_settings` - (Optional) Settings for logging access in this stage.
-Use the [`aws_api_gateway_account`](/docs/providers/aws/r/api_gateway_account.html) resource to configure [permissions for CloudWatch Logging](https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-logging.html#set-up-access-logging-permissions).
+Use the `aws_api_gateway_account` resource to configure [permissions for CloudWatch Logging](https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-logging.html#set-up-access-logging-permissions).
 * `auto_deploy` - (Optional) Whether updates to an API automatically trigger a new deployment. Defaults to `false`.
-* `client_certificate_id` - (Optional) The identifier of a client certificate for the stage. Use the [`aws_api_gateway_client_certificate`](/docs/providers/aws/r/api_gateway_client_certificate.html) resource to configure a client certificate.
+* `client_certificate_id` - (Optional) The identifier of a client certificate for the stage. Use the `aws_api_gateway_client_certificate` resource to configure a client certificate.
 Supported only for WebSocket APIs.
 * `default_route_settings` - (Optional) The default route settings for the stage.
 * `deployment_id` - (Optional) The deployment identifier of the stage. Use the `aws_apigatewayv2_deployment` resource to configure a deployment.
@@ -72,8 +72,8 @@ In addition to all arguments above, the following attributes are exported:
 
 * `id` - The stage identifier.
 * `arn` - The ARN of the stage.
-* `execution_arn` - The ARN prefix to be used in an [`aws_lambda_permission`](/docs/providers/aws/r/lambda_permission.html)'s `source_arn` attribute
-or in an [`aws_iam_policy`](/docs/providers/aws/r/iam_policy.html) to authorize access to the [`@connections` API](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-how-to-call-websocket-api-connections.html).
+* `execution_arn` - The ARN prefix to be used in an `aws_lambda_permission`'s `source_arn` attribute
+or in an `aws_iam_policy` to authorize access to the [`@connections` API](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-how-to-call-websocket-api-connections.html).
 See the [Amazon API Gateway Developer Guide](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-websocket-control-access-iam.html) for details.
 Set only for WebSocket APIs.
 * `invoke_url` - The URL to invoke the API pointing to the stage,

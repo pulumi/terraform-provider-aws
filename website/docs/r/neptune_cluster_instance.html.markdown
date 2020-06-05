@@ -46,13 +46,13 @@ The following arguments are supported:
   are applied immediately, or during the next maintenance window. Default is`false`.
 * `auto_minor_version_upgrade` - (Optional) Indicates that minor engine upgrades will be applied automatically to the instance during the maintenance window. Default is `true`.
 * `availability_zone` - (Optional) The EC2 Availability Zone that the neptune instance is created in.
-* `cluster_identifier` - (Required) The identifier of the [`aws_neptune_cluster`](/docs/providers/aws/r/neptune_cluster.html) in which to launch this instance.
+* `cluster_identifier` - (Required) The identifier of the `aws_neptune_cluster` in which to launch this instance.
 * `engine` - (Optional) The name of the database engine to be used for the neptune instance. Defaults to `neptune`. Valid Values: `neptune`.
 * `engine_version` - (Optional) The neptune engine version.
 * `identifier` - (Optional, Forces new resource) The indentifier for the neptune instance, if omitted, this provider will assign a random, unique identifier.
 * `identifier_prefix` - (Optional, Forces new resource) Creates a unique identifier beginning with the specified prefix. Conflicts with `identifier`.
 * `instance_class` - (Required) The instance class to use.
-* `neptune_subnet_group_name` - (Required if `publicly_accessible = false`, Optional otherwise) A subnet group to associate with this neptune instance. **NOTE:** This must match the `neptune_subnet_group_name` of the attached [`aws_neptune_cluster`](/docs/providers/aws/r/neptune_cluster.html).
+* `neptune_subnet_group_name` - (Required if `publicly_accessible = false`, Optional otherwise) A subnet group to associate with this neptune instance. **NOTE:** This must match the `neptune_subnet_group_name` of the attached `aws_neptune_cluster`.
 * `neptune_parameter_group_name` - (Optional) The name of the neptune parameter group to associate with this instance.
 * `port` - (Optional) The port on which the DB accepts connections. Defaults to `8182`.
 * `preferred_backup_window` - (Optional) The daily time range during which automated backups are created if automated backups are enabled. Eg: "04:00-09:00"

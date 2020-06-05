@@ -56,7 +56,7 @@ For `JWT` authorizers the single entry specifies where to extract the JSON Web T
 * `authorizer_credentials_arn` - (Optional) The required credentials as an IAM role for API Gateway to invoke the authorizer.
 Supported only for `REQUEST` authorizers.
 * `authorizer_uri` - (Optional) The authorizer's Uniform Resource Identifier (URI).
-For `REQUEST` authorizers this must be a well-formed Lambda function URI, such as the `invoke_arn` attribute of the [`aws_lambda_function`](/docs/providers/aws/r/lambda_function.html) resource.
+For `REQUEST` authorizers this must be a well-formed Lambda function URI, such as the `invoke_arn` attribute of the `aws_lambda_function` resource.
 Supported only for `REQUEST` authorizers.
 * `jwt_configuration` - (Optional) The configuration of a JWT authorizer. Required for the `JWT` authorizer type.
 Supported only for HTTP APIs.
@@ -64,7 +64,7 @@ Supported only for HTTP APIs.
 The `jwt_configuration` object supports the following:
 
 * `audience` - (Optional) A list of the intended recipients of the JWT. A valid JWT must provide an aud that matches at least one entry in this list.
-* `issuer` - (Optional) The base domain of the identity provider that issues JSON Web Tokens, such as the `endpoint` attribute of the [`aws_cognito_user_pool`](/docs/providers/aws/r/cognito_user_pool.html) resource.
+* `issuer` - (Optional) The base domain of the identity provider that issues JSON Web Tokens, such as the `endpoint` attribute of the `aws_cognito_user_pool` resource.
 
 ## Attribute Reference
 

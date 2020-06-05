@@ -8,7 +8,7 @@ description: |-
 
 # Resource: aws_guardduty_member
 
-Provides a resource to manage a GuardDuty member. To accept invitations in member accounts, see the [`aws_guardduty_invite_accepter` resource](/docs/providers/aws/r/guardduty_invite_accepter.html).
+Provides a resource to manage a GuardDuty member. To accept invitations in member accounts, see the `aws_guardduty_invite_accepter` resource.
 
 ## Example Usage
 

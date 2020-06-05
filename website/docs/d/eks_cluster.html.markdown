@@ -44,7 +44,7 @@ output "identity-oidc-issuer" {
 * `created_at` - The Unix epoch time stamp in seconds for when the cluster was created.
 * `enabled_cluster_log_types` - The enabled control plane logs.
 * `endpoint` - The endpoint for your Kubernetes API server.
-* `identity` - Nested attribute containing identity provider information for your cluster. Only available on Kubernetes version 1.13 and 1.14 clusters created or upgraded on or after September 3, 2019. For an example using this information to enable IAM Roles for Service Accounts, see the [`aws_eks_cluster` resource documentation](/docs/providers/aws/r/eks_cluster.html).
+* `identity` - Nested attribute containing identity provider information for your cluster. Only available on Kubernetes version 1.13 and 1.14 clusters created or upgraded on or after September 3, 2019. For an example using this information to enable IAM Roles for Service Accounts, see the `aws_eks_cluster` resource documentation.
     * `oidc` - Nested attribute containing [OpenID Connect](https://openid.net/connect/) identity provider information for the cluster.
         * `issuer` - Issuer URL for the OpenID Connect identity provider.
 * `platform_version` - The platform version for the cluster.

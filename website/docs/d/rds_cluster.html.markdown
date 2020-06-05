@@ -26,5 +26,5 @@ The following arguments are supported:
 
 ## Attributes Reference
 
-See the [RDS Cluster Resource](/docs/providers/aws/r/rds_cluster.html) for details on the
+See the `RDS Cluster` Resource for details on the
 returned attributes - they are identical.
