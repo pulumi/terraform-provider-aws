@@ -16,6 +16,7 @@ func resourceAwsCognitoUserPoolDomain() *schema.Resource {
 	return &schema.Resource{
 		Create: resourceAwsCognitoUserPoolDomainCreate,
 		Read:   resourceAwsCognitoUserPoolDomainRead,
+		Update: resourceAwsCognitoUserPoolDomainUpdate,
 		Delete: resourceAwsCognitoUserPoolDomainDelete,
 		Importer: &schema.ResourceImporter{
 			State: schema.ImportStatePassthrough,
@@ -87,33 +88,7 @@ func resourceAwsCognitoUserPoolDomainCreate(d *schema.ResourceData, meta interfa
 
 	d.SetId(domain)
 
-	stateConf := resource.StateChangeConf{
-		Pending: []string{
-			cognitoidentityprovider.DomainStatusTypeCreating,
-			cognitoidentityprovider.DomainStatusTypeUpdating,
-		},
-		Target: []string{
-			cognitoidentityprovider.DomainStatusTypeActive,
-		},
-		MinTimeout: 1 * time.Minute,
-		Timeout:    timeout,
-		Refresh: func() (interface{}, string, error) {
-			domain, err := conn.DescribeUserPoolDomain(&cognitoidentityprovider.DescribeUserPoolDomainInput{
-				Domain: aws.String(d.Get("domain").(string)),
-			})
-			if err != nil {
-				return 42, "", err
-			}
-
-			desc := domain.DomainDescription
-
-			return domain, *desc.Status, nil
-		},
-	}
-	_, err = stateConf.WaitForState()
-	if err != nil {
-		return err
-	}
+	err = waitForUserPoolDomainCreateUpdate(conn, domain, timeout)
 
 	return resourceAwsCognitoUserPoolDomainRead(d, meta)
 }
@@ -162,16 +137,50 @@ func resourceAwsCognitoUserPoolDomainDelete(d *schema.ResourceData, meta interfa
 		return err
 	}
 
+	return err
+}
+
+func resourceAwsCognitoUserPoolDomainUpdate(d *schema.ResourceData, meta interface{}) error {
+	conn := meta.(*AWSClient).cognitoidpconn
+	timeout := 1 * time.Minute //Default timeout for a basic domain
+
+	params := &cognitoidentityprovider.UpdateUserPoolDomainInput{
+		Domain:     aws.String(d.Id()),
+		UserPoolId: aws.String(d.Get("user_pool_id").(string)),
+	}
+
+	if v, ok := d.GetOk("certificate_arn"); ok {
+	CustomDomainConfig:
+		&cognitoidentityprovider.CustomDomainConfigType{
+			CertificateArn: aws.String(v.(string)),
+		}
+		timeout = 60 * time.Minute //Custom domains take more time to become active
+	}
+
+	log.Printf("[DEBUG] Updating Cognito User Pool Domain: %s", params)
+
+	_, err := conn.UpdateUserPoolDomain(params)
+	if err != nil {
+		return fmt.Errorf("Error updating Cognito User Pool Domain: %s", err)
+	}
+
+	err = waitForUserPoolDomainCreateUpdate(conn, d.Id(), timeout)
+
+	return resourceAwsCognitoUserPoolDomainRead(d, meta)
+}
+
+func waitForUserPoolDomainCreateUpdate(conn *cognitoidentityprovider.CognitoIdentityProvider, domainID string, timeout time.Duration) error {
 	stateConf := resource.StateChangeConf{
 		Pending: []string{
 			cognitoidentityprovider.DomainStatusTypeUpdating,
 			cognitoidentityprovider.DomainStatusTypeDeleting,
 		},
-		Target:  []string{""},
-		Timeout: 1 * time.Minute,
+		Target:     []string{""},
+		MinTimeout: 1 * time.Minute,
+		Timeout:    timeout,
 		Refresh: func() (interface{}, string, error) {
 			domain, err := conn.DescribeUserPoolDomain(&cognitoidentityprovider.DescribeUserPoolDomainInput{
-				Domain: aws.String(d.Id()),
+				Domain: aws.String(domainID),
 			})
 			if err != nil {
 				if isAWSErr(err, "ResourceNotFoundException", "") {
@@ -188,6 +197,7 @@ func resourceAwsCognitoUserPoolDomainDelete(d *schema.ResourceData, meta interfa
 			return domain, *desc.Status, nil
 		},
 	}
+
 	_, err = stateConf.WaitForState()
 	return err
 }
