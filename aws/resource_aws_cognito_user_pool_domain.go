@@ -204,11 +204,11 @@ func cognitoUserPoolDomainRefresh(conn *cognitoidentityprovider.CognitoIdentityP
 
 func waitForUserPoolDomainCreateUpdate(conn *cognitoidentityprovider.CognitoIdentityProvider, domainID string, timeout time.Duration) error {
 	stateConf := resource.StateChangeConf{
-		Pending: 	[]string{
+		Pending: []string{
 			cognitoidentityprovider.DomainStatusTypeCreating,
 			cognitoidentityprovider.DomainStatusTypeUpdating,
 		},
-		Target:     []string{
+		Target: []string{
 			cognitoidentityprovider.DomainStatusTypeActive,
 		},
 		MinTimeout: 1 * time.Minute,
