@@ -152,24 +152,30 @@ func resourceAwsCognitoUserPoolDomainUpdate(d *schema.ResourceData, meta interfa
 		Domain:     aws.String(d.Id()),
 		UserPoolId: aws.String(d.Get("user_pool_id").(string)),
 	}
+	requestUpdate = false
 
-	if v, ok := d.GetOk("certificate_arn"); ok {
-		params.CustomDomainConfig = &cognitoidentityprovider.CustomDomainConfigType{
-			CertificateArn: aws.String(v.(string)),
+	if d.HasChange("certificate_arn") {
+		if v, ok := d.GetOk("certificate_arn"); ok {
+			requestUpdate = true
+			params.CustomDomainConfig = &cognitoidentityprovider.CustomDomainConfigType{
+				CertificateArn: aws.String(v.(string)),
+			}
+			timeout = 60 * time.Minute //Custom domains take more time to become active
 		}
-		timeout = 60 * time.Minute //Custom domains take more time to become active
 	}
 
-	log.Printf("[DEBUG] Updating Cognito User Pool Domain: %s", params)
+	if requestUpdate {
+		log.Printf("[DEBUG] Updating Cognito User Pool Domain: %s", params)
 
-	_, err := conn.UpdateUserPoolDomain(params)
-	if err != nil {
-		return fmt.Errorf("Error updating Cognito User Pool Domain: %s", err)
-	}
+		_, err := conn.UpdateUserPoolDomain(params)
+		if err != nil {
+			return fmt.Errorf("Error updating Cognito User Pool Domain: %s", err)
+		}
 
-	err = waitForUserPoolDomainCreateUpdate(conn, d.Id(), timeout)
-	if err != nil {
-		return err
+		err = waitForUserPoolDomainCreateUpdate(conn, d.Id(), timeout)
+		if err != nil {
+			return err
+		}
 	}
 
 	return resourceAwsCognitoUserPoolDomainRead(d, meta)
