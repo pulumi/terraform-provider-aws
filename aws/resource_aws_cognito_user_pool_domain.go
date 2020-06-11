@@ -198,7 +198,7 @@ func cognitoUserPoolDomainRefresh(conn *cognitoidentityprovider.CognitoIdentityP
 
 func waitForUserPoolDomainCreateUpdate(conn *cognitoidentityprovider.CognitoIdentityProvider, domainID string, timeout time.Duration) error {
 	stateConf := resource.StateChangeConf{
-		Pending: []string{
+		Pending: 	[]string{
 			cognitoidentityprovider.DomainStatusTypeCreating,
 			cognitoidentityprovider.DomainStatusTypeUpdating,
 		},
@@ -207,7 +207,7 @@ func waitForUserPoolDomainCreateUpdate(conn *cognitoidentityprovider.CognitoIden
 		},
 		MinTimeout: 1 * time.Minute,
 		Timeout:    timeout,
-		Refresh:	cognitoUserPoolDomainRefresh(conn, domainID)
+		Refresh:    cognitoUserPoolDomainRefresh(conn, domainID)
 	}
 
 	_, err = stateConf.WaitForState()
@@ -220,9 +220,9 @@ func waitForUserPoolDomainDelete(conn *cognitoidentityprovider.CognitoIdentityPr
 			cognitoidentityprovider.DomainStatusTypeUpdating,
 			cognitoidentityprovider.DomainStatusTypeDeleting,
 		},
-		Target:     []string{""},
-		Timeout:    timeout,
-		Refresh:	cognitoUserPoolDomainRefresh(conn, domainID)
+		Target:  []string{""},
+		Timeout: timeout,
+		Refresh: cognitoUserPoolDomainRefresh(conn, domainID)
 	}
 
 	_, err = stateConf.WaitForState()
