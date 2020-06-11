@@ -136,13 +136,11 @@ func resourceAwsCognitoUserPoolDomainDelete(d *schema.ResourceData, meta interfa
 		Domain:     aws.String(d.Id()),
 		UserPoolId: aws.String(d.Get("user_pool_id").(string)),
 	})
-
 	if err != nil {
 		return err
 	}
 
 	err = waitForUserPoolDomainDelete(conn, d.Id())
-
 	return err
 }
 
@@ -156,8 +154,7 @@ func resourceAwsCognitoUserPoolDomainUpdate(d *schema.ResourceData, meta interfa
 	}
 
 	if v, ok := d.GetOk("certificate_arn"); ok {
-	CustomDomainConfig:
-		&cognitoidentityprovider.CustomDomainConfigType{
+		params.CustomDomainConfig = &cognitoidentityprovider.CustomDomainConfigType{
 			CertificateArn: aws.String(v.(string)),
 		}
 		timeout = 60 * time.Minute //Custom domains take more time to become active
@@ -171,6 +168,9 @@ func resourceAwsCognitoUserPoolDomainUpdate(d *schema.ResourceData, meta interfa
 	}
 
 	err = waitForUserPoolDomainCreateUpdate(conn, d.Id(), timeout)
+	if err != nil {
+		return err
+	}
 
 	return resourceAwsCognitoUserPoolDomainRead(d, meta)
 }
