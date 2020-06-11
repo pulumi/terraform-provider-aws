@@ -152,7 +152,7 @@ func resourceAwsCognitoUserPoolDomainUpdate(d *schema.ResourceData, meta interfa
 		Domain:     aws.String(d.Id()),
 		UserPoolId: aws.String(d.Get("user_pool_id").(string)),
 	}
-	requestUpdate = false
+	requestUpdate := false
 
 	if d.HasChange("certificate_arn") {
 		if v, ok := d.GetOk("certificate_arn"); ok {
@@ -213,10 +213,10 @@ func waitForUserPoolDomainCreateUpdate(conn *cognitoidentityprovider.CognitoIden
 		},
 		MinTimeout: 1 * time.Minute,
 		Timeout:    timeout,
-		Refresh:    cognitoUserPoolDomainRefresh(conn, domainID)
+		Refresh:    cognitoUserPoolDomainRefresh(conn, domainID),
 	}
 
-	_, err = stateConf.WaitForState()
+	_, err := stateConf.WaitForState()
 	return err
 }
 
@@ -227,10 +227,10 @@ func waitForUserPoolDomainDelete(conn *cognitoidentityprovider.CognitoIdentityPr
 			cognitoidentityprovider.DomainStatusTypeDeleting,
 		},
 		Target:  []string{""},
-		Timeout: timeout,
-		Refresh: cognitoUserPoolDomainRefresh(conn, domainID)
+		Timeout: 1 * time.Minute,
+		Refresh: cognitoUserPoolDomainRefresh(conn, domainID),
 	}
 
-	_, err = stateConf.WaitForState()
+	_, err := stateConf.WaitForState()
 	return err
 }
