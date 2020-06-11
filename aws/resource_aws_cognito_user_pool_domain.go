@@ -31,7 +31,6 @@ func resourceAwsCognitoUserPoolDomain() *schema.Resource {
 			"certificate_arn": {
 				Type:         schema.TypeString,
 				Optional:     true,
-				ForceNew:     true,
 				ValidateFunc: validateArn,
 			},
 			"user_pool_id": {
