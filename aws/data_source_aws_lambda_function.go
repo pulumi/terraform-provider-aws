@@ -99,6 +99,22 @@ func dataSourceAwsLambdaFunction() *schema.Resource {
 					},
 				},
 			},
+			"file_system_config": {
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"arn": {
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"local_mount_path": {
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
 			"arn": {
 				Type:     schema.TypeString,
 				Computed: true,
@@ -222,6 +238,12 @@ func dataSourceAwsLambdaFunctionRead(d *schema.ResourceData, meta interface{}) e
 
 	if err := d.Set("layers", flattenLambdaLayers(function.Layers)); err != nil {
 		return fmt.Errorf("Error setting layers for Lambda Function (%s): %s", d.Id(), err)
+	}
+
+	fileSystemConfigs := flattenLambdaFileSystemConfigs(function.FileSystemConfigs)
+	log.Printf("[INFO] Setting Lambda %s File System Configs %#v from API", d.Id(), fileSystemConfigs)
+	if err := d.Set("file_system_config", fileSystemConfigs); err != nil {
+		return fmt.Errorf("Error setting file system configs for Lambda Function (%s): %s", d.Id(), err)
 	}
 
 	d.Set("memory_size", function.MemorySize)

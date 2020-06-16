@@ -1692,6 +1692,17 @@ func flattenLambdaLayers(layers []*lambda.Layer) []interface{} {
 	return flattenStringList(arns)
 }
 
+func flattenLambdaFileSystemConfigs(configs []*lambda.FileSystemConfig) []map[string]interface{} {
+	var settings []map[string]interface{}
+	for _, config := range configs {
+		setting := make(map[string]interface{})
+		setting["arn"] = *config.Arn
+		setting["local_mount_path"] = *config.LocalMountPath
+		settings = append(settings, setting)
+	}
+	return settings
+}
+
 func flattenLambdaVpcConfigResponse(s *lambda.VpcConfigResponse) []map[string]interface{} {
 	settings := make(map[string]interface{})
 
