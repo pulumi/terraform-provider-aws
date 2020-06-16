@@ -108,6 +108,23 @@ func resourceAwsLambdaFunction() *schema.Resource {
 				Required: true,
 				ForceNew: true,
 			},
+			"file_system_config": {
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"arn": {
+							Type:         schema.TypeString,
+							Required:     true,
+							ValidateFunc: validateArn,
+						},
+						"local_mount_path": {
+							Type:     schema.TypeString,
+							Required: true,
+						},
+					},
+				},
+			},
 			"handler": {
 				Type:         schema.TypeString,
 				Required:     true,
@@ -343,6 +360,15 @@ func resourceAwsLambdaFunctionCreate(d *schema.ResourceData, meta interface{}) e
 		params.Layers = expandStringList(v.([]interface{}))
 	}
 
+	if v, ok := d.GetOk("file_system_config"); ok && len(v.([]interface{})) > 0 {
+		for _, config := range v.([]interface{}) {
+			params.FileSystemConfigs = append(params.FileSystemConfigs, &lambda.FileSystemConfig{
+				Arn:            aws.String(config.(map[string]interface{})["arn"].(string)),
+				LocalMountPath: aws.String(config.(map[string]interface{})["local_mount_path"].(string)),
+			})
+		}
+	}
+
 	if v, ok := d.GetOk("dead_letter_config"); ok {
 		dlcMaps := v.([]interface{})
 		if len(dlcMaps) == 1 { // Schema guarantees either 0 or 1
@@ -555,6 +581,12 @@ func resourceAwsLambdaFunctionRead(d *schema.ResourceData, meta interface{}) err
 		return fmt.Errorf("Error setting layers for Lambda Function (%s): %s", d.Id(), err)
 	}
 
+	fileSystemConfigs := flattenLambdaFileSystemConfigs(function.FileSystemConfigs)
+	log.Printf("[INFO] Setting Lambda %s File System Configs %#v from API", d.Id(), fileSystemConfigs)
+	if err := d.Set("file_system_config", fileSystemConfigs); err != nil {
+		return fmt.Errorf("Error setting file system configs for Lambda Function (%s): %s", d.Id(), err)
+	}
+
 	config := flattenLambdaVpcConfigResponse(function.VpcConfig)
 	log.Printf("[INFO] Setting Lambda %s VPC config %#v from API", d.Id(), config)
 	if err := d.Set("vpc_config", config); err != nil {
@@ -715,6 +747,18 @@ func resourceAwsLambdaFunctionUpdate(d *schema.ResourceData, meta interface{}) e
 		layers := d.Get("layers").([]interface{})
 		configReq.Layers = expandStringList(layers)
 		configUpdate = true
+	}
+	if d.HasChange("file_system_config") {
+		configReq.FileSystemConfigs = []*lambda.FileSystemConfig{}
+		configUpdate = true
+		if v, ok := d.GetOk("file_system_config"); ok {
+			for _, config := range v.([]interface{}) {
+				configReq.FileSystemConfigs = append(configReq.FileSystemConfigs, &lambda.FileSystemConfig{
+					Arn:            aws.String(config.(map[string]interface{})["arn"].(string)),
+					LocalMountPath: aws.String(config.(map[string]interface{})["local_mount_path"].(string)),
+				})
+			}
+		}
 	}
 	if d.HasChange("dead_letter_config") {
 		dlcMaps := d.Get("dead_letter_config").([]interface{})
