@@ -132,23 +132,6 @@ func resourceAwsLambdaFunction() *schema.Resource {
 				Required: true,
 				ForceNew: true,
 			},
-			"file_system_config": {
-				Type:     schema.TypeList,
-				Optional: true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"arn": {
-							Type:         schema.TypeString,
-							Required:     true,
-							ValidateFunc: validateArn,
-						},
-						"local_mount_path": {
-							Type:     schema.TypeString,
-							Required: true,
-						},
-					},
-				},
-			},
 			"handler": {
 				Type:         schema.TypeString,
 				Required:     true,
@@ -613,12 +596,6 @@ func resourceAwsLambdaFunctionRead(d *schema.ResourceData, meta interface{}) err
 	log.Printf("[INFO] Setting Lambda %s Layers %#v from API", d.Id(), layers)
 	if err := d.Set("layers", layers); err != nil {
 		return fmt.Errorf("Error setting layers for Lambda Function (%s): %s", d.Id(), err)
-	}
-
-	fileSystemConfigs := flattenLambdaFileSystemConfigs(function.FileSystemConfigs)
-	log.Printf("[INFO] Setting Lambda %s File System Configs %#v from API", d.Id(), fileSystemConfigs)
-	if err := d.Set("file_system_config", fileSystemConfigs); err != nil {
-		return fmt.Errorf("Error setting file system configs for Lambda Function (%s): %s", d.Id(), err)
 	}
 
 	config := flattenLambdaVpcConfigResponse(function.VpcConfig)
