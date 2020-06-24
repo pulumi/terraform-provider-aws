@@ -390,7 +390,7 @@ func resourceAwsAutoscalingGroup() *schema.Resource {
 			"tag": autoscalingTagSchema(),
 
 			"tags": {
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Schema{
 					Type: schema.TypeMap,
