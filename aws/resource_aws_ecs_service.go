@@ -1193,7 +1193,7 @@ func resourceAwsEcsWaitForServiceSteadyState(d *schema.ResourceData, meta interf
 		Pending:    []string{"false"},
 		Target:     []string{"true"},
 		Refresh:    resourceAwsEcsServiceIsSteadyStateFunc(d, meta),
-		Timeout:    10 * time.Minute,
+		Timeout:    15 * time.Minute,
 		MinTimeout: 1 * time.Second,
 	}
 
