@@ -12,6 +12,8 @@ Gives an external source (like a CloudWatch Event Rule, SNS, or S3) permission t
 
 ## Example Usage
 
+###  Basic Example
+
 ```hcl
 resource "aws_lambda_permission" "allow_cloudwatch" {
   statement_id  = "AllowExecutionFromCloudWatch"
@@ -58,7 +60,7 @@ EOF
 }
 ```
 
-## Usage with SNS
+### Usage with SNS
 
 ```hcl
 resource "aws_lambda_permission" "with_sns" {
@@ -108,7 +110,7 @@ EOF
 }
 ```
 
-## Specify Lambda permissions for API Gateway REST API
+### Specify Lambda permissions for API Gateway REST API
 
 ```hcl
 resource "aws_api_gateway_rest_api" "MyDemoAPI" {
@@ -130,17 +132,17 @@ resource "aws_lambda_permission" "lambda_permission" {
 
 ## Argument Reference
 
- * `action` - (Required) The AWS Lambda action you want to allow in this statement. (e.g. `lambda:InvokeFunction`)
- * `event_source_token` - (Optional) The Event Source Token to validate.  Used with [Alexa Skills][1].
- * `function_name` - (Required) Name of the Lambda function whose resource policy you are updating
- * `principal` - (Required) The principal who is getting this permission.
+* `action` - (Required) The AWS Lambda action you want to allow in this statement. (e.g. `lambda:InvokeFunction`)
+* `event_source_token` - (Optional) The Event Source Token to validate.  Used with [Alexa Skills][1].
+* `function_name` - (Required) Name of the Lambda function whose resource policy you are updating
+* `principal` - (Required) The principal who is getting this permission.
  	e.g. `s3.amazonaws.com`, an AWS account ID, or any valid AWS service principal
  	such as `events.amazonaws.com` or `sns.amazonaws.com`.
- * `qualifier` - (Optional) Query parameter to specify function version or alias name.
+* `qualifier` - (Optional) Query parameter to specify function version or alias name.
  	The permission will then apply to the specific qualified ARN.
  	e.g. `arn:aws:lambda:aws-region:acct-id:function:function-name:2`
- * `source_account` - (Optional) This parameter is used for S3 and SES. The AWS account ID (without a hyphen) of the source owner.
- * `source_arn` - (Optional) When the principal is an AWS service, the ARN of the specific resource within that service to grant permission to.
+* `source_account` - (Optional) This parameter is used for S3 and SES. The AWS account ID (without a hyphen) of the source owner.
+* `source_arn` - (Optional) When the principal is an AWS service, the ARN of the specific resource within that service to grant permission to.
   Without this, any resource from `principal` will be granted permission – even if that resource is from another account.
   For S3, this should be the ARN of the S3 Bucket.
   For CloudWatch Events, this should be the ARN of the CloudWatch Events Rule.

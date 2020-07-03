@@ -14,17 +14,17 @@ from the Amazon Certificate Manager.
 It deals with requesting certificates and managing their attributes and life-cycle.
 This resource does not deal with validation of a certificate but can provide inputs
 for other resources implementing the validation. It does not wait for a certificate to be issued.
-Use a [`aws_acm_certificate_validation`](acm_certificate_validation.html) resource for this.
+Use a `aws_acm_certificate_validation` resource for this.
 
-Most commonly, this resource is used together with [`aws_route53_record`](route53_record.html) and
-[`aws_acm_certificate_validation`](acm_certificate_validation.html) to request a DNS validated certificate,
+Most commonly, this resource is used together with `aws_route53_record` and
+`aws_acm_certificate_validation` to request a DNS validated certificate,
 deploy the required validation records and wait for validation to complete.
 
 Domain validation through E-Mail is also supported but should be avoided as it requires a manual step outside
 of this provider.
 
 It's recommended to specify `create_before_destroy = true` in a [lifecycle][1] block to replace a certificate
-which is currently in use (eg, by [`aws_lb_listener`](lb_listener.html)).
+which is currently in use (eg, by `aws_lb_listener`).
 
 ## Example Usage
 
@@ -81,18 +81,18 @@ resource "aws_acm_certificate" "cert" {
 The following arguments are supported:
 
 * Creating an amazon issued certificate
-  * `domain_name` - (Required) A domain name for which the certificate should be issued
-  * `subject_alternative_names` - (Optional) A list of domains that should be SANs in the issued certificate. To remove all elements of a previously configured list, set this value equal to an empty list (`[]`).
-  * `validation_method` - (Required) Which method to use for validation. `DNS` or `EMAIL` are valid, `NONE` can be used for certificates that were imported into ACM and then into state managed by this provider.
-  * `options` - (Optional) Configuration block used to set certificate options. Detailed below.
+    * `domain_name` - (Required) A domain name for which the certificate should be issued
+    * `subject_alternative_names` - (Optional) A list of domains that should be SANs in the issued certificate. To remove all elements of a previously configured list, set this value equal to an empty list (`[]`) to trigger recreation.
+    * `validation_method` - (Required) Which method to use for validation. `DNS` or `EMAIL` are valid, `NONE` can be used for certificates that were imported into ACM and then into the provider.
+    * `options` - (Optional) Configuration block used to set certificate options. Detailed below.
 * Importing an existing certificate
-  * `private_key` - (Required) The certificate's PEM-formatted private key
-  * `certificate_body` - (Required) The certificate's PEM-formatted public key
-  * `certificate_chain` - (Optional) The certificate's PEM-formatted chain
+    * `private_key` - (Required) The certificate's PEM-formatted private key
+    * `certificate_body` - (Required) The certificate's PEM-formatted public key
+    * `certificate_chain` - (Optional) The certificate's PEM-formatted chain
 * Creating a private CA issued certificate
-  * `domain_name` - (Required) A domain name for which the certificate should be issued
-  * `certificate_authority_arn` - (Required) ARN of an ACMPCA
-  * `subject_alternative_names` - (Optional) A list of domains that should be SANs in the issued certificate. To remove all elements of a previously configured list, set this value equal to an empty list (`[]`).
+    * `domain_name` - (Required) A domain name for which the certificate should be issued
+    * `certificate_authority_arn` - (Required) ARN of an ACMPCA
+    * `subject_alternative_names` - (Optional) A list of domains that should be SANs in the issued certificate. To remove all elements of a previously configured list, set this value equal to an empty list (`[]`) to trigger recreation.
 * `tags` - (Optional) A map of tags to assign to the resource.
 
 ## options Configuration Block

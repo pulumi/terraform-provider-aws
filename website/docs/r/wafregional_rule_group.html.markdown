@@ -49,7 +49,7 @@ The following arguments are supported:
 #### Arguments
 
 * `action` - (Required) Specifies the action that CloudFront or AWS WAF takes when a web request matches the conditions in the rule.
-  * `type` - (Required) e.g. `BLOCK`, `ALLOW`, or `COUNT`
+    * `type` - (Required) e.g. `BLOCK`, `ALLOW`, or `COUNT`
 * `priority` - (Required) Specifies the order in which the rules are evaluated. Rules with a lower value are evaluated before rules with a higher value.
 * `rule_id` - (Required) The ID of a `waf_regional_rule`
 * `type` - (Optional) The rule type, either `REGULAR`, `RATE_BASED`, or `GROUP`. Defaults to `REGULAR`.
