@@ -58,7 +58,7 @@ resource "aws_lb_listener_rule" "host_based_weighted_routing" {
 
   condition {
     host_header {
-      values = ["my-service.*.terraform.io"]
+      values = ["my-service.*.mycompany.io"]
     }
   }
 }

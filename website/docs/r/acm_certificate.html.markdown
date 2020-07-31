@@ -106,7 +106,7 @@ The following arguments are supported:
 * Creating an amazon issued certificate
     * `domain_name` - (Required) A domain name for which the certificate should be issued
     * `subject_alternative_names` - (Optional) Set of domains that should be SANs in the issued certificate. To remove all elements of a previously configured list, set this value equal to an empty list (`[]`) to trigger recreation.
-    * `validation_method` - (Required) Which method to use for validation. `DNS` or `EMAIL` are valid, `NONE` can be used for certificates that were imported into ACM and then into Terraform.
+    * `validation_method` - (Required) Which method to use for validation. `DNS` or `EMAIL` are valid, `NONE` can be used for certificates that were imported into ACM and then into the provider.
     * `options` - (Optional) Configuration block used to set certificate options. Detailed below.
 * Importing an existing certificate
     * `private_key` - (Required) The certificate's PEM-formatted private key

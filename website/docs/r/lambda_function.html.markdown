@@ -283,7 +283,6 @@ For **environment** the following attributes are supported:
 [8]: https://docs.aws.amazon.com/lambda/latest/dg/deployment-package-v2.html
 [9]: https://docs.aws.amazon.com/lambda/latest/dg/concurrent-executions.html
 [10]: https://docs.aws.amazon.com/lambda/latest/dg/configuration-layers.html
-[11]: https://learn.hashicorp.com/terraform/aws/lambda-api-gateway
 [12]: https://docs.aws.amazon.com/lambda/latest/dg/services-efs.html
 
 ## Timeouts

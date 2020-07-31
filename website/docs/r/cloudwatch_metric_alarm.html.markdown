@@ -111,7 +111,7 @@ resource "aws_cloudwatch_metric_alarm" "foobar" {
 
 ```hcl
 resource "aws_cloudwatch_metric_alarm" "xx_anomaly_detection" {
-  alarm_name                = "terraform-test-foobar"
+  alarm_name                = "test-foobar"
   comparison_operator       = "GreaterThanUpperThreshold"
   evaluation_periods        = "2"
   threshold_metric_id       = "e1"
