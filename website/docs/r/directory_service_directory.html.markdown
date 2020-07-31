@@ -23,8 +23,8 @@ resource "aws_directory_service_directory" "bar" {
   size     = "Small"
 
   vpc_settings {
-    vpc_id     = "${aws_vpc.main.id}"
-    subnet_ids = ["${aws_subnet.foo.id}", "${aws_subnet.bar.id}"]
+    vpc_id     = aws_vpc.main.id
+    subnet_ids = [aws_subnet.foo.id, aws_subnet.bar.id]
   }
 
   tags = {
@@ -37,13 +37,13 @@ resource "aws_vpc" "main" {
 }
 
 resource "aws_subnet" "foo" {
-  vpc_id            = "${aws_vpc.main.id}"
+  vpc_id            = aws_vpc.main.id
   availability_zone = "us-west-2a"
   cidr_block        = "10.0.1.0/24"
 }
 
 resource "aws_subnet" "bar" {
-  vpc_id            = "${aws_vpc.main.id}"
+  vpc_id            = aws_vpc.main.id
   availability_zone = "us-west-2b"
   cidr_block        = "10.0.2.0/24"
 }
@@ -59,8 +59,8 @@ resource "aws_directory_service_directory" "bar" {
   type     = "MicrosoftAD"
 
   vpc_settings {
-    vpc_id     = "${aws_vpc.main.id}"
-    subnet_ids = ["${aws_subnet.foo.id}", "${aws_subnet.bar.id}"]
+    vpc_id     = aws_vpc.main.id
+    subnet_ids = [aws_subnet.foo.id, aws_subnet.bar.id]
   }
 
   tags = {
@@ -73,13 +73,13 @@ resource "aws_vpc" "main" {
 }
 
 resource "aws_subnet" "foo" {
-  vpc_id            = "${aws_vpc.main.id}"
+  vpc_id            = aws_vpc.main.id
   availability_zone = "us-west-2a"
   cidr_block        = "10.0.1.0/24"
 }
 
 resource "aws_subnet" "bar" {
-  vpc_id            = "${aws_vpc.main.id}"
+  vpc_id            = aws_vpc.main.id
   availability_zone = "us-west-2b"
   cidr_block        = "10.0.2.0/24"
 }
@@ -97,8 +97,8 @@ resource "aws_directory_service_directory" "connector" {
   connect_settings {
     customer_dns_ips  = ["A.B.C.D"]
     customer_username = "Admin"
-    subnet_ids        = ["${aws_subnet.foo.id}", "${aws_subnet.bar.id}"]
-    vpc_id            = "${aws_vpc.main.id}"
+    subnet_ids        = [aws_subnet.foo.id, aws_subnet.bar.id]
+    vpc_id            = aws_vpc.main.id
   }
 }
 
@@ -107,13 +107,13 @@ resource "aws_vpc" "main" {
 }
 
 resource "aws_subnet" "foo" {
-  vpc_id            = "${aws_vpc.main.id}"
+  vpc_id            = aws_vpc.main.id
   availability_zone = "us-west-2a"
   cidr_block        = "10.0.1.0/24"
 }
 
 resource "aws_subnet" "bar" {
-  vpc_id            = "${aws_vpc.main.id}"
+  vpc_id            = aws_vpc.main.id
   availability_zone = "us-west-2b"
   cidr_block        = "10.0.2.0/24"
 }

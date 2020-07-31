@@ -15,7 +15,7 @@ Provides an IAM instance profile.
 ```hcl
 resource "aws_iam_instance_profile" "test_profile" {
   name = "test_profile"
-  role = "${aws_iam_role.role.name}"
+  role = aws_iam_role.role.name
 }
 
 resource "aws_iam_role" "role" {
@@ -47,8 +47,6 @@ The following arguments are supported:
 * `name` - (Optional, Forces new resource) The profile's name. If omitted, this provider will assign a random, unique name.
 * `name_prefix` - (Optional, Forces new resource) Creates a unique name beginning with the specified prefix. Conflicts with `name`.
 * `path` - (Optional, default "/") Path in which to create the profile.
-* `roles` - (**Deprecated**)
-A list of role names to include in the profile.  The current default is 1.  If you see an error message similar to `Cannot exceed quota for InstanceSessionsPerInstanceProfile: 1`, then you must contact AWS support and ask for a limit increase.
 * `role` - (Optional) The role name to include in the profile.
 
 ## Attribute Reference
@@ -59,7 +57,6 @@ A list of role names to include in the profile.  The current default is 1.  If y
 * `name` - The instance profile's name.
 * `path` - The path of the instance profile in IAM.
 * `role` - The role assigned to the instance profile.
-* `roles` - The list of roles assigned to the instance profile. (**Deprecated**)
 * `unique_id` - The [unique ID][1] assigned by AWS.
 
   [1]: https://docs.aws.amazon.com/IAM/latest/UserGuide/Using_Identifiers.html#GUIDs

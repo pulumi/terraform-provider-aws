@@ -65,7 +65,7 @@ data "aws_iam_policy_document" "example" {
 resource "aws_iam_policy" "example" {
   name   = "example_policy"
   path   = "/"
-  policy = "${data.aws_iam_policy_document.example.json}"
+  policy = data.aws_iam_policy_document.example.json
 }
 ```
 
@@ -182,7 +182,7 @@ data "aws_iam_policy_document" "event_stream_bucket_role_assume_role_policy" {
 
     principals {
       type        = "AWS"
-      identifiers = ["${var.trusted_role_arn}"]
+      identifiers = [var.trusted_role_arn]
     }
 
     principals {
@@ -213,7 +213,7 @@ data "aws_iam_policy_document" "source" {
 }
 
 data "aws_iam_policy_document" "source_json_example" {
-  source_json = "${data.aws_iam_policy_document.source.json}"
+  source_json = data.aws_iam_policy_document.source.json
 
   statement {
     sid = "SidToOverwrite"
@@ -237,7 +237,7 @@ data "aws_iam_policy_document" "override" {
 }
 
 data "aws_iam_policy_document" "override_json_example" {
-  override_json = "${data.aws_iam_policy_document.override.json}"
+  override_json = data.aws_iam_policy_document.override.json
 
   statement {
     actions   = ["ec2:*"]
@@ -328,8 +328,8 @@ data "aws_iam_policy_document" "override" {
 }
 
 data "aws_iam_policy_document" "politik" {
-  source_json   = "${data.aws_iam_policy_document.source.json}"
-  override_json = "${data.aws_iam_policy_document.override.json}"
+  source_json   = data.aws_iam_policy_document.source.json
+  override_json = data.aws_iam_policy_document.override.json
 }
 ```
 

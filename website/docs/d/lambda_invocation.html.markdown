@@ -16,7 +16,7 @@ invocation type.
 
 ```hcl
 data "aws_lambda_invocation" "example" {
-  function_name = "${aws_lambda_function.lambda_function_test.function_name}"
+  function_name = aws_lambda_function.lambda_function_test.function_name
 
   input = <<JSON
 {
@@ -26,12 +26,7 @@ data "aws_lambda_invocation" "example" {
 JSON
 }
 
-output "result" {
-  description = "String result of Lambda execution"
-  value       = "${data.aws_lambda_invocation.example.result}"
-}
-
-output "result_entry_tf012" {
+output "result_entry" {
   value = jsondecode(data.aws_lambda_invocation.example.result)["key1"]
 }
 ```
@@ -45,5 +40,4 @@ output "result_entry_tf012" {
 
 ## Attributes Reference
 
- * `result` - String result of the lambda function invocation.
- * `result_map` - (**DEPRECATED**) This field is set only if result is a map of primitive types, where the map is string keys and string values.
+* `result` - String result of the lambda function invocation.

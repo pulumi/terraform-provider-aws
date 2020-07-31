@@ -17,7 +17,7 @@ More information can be found in the [Amazon API Gateway Developer Guide](https:
 
 ```hcl
 resource "aws_apigatewayv2_stage" "example" {
-  api_id = "${aws_apigatewayv2_api.example.id}"
+  api_id = aws_apigatewayv2_api.example.id
   name   = "example-stage"
 }
 ```
@@ -34,7 +34,7 @@ Use the `aws_api_gateway_account` resource to configure [permissions for CloudWa
 * `client_certificate_id` - (Optional) The identifier of a client certificate for the stage. Use the `aws_api_gateway_client_certificate` resource to configure a client certificate.
 Supported only for WebSocket APIs.
 * `default_route_settings` - (Optional) The default route settings for the stage.
-* `deployment_id` - (Optional) The deployment identifier of the stage. Use the `aws_apigatewayv2_deployment` resource to configure a deployment.
+* `deployment_id` - (Optional) The deployment identifier of the stage. Use the [`aws_apigatewayv2_deployment`](/docs/providers/aws/r/apigatewayv2_deployment.html) resource to configure a deployment.
 * `description` - (Optional) The description for the stage.
 * `route_settings` - (Optional) Route settings for the stage.
 * `stage_variables` - (Optional) A map that defines the stage variables for the stage.
@@ -51,7 +51,7 @@ The `default_route_settings` object supports the following:
 Defaults to `false`. Supported only for WebSocket APIs.
 * `detailed_metrics_enabled` - (Optional) Whether detailed metrics are enabled for the default route. Defaults to `false`.
 * `logging_level` - (Optional) The logging level for the default route. Affects the log entries pushed to Amazon CloudWatch Logs.
-Valid values: `ERROR`, `INFO`, `OFF`. Defaults to `OFF`. Supported only for WebSocket APIs.
+Valid values: `ERROR`, `INFO`, `OFF`. Defaults to `OFF`. Supported only for WebSocket APIs. Terraform will only perform drift detection of its value when present in a configuration.
 * `throttling_burst_limit` - (Optional) The throttling burst limit for the default route.
 * `throttling_rate_limit` - (Optional) The throttling rate limit for the default route.
 
@@ -62,7 +62,7 @@ The `route_settings` object supports the following:
 Defaults to `false`. Supported only for WebSocket APIs.
 * `detailed_metrics_enabled` - (Optional) Whether detailed metrics are enabled for the route. Defaults to `false`.
 * `logging_level` - (Optional) The logging level for the route. Affects the log entries pushed to Amazon CloudWatch Logs.
-Valid values: `ERROR`, `INFO`, `OFF`. Defaults to `OFF`. Supported only for WebSocket APIs.
+Valid values: `ERROR`, `INFO`, `OFF`. Defaults to `OFF`. Supported only for WebSocket APIs. Terraform will only perform drift detection of its value when present in a configuration.
 * `throttling_burst_limit` - (Optional) The throttling burst limit for the route.
 * `throttling_rate_limit` - (Optional) The throttling rate limit for the route.
 

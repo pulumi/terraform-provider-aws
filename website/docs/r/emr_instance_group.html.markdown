@@ -19,7 +19,7 @@ this provider will resize any Instance Group to zero when destroying the resourc
 
 ```hcl
 resource "aws_emr_instance_group" "task" {
-  cluster_id     = "${aws_emr_cluster.tf-test-cluster.id}"
+  cluster_id     = aws_emr_cluster.tf-test-cluster.id
   instance_count = 1
   instance_type  = "m5.xlarge"
   name           = "my little instance group"
