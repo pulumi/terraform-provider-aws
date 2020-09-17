@@ -29,7 +29,7 @@ github.com/apparentlymart/go-cidr/cidr
 github.com/apparentlymart/go-textseg/textseg
 # github.com/armon/go-radix v1.0.0
 github.com/armon/go-radix
-# github.com/aws/aws-sdk-go v1.33.21
+# github.com/aws/aws-sdk-go v1.34.4
 ## explicit
 github.com/aws/aws-sdk-go/aws
 github.com/aws/aws-sdk-go/aws/arn
@@ -236,7 +236,7 @@ github.com/bflad/tfproviderdocs/check
 github.com/bflad/tfproviderdocs/check/sidenavigation
 github.com/bflad/tfproviderdocs/command
 github.com/bflad/tfproviderdocs/version
-# github.com/bflad/tfproviderlint v0.17.0
+# github.com/bflad/tfproviderlint v0.18.0
 ## explicit
 github.com/bflad/tfproviderlint/cmd/tfproviderlint
 github.com/bflad/tfproviderlint/helper/analysisutils
@@ -344,10 +344,12 @@ github.com/bflad/tfproviderlint/passes/helper/validation/iprangecallexpr
 github.com/bflad/tfproviderlint/passes/helper/validation/iprangeselectorexpr
 github.com/bflad/tfproviderlint/passes/helper/validation/singleipcallexpr
 github.com/bflad/tfproviderlint/passes/helper/validation/singleipselectorexpr
+github.com/bflad/tfproviderlint/passes/helper/validation/stringinslicecallexpr
 github.com/bflad/tfproviderlint/passes/helper/validation/validatejsonstringselectorexpr
 github.com/bflad/tfproviderlint/passes/helper/validation/validatelistuniquestringsselectorexpr
 github.com/bflad/tfproviderlint/passes/helper/validation/validateregexpselectorexpr
 github.com/bflad/tfproviderlint/passes/helper/validation/validaterfc3339timestringselectorexpr
+github.com/bflad/tfproviderlint/passes/stdlib/fmtsprintfcallexpr
 github.com/bflad/tfproviderlint/passes/testaccfuncdecl
 github.com/bflad/tfproviderlint/passes/testfuncdecl
 github.com/bflad/tfproviderlint/version
@@ -504,9 +506,10 @@ github.com/googleapis/gax-go/v2
 github.com/gookit/color
 # github.com/gostaticanalysis/analysisutil v0.0.3
 github.com/gostaticanalysis/analysisutil
-# github.com/hashicorp/aws-sdk-go-base v0.5.0
+# github.com/hashicorp/aws-sdk-go-base v0.6.0
 ## explicit
 github.com/hashicorp/aws-sdk-go-base
+github.com/hashicorp/aws-sdk-go-base/tfawserr
 # github.com/hashicorp/errwrap v1.0.0
 github.com/hashicorp/errwrap
 # github.com/hashicorp/go-checkpoint v0.5.0

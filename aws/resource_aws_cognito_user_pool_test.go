@@ -21,6 +21,9 @@ func init() {
 	resource.AddTestSweepers("aws_cognito_user_pool", &resource.Sweeper{
 		Name: "aws_cognito_user_pool",
 		F:    testSweepCognitoUserPools,
+		Dependencies: []string{
+			"aws_cognito_user_pool_domain",
+		},
 	})
 }
 
@@ -35,37 +38,32 @@ func testSweepCognitoUserPools(region string) error {
 		MaxResults: aws.Int64(int64(50)),
 	}
 
-	for {
-		output, err := conn.ListUserPools(input)
-		if err != nil {
-			if testSweepSkipSweepError(err) {
-				log.Printf("[WARN] Skipping Cognito User Pool sweep for %s: %s", region, err)
-				return nil
-			}
-			return fmt.Errorf("Error retrieving Cognito User Pools: %s", err)
-		}
-
-		if len(output.UserPools) == 0 {
+	err = conn.ListUserPoolsPages(input, func(resp *cognitoidentityprovider.ListUserPoolsOutput, isLast bool) bool {
+		if len(resp.UserPools) == 0 {
 			log.Print("[DEBUG] No Cognito User Pools to sweep")
-			return nil
+			return false
 		}
 
-		for _, userPool := range output.UserPools {
+		for _, userPool := range resp.UserPools {
 			name := aws.StringValue(userPool.Name)
 
-			log.Printf("[INFO] Deleting Cognito User Pool %s", name)
+			log.Printf("[INFO] Deleting Cognito User Pool: %s", name)
 			_, err := conn.DeleteUserPool(&cognitoidentityprovider.DeleteUserPoolInput{
 				UserPoolId: userPool.Id,
 			})
 			if err != nil {
-				return fmt.Errorf("Error deleting Cognito User Pool %s: %s", name, err)
+				log.Printf("[ERROR] Failed deleting Cognito User Pool (%s): %s", name, err)
 			}
 		}
+		return !isLast
+	})
 
-		if output.NextToken == nil {
-			break
+	if err != nil {
+		if testSweepSkipSweepError(err) {
+			log.Printf("[WARN] Skipping Cognito User Pool sweep for %s: %s", region, err)
+			return nil
 		}
-		input.NextToken = output.NextToken
+		return fmt.Errorf("Error retrieving Cognito User Pools: %w", err)
 	}
 
 	return nil
@@ -1619,7 +1617,6 @@ resource "aws_iam_role" "test" {
   ]
 }
 EOF
-
 }
 
 resource "aws_lambda_function" "test" {
@@ -1669,7 +1666,6 @@ resource "aws_iam_role" "test" {
   ]
 }
 EOF
-
 }
 
 resource "aws_lambda_function" "test" {
@@ -1849,7 +1845,6 @@ resource "aws_iam_role" "test" {
   ]
 }
 POLICY
-
 }
 
 resource "aws_iam_role_policy" "test" {
@@ -1872,7 +1867,6 @@ resource "aws_iam_role_policy" "test" {
   ]
 }
 EOF
-
 }
 
 resource "aws_cognito_user_pool" "test" {
