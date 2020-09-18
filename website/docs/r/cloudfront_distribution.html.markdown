@@ -307,7 +307,7 @@ of several sub-resources - these resources are laid out below.
     CloudFront to route requests to when a request matches the path pattern
     either for a cache behavior or for the default cache behavior.
 
-* `trusted_signers` (Optional) - List of AWS account IDs (or `self`) that you want to allow to create signed URLs for private content. 
+* `trusted_signers` (Optional) - List of AWS account IDs (or `self`) that you want to allow to create signed URLs for private content.
 See the [CloudFront User Guide](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/private-content-trusted-signers.html) for more information about this feature.
 
 * `viewer_protocol_policy` (Required) - Use this element to specify the
@@ -428,7 +428,7 @@ argument should not be specified.
 
 * `s3_origin_config` - The [CloudFront S3 origin](#s3-origin-config-arguments)
     configuration information. If a custom origin is required, use
-    `custom_origin_config` instead.    
+    `custom_origin_config` instead.
 
 ##### Custom Origin Config Arguments
 
