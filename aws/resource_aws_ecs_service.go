@@ -34,6 +34,8 @@ func resourceAwsEcsService() *schema.Resource {
 
 		Timeouts: &schema.ResourceTimeout{
 			Delete: schema.DefaultTimeout(20 * time.Minute),
+			Update: schema.DefaultTimeout(20 * time.Minute),
+			Create: schema.DefaultTimeout(20 * time.Minute),
 		},
 
 		Schema: map[string]*schema.Schema{
@@ -504,7 +506,7 @@ func resourceAwsEcsServiceCreate(d *schema.ResourceData, meta interface{}) error
 	// Retry due to AWS IAM & ECS eventual consistency
 	var out *ecs.CreateServiceOutput
 	var err error
-	err = resource.Retry(2*time.Minute, func() *resource.RetryError {
+	err = resource.Retry(d.Timeout(schema.TimeoutCreate), func() *resource.RetryError {
 		out, err = conn.CreateService(&input)
 
 		if err != nil {
@@ -1027,7 +1029,7 @@ func resourceAwsEcsServiceUpdate(d *schema.ResourceData, meta interface{}) error
 	if updateService {
 		log.Printf("[DEBUG] Updating ECS Service (%s): %s", d.Id(), input)
 		// Retry due to IAM eventual consistency
-		err := resource.Retry(2*time.Minute, func() *resource.RetryError {
+		err := resource.Retry(d.Timeout(schema.TimeoutUpdate), func() *resource.RetryError {
 			_, err := conn.UpdateService(&input)
 			if err != nil {
 				if isAWSErr(err, ecs.ErrCodeInvalidParameterException, "Please verify that the ECS service role being passed has the proper permissions.") {
@@ -1203,7 +1205,7 @@ func resourceAwsEcsWaitForServiceSteadyState(d *schema.ResourceData, meta interf
 		Pending:    []string{"false"},
 		Target:     []string{"true"},
 		Refresh:    resourceAwsEcsServiceIsSteadyStateFunc(d, meta),
-		Timeout:    15 * time.Minute,
+		Timeout:    20 * time.Minute,
 		MinTimeout: 1 * time.Second,
 	}
 
