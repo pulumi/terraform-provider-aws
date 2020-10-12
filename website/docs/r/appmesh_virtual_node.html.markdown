@@ -212,7 +212,7 @@ The `validation` object supports the following:
 
 The `trust` object supports the following:
 
-* `acm` - (Optional) The TLS validation context trust for an AWS Certicate Manager (ACM) certificate.
+* `acm` - (Optional) The TLS validation context trust for an AWS Certificate Manager (ACM) certificate.
 * `file` - (Optional) The TLS validation context trust for a local file.
 
 The `acm` object supports the following:
@@ -231,6 +231,7 @@ The `listener` object supports the following:
 
 * `port_mapping` - (Required) The port mapping information for the listener.
 * `health_check` - (Optional) The health check information for the listener.
+* `timeout` - (Optional) Timeouts for different protocols.
 * `tls` - (Optional) The Transport Layer Security (TLS) properties for the listener
 
 The `logging` object supports the following:
@@ -276,6 +277,42 @@ The `health_check` object supports the following:
 * `path` - (Optional) The destination path for the health check request. This is only required if the specified protocol is `http` or `http2`.
 * `port` - (Optional) The destination port for the health check request. This port must match the port defined in the `port_mapping` for the listener.
 
+The `timeout` object supports the following:
+
+* `grpc` - (Optional) Timeouts for gRPC listeners.
+* `http` - (Optional) Timeouts for HTTP listeners.
+* `http2` - (Optional) Timeouts for HTTP2 listeners.
+* `tcp` - (Optional) Timeouts for TCP listeners.
+
+The `grpc` timeout object supports the following:
+
+* `idle` - (Optional) The idle timeout. An idle timeout bounds the amount of time that a connection may be idle.
+* `per_request` - (Optional) The per request timeout.
+
+The `idle` and `per_request` objects support the following:
+
+* `unit` - (Required) The unit of time. Valid values: `ms`, `s`.
+* `value` - (Required) The number of time units. Minimum value of `0`.
+
+The `http` and `http2` timeout objects support the following:
+
+* `idle` - (Optional) The idle timeout. An idle timeout bounds the amount of time that a connection may be idle.
+* `per_request` - (Optional) The per request timeout.
+
+The `idle` and `per_request` objects support the following:
+
+* `unit` - (Required) The unit of time. Valid values: `ms`, `s`.
+* `value` - (Required) The number of time units. Minimum value of `0`.
+
+The `tcp` timeout object supports the following:
+
+* `idle` - (Optional) The idle timeout. An idle timeout bounds the amount of time that a connection may be idle.
+
+The `idle` object supports the following:
+
+* `unit` - (Required) The unit of time. Valid values: `ms`, `s`.
+* `value` - (Required) The number of time units. Minimum value of `0`.
+
 The `tls` object supports the following:
 
 * `certificate` - (Required) The listener's TLS certificate.
@@ -283,7 +320,7 @@ The `tls` object supports the following:
 
 The `certificate` object supports the following:
 
-* `acm` - (Optional) An AWS Certicate Manager (ACM) certificate.
+* `acm` - (Optional) An AWS Certificate Manager (ACM) certificate.
 * `file` - (optional) A local file certificate.
 
 The `acm` object supports the following:

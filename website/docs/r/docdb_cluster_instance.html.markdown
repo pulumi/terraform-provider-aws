@@ -48,8 +48,8 @@ The following arguments are supported:
 * `availability_zone` - (Optional, Computed) The EC2 Availability Zone that the DB instance is created in. See [docs](https://docs.aws.amazon.com/documentdb/latest/developerguide/API_CreateDBInstance.html) about the details.
 * `cluster_identifier` - (Required) The identifier of the `aws_docdb_cluster` in which to launch this instance.
 * `engine` - (Optional) The name of the database engine to be used for the DocDB instance. Defaults to `docdb`. Valid Values: `docdb`.
-* `identifier` - (Optional, Forces new resource) The indentifier for the DocDB instance, if omitted, this provider will assign a random, unique identifier.
-* `identifier_prefix` - (Optional, Forces new resource) Creates a unique identifier beginning with the specified prefix. Conflicts with `identifer`.
+* `identifier` - (Optional, Forces new resource) The identifier for the DocDB instance, if omitted, this provider will assign a random, unique identifier.
+* `identifier_prefix` - (Optional, Forces new resource) Creates a unique identifier beginning with the specified prefix. Conflicts with `identifier`.
 * `instance_class` - (Required) The instance class to use. For details on CPU and memory, see [Scaling for DocDB Instances][2]. DocDB currently
   supports the below instance classes. Please see [AWS Documentation][4] for complete details.
     - db.r4.large
