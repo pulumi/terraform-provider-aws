@@ -46,6 +46,12 @@ func resourceAwsSagemakerNotebookInstance() *schema.Resource {
 				Required: true,
 			},
 
+			"volume_size": {
+				Type:     schema.TypeInt,
+				Optional: true,
+				Default:  5,
+			},
+
 			"subnet_id": {
 				Type:     schema.TypeString,
 				Optional: true,
@@ -94,6 +100,12 @@ func resourceAwsSagemakerNotebookInstance() *schema.Resource {
 				}, false),
 			},
 
+			"default_code_repository": {
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
+
 			"tags": tagsSchema(),
 		},
 	}
@@ -119,8 +131,16 @@ func resourceAwsSagemakerNotebookInstanceCreate(d *schema.ResourceData, meta int
 		createOpts.DirectInternetAccess = aws.String(v.(string))
 	}
 
+	if v, ok := d.GetOk("default_code_repository"); ok {
+		createOpts.DefaultCodeRepository = aws.String(v.(string))
+	}
+
 	if s, ok := d.GetOk("subnet_id"); ok {
 		createOpts.SubnetId = aws.String(s.(string))
+	}
+
+	if v, ok := d.GetOk("volume_size"); ok {
+		createOpts.VolumeSizeInGB = aws.Int64(int64(v.(int)))
 	}
 
 	if k, ok := d.GetOk("kms_key_id"); ok {
@@ -200,6 +220,10 @@ func resourceAwsSagemakerNotebookInstanceRead(d *schema.ResourceData, meta inter
 		return fmt.Errorf("error setting kms_key_id for sagemaker notebook instance (%s): %s", d.Id(), err)
 	}
 
+	if err := d.Set("volume_size", notebookInstance.VolumeSizeInGB); err != nil {
+		return fmt.Errorf("error setting volume_size for sagemaker notebook instance (%s): %s", d.Id(), err)
+	}
+
 	if err := d.Set("lifecycle_config_name", notebookInstance.NotebookInstanceLifecycleConfigName); err != nil {
 		return fmt.Errorf("error setting lifecycle_config_name for sagemaker notebook instance (%s): %s", d.Id(), err)
 	}
@@ -214,6 +238,10 @@ func resourceAwsSagemakerNotebookInstanceRead(d *schema.ResourceData, meta inter
 
 	if err := d.Set("direct_internet_access", notebookInstance.DirectInternetAccess); err != nil {
 		return fmt.Errorf("error setting direct_internet_access for sagemaker notebook instance (%s): %s", d.Id(), err)
+	}
+
+	if err := d.Set("default_code_repository", notebookInstance.DefaultCodeRepository); err != nil {
+		return fmt.Errorf("error setting default_code_repository for sagemaker notebook instance (%s): %s", d.Id(), err)
 	}
 
 	tags, err := keyvaluetags.SagemakerListTags(conn, aws.StringValue(notebookInstance.NotebookInstanceArn))
@@ -253,6 +281,11 @@ func resourceAwsSagemakerNotebookInstanceUpdate(d *schema.ResourceData, meta int
 
 	if d.HasChange("instance_type") {
 		updateOpts.InstanceType = aws.String(d.Get("instance_type").(string))
+		hasChanged = true
+	}
+
+	if d.HasChange("volume_size") {
+		updateOpts.VolumeSizeInGB = aws.Int64(int64(d.Get("volume_size").(int)))
 		hasChanged = true
 	}
 

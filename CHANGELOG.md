@@ -1,3 +1,23 @@
+## 3.11.0 (October 15, 2020)
+
+FEATURES
+
+* **New Data Source:** `aws_codeartifact_repository_endpoint` ([#15566](https://github.com/terraform-providers/terraform-provider-aws/issues/15566))
+* **New Resource:** `aws_appmesh_gateway_route` ([#15638](https://github.com/terraform-providers/terraform-provider-aws/issues/15638))
+* **New Resource:** `aws_appmesh_virtual_gateway` ([#15611](https://github.com/terraform-providers/terraform-provider-aws/issues/15611))
+
+BUG FIXES
+
+* resource/aws_ec2_transit_gateway_route: Prevent plan errors with compressed IPv6 addresses ([#14846](https://github.com/terraform-providers/terraform-provider-aws/issues/14846))
+
+ENHANCEMENTS
+
+* data-source/aws_workspaces_directory: Add workspaces creation properties ([#14577](https://github.com/terraform-providers/terraform-provider-aws/issues/14577))
+* resource/aws_backup_plan: Add support for AdvancedBackupSettings ([#15341](https://github.com/terraform-providers/terraform-provider-aws/issues/15341))
+* resource/aws_sagemaker_notebook_instance: Add `default_code_repository` attribute ([#13772](https://github.com/terraform-providers/terraform-provider-aws/issues/13772))
+* resource/aws_sagemaker_notebook_instance: Add `volume_size` attribute ([#15521](https://github.com/terraform-providers/terraform-provider-aws/issues/15521))
+* resource/aws_workspaces_directory: Add workspaces creation properties ([#14577](https://github.com/terraform-providers/terraform-provider-aws/issues/14577))
+
 ## 3.10.0 (October 09, 2020)
 
 FEATURES
