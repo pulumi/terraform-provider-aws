@@ -1,14 +1,16 @@
 ---
-subcategory: "CloudWatch"
+subcategory: "EventBridge (CloudWatch Events)"
 layout: "aws"
 page_title: "AWS: aws_cloudwatch_event_target"
 description: |-
-  Provides a CloudWatch Event Target resource.
+  Provides an EventBridge Target resource.
 ---
 
 # Resource: aws_cloudwatch_event_target
 
-Provides a CloudWatch Event Target resource.
+Provides an EventBridge Target resource.
+
+~> **Note:** EventBridge was formerly known as CloudWatch Events. The functionality is identical.
 
 ## Example Usage
 
@@ -240,7 +242,8 @@ DOC
 -> **Note:** `input` and `input_path` are mutually exclusive options.
 
 -> **Note:** In order to be able to have your AWS Lambda function or
-   SNS topic invoked by a CloudWatch Events rule, you must setup the right permissions.
+   SNS topic invoked by an EventBridge rule, you must setup the right permissions
+   using `aws_lambda_permission` or `aws_sns_topic.policy`.
    More info [here](https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/resource-based-policies-cwe.html).
 
 The following arguments are supported:
@@ -307,7 +310,7 @@ For more information, see [Task Networking](https://docs.aws.amazon.com/AmazonEC
 
 ## Import
 
-Cloud Watch Event Target can be imported using the role event_rule and target_id separated by `/`.
+EventBridge Targets can be imported using the role event_rule and target_id separated by `/`.
 
  ```
 $ terraform import aws_cloudwatch_event_target.test-event-target rule-name/target-id

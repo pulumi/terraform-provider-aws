@@ -89,7 +89,7 @@ The following arguments are supported:
 * `triggers` - (Optional) A map of arbitrary keys and values that, when changed, will trigger a redeployment.
 * `variables` - (Optional) A map that defines variables for the stage
 
-## Attribute Reference
+## Attributes Reference
 
 In addition to all arguments above, the following attributes are exported:
 
