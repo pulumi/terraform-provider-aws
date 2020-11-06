@@ -15,10 +15,13 @@
         - [Other Recommended Variables](#other-recommended-variables)
         - [Basic Acceptance Tests](#basic-acceptance-tests)
         - [PreChecks](#prechecks)
+            - [Standard Provider PreChecks](#standard-provider-prechecks)
+            - [Custom PreChecks](#custom-prechecks)
         - [Disappears Acceptance Tests](#disappears-acceptance-tests)
         - [Per Attribute Acceptance Tests](#per-attribute-acceptance-tests)
         - [Cross-Account Acceptance Tests](#cross-account-acceptance-tests)
         - [Cross-Region Acceptance Tests](#cross-region-acceptance-tests)
+        - [Service-Specific Region Acceptance Tests](#service-specific-region-acceptance-tests)
     - [Data Source Acceptance Testing](#data-source-acceptance-testing)
 - [Acceptance Test Sweepers](#acceptance-test-sweepers)
     - [Running Test Sweepers](#running-test-sweepers)
@@ -77,7 +80,7 @@ TF_ACC=1 go test ./aws -v -run=TestAccAWSCloudWatchDashboard_update -timeout 120
 === RUN   TestAccAWSCloudWatchDashboard_update
 --- PASS: TestAccAWSCloudWatchDashboard_update (26.56s)
 PASS
-ok  	github.com/terraform-providers/terraform-provider-aws/aws	26.607s
+ok  	github.com/hashicorp/terraform-provider-aws/aws	26.607s
 ```
 
 Entire resource test suites can be targeted by using the naming convention to
@@ -96,7 +99,7 @@ TF_ACC=1 go test ./aws -v -run=TestAccAWSCloudWatchDashboard -timeout 120m
 === RUN   TestAccAWSCloudWatchDashboard_update
 --- PASS: TestAccAWSCloudWatchDashboard_update (27.81s)
 PASS
-ok  	github.com/terraform-providers/terraform-provider-aws/aws	55.619s
+ok  	github.com/hashicorp/terraform-provider-aws/aws	55.619s
 ```
 
 Running acceptance tests requires version 0.12.26 or higher of the Terraform CLI to be installed.
@@ -115,7 +118,7 @@ $ make testacc TEST=./aws TESTARGS='-run=TestAccAWSDBInstance_DbSubnetGroupName_
     TestAccAWSDBInstance_DbSubnetGroupName_RamShared: provider_test.go:386: AWS_ALTERNATE_ACCESS_KEY_ID or AWS_ALTERNATE_PROFILE must be set for acceptance tests
 --- FAIL: TestAccAWSDBInstance_DbSubnetGroupName_RamShared (2.22s)
 FAIL
-FAIL	github.com/terraform-providers/terraform-provider-aws/aws	4.305s
+FAIL	github.com/hashicorp/terraform-provider-aws/aws	4.305s
 FAIL
 ```
 
@@ -522,12 +525,34 @@ func TestAccAwsExampleThing_basic(t *testing.T) {
 
 Extend the default PreCheck by adding calls to functions in the anonymous PreCheck function. The functions can be existing functions in the provider or custom functions you add for new capabilities.
 
-These are some of the existing functions:
+##### Standard Provider PreChecks
+
+If you add a new test that has preconditions which are checked by an existing provider function, use that standard PreCheck instead of creating a new one. Some existing tests are missing standard PreChecks and you can help by adding them where appropriate.
+
+These are some of the standard provider PreChecks:
 
 * `testAccPartitionHasServicePreCheck(serviceId string, t *testing.T)` checks whether the current partition lists the service as part of its offerings. Note: AWS may not add new or public preview services to the service list immediately. This function will return a false positive in that case.
 * `testAccOrganizationsAccountPreCheck(t *testing.T)` checks whether the current account can perform AWS Organizations tests.
 * `testAccAlternateAccountPreCheck(t *testing.T)` checks whether the environment is set up for tests across accounts.
 * `testAccMultipleRegionPreCheck(t *testing.T, regions int)` checks whether the environment is set up for tests across regions.
+
+This is an example of using a standard PreCheck function. For an established service, such as WAF or FSx, use `testAccPartitionHasServicePreCheck()` and the service endpoint ID to check that a partition supports the service.
+
+```go
+func TestAccAwsExampleThing_basic(t *testing.T) {
+  rName := acctest.RandomWithPrefix("tf-acc-test")
+  resourceName := "aws_example_thing.test"
+
+  resource.ParallelTest(t, resource.TestCase{
+    PreCheck:     func() { testAccPreCheck(t); testAccPartitionHasServicePreCheck(waf.EndpointsID, t) },
+    // ... additional checks follow ...
+  })
+}
+```
+
+##### Custom PreChecks
+
+In situations where standard PreChecks do not test for the required preconditions, create a custom PreCheck.
 
 Below is an example of adding a custom PreCheck function. For a new or preview service that AWS does not include in the partition service list yet, you can verify the existence of the service with a simple read-only request (e.g., list all X service things). (For acceptance tests of established services, use `testAccPartitionHasServicePreCheck()` instead.)
 
@@ -778,6 +803,116 @@ resource "aws_example" "test" {
 ```
 
 Searching for usage of `testAccMultipleRegionPreCheck` in the codebase will yield real world examples of this setup in action.
+
+#### Service-Specific Region Acceptance Testing
+
+Certain AWS service APIs are only available in specific AWS regions. For example as of this writing, the `pricing` service is available in `ap-south-1` and `us-east-1`, but no other regions or partitions. When encountering these types of services, the acceptance testing can be setup to automatically detect the correct region(s), while skipping the testing in unsupported partitions.
+
+To prepare the shared service functionality, create a file named `aws/{SERVICE}_test.go`. A starting example with the Pricing service (`aws/pricing_test.go`):
+
+```go
+package aws
+
+import (
+  "context"
+  "sync"
+  "testing"
+
+  "github.com/aws/aws-sdk-go/aws/endpoints"
+  "github.com/aws/aws-sdk-go/service/pricing"
+  "github.com/hashicorp/terraform-plugin-sdk/v2/diag"
+  "github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+  "github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
+)
+
+// testAccPricingRegion is the chosen Pricing testing region
+//
+// Cached to prevent issues should multiple regions become available.
+var testAccPricingRegion string
+
+// testAccProviderPricing is the Pricing provider instance
+//
+// This Provider can be used in testing code for API calls without requiring
+// the use of saving and referencing specific ProviderFactories instances.
+//
+// testAccPreCheckPricing(t) must be called before using this provider instance.
+var testAccProviderPricing *schema.Provider
+
+// testAccProviderPricingConfigure ensures the provider is only configured once
+var testAccProviderPricingConfigure sync.Once
+
+// testAccPreCheckPricing verifies AWS credentials and that Pricing is supported
+func testAccPreCheckPricing(t *testing.T) {
+  testAccPartitionHasServicePreCheck(pricing.EndpointsID, t)
+
+  // Since we are outside the scope of the Terraform configuration we must
+  // call Configure() to properly initialize the provider configuration.
+  testAccProviderPricingConfigure.Do(func() {
+    testAccProviderPricing = Provider()
+
+    config := map[string]interface{}{
+      "region": testAccGetPricingRegion(),
+    }
+
+    diags := testAccProviderPricing.Configure(context.Background(), terraform.NewResourceConfigRaw(config))
+
+    if diags != nil && diags.HasError() {
+      for _, d := range diags {
+        if d.Severity == diag.Error {
+          t.Fatalf("error configuring Pricing provider: %s", d.Summary)
+        }
+      }
+    }
+  })
+}
+
+// testAccPricingRegionProviderConfig is the Terraform provider configuration for Pricing region testing
+//
+// Testing Pricing assumes no other provider configurations
+// are necessary and overwrites the "aws" provider configuration.
+func testAccPricingRegionProviderConfig() string {
+  return testAccRegionalProviderConfig(testAccGetPricingRegion())
+}
+
+// testAccGetPricingRegion returns the Pricing region for testing
+func testAccGetPricingRegion() string {
+  if testAccPricingRegion != "" {
+    return testAccPricingRegion
+  }
+
+  if rs, ok := endpoints.RegionsForService(endpoints.DefaultPartitions(), testAccGetPartition(), pricing.ServiceName); ok {
+    // return available region (random if multiple)
+    for regionID := range rs {
+      testAccPricingRegion = regionID
+      return testAccPricingRegion
+    }
+  }
+
+  testAccPricingRegion = testAccGetRegion()
+
+  return testAccPricingRegion
+}
+```
+
+For the resource or data source acceptance tests, the key items to adjust are:
+
+* Ensure `TestCase` uses `ProviderFactories: testAccProviderFactories` instead of `Providers: testAccProviders`
+* Add the call for the new `PreCheck` function (keeping `testAccPreCheck(t)`), e.g. `PreCheck: func() { testAccPreCheck(t); testAccPreCheckPricing(t) },`
+* If the testing is for a managed resource with a `CheckDestroy` function, ensure it uses the new provider instance, e.g. `testAccProviderPricing`, instead of `testAccProvider`.
+* If the testing is for a managed resource with a `Check...Exists` function, ensure it uses the new provider instance, e.g. `testAccProviderPricing`, instead of `testAccProvider`.
+* In each `TestStep` configuration, ensure the new provider configuration function is called, e.g.
+
+```go
+func testAccDataSourceAwsPricingProductConfigRedshift() string {
+  return composeConfig(
+    testAccPricingRegionProviderConfig(),
+    `
+# ... test configuration ...
+`)
+}
+```
+
+If the testing configurations require more than one region, reach out to the maintainers for further assistance.
 
 ### Data Source Acceptance Testing
 

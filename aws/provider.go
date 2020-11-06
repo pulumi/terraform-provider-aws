@@ -4,7 +4,6 @@ import (
 	"log"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
-
 	"github.com/terraform-providers/terraform-provider-aws/aws/internal/keyvaluetags"
 	"github.com/terraform-providers/terraform-provider-aws/aws/internal/mutexkv"
 )
@@ -325,12 +324,14 @@ func Provider() *schema.Provider {
 			"aws_route_table":                                dataSourceAwsRouteTable(),
 			"aws_route_tables":                               dataSourceAwsRouteTables(),
 			"aws_route53_delegation_set":                     dataSourceAwsDelegationSet(),
+			"aws_route53_resolver_endpoint":                  dataSourceAwsRoute53ResolverEndpoint(),
 			"aws_route53_resolver_rule":                      dataSourceAwsRoute53ResolverRule(),
 			"aws_route53_resolver_rules":                     dataSourceAwsRoute53ResolverRules(),
 			"aws_route53_zone":                               dataSourceAwsRoute53Zone(),
 			"aws_s3_bucket":                                  dataSourceAwsS3Bucket(),
 			"aws_s3_bucket_object":                           dataSourceAwsS3BucketObject(),
 			"aws_s3_bucket_objects":                          dataSourceAwsS3BucketObjects(),
+			"aws_sagemaker_prebuilt_ecr_image":               dataSourceAwsSageMakerPrebuiltECRImage(),
 			"aws_secretsmanager_secret":                      dataSourceAwsSecretsManagerSecret(),
 			"aws_secretsmanager_secret_rotation":             dataSourceAwsSecretsManagerSecretRotation(),
 			"aws_secretsmanager_secret_version":              dataSourceAwsSecretsManagerSecretVersion(),
@@ -372,6 +373,7 @@ func Provider() *schema.Provider {
 			"aws_workspaces_bundle":                          dataSourceAwsWorkspacesBundle(),
 			"aws_workspaces_directory":                       dataSourceAwsWorkspacesDirectory(),
 			"aws_workspaces_image":                           dataSourceAwsWorkspacesImage(),
+			"aws_workspaces_workspace":                       dataSourceAwsWorkspacesWorkspace(),
 
 			// Adding the Aliases for the ALB -> LB Rename
 			"aws_lb":               dataSourceAwsLb(),
@@ -837,6 +839,7 @@ func Provider() *schema.Provider {
 			"aws_sagemaker_notebook_instance_lifecycle_configuration": resourceAwsSagemakerNotebookInstanceLifeCycleConfiguration(),
 			"aws_sagemaker_notebook_instance":                         resourceAwsSagemakerNotebookInstance(),
 			"aws_secretsmanager_secret":                               resourceAwsSecretsManagerSecret(),
+			"aws_secretsmanager_secret_policy":                        resourceAwsSecretsManagerSecretPolicy(),
 			"aws_secretsmanager_secret_version":                       resourceAwsSecretsManagerSecretVersion(),
 			"aws_secretsmanager_secret_rotation":                      resourceAwsSecretsManagerSecretRotation(),
 			"aws_ses_active_receipt_rule_set":                         resourceAwsSesActiveReceiptRuleSet(),
@@ -1114,6 +1117,7 @@ func init() {
 		"codecommit",
 		"codedeploy",
 		"codepipeline",
+		"codestarconnections",
 		"cognitoidentity",
 		"cognitoidp",
 		"configservice",
