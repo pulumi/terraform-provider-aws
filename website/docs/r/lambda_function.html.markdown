@@ -12,7 +12,9 @@ Provides a Lambda Function resource. Lambda allows you to trigger execution of c
 
 For information about Lambda and how to use it, see [What is AWS Lambda?][1]
 
-~> **NOTE:** Due to [AWS Lambda improved VPC networking changes that began deploying in September 2019](https://aws.amazon.com/blogs/compute/announcing-improved-vpc-networking-for-aws-lambda-functions/), EC2 subnets and security groups associated with Lambda Functions can take up to 45 minutes to successfully delete.
+For a detailed example of setting up Lambda and API Gateway, see [Serverless Applications with AWS Lambda and API Gateway.][11]
+
+~> **NOTE:** Due to [AWS Lambda improved VPC networking changes that began deploying in September 2019](https://aws.amazon.com/blogs/compute/announcing-improved-vpc-networking-for-aws-lambda-functions/), EC2 subnets and security groups associated with Lambda Functions can take up to 45 minutes to successfully delete. Terraform AWS Provider version 2.31.0 and later automatically handles this increased timeout, however prior versions require setting the customizable deletion timeouts of those Terraform resources to 45 minutes (`delete = "45m"`). AWS and HashiCorp are working together to reduce the amount of time required for resource deletion and updates can be tracked in this [GitHub issue](https://github.com/hashicorp/terraform-provider-aws/issues/10329).
 
 ## Example Usage
 
@@ -45,8 +47,8 @@ resource "aws_lambda_function" "test_lambda" {
   role          = aws_iam_role.iam_for_lambda.arn
   handler       = "exports.test"
 
-  # The filebase64sha256() function is available in this provider 0.11.12 and later
-  # For this provider 0.11.11 and earlier, use the base64sha256() function and the file() function:
+  # The filebase64sha256() function is available in Terraform 0.11.12 and later
+  # For Terraform 0.11.11 and earlier, use the base64sha256() function and the file() function:
   # source_code_hash = "${base64sha256(file("lambda_function_payload.zip"))}"
   source_code_hash = filebase64sha256("lambda_function_payload.zip")
 
@@ -61,6 +63,8 @@ resource "aws_lambda_function" "test_lambda" {
 ```
 
 ### Lambda Layers
+
+~> **NOTE:** The `aws_lambda_layer_version` attribute values for `arn` and `layer_arn` were swapped in version 2.0.0 of the Terraform AWS Provider. For version 1.x, use `layer_arn` references. For version 2.x, use `arn` references.
 
 ```hcl
 resource "aws_lambda_layer_version" "example" {
@@ -135,7 +139,7 @@ resource "aws_efs_access_point" "access_point_for_lambda" {
 }
 ```
 
-### CloudWatch Logging and Permissions
+## CloudWatch Logging and Permissions
 
 For more information about CloudWatch Logs for Lambda, see the [Lambda User Guide](https://docs.aws.amazon.com/lambda/latest/dg/monitoring-functions-logs.html).
 
@@ -222,11 +226,12 @@ large files efficiently.
 * `reserved_concurrent_executions` - (Optional) The amount of reserved concurrent executions for this lambda function. A value of `0` disables lambda from being triggered and `-1` removes any concurrency limitations. Defaults to Unreserved Concurrency Limits `-1`. See [Managing Concurrency][9]
 * `publish` - (Optional) Whether to publish creation/change as new Lambda Function Version. Defaults to `false`.
 * `vpc_config` - (Optional) Provide this to allow your function to access your VPC. Fields documented below. See [Lambda in VPC][7]
-* `file_system_config` - (Optional) The connection settings for an EFS file system. Fields documented below. Before creating or updating Lambda functions with `file_system_config`, EFS mount targets much be in available lifecycle state. Use `depends_on` to explicitly declare this dependency. See [Using Amazon EFS with Lambda][12].
 * `environment` - (Optional) The Lambda environment's configuration settings. Fields documented below.
-* `kms_key_arn` - (Optional) Amazon Resource Name (ARN) of the AWS Key Management Service (KMS) key that is used to encrypt environment variables. If this configuration is not provided when environment variables are in use, AWS Lambda uses a default service key. If this configuration is provided when environment variables are not in use, the AWS Lambda API does not save this configuration and this provider will show a perpetual difference of adding the key. To fix the perpetual difference, remove this configuration.
-* `source_code_hash` - (Optional) Used to trigger updates. Must be set to a base64-encoded SHA256 hash of the package file specified with either `filename` or `s3_key`. The usual way to set this is `filebase64sha256("file.zip")` (this provider 0.11.12 and later) or `base64sha256(file("file.zip"))` (this provider 0.11.11 and earlier), where "file.zip" is the local filename of the lambda function source archive.
-* `tags` - (Optional) A mapping of tags to assign to the object.
+* `kms_key_arn` - (Optional) Amazon Resource Name (ARN) of the AWS Key Management Service (KMS) key that is used to encrypt environment variables. If this configuration is not provided when environment variables are in use, AWS Lambda uses a default service key. If this configuration is provided when environment variables are not in use, the AWS Lambda API does not save this configuration and Terraform will show a perpetual difference of adding the key. To fix the perpetual difference, remove this configuration.
+* `source_code_hash` - (Optional) Used to trigger updates. Must be set to a base64-encoded SHA256 hash of the package file specified with either `filename` or `s3_key`. The usual way to set this is `filebase64sha256("file.zip")` (Terraform 0.11.12 and later) or `base64sha256(file("file.zip"))` (Terraform 0.11.11 and earlier), where "file.zip" is the local filename of the lambda function source archive.
+* `tags` - (Optional) A map of tags to assign to the object.
+* `file_system_config` - (Optional) The connection settings for an EFS file system. Fields documented below. Before creating or updating Lambda functions with `file_system_config`, EFS mount targets much be in available lifecycle state. Use `depends_on` to explicitly declare this dependency. See [Using Amazon EFS with Lambda][12].
+* `code_signing_config_arn` - (Optional) Amazon Resource Name (ARN) for a Code Signing Configuration.
 
 **dead_letter_config** is a child block with a single argument:
 
@@ -250,11 +255,6 @@ large files efficiently.
 
 ~> **NOTE:** if both `subnet_ids` and `security_group_ids` are empty then vpc_config is considered to be empty or unset.
 
-**file_system_config** requires the following:
-
-* `arn` - (Required) The ARN of the EFS Access Profile that provides access to the file system.
-* `local_mount_path` - (Required) The path where the function can access the file system, starting with `/mnt/`.
-
 For **environment** the following attributes are supported:
 
 * `variables` - (Optional) A map that defines environment variables for the Lambda function.
@@ -272,10 +272,12 @@ In addition to all arguments above, the following attributes are exported:
 * `arn` - The Amazon Resource Name (ARN) identifying your Lambda Function.
 * `qualified_arn` - The Amazon Resource Name (ARN) identifying your Lambda Function Version
   (if versioning is enabled via `publish = true`).
-* `invoke_arn` - The ARN to be used for invoking Lambda Function from API Gateway - to be used in `aws_api_gateway_integration`'s `uri`
+* `invoke_arn` - The ARN to be used for invoking Lambda Function from API Gateway - to be used in [`aws_api_gateway_integration`](/docs/providers/aws/r/api_gateway_integration.html)'s `uri`
 * `version` - Latest published version of your Lambda Function.
 * `last_modified` - The date this resource was last modified.
 * `kms_key_arn` - (Optional) The ARN for the KMS encryption key.
+* `signing_job_arn` - The Amazon Resource Name (ARN) of a signing job.
+* `signing_profile_version_arn` - The Amazon Resource Name (ARN) for a signing profile version.
 * `source_code_hash` - Base64-encoded representation of raw SHA-256 sum of the zip file, provided either via `filename` or `s3_*` parameters.
 * `source_code_size` - The size in bytes of the function .zip file.
 
@@ -289,6 +291,7 @@ In addition to all arguments above, the following attributes are exported:
 [8]: https://docs.aws.amazon.com/lambda/latest/dg/deployment-package-v2.html
 [9]: https://docs.aws.amazon.com/lambda/latest/dg/concurrent-executions.html
 [10]: https://docs.aws.amazon.com/lambda/latest/dg/configuration-layers.html
+[11]: https://learn.hashicorp.com/terraform/aws/lambda-api-gateway
 [12]: https://docs.aws.amazon.com/lambda/latest/dg/services-efs.html
 
 ## Timeouts
