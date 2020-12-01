@@ -139,6 +139,46 @@ resource "aws_efs_access_point" "access_point_for_lambda" {
 }
 ```
 
+### Lambda Container Images
+
+AWS Lambda Container Images will support packaging and deploying functions as container images, making it
+easy for customers to build serverless applications by using familiar container tooling,
+languages and dependencies.
+
+```hcl
+resource "aws_iam_role" "iam_for_lambda" {
+  name = "iam_for_lambda"
+
+  assume_role_policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Principal": {
+        "Service": "lambda.amazonaws.com"
+      },
+      "Effect": "Allow",
+      "Sid": ""
+    }
+  ]
+}
+EOF
+}
+
+resource "aws_lambda_function" "test_lambda" {
+  image_uri     = "1234567890.dkr.ecr.us-west2-1.amazonaws.com/my-node12:two-handler2"
+  function_name = "lambda_function_name"
+  role          = aws_iam_role.iam_for_lambda.arn
+
+  environment {
+    variables = {
+      foo = "bar"
+    }
+  }
+}
+```
+
 ## CloudWatch Logging and Permissions
 
 For more information about CloudWatch Logs for Lambda, see the [Lambda User Guide](https://docs.aws.amazon.com/lambda/latest/dg/monitoring-functions-logs.html).
@@ -201,27 +241,28 @@ AWS Lambda expects source code to be provided as a deployment package whose stru
 See [Runtimes][6] for the valid values of `runtime`. The expected structure of the deployment package can be found in
 [the AWS Lambda documentation for each runtime][8].
 
-Once you have created your deployment package you can specify it either directly as a local file (using the `filename` argument) or
-indirectly via Amazon S3 (using the `s3_bucket`, `s3_key` and `s3_object_version` arguments). When providing the deployment
-package via S3 it may be useful to use [the `aws_s3_bucket_object` resource](s3_bucket_object.html) to upload it.
+Once you have created your deployment package you can specify it either directly as a local file (using the `filename` argument),
+indirectly via Amazon S3 (using the `s3_bucket`, `s3_key` and `s3_object_version` arguments) or via a container image (using the `image_uri` argument).
+When providing the deployment package via S3 it may be useful to use [the `aws_s3_bucket_object` resource](s3_bucket_object.html) to upload it.
 
 For larger deployment packages it is recommended by Amazon to upload via S3, since the S3 API has better support for uploading
 large files efficiently.
 
 ## Argument Reference
 
-* `filename` - (Optional) The path to the function's deployment package within the local filesystem. If defined, The `s3_`-prefixed options cannot be used.
-* `s3_bucket` - (Optional) The S3 bucket location containing the function's deployment package. Conflicts with `filename`. This bucket must reside in the same AWS region where you are creating the Lambda function.
-* `s3_key` - (Optional) The S3 key of an object containing the function's deployment package. Conflicts with `filename`.
-* `s3_object_version` - (Optional) The object version containing the function's deployment package. Conflicts with `filename`.
+* `filename` - (Optional) The path to the function's deployment package within the local filesystem. If defined, The `s3_`-prefixed options or `image_uri` cannot be used.
+* `s3_bucket` - (Optional) The S3 bucket location containing the function's deployment package. Conflicts with `filename` and `image_uri`. This bucket must reside in the same AWS region where you are creating the Lambda function.
+* `s3_key` - (Optional) The S3 key of an object containing the function's deployment package. Conflicts with `filename` and `image_uri`.
+* `s3_object_version` - (Optional) The object version containing the function's deployment package. Conflicts with `filename` and `imageUri`.
+* `image_uri` - (Optional) The ECR image URI containing the function's deployment package. Conflicts with `filename`, `s3_bucket`, `s3_key`, and `s3_object_version`.
 * `function_name` - (Required) A unique name for your Lambda Function.
 * `dead_letter_config` - (Optional) Nested block to configure the function's *dead letter queue*. See details below.
-* `handler` - (Required) The function [entrypoint][3] in your code.
+* `handler` - (Optional) The function [entrypoint][3] in your code.
 * `role` - (Required) IAM role attached to the Lambda Function. This governs both who / what can invoke your Lambda Function, as well as what resources our Lambda Function has access to. See [Lambda Permission Model][4] for more details.
 * `description` - (Optional) Description of what your Lambda Function does.
 * `layers` - (Optional) List of Lambda Layer Version ARNs (maximum of 5) to attach to your Lambda Function. See [Lambda Layers][10]
 * `memory_size` - (Optional) Amount of memory in MB your Lambda Function can use at runtime. Defaults to `128`. See [Limits][5]
-* `runtime` - (Required) See [Runtimes][6] for valid values.
+* `runtime` - (Optional) See [Runtimes][6] for valid values.
 * `timeout` - (Optional) The amount of time your Lambda Function has to run in seconds. Defaults to `3`. See [Limits][5]
 * `reserved_concurrent_executions` - (Optional) The amount of reserved concurrent executions for this lambda function. A value of `0` disables lambda from being triggered and `-1` removes any concurrency limitations. Defaults to Unreserved Concurrency Limits `-1`. See [Managing Concurrency][9]
 * `publish` - (Optional) Whether to publish creation/change as new Lambda Function Version. Defaults to `false`.
@@ -232,6 +273,7 @@ large files efficiently.
 * `tags` - (Optional) A map of tags to assign to the object.
 * `file_system_config` - (Optional) The connection settings for an EFS file system. Fields documented below. Before creating or updating Lambda functions with `file_system_config`, EFS mount targets much be in available lifecycle state. Use `depends_on` to explicitly declare this dependency. See [Using Amazon EFS with Lambda][12].
 * `code_signing_config_arn` - (Optional) Amazon Resource Name (ARN) for a Code Signing Configuration.
+* `image_config` - (Optional) The Lambda OCI image configurations. Fields documented below. See [Using container images with Lambda][13]
 
 **dead_letter_config** is a child block with a single argument:
 
@@ -264,6 +306,11 @@ For **environment** the following attributes are supported:
 * `arn` - (Required) The Amazon Resource Name (ARN) of the Amazon EFS Access Point that provides access to the file system.
 * `local_mount_path` - (Required) The path where the function can access the file system, starting with /mnt/.
 
+**image_config** is a child block with three arguments:
+
+* `entry_point` - (Optional) The ENTRYPOINT for the docker image.
+* `command` - (Optional) The CMD for the docker image.
+* `working_directory` - (Optional) The working directory for the docker image.
 
 ## Attributes Reference
 
@@ -293,6 +340,7 @@ In addition to all arguments above, the following attributes are exported:
 [10]: https://docs.aws.amazon.com/lambda/latest/dg/configuration-layers.html
 [11]: https://learn.hashicorp.com/terraform/aws/lambda-api-gateway
 [12]: https://docs.aws.amazon.com/lambda/latest/dg/services-efs.html
+[13]: https://docs.aws.amazon.com/lambda/latest/dg/lambda-images.html
 
 ## Timeouts
 
