@@ -8,6 +8,11 @@ import (
 )
 
 const (
+	// Maximum amount of time to wait for EC2 Instance attribute modifications to propagate
+	InstanceAttributePropagationTimeout = 2 * time.Minute
+)
+
+const (
 	// Maximum amount of time to wait for a LocalGatewayRouteTableVpcAssociation to return Associated
 	LocalGatewayRouteTableVpcAssociationAssociatedTimeout = 5 * time.Minute
 
@@ -113,11 +118,11 @@ func ClientVpnAuthorizationRuleRevoked(conn *ec2.EC2, authorizationRuleID string
 }
 
 const (
-	ClientVpnNetworkAssociationAssociatedTimeout = 10 * time.Minute
+	ClientVpnNetworkAssociationAssociatedTimeout = 30 * time.Minute
 
 	ClientVpnNetworkAssociationAssociatedDelay = 4 * time.Minute
 
-	ClientVpnNetworkAssociationDisassociatedTimeout = 10 * time.Minute
+	ClientVpnNetworkAssociationDisassociatedTimeout = 30 * time.Minute
 
 	ClientVpnNetworkAssociationDisassociatedDelay = 4 * time.Minute
 

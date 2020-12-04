@@ -61,7 +61,7 @@ func Provider() *schema.Provider {
 					"AWS_DEFAULT_REGION",
 				}, nil),
 				Description:  descriptions["region"],
-				InputDefault: "us-east-1",
+				InputDefault: "us-east-1", // lintignore:AWSAT003
 			},
 
 			"max_retries": {
@@ -1072,7 +1072,7 @@ var endpointServiceNames []string
 func init() {
 	descriptions = map[string]string{
 		"region": "The region where AWS operations will take place. Examples\n" +
-			"are us-east-1, us-west-2, etc.",
+			"are us-east-1, us-west-2, etc.", // lintignore:AWSAT003
 
 		"access_key": "The access key for API operations. You can retrieve this\n" +
 			"from the 'Security & Credentials' section of the AWS console.",
@@ -1168,6 +1168,7 @@ func init() {
 		"dynamodb",
 		"ec2",
 		"ecr",
+		"ecrpublic",
 		"ecs",
 		"efs",
 		"eks",
@@ -1216,6 +1217,7 @@ func init() {
 		"mediastore",
 		"mediastoredata",
 		"mq",
+		"mwaa",
 		"neptune",
 		"networkfirewall",
 		"networkmanager",
