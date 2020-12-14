@@ -18,6 +18,7 @@ import (
 	"github.com/aws/aws-sdk-go/service/ec2"
 	"github.com/aws/aws-sdk-go/service/iam"
 	"github.com/aws/aws-sdk-go/service/organizations"
+	"github.com/hashicorp/aws-sdk-go-base/tfawserr"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -190,8 +191,8 @@ func testAccPreCheck(t *testing.T) {
 	// Since we are outside the scope of the Terraform configuration we must
 	// call Configure() to properly initialize the provider configuration.
 	testAccProviderConfigure.Do(func() {
-		if os.Getenv("AWS_PROFILE") == "" && os.Getenv("AWS_ACCESS_KEY_ID") == "" {
-			t.Fatal("AWS_ACCESS_KEY_ID or AWS_PROFILE must be set for acceptance tests")
+		if os.Getenv("AWS_PROFILE") == "" && os.Getenv("AWS_ACCESS_KEY_ID") == "" && os.Getenv("AWS_CONTAINER_CREDENTIALS_FULL_URI") == "" {
+			t.Fatal("AWS_ACCESS_KEY_ID, AWS_PROFILE, or AWS_CONTAINER_CREDENTIALS_FULL_URI must be set for acceptance tests")
 		}
 
 		if os.Getenv("AWS_ACCESS_KEY_ID") != "" && os.Getenv("AWS_SECRET_ACCESS_KEY") == "" {
@@ -1059,6 +1060,14 @@ func testSweepSkipSweepError(err error) bool {
 		return true
 	}
 	return false
+}
+
+// Check sweeper API call error for reasons to skip a specific resource
+// These include AccessDenied or AccessDeniedException for individual resources, e.g. managed by central IT
+func testSweepSkipResourceError(err error) bool {
+	// Since acceptance test sweepers are best effort, we allow bypassing this error globally
+	// instead of individual test sweeper fixes.
+	return tfawserr.ErrCodeContains(err, "AccessDenied")
 }
 
 func TestAccAWSProvider_Endpoints(t *testing.T) {

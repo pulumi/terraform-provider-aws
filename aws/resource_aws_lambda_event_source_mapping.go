@@ -266,6 +266,7 @@ func resourceAwsLambdaEventSourceMappingCreate(d *schema.ResourceData, meta inte
 	}
 
 	// No error
+	d.Set("uuid", eventSourceMappingConfiguration.UUID)
 	d.SetId(aws.StringValue(eventSourceMappingConfiguration.UUID))
 	return resourceAwsLambdaEventSourceMappingRead(d, meta)
 }
