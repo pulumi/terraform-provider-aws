@@ -233,7 +233,7 @@ In addition to all arguments above, the following attributes are exported:
 * `name` - The name of the launch configuration.
 
 [1]: /docs/providers/aws/r/autoscaling_group.html
-[2]: /docs/configuration/resources.html#lifecycle
+[2]: https://www.terraform.io/docs/configuration/meta-arguments/lifecycle.html
 [3]: /docs/providers/aws/r/spot_instance_request.html
 
 ## Import

@@ -75,7 +75,7 @@ string.
 ### Timeouts
 
 `aws_redshift_cluster` provides the following
-[Timeouts](/docs/configuration/resources.html#timeouts) configuration options:
+[Timeouts](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts) configuration options:
 
 - `create` - (Default `75 minutes`) Used for creating Clusters.
 - `update` - (Default `75 minutes`) Used for updating Clusters.

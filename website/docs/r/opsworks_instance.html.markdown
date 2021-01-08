@@ -136,7 +136,7 @@ In addition to all arguments above, the following attributes are exported:
 ## Timeouts
 
 `aws_opsworks_instance` provides the following
-[Timeouts](/docs/configuration/resources.html#timeouts) configuration options:
+[Timeouts](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts) configuration options:
 
 - `create` - (Default `10 minutes`) Used when the instance is created. It should cover the time needed for the instance to start successfully.
 - `delete` - (Default `10 minutes`) Used when the instance is deleted. It should cover the time needed for the instance to stop successfully.

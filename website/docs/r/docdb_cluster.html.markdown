@@ -89,7 +89,7 @@ In addition to all arguments above, the following attributes are exported:
 ## Timeouts
 
 `aws_docdb_cluster` provides the following
-[Timeouts](/docs/configuration/resources.html#timeouts) configuration options:
+[Timeouts](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts) configuration options:
 
 - `create` - (Default `120 minutes`) Used for Cluster creation
 - `update` - (Default `120 minutes`) Used for Cluster modifications

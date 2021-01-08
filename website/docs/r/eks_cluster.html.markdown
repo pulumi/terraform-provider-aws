@@ -148,7 +148,6 @@ resource "aws_iam_role" "example" {
 ```
 
 After adding inline IAM Policies (e.g. `aws_iam_role_policy` resource) or attaching IAM Policies (e.g. `aws_iam_policy` resource and `aws_iam_role_policy_attachment` resource) with the desired permissions to the IAM Role, annotate the Kubernetes service account (e.g. `kubernetes_service_account` resource) and recreate any pods.
-
 ## Argument Reference
 
 The following arguments are supported:
@@ -217,7 +216,7 @@ In addition to all arguments above, the following attributes are exported:
 ## Timeouts
 
 `aws_eks_cluster` provides the following
-[Timeouts](/docs/configuration/resources.html#timeouts) configuration options:
+[Timeouts](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts) configuration options:
 
 * `create` - (Default `30 minutes`) How long to wait for the EKS Cluster to be created.
 * `update` - (Default `60 minutes`) How long to wait for the EKS Cluster to be updated.

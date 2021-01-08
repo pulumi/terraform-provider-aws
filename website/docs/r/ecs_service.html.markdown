@@ -193,7 +193,7 @@ In addition to all arguments above, the following attributes are exported:
 ## Timeouts
 
 `aws_ecs_service` provides the following
-[Timeouts](/docs/configuration/resources.html#operation-timeouts) configuration options:
+[Timeouts](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts) configuration options:
 
 - `delete` - (Default `20 minutes`)
 
