@@ -428,14 +428,14 @@ func expandOptionConfiguration(configured []interface{}) []*rds.OptionConfigurat
 		}
 
 		if raw, ok := data["db_security_group_memberships"]; ok {
-			memberships := expandStringList(raw.(*schema.Set).List())
+			memberships := expandStringSet(raw.(*schema.Set))
 			if len(memberships) > 0 {
 				o.DBSecurityGroupMemberships = memberships
 			}
 		}
 
 		if raw, ok := data["vpc_security_group_memberships"]; ok {
-			memberships := expandStringList(raw.(*schema.Set).List())
+			memberships := expandStringSet(raw.(*schema.Set))
 			if len(memberships) > 0 {
 				o.VpcSecurityGroupMemberships = memberships
 			}
@@ -470,27 +470,6 @@ func expandOptionSetting(list []interface{}) []*rds.OptionSetting {
 	}
 
 	return options
-}
-
-// Takes the result of flatmap.Expand for an array of parameters and
-// returns Parameter API compatible objects
-func expandElastiCacheParameters(configured []interface{}) []*elasticache.ParameterNameValue {
-	parameters := make([]*elasticache.ParameterNameValue, 0, len(configured))
-
-	// Loop over our configured parameters and create
-	// an array of aws-sdk-go compatible objects
-	for _, pRaw := range configured {
-		data := pRaw.(map[string]interface{})
-
-		p := &elasticache.ParameterNameValue{
-			ParameterName:  aws.String(data["name"].(string)),
-			ParameterValue: aws.String(data["value"].(string)),
-		}
-
-		parameters = append(parameters, p)
-	}
-
-	return parameters
 }
 
 // Takes the result of flatmap.Expand for an array of parameters and
@@ -957,20 +936,6 @@ func flattenRedshiftParameters(list []*redshift.Parameter) []map[string]interfac
 			"name":  strings.ToLower(*i.ParameterName),
 			"value": strings.ToLower(*i.ParameterValue),
 		})
-	}
-	return result
-}
-
-// Flattens an array of Parameters into a []map[string]interface{}
-func flattenElastiCacheParameters(list []*elasticache.Parameter) []map[string]interface{} {
-	result := make([]map[string]interface{}, 0, len(list))
-	for _, i := range list {
-		if i.ParameterValue != nil {
-			result = append(result, map[string]interface{}{
-				"name":  strings.ToLower(*i.ParameterName),
-				"value": *i.ParameterValue,
-			})
-		}
 	}
 	return result
 }
@@ -1509,10 +1474,10 @@ func expandESVPCOptions(m map[string]interface{}) *elasticsearch.VPCOptions {
 	options := elasticsearch.VPCOptions{}
 
 	if v, ok := m["security_group_ids"]; ok {
-		options.SecurityGroupIds = expandStringList(v.(*schema.Set).List())
+		options.SecurityGroupIds = expandStringSet(v.(*schema.Set))
 	}
 	if v, ok := m["subnet_ids"]; ok {
-		options.SubnetIds = expandStringList(v.(*schema.Set).List())
+		options.SubnetIds = expandStringSet(v.(*schema.Set))
 	}
 
 	return &options
@@ -1531,7 +1496,7 @@ func expandConfigRecordingGroup(configured []interface{}) *configservice.Recordi
 	}
 
 	if v, ok := group["resource_types"]; ok {
-		recordingGroup.ResourceTypes = expandStringList(v.(*schema.Set).List())
+		recordingGroup.ResourceTypes = expandStringSet(v.(*schema.Set))
 	}
 	return &recordingGroup
 }
@@ -2277,7 +2242,7 @@ func expandConfigRuleScope(l []interface{}) *configservice.Scope {
 	if v, ok := configured["compliance_resource_types"]; ok {
 		l := v.(*schema.Set)
 		if l.Len() > 0 {
-			scope.ComplianceResourceTypes = expandStringList(l.List())
+			scope.ComplianceResourceTypes = expandStringSet(l)
 		}
 	}
 	if v, ok := configured["tag_key"].(string); ok && v != "" {
@@ -3631,7 +3596,7 @@ func expandMqUsers(cfg []interface{}) []*mq.User {
 			user.ConsoleAccess = aws.Bool(v.(bool))
 		}
 		if v, ok := u["groups"]; ok {
-			user.Groups = expandStringList(v.(*schema.Set).List())
+			user.Groups = expandStringSet(v.(*schema.Set))
 		}
 		users[i] = &user
 	}
@@ -4228,7 +4193,7 @@ func expandDynamoDbProjection(data map[string]interface{}) *dynamodb.Projection 
 	}
 
 	if v, ok := data["non_key_attributes"].(*schema.Set); ok && v.Len() > 0 {
-		projection.NonKeyAttributes = expandStringList(v.List())
+		projection.NonKeyAttributes = expandStringSet(v)
 	}
 
 	return projection
@@ -4323,7 +4288,7 @@ func flattenDynamoDbTableItemAttributes(attrs map[string]*dynamodb.AttributeValu
 
 func expandIotThingTypeProperties(config map[string]interface{}) *iot.ThingTypeProperties {
 	properties := &iot.ThingTypeProperties{
-		SearchableAttributes: expandStringList(config["searchable_attributes"].(*schema.Set).List()),
+		SearchableAttributes: expandStringSet(config["searchable_attributes"].(*schema.Set)),
 	}
 
 	if v, ok := config["description"]; ok && v.(string) != "" {
@@ -5547,69 +5512,74 @@ func expandAppmeshGrpcRoute(vGrpcRoute []interface{}) *appmesh.GrpcRoute {
 		}
 	}
 
-	if vGrpcRouteMatch, ok := mGrpcRoute["match"].([]interface{}); ok && len(vGrpcRouteMatch) > 0 && vGrpcRouteMatch[0] != nil {
+	if vGrpcRouteMatch, ok := mGrpcRoute["match"].([]interface{}); ok {
 		grpcRouteMatch := &appmesh.GrpcRouteMatch{}
 
-		mGrpcRouteMatch := vGrpcRouteMatch[0].(map[string]interface{})
+		// Empty match is allowed.
+		// https://github.com/hashicorp/terraform-provider-aws/issues/16816.
 
-		if vMethodName, ok := mGrpcRouteMatch["method_name"].(string); ok && vMethodName != "" {
-			grpcRouteMatch.MethodName = aws.String(vMethodName)
-		}
-		if vServiceName, ok := mGrpcRouteMatch["service_name"].(string); ok && vServiceName != "" {
-			grpcRouteMatch.ServiceName = aws.String(vServiceName)
-		}
+		if len(vGrpcRouteMatch) > 0 && vGrpcRouteMatch[0] != nil {
+			mGrpcRouteMatch := vGrpcRouteMatch[0].(map[string]interface{})
 
-		if vGrpcRouteMetadatas, ok := mGrpcRouteMatch["metadata"].(*schema.Set); ok && vGrpcRouteMetadatas.Len() > 0 {
-			grpcRouteMetadatas := []*appmesh.GrpcRouteMetadata{}
-
-			for _, vGrpcRouteMetadata := range vGrpcRouteMetadatas.List() {
-				grpcRouteMetadata := &appmesh.GrpcRouteMetadata{}
-
-				mGrpcRouteMetadata := vGrpcRouteMetadata.(map[string]interface{})
-
-				if vInvert, ok := mGrpcRouteMetadata["invert"].(bool); ok {
-					grpcRouteMetadata.Invert = aws.Bool(vInvert)
-				}
-				if vName, ok := mGrpcRouteMetadata["name"].(string); ok && vName != "" {
-					grpcRouteMetadata.Name = aws.String(vName)
-				}
-
-				if vMatch, ok := mGrpcRouteMetadata["match"].([]interface{}); ok && len(vMatch) > 0 && vMatch[0] != nil {
-					grpcRouteMetadata.Match = &appmesh.GrpcRouteMetadataMatchMethod{}
-
-					mMatch := vMatch[0].(map[string]interface{})
-
-					if vExact, ok := mMatch["exact"].(string); ok && vExact != "" {
-						grpcRouteMetadata.Match.Exact = aws.String(vExact)
-					}
-					if vPrefix, ok := mMatch["prefix"].(string); ok && vPrefix != "" {
-						grpcRouteMetadata.Match.Prefix = aws.String(vPrefix)
-					}
-					if vRegex, ok := mMatch["regex"].(string); ok && vRegex != "" {
-						grpcRouteMetadata.Match.Regex = aws.String(vRegex)
-					}
-					if vSuffix, ok := mMatch["suffix"].(string); ok && vSuffix != "" {
-						grpcRouteMetadata.Match.Suffix = aws.String(vSuffix)
-					}
-
-					if vRange, ok := mMatch["range"].([]interface{}); ok && len(vRange) > 0 && vRange[0] != nil {
-						grpcRouteMetadata.Match.Range = &appmesh.MatchRange{}
-
-						mRange := vRange[0].(map[string]interface{})
-
-						if vEnd, ok := mRange["end"].(int); ok && vEnd > 0 {
-							grpcRouteMetadata.Match.Range.End = aws.Int64(int64(vEnd))
-						}
-						if vStart, ok := mRange["start"].(int); ok && vStart > 0 {
-							grpcRouteMetadata.Match.Range.Start = aws.Int64(int64(vStart))
-						}
-					}
-				}
-
-				grpcRouteMetadatas = append(grpcRouteMetadatas, grpcRouteMetadata)
+			if vMethodName, ok := mGrpcRouteMatch["method_name"].(string); ok && vMethodName != "" {
+				grpcRouteMatch.MethodName = aws.String(vMethodName)
+			}
+			if vServiceName, ok := mGrpcRouteMatch["service_name"].(string); ok && vServiceName != "" {
+				grpcRouteMatch.ServiceName = aws.String(vServiceName)
 			}
 
-			grpcRouteMatch.Metadata = grpcRouteMetadatas
+			if vGrpcRouteMetadatas, ok := mGrpcRouteMatch["metadata"].(*schema.Set); ok && vGrpcRouteMetadatas.Len() > 0 {
+				grpcRouteMetadatas := []*appmesh.GrpcRouteMetadata{}
+
+				for _, vGrpcRouteMetadata := range vGrpcRouteMetadatas.List() {
+					grpcRouteMetadata := &appmesh.GrpcRouteMetadata{}
+
+					mGrpcRouteMetadata := vGrpcRouteMetadata.(map[string]interface{})
+
+					if vInvert, ok := mGrpcRouteMetadata["invert"].(bool); ok {
+						grpcRouteMetadata.Invert = aws.Bool(vInvert)
+					}
+					if vName, ok := mGrpcRouteMetadata["name"].(string); ok && vName != "" {
+						grpcRouteMetadata.Name = aws.String(vName)
+					}
+
+					if vMatch, ok := mGrpcRouteMetadata["match"].([]interface{}); ok && len(vMatch) > 0 && vMatch[0] != nil {
+						grpcRouteMetadata.Match = &appmesh.GrpcRouteMetadataMatchMethod{}
+
+						mMatch := vMatch[0].(map[string]interface{})
+
+						if vExact, ok := mMatch["exact"].(string); ok && vExact != "" {
+							grpcRouteMetadata.Match.Exact = aws.String(vExact)
+						}
+						if vPrefix, ok := mMatch["prefix"].(string); ok && vPrefix != "" {
+							grpcRouteMetadata.Match.Prefix = aws.String(vPrefix)
+						}
+						if vRegex, ok := mMatch["regex"].(string); ok && vRegex != "" {
+							grpcRouteMetadata.Match.Regex = aws.String(vRegex)
+						}
+						if vSuffix, ok := mMatch["suffix"].(string); ok && vSuffix != "" {
+							grpcRouteMetadata.Match.Suffix = aws.String(vSuffix)
+						}
+
+						if vRange, ok := mMatch["range"].([]interface{}); ok && len(vRange) > 0 && vRange[0] != nil {
+							grpcRouteMetadata.Match.Range = &appmesh.MatchRange{}
+
+							mRange := vRange[0].(map[string]interface{})
+
+							if vEnd, ok := mRange["end"].(int); ok && vEnd > 0 {
+								grpcRouteMetadata.Match.Range.End = aws.Int64(int64(vEnd))
+							}
+							if vStart, ok := mRange["start"].(int); ok && vStart > 0 {
+								grpcRouteMetadata.Match.Range.Start = aws.Int64(int64(vStart))
+							}
+						}
+					}
+
+					grpcRouteMetadatas = append(grpcRouteMetadatas, grpcRouteMetadata)
+				}
+
+				grpcRouteMatch.Metadata = grpcRouteMetadatas
+			}
 		}
 
 		grpcRoute.Match = grpcRouteMatch
