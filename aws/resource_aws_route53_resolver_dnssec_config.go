@@ -27,11 +27,6 @@ func resourceAwsRoute53ResolverDnssecConfig() *schema.Resource {
 				Computed: true,
 			},
 
-			"id": {
-				Type:     schema.TypeString,
-				Computed: true,
-			},
-
 			"owner_id": {
 				Type:     schema.TypeString,
 				Computed: true,
@@ -90,7 +85,6 @@ func resourceAwsRoute53ResolverDnssecConfigRead(d *schema.ResourceData, meta int
 		return nil
 	}
 
-	d.Set("id", config.Id)
 	d.Set("owner_id", config.OwnerId)
 	d.Set("resource_id", config.ResourceId)
 	d.Set("validation_status", config.ValidationStatus)
