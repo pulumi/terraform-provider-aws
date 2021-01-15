@@ -1,3 +1,9 @@
+## 3.24.1 (January 15, 2021)
+
+BUX FIXES
+
+* data-source/instance: Fix EBS and root block device tags issue with "Invalid address to set" ([#17136](https://github.com/hashicorp/terraform-provider-aws/issues/17136))
+
 ## 3.24.0 (January 14, 2021)
 
 FEATURES
