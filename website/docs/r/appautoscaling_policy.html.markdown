@@ -116,6 +116,34 @@ resource "aws_appautoscaling_policy" "replicas" {
 }
 ```
 
+### MSK / Kafka Autoscaling
+
+```hcl
+resource "aws_appautoscaling_target" "msk_target" {
+  service_namespace  = "kafka"
+  scalable_dimension = "kafka:broker-storage:VolumeSize"
+  resource_id        = "${aws_msk_cluster.example.arn}"
+  min_capacity       = 1
+  max_capacity       = 8
+}
+
+resource "aws_appautoscaling_policy" "targets" {
+  name               = "storage-size-auto-scaling"
+  service_namespace  = aws_appautoscaling_target.msk_target.service_namespace
+  scalable_dimension = aws_appautoscaling_target.msk_target.scalable_dimension
+  resource_id        = aws_appautoscaling_target.msk_target.resource_id
+  policy_type        = "TargetTrackingScaling"
+
+  target_tracking_scaling_policy_configuration {
+    predefined_metric_specification {
+      predefined_metric_type = "KafkaBrokerStorageUtilization"
+    }
+
+    target_value = 55
+  }
+}
+```
+
 ## Argument Reference
 
 The following arguments are supported:
@@ -133,7 +161,7 @@ The following arguments are supported:
 The `step_scaling_policy_configuration` configuration block supports the following arguments:
 
 * `adjustment_type` - (Required) Specifies whether the adjustment is an absolute number or a percentage of the current capacity. Valid values are `ChangeInCapacity`, `ExactCapacity`, and `PercentChangeInCapacity`.
-* `cooldown` - (Required) The amount of time, in seconds, after a scaling activity completes and before the next scaling activity can start.
+* `cooldown` - (Optional) The amount of time, in seconds, after a scaling activity completes and before the next scaling activity can start.
 * `metric_aggregation_type` - (Optional) The aggregation type for the policy's metrics. Valid values are "Minimum", "Maximum", and "Average". Without a value, AWS will treat the aggregation type as "Average".
 * `min_adjustment_magnitude` - (Optional) The minimum number to adjust your scalable dimension as a result of a scaling activity. If the adjustment type is PercentChangeInCapacity, the scaling policy changes the scalable dimension of the scalable target by this amount.
 * `step_adjustment` - (Optional) A set of adjustments that manage scaling. These have the following structure:
