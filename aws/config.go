@@ -71,6 +71,7 @@ import (
 	"github.com/aws/aws-sdk-go/service/elb"
 	"github.com/aws/aws-sdk-go/service/elbv2"
 	"github.com/aws/aws-sdk-go/service/emr"
+	"github.com/aws/aws-sdk-go/service/emrcontainers"
 	"github.com/aws/aws-sdk-go/service/firehose"
 	"github.com/aws/aws-sdk-go/service/fms"
 	"github.com/aws/aws-sdk-go/service/forecastservice"
@@ -120,6 +121,7 @@ import (
 	"github.com/aws/aws-sdk-go/service/personalize"
 	"github.com/aws/aws-sdk-go/service/pinpoint"
 	"github.com/aws/aws-sdk-go/service/pricing"
+	"github.com/aws/aws-sdk-go/service/prometheusservice"
 	"github.com/aws/aws-sdk-go/service/qldb"
 	"github.com/aws/aws-sdk-go/service/quicksight"
 	"github.com/aws/aws-sdk-go/service/ram"
@@ -267,6 +269,7 @@ type AWSClient struct {
 	elbconn                             *elb.ELB
 	elbv2conn                           *elbv2.ELBV2
 	emrconn                             *emr.EMR
+	emrcontainersconn                   *emrcontainers.EMRContainers
 	esconn                              *elasticsearch.ElasticsearchService
 	firehoseconn                        *firehose.Firehose
 	fmsconn                             *fms.FMS
@@ -318,6 +321,7 @@ type AWSClient struct {
 	outpostsconn                        *outposts.Outposts
 	partition                           string
 	personalizeconn                     *personalize.Personalize
+	prometheusserviceconn               *prometheusservice.PrometheusService
 	pinpointconn                        *pinpoint.Pinpoint
 	pricingconn                         *pricing.Pricing
 	qldbconn                            *qldb.QLDB
@@ -507,6 +511,7 @@ func (c *Config) Client() (interface{}, error) {
 		elbconn:                             elb.New(sess.Copy(&aws.Config{Endpoint: aws.String(c.Endpoints["elb"])})),
 		elbv2conn:                           elbv2.New(sess.Copy(&aws.Config{Endpoint: aws.String(c.Endpoints["elb"])})),
 		emrconn:                             emr.New(sess.Copy(&aws.Config{Endpoint: aws.String(c.Endpoints["emr"])})),
+		emrcontainersconn:                   emrcontainers.New(sess.Copy(&aws.Config{Endpoint: aws.String(c.Endpoints["emrcontainers"])})),
 		esconn:                              elasticsearch.New(sess.Copy(&aws.Config{Endpoint: aws.String(c.Endpoints["es"])})),
 		firehoseconn:                        firehose.New(sess.Copy(&aws.Config{Endpoint: aws.String(c.Endpoints["firehose"])})),
 		fmsconn:                             fms.New(sess.Copy(&aws.Config{Endpoint: aws.String(c.Endpoints["fms"])})),
@@ -556,6 +561,7 @@ func (c *Config) Client() (interface{}, error) {
 		outpostsconn:                        outposts.New(sess.Copy(&aws.Config{Endpoint: aws.String(c.Endpoints["outposts"])})),
 		partition:                           partition,
 		personalizeconn:                     personalize.New(sess.Copy(&aws.Config{Endpoint: aws.String(c.Endpoints["personalize"])})),
+		prometheusserviceconn:               prometheusservice.New(sess.Copy(&aws.Config{Endpoint: aws.String(c.Endpoints["prometheusservice"])})),
 		pinpointconn:                        pinpoint.New(sess.Copy(&aws.Config{Endpoint: aws.String(c.Endpoints["pinpoint"])})),
 		pricingconn:                         pricing.New(sess.Copy(&aws.Config{Endpoint: aws.String(c.Endpoints["pricing"])})),
 		qldbconn:                            qldb.New(sess.Copy(&aws.Config{Endpoint: aws.String(c.Endpoints["qldb"])})),
