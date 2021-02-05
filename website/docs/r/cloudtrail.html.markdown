@@ -24,47 +24,50 @@ For capturing events from services like IAM, `include_global_service_events` mus
 ```hcl
 data "aws_caller_identity" "current" {}
 
-resource "aws_cloudtrail" "foobar" {
-  name                          = "tf-trail-foobar"
-  s3_bucket_name                = aws_s3_bucket.foo.id
-  s3_key_prefix                 = "prefix"
-  include_global_service_events = false
+resource "aws_s3_bucket" "b" {
+  bucket = "my_tf_test_bucket"
 }
 
-resource "aws_s3_bucket" "foo" {
-  bucket        = "tf-test-trail"
-  force_destroy = true
+resource "aws_s3_bucket_policy" "b" {
+  bucket = aws_s3_bucket.b.id
 
   policy = <<POLICY
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Sid": "AWSCloudTrailAclCheck",
-            "Effect": "Allow",
-            "Principal": {
-              "Service": "cloudtrail.amazonaws.com"
-            },
-            "Action": "s3:GetBucketAcl",
-            "Resource": "arn:aws:s3:::tf-test-trail"
-        },
-        {
-            "Sid": "AWSCloudTrailWrite",
-            "Effect": "Allow",
-            "Principal": {
-              "Service": "cloudtrail.amazonaws.com"
-            },
-            "Action": "s3:PutObject",
-            "Resource": "arn:aws:s3:::tf-test-trail/prefix/AWSLogs/${data.aws_caller_identity.current.account_id}/*",
-            "Condition": {
-                "StringEquals": {
-                    "s3:x-amz-acl": "bucket-owner-full-control"
-                }
-            }
-        }
-    ]
-}
+  {
+      "Version": "2012-10-17",
+      "Statement": [
+          {
+              "Sid": "AWSCloudTrailAclCheck",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "cloudtrail.amazonaws.com"
+              },
+              "Action": "s3:GetBucketAcl",
+              "Resource": "arn:aws:s3:::${aws_s3_bucket.b.id}"
+          },
+          {
+              "Sid": "AWSCloudTrailWrite",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "cloudtrail.amazonaws.com"
+              },
+              "Action": "s3:PutObject",
+              "Resource": "arn:aws:s3:::${aws_s3_bucket.b.id}/prefix/AWSLogs/${data.aws_caller_identity.current.account_id}/*",
+              "Condition": {
+                  "StringEquals": {
+                      "s3:x-amz-acl": "bucket-owner-full-control"
+                  }
+              }
+          }
+      ]
+  }
 POLICY
+}
+
+resource "aws_cloudtrail" "foobar" {
+  name                          = "tf-trail-foobar"
+  s3_bucket_name                = aws_s3_bucket.b.id
+  s3_key_prefix                 = "prefix"
+  include_global_service_events = false
 }
 ```
 
@@ -136,13 +139,58 @@ resource "aws_cloudtrail" "example" {
 #### Sending Events to CloudWatch Logs
 
 ```hcl
+data "aws_partition" "current" {}
+
 resource "aws_cloudwatch_log_group" "example" {
   name = "Example"
+}
+
+resource "aws_iam_role" "test" {
+  name = "tf-acc-test-cloudtrail-role"
+
+  assume_role_policy = <<POLICY
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "cloudtrail.${data.aws_partition.current.dns_suffix}"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+POLICY
+}
+
+resource "aws_iam_role_policy" "test" {
+  name = "tf-acc-test-cloudtrail-policy"
+  role = aws_iam_role.test.id
+
+  policy = <<POLICY
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "AWSCloudTrailCreateLogStream",
+      "Effect": "Allow",
+      "Action": [
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+      ],
+      "Resource": "${aws_cloudwatch_log_group.test.arn}:*"
+    }
+  ]
+}
+POLICY
 }
 
 resource "aws_cloudtrail" "example" {
   # ... other configuration ...
 
+  cloud_watch_logs_role_arn  = aws_iam_role.test.arn
   cloud_watch_logs_group_arn = "${aws_cloudwatch_log_group.example.arn}:*" # CloudTrail requires the Log Stream wildcard
 }
 ```
