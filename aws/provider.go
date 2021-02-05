@@ -2,6 +2,7 @@ package aws
 
 import (
 	"log"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/terraform-providers/terraform-provider-aws/aws/internal/keyvaluetags"
@@ -190,6 +191,7 @@ func Provider() *schema.Provider {
 			"aws_cloudformation_export":                      dataSourceAwsCloudFormationExport(),
 			"aws_cloudformation_stack":                       dataSourceAwsCloudFormationStack(),
 			"aws_cloudfront_distribution":                    dataSourceAwsCloudFrontDistribution(),
+			"aws_cloudfront_origin_request_policy":           dataSourceAwsCloudFrontOriginRequestPolicy(),
 			"aws_cloudhsm_v2_cluster":                        dataSourceCloudHsmV2Cluster(),
 			"aws_cloudtrail_service_account":                 dataSourceAwsCloudTrailServiceAccount(),
 			"aws_cloudwatch_log_group":                       dataSourceAwsCloudwatchLogGroup(),
@@ -488,6 +490,7 @@ func Provider() *schema.Provider {
 			"aws_cloudformation_stack_set_instance":                   resourceAwsCloudFormationStackSetInstance(),
 			"aws_cloudfront_distribution":                             resourceAwsCloudFrontDistribution(),
 			"aws_cloudfront_origin_access_identity":                   resourceAwsCloudFrontOriginAccessIdentity(),
+			"aws_cloudfront_origin_request_policy":                    resourceAwsCloudFrontOriginRequestPolicy(),
 			"aws_cloudfront_public_key":                               resourceAwsCloudFrontPublicKey(),
 			"aws_cloudtrail":                                          resourceAwsCloudTrail(),
 			"aws_cloudwatch_event_bus":                                resourceAwsCloudWatchEventBus(),
@@ -625,6 +628,7 @@ func Provider() *schema.Provider {
 			"aws_ec2_transit_gateway":                                 resourceAwsEc2TransitGateway(),
 			"aws_ec2_transit_gateway_peering_attachment":              resourceAwsEc2TransitGatewayPeeringAttachment(),
 			"aws_ec2_transit_gateway_peering_attachment_accepter":     resourceAwsEc2TransitGatewayPeeringAttachmentAccepter(),
+			"aws_ec2_transit_gateway_prefix_list_reference":           resourceAwsEc2TransitGatewayPrefixListReference(),
 			"aws_ec2_transit_gateway_route":                           resourceAwsEc2TransitGatewayRoute(),
 			"aws_ec2_transit_gateway_route_table":                     resourceAwsEc2TransitGatewayRouteTable(),
 			"aws_ec2_transit_gateway_route_table_association":         resourceAwsEc2TransitGatewayRouteTableAssociation(),
@@ -866,6 +870,7 @@ func Provider() *schema.Provider {
 			"aws_redshift_event_subscription":                         resourceAwsRedshiftEventSubscription(),
 			"aws_resourcegroups_group":                                resourceAwsResourceGroupsGroup(),
 			"aws_route53_delegation_set":                              resourceAwsRoute53DelegationSet(),
+			"aws_route53_key_signing_key":                             resourceAwsRoute53KeySigningKey(),
 			"aws_route53_query_log":                                   resourceAwsRoute53QueryLog(),
 			"aws_route53_record":                                      resourceAwsRoute53Record(),
 			"aws_route53_zone_association":                            resourceAwsRoute53ZoneAssociation(),
@@ -1514,4 +1519,15 @@ func expandProviderIgnoreTags(l []interface{}) *keyvaluetags.IgnoreConfig {
 	}
 
 	return ignoreConfig
+}
+
+// ReverseDns switches a DNS hostname to reverse DNS and vice-versa.
+func ReverseDns(hostname string) string {
+	parts := strings.Split(hostname, ".")
+
+	for i, j := 0, len(parts)-1; i < j; i, j = i+1, j-1 {
+		parts[i], parts[j] = parts[j], parts[i]
+	}
+
+	return strings.Join(parts, ".")
 }
