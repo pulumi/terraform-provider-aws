@@ -282,7 +282,7 @@ func TestAccAWSFsxLustreFileSystem_SecurityGroupIds(t *testing.T) {
 }
 
 func TestAccAWSFsxLustreFileSystem_StorageCapacity(t *testing.T) {
-	var filesystem1, filesystem2 fsx.FileSystem
+	var filesystem1, filesystem2, filesystem3 fsx.FileSystem
 	resourceName := "aws_fsx_lustre_file_system.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -309,6 +309,14 @@ func TestAccAWSFsxLustreFileSystem_StorageCapacity(t *testing.T) {
 					testAccCheckFsxLustreFileSystemExists(resourceName, &filesystem2),
 					testAccCheckFsxLustreFileSystemRecreated(&filesystem1, &filesystem2),
 					resource.TestCheckResourceAttr(resourceName, "storage_capacity", "1200"),
+				),
+			},
+			{
+				Config: testAccAwsFsxLustreFileSystemConfigStorageCapacity(2400),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFsxLustreFileSystemExists(resourceName, &filesystem3),
+					testAccCheckFsxLustreFileSystemNotRecreated(&filesystem2, &filesystem3),
+					resource.TestCheckResourceAttr(resourceName, "storage_capacity", "2400"),
 				),
 			},
 		},
@@ -902,7 +910,7 @@ func testAccAwsFsxLustreFileSystemConfigStorageCapacity(storageCapacity int) str
 resource "aws_fsx_lustre_file_system" "test" {
   storage_capacity = %[1]d
   subnet_ids       = [aws_subnet.test1.id]
-  deployment_type  = data.aws_partition.current.partition == "aws-us-gov" ? "SCRATCH_2" : null # GovCloud does not support SCRATCH_1
+  deployment_type  = "SCRATCH_2" # SCRATCH_1 deployment_types do not support resizing
 }
 `, storageCapacity))
 }
