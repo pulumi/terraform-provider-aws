@@ -78,7 +78,14 @@ CloudTrail can log [Data Events](https://docs.aws.amazon.com/awscloudtrail/lates
 #### Logging All Lambda Function Invocations
 
 ```hcl
+resource "aws_s3_bucket" "b" {
+  bucket = "my_tf_test_bucket"
+}
+
 resource "aws_cloudtrail" "example" {
+  s3_bucket_name = aws_s3_bucket.b.id
+  s3_key_prefix  = "prefix"
+
   # ... other configuration ...
 
   event_selector {
@@ -96,7 +103,14 @@ resource "aws_cloudtrail" "example" {
 #### Logging All S3 Bucket Object Events
 
 ```hcl
+resource "aws_s3_bucket" "b" {
+  bucket = "my_tf_test_bucket"
+}
+
 resource "aws_cloudtrail" "example" {
+  s3_bucket_name = aws_s3_bucket.b.id
+  s3_key_prefix  = "prefix"
+  
   # ... other configuration ...
 
   event_selector {
@@ -119,6 +133,8 @@ data "aws_s3_bucket" "important-bucket" {
 }
 
 resource "aws_cloudtrail" "example" {
+  s3_bucket_name = data.aws_s3_bucket.important-bucket.id
+  s3_key_prefix  = "prefix"
   # ... other configuration ...
 
   event_selector {
@@ -187,7 +203,14 @@ resource "aws_iam_role_policy" "test" {
 POLICY
 }
 
+resource "aws_s3_bucket" "b" {
+  bucket = "my_tf_test_bucket"
+}
+
 resource "aws_cloudtrail" "example" {
+  s3_bucket_name = data.aws_s3_bucket.important-bucket.id
+  s3_key_prefix  = "prefix"
+
   # ... other configuration ...
 
   cloud_watch_logs_role_arn  = aws_iam_role.test.arn
