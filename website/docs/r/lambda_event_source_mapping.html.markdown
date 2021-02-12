@@ -35,6 +35,17 @@ resource "aws_lambda_event_source_mapping" "example" {
 }
 ```
 
+### Managed Streaming for Kafka (MSK)
+
+```hcl
+resource "aws_lambda_event_source_mapping" "example" {
+  event_source_arn  = aws_msk_cluster.example.arn
+  function_name     = aws_lambda_function.example.arn
+  topics            = ["Example"]
+  starting_position = "TRIM_HORIZON"
+}
+```
+
 ### SQS
 
 ```hcl

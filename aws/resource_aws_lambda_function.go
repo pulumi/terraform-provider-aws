@@ -1335,7 +1335,7 @@ func expandLambdaFileSystemConfigs(fscMaps []interface{}) []*lambda.FileSystemCo
 func flattenLambdaImageConfig(response *lambda.ImageConfigResponse) []map[string]interface{} {
 	settings := make(map[string]interface{})
 
-	if response == nil || response.Error != nil {
+	if response == nil || response.Error != nil || response.ImageConfig == nil {
 		return nil
 	}
 

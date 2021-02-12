@@ -47,13 +47,13 @@ resource "aws_instance" "instance" {
   ami           = data.aws_ami.ami.id
 
   tags = {
-    "type" = "test-instance"
+    type = "test-instance"
   }
 }
 
 resource "aws_security_group" "sg" {
   tags = {
-    "type" = "test-security-group"
+    type = "test-security-group"
   }
 }
 
@@ -74,7 +74,7 @@ data "aws_instance" "instance" {
 
 resource "aws_security_group" "sg" {
   tags = {
-    "type" = "test-security-group"
+    type = "test-security-group"
   }
 }
 
