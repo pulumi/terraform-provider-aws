@@ -70,6 +70,41 @@ rules:
       - pattern-not: '*$LHS2 = *$RHS'
     severity: WARNING
 
+  - id: prefer-aws-go-sdk-pointer-conversion-conditional
+    languages: [go]
+    message: Prefer AWS Go SDK pointer conversion functions for dereferencing during conditionals, e.g. aws.StringValue()
+    paths:
+      exclude:
+        - aws/cloudfront_distribution_configuration_structure.go
+        - aws/cloudfront_distribution_configuration_structure_test.go
+        - aws/config.go
+        - aws/data_source_aws_route*
+        - aws/ecs_task_definition_equivalency.go
+        - aws/opsworks_layers.go
+        - aws/resource*
+        - aws/structure.go
+        - aws/internal/generators/
+        - aws/internal/keyvaluetags/
+        - aws/internal/naming/
+        - awsproviderlint/vendor/
+      include:
+        - aws/
+    patterns:
+      - pattern-either:
+        - pattern: '$LHS == *$RHS'
+        - pattern: '$LHS != *$RHS'
+        - pattern: '$LHS > *$RHS'
+        - pattern: '$LHS < *$RHS'
+        - pattern: '$LHS >= *$RHS'
+        - pattern: '$LHS <= *$RHS'
+        - pattern: '*$LHS == $RHS'
+        - pattern: '*$LHS != $RHS'
+        - pattern: '*$LHS > $RHS'
+        - pattern: '*$LHS < $RHS'
+        - pattern: '*$LHS >= $RHS'
+        - pattern: '*$LHS <= $RHS'
+    severity: WARNING
+
   - id: aws-go-sdk-pointer-conversion-ResourceData-SetId
     fix: d.SetId(aws.StringValue($VALUE))
     languages: [go]
@@ -86,9 +121,7 @@ rules:
     paths:
       include:
         - aws/
-    patterns:
-      - pattern: schema.NewSet(schema.HashString, flattenStringList($APIOBJECT))
-      - pattern-not-inside: func flattenStringSet(list []*string) *schema.Set { ... }
+    pattern: schema.NewSet(schema.HashString, flattenStringList($APIOBJECT))
     severity: WARNING
     
   - id: helper-schema-Set-extraneous-expandStringList-with-List
@@ -104,7 +137,6 @@ rules:
             $LIST := $SET.List()
             ...
             expandStringList($LIST)
-      - pattern-not-inside: func expandStringSet(configured *schema.Set) []*string { ... }
     severity: WARNING
 
 
@@ -180,9 +212,39 @@ rules:
               var $CAST *resource.NotFoundError
               ...
               errors.As($ERR, &$CAST)
-          - pattern-not-inside: func NotFound(err error) bool { ... }
+          - pattern-not-inside: |
+              var $CAST *resource.NotFoundError
+              ...
+              errors.As($ERR, &$CAST)
+              ...
+              $CAST.$FIELD
         - patterns:
           - pattern: |
               $X, $Y := $ERR.(*resource.NotFoundError)
-          - pattern-not-inside: func isResourceNotFoundError(err error) bool { ... }
+    severity: WARNING
+
+  - id: time-equality
+    languages: [go]
+    message: Use time.Equal() instead of ==
+    paths:
+      include:
+        - aws/
+    patterns:
+      - pattern-either:
+        - pattern: |
+            aws.TimeValue($X) == $Y
+        - pattern: |
+            aws.TimeValue($X) != $Y
+        - pattern: |
+            ($X : time.Time) == $Y
+        - pattern: |
+            ($X : time.Time) != $Y
+        - pattern: |
+            $X == aws.TimeValue($Y)
+        - pattern: |
+            $X != aws.TimeValue($Y)
+        - pattern: |
+            $X == ($Y : time.Time)
+        - pattern: |
+            $X != ($Y : time.Time)
     severity: WARNING

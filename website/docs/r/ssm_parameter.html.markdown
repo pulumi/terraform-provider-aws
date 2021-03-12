@@ -50,8 +50,6 @@ resource "aws_ssm_parameter" "secret" {
 }
 ```
 
-~> **Note:** The unencrypted value of a SecureString will be stored in the raw state as plain-text.
-
 ## Argument Reference
 
 The following arguments are supported:
