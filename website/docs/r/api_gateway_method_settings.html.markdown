@@ -10,11 +10,9 @@ description: |-
 
 Manages API Gateway Stage Method Settings. For example, CloudWatch logging and metrics.
 
-~> **NOTE:** It is recommended to use this resource in conjunction with the [`aws_api_gateway_stage` resource](api_gateway_stage.html) instead of a stage managed by the [`aws_api_gateway_deployment` resource](api_gateway_deployment.html) optional `stage_name` argument. Stages managed by the `aws_api_gateway_deployment` resource are recreated on redeployment and this resource will require a second apply to recreate the method settings.
+~> **NOTE:** It is recommended to use this resource in conjunction with the `aws_api_gateway_stage` resource instead of a stage managed by the `aws_api_gateway_deployment` resource optional `stage_name` argument. Stages managed by the `aws_api_gateway_deployment` resource are recreated on redeployment and this resource will require a second apply to recreate the method settings.
 
 ## Example Usage
-
-An end-to-end example of a REST API configured with OpenAPI can be found in the [`/examples/api-gateway-rest-api-openapi` directory within the GitHub repository](https://github.com/hashicorp/terraform-provider-aws/tree/main/examples/api-gateway-rest-api-openapi).
 
 ```terraform
 resource "aws_api_gateway_rest_api" "example" {

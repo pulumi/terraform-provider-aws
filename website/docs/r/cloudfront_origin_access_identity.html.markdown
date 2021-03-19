@@ -53,7 +53,7 @@ Normally, when referencing an origin access identity in CloudFront, you need to
 prefix the ID with the `origin-access-identity/cloudfront/` special path.
 The `cloudfront_access_identity_path` allows this to be circumvented.
 The below snippet demonstrates use with the `s3_origin_config` structure for the
-[`aws_cloudfront_distribution`][3] resource:
+`aws_cloudfront_distribution` resource:
 
 ```terraform
 resource "aws_cloudfront_distribution" "example" {
@@ -71,7 +71,7 @@ resource "aws_cloudfront_distribution" "example" {
 
 Note that the AWS API may translate the `s3_canonical_user_id` `CanonicalUser`
 principal into an `AWS` IAM ARN principal when supplied in an
-[`aws_s3_bucket`][4] bucket policy, causing spurious diffs. If
+`aws_s3_bucket` bucket policy, causing spurious diffs. If
 you see this behaviour, use the `iam_arn` instead:
 
 ```terraform
@@ -95,8 +95,6 @@ resource "aws_s3_bucket_policy" "example" {
 
 [1]: http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Introduction.html
 [2]: http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/private-content-restricting-access-to-s3.html
-[3]: /docs/providers/aws/r/cloudfront_distribution.html
-[4]: /docs/providers/aws/r/s3_bucket.html
 
 
 ## Import

@@ -10,7 +10,7 @@ description: |-
 
 Provides a resource to manage an S3 Control Bucket Policy.
 
--> This functionality is for managing [S3 on Outposts](https://docs.aws.amazon.com/AmazonS3/latest/dev/S3onOutposts.html). To manage S3 Bucket Policies in an AWS Partition, see the [`aws_s3_bucket_policy` resource](/docs/providers/aws/r/s3_bucket_policy.html).
+-> This functionality is for managing [S3 on Outposts](https://docs.aws.amazon.com/AmazonS3/latest/dev/S3onOutposts.html). To manage S3 Bucket Policies in an AWS Partition, see the `aws_s3_bucket_policy` resource.
 
 ## Example Usage
 
@@ -40,7 +40,7 @@ resource "aws_s3control_bucket_policy" "example" {
 The following arguments are required:
 
 * `bucket` - (Required) Amazon Resource Name (ARN) of the bucket.
-* `policy` - (Required) JSON string of the resource policy. For more information about building AWS IAM policy documents with Terraform, see the [AWS IAM Policy Document Guide](https://learn.hashicorp.com/terraform/aws/iam-policy).
+* `policy` - (Required) JSON string of the resource policy.
 
 ## Attributes Reference
 

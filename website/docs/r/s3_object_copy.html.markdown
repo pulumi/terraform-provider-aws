@@ -87,8 +87,6 @@ This configuration block has the following optional arguments (one of the three 
 * `id` - (Optional) The canonical user ID of the grantee. Used only when `type` is `CanonicalUser`.  
 * `uri` - (Optional) URI of the grantee group. Used only when `type` is `Group`.
 
--> **Note:** Terraform ignores all leading `/`s in the object's `key` and treats multiple `/`s in the rest of the object's `key` as a single `/`, so values of `/index.html` and `index.html` correspond to the same S3 object as do `first//second///third//` and `first/second/third/`.
-
 ## Attributes Reference
 
 In addition to all arguments above, the following attributes are exported:

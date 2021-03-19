@@ -10,8 +10,6 @@ description: |-
 
 Provides a DMS (Data Migration Service) certificate resource. DMS certificates can be created, deleted, and imported.
 
-~> **Note:** All arguments including the PEM encoded certificate will be stored in the raw state as plain-text.
-
 ## Example Usage
 
 ```terraform

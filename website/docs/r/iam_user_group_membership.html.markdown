@@ -9,12 +9,12 @@ description: |-
 
 # Resource: aws_iam_user_group_membership
 
-Provides a resource for adding an [IAM User][2] to [IAM Groups][1]. This
+Provides a resource for adding an IAM User to IAM Groups. This
 resource can be used multiple times with the same user for non-overlapping
 groups.
 
 To exclusively manage the users in a group, see the
-[`aws_iam_group_membership` resource][3].
+`aws_iam_group_membership` resource.
 
 ## Example Usage
 
@@ -57,17 +57,13 @@ resource "aws_iam_group" "group3" {
 
 The following arguments are supported:
 
-* `user` - (Required) The name of the [IAM User][2] to add to groups
-* `groups` - (Required) A list of [IAM Groups][1] to add the user to
+* `user` - (Required) The name of the IAM User to add to groups
+* `groups` - (Required) A list of IAM Groups to add the user to
 
 ## Attributes Reference
 
 * `user` - The name of the IAM User
 * `groups` - The list of IAM Groups
-
-[1]: /docs/providers/aws/r/iam_group.html
-[2]: /docs/providers/aws/r/iam_user.html
-[3]: /docs/providers/aws/r/iam_group_membership.html
 
 ## Import
 

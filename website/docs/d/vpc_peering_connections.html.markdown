@@ -9,10 +9,7 @@ description: |-
 # Data Source: aws_vpc_peering_connections
 
 Use this data source to get IDs of Amazon VPC peering connections
-To get more details on each connection, use the data resource [aws_vpc_peering_connection](/docs/providers/aws/d/vpc_peering_connection.html)
-
-Note: To use this data source in a count, the resources should exist before trying to access
-the data source, as noted in [issue 4149](https://github.com/hashicorp/terraform/issues/4149)
+To get more details on each connection, use the data resource `aws_vpc_peering_connection`
 
 ## Example Usage
 

@@ -42,8 +42,6 @@ resource "aws_lambda_function" "test_lambda" {
 resource "aws_iam_role" "iam_for_lambda" {
   name = "iam_for_lambda"
 
-  # Terraform's "jsonencode" function converts a
-  # Terraform expression result to valid JSON syntax.
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -92,8 +90,6 @@ resource "aws_lambda_function" "func" {
 resource "aws_iam_role" "default" {
   name = "iam_for_lambda_with_sns"
 
-  # Terraform's "jsonencode" function converts a
-  # Terraform expression result to valid JSON syntax.
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [

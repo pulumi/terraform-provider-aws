@@ -12,13 +12,13 @@ Associates SCRAM secrets stored in the Secrets Manager service with a Managed St
 
 -> **Note:** The following assumes the MSK cluster has SASL/SCRAM authentication enabled. See below for example usage or refer to the [Username/Password Authentication](https://docs.aws.amazon.com/msk/latest/developerguide/msk-password.html) section of the MSK Developer Guide for more details.
 
-To set up username and password authentication for a cluster, create an [`aws_secretsmanager_secret` resource](/docs/providers/aws/r/secretsmanager_secret.html) and associate
-a username and password with the secret with an [`aws_secretsmanager_secret_version` resource](/docs/providers/aws/r/secretsmanager_secret_version.html). When creating a secret for the cluster,
+To set up username and password authentication for a cluster, create an `aws_secretsmanager_secret` resource and associate
+a username and password with the secret with an `aws_secretsmanager_secret_version` resource. When creating a secret for the cluster,
 the `name` must have the prefix `AmazonMSK_` and you must either use an existing custom AWS KMS key or create a new
-custom AWS KMS key for your secret with the [`aws_kms_key` resource](/docs/providers/aws/r/kms_key.html). It is important to note that a policy is required for the `aws_secretsmanager_secret`
+custom AWS KMS key for your secret with the `aws_kms_key` resource It is important to note that a policy is required for the `aws_secretsmanager_secret`
 resource in order for Kafka to be able to read it. This policy is attached automatically when the `aws_msk_scram_secret_association` is used,
-however, this policy will not be in terraform and as such, will present a diff on plan/apply. For that reason, you must use the [`aws_secretsmanager_secret_policy`
-resource](/docs/providers/aws/r/secretsmanager_secret_policy.html) as shown below in order to ensure that the state is in a clean state after the creation of secret and the association to the cluster.
+however, this policy will not be in terraform and as such, will present a diff on plan/apply. For that reason, you must use the `aws_secretsmanager_secret_policy`
+resource as shown below in order to ensure that the state is in a clean state after the creation of secret and the association to the cluster.
 
 ## Example Usage
 

@@ -11,11 +11,11 @@ description: |-
 ~> **WARNING:** Multiple aws_iam_group_membership resources with the same group name will produce inconsistent behavior!
 
 Provides a top level resource to manage IAM Group membership for IAM Users. For
-more information on managing IAM Groups or IAM Users, see [IAM Groups][1] or
-[IAM Users][2]
+more information on managing IAM Groups or IAM Users, see IAM Groups or
+IAM Users
 
 ~> **Note:** `aws_iam_group_membership` will conflict with itself if used more than once with the same group. To non-exclusively manage the users in a group, see the
-[`aws_iam_user_group_membership` resource][3].
+`aws_iam_user_group_membership` resource.
 
 ## Example Usage
 
@@ -59,8 +59,3 @@ In addition to all arguments above, the following attributes are exported:
 * `name` - The name to identify the Group Membership
 * `users` - list of IAM User names
 * `group` – IAM Group name
-
-
-[1]: /docs/providers/aws/r/iam_group.html
-[2]: /docs/providers/aws/r/iam_user.html
-[3]: /docs/providers/aws/r/iam_user_group_membership.html

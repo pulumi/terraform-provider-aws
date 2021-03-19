@@ -10,7 +10,7 @@ description: |-
 
 Manages an Amazon Managed Service for Prometheus (AMP) Workspace.
 
-~> **NOTE:** This AWS functionality is in Preview and may change before General Availability release. Backwards compatibility is not guaranteed between Terraform AWS Provider releases.
+~> **NOTE:** This AWS functionality is in Preview and may change before General Availability release. Backwards compatibility is not guaranteed between provider releases.
 
 ## Example Usage
 

@@ -10,7 +10,7 @@ description: |-
 
 Provides an IAM role inline policy.
 
-~> **NOTE:** For a given role, this resource is incompatible with using the [`aws_iam_role` resource](/docs/providers/aws/r/iam_role.html) `inline_policy` argument. When using that argument and this resource, both will attempt to manage the role's inline policies and Terraform will show a permanent difference.
+~> **NOTE:** For a given role, this resource is incompatible with using the `aws_iam_role` resource `inline_policy` argument. When using that argument and this resource, both will attempt to manage the role's inline policies and the provider will show a permanent difference.
 
 ## Example Usage
 
@@ -19,8 +19,6 @@ resource "aws_iam_role_policy" "test_policy" {
   name = "test_policy"
   role = aws_iam_role.test_role.id
 
-  # Terraform's "jsonencode" function converts a
-  # Terraform expression result to valid JSON syntax.
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [

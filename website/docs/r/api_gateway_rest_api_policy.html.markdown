@@ -10,7 +10,7 @@ description: |-
 
 Provides an API Gateway REST API Policy.
 
--> **Note:** Amazon API Gateway Version 1 resources are used for creating and deploying REST APIs. To create and deploy WebSocket and HTTP APIs, use Amazon API Gateway Version 2 [resources](/docs/providers/aws/r/apigatewayv2_api.html).
+-> **Note:** Amazon API Gateway Version 1 resources are used for creating and deploying REST APIs. To create and deploy WebSocket and HTTP APIs, use Amazon API Gateway Version 2 resources.
 
 ## Example Usage
 
@@ -52,7 +52,7 @@ EOF
 The following arguments are supported:
 
 * `rest_api_id` - (Required) The ID of the REST API.
-* `policy` - (Required) JSON formatted policy document that controls access to the API Gateway. For more information about building AWS IAM policy documents with Terraform, see the [AWS IAM Policy Document Guide](https://learn.hashicorp.com/terraform/aws/iam-policy)
+* `policy` - (Required) JSON formatted policy document that controls access to the API Gateway.
 
 ## Attributes Reference
 

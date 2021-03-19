@@ -130,7 +130,7 @@ See the [Amazon API Gateway Developer Guide](https://docs.aws.amazon.com/apigate
 * `template_selection_expression` - (Optional) The [template selection expression](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-websocket-api-selection-expressions.html#apigateway-websocket-api-template-selection-expressions) for the integration.
 * `timeout_milliseconds` - (Optional) Custom timeout between 50 and 29,000 milliseconds for WebSocket APIs and between 50 and 30,000 milliseconds for HTTP APIs.
 The default timeout is 29 seconds for WebSocket APIs and 30 seconds for HTTP APIs.
-Terraform will only perform drift detection of its value when present in a configuration.
+this provider will only perform drift detection of its value when present in a configuration.
 * `tls_config` - (Optional) The TLS configuration for a private integration. Supported only for HTTP APIs.
 
 The `response_parameters` object supports the following:

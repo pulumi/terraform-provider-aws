@@ -34,7 +34,7 @@ Use the `aws_api_gateway_account` resource to configure [permissions for CloudWa
 * `client_certificate_id` - (Optional) The identifier of a client certificate for the stage. Use the `aws_api_gateway_client_certificate` resource to configure a client certificate.
 Supported only for WebSocket APIs.
 * `default_route_settings` - (Optional) The default route settings for the stage.
-* `deployment_id` - (Optional) The deployment identifier of the stage. Use the [`aws_apigatewayv2_deployment`](/docs/providers/aws/r/apigatewayv2_deployment.html) resource to configure a deployment.
+* `deployment_id` - (Optional) The deployment identifier of the stage. Use the `aws_apigatewayv2_deployment` resource to configure a deployment.
 * `description` - (Optional) The description for the stage. Must be less than or equal to 1024 characters in length.
 * `route_settings` - (Optional) Route settings for the stage.
 * `stage_variables` - (Optional) A map that defines the stage variables for the stage.

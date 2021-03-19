@@ -10,8 +10,6 @@ description: |-
 
 Provides an OpsWorks RDS DB Instance resource.
 
-~> **Note:** All arguments including the username and password will be stored in the raw state as plain-text.
-
 ## Example Usage
 
 ```terraform

@@ -12,11 +12,7 @@ Provides a Lambda Function resource. Lambda allows you to trigger execution of c
 
 For information about Lambda and how to use it, see [What is AWS Lambda?][1]
 
-For a detailed example of setting up Lambda and API Gateway, see [Serverless Applications with AWS Lambda and API Gateway.][11]
-
-~> **NOTE:** Due to [AWS Lambda improved VPC networking changes that began deploying in September 2019](https://aws.amazon.com/blogs/compute/announcing-improved-vpc-networking-for-aws-lambda-functions/), EC2 subnets and security groups associated with Lambda Functions can take up to 45 minutes to successfully delete. Terraform AWS Provider version 2.31.0 and later automatically handles this increased timeout, however prior versions require setting the customizable deletion timeouts of those Terraform resources to 45 minutes (`delete = "45m"`). AWS and HashiCorp are working together to reduce the amount of time required for resource deletion and updates can be tracked in this [GitHub issue](https://github.com/hashicorp/terraform-provider-aws/issues/10329).
-
--> To give an external source (like a CloudWatch Event Rule, SNS, or S3) permission to access the Lambda function, use the [`aws_lambda_permission`](lambda_permission.html) resource. See [Lambda Permission Model][4] for more details. On the other hand, the `role` argument of this resource is the function's execution role for identity and access to AWS services and resources.
+-> To give an external source (like a CloudWatch Event Rule, SNS, or S3) permission to access the Lambda function, use the `aws_lambda_permission` resource. See [Lambda Permission Model][4] for more details. On the other hand, the `role` argument of this resource is the function's execution role for identity and access to AWS services and resources.
 
 ## Example Usage
 
@@ -49,9 +45,6 @@ resource "aws_lambda_function" "test_lambda" {
   role          = aws_iam_role.iam_for_lambda.arn
   handler       = "exports.test"
 
-  # The filebase64sha256() function is available in Terraform 0.11.12 and later
-  # For Terraform 0.11.11 and earlier, use the base64sha256() function and the file() function:
-  # source_code_hash = "${base64sha256(file("lambda_function_payload.zip"))}"
   source_code_hash = filebase64sha256("lambda_function_payload.zip")
 
   runtime = "nodejs12.x"
@@ -65,8 +58,6 @@ resource "aws_lambda_function" "test_lambda" {
 ```
 
 ### Lambda Layers
-
-~> **NOTE:** The `aws_lambda_layer_version` attribute values for `arn` and `layer_arn` were swapped in version 2.0.0 of the Terraform AWS Provider. For version 1.x, use `layer_arn` references. For version 2.x, use `arn` references.
 
 ```terraform
 resource "aws_lambda_layer_version" "example" {
@@ -223,7 +214,7 @@ The following arguments are optional:
 * `handler` - (Optional) Function [entrypoint][3] in your code.
 * `image_config` - (Optional) Configuration block. Detailed below.
 * `image_uri` - (Optional) ECR image URI containing the function's deployment package. Conflicts with `filename`, `s3_bucket`, `s3_key`, and `s3_object_version`.
-* `kms_key_arn` - (Optional) Amazon Resource Name (ARN) of the AWS Key Management Service (KMS) key that is used to encrypt environment variables. If this configuration is not provided when environment variables are in use, AWS Lambda uses a default service key. If this configuration is provided when environment variables are not in use, the AWS Lambda API does not save this configuration and Terraform will show a perpetual difference of adding the key. To fix the perpetual difference, remove this configuration.
+* `kms_key_arn` - (Optional) Amazon Resource Name (ARN) of the AWS Key Management Service (KMS) key that is used to encrypt environment variables. If this configuration is not provided when environment variables are in use, AWS Lambda uses a default service key. If this configuration is provided when environment variables are not in use, the AWS Lambda API does not save this configuration and the provider will show a perpetual difference of adding the key. To fix the perpetual difference, remove this configuration.
 * `layers` - (Optional) List of Lambda Layer Version ARNs (maximum of 5) to attach to your Lambda Function. See [Lambda Layers][10]
 * `memory_size` - (Optional) Amount of memory in MB your Lambda Function can use at runtime. Defaults to `128`. See [Limits][5]
 * `package_type` - (Optional) Lambda deployment package type. Valid values are `Zip` and `Image`. Defaults to `Zip`.
@@ -233,7 +224,7 @@ The following arguments are optional:
 * `s3_bucket` - (Optional) S3 bucket location containing the function's deployment package. Conflicts with `filename` and `image_uri`. This bucket must reside in the same AWS region where you are creating the Lambda function.
 * `s3_key` - (Optional) S3 key of an object containing the function's deployment package. Conflicts with `filename` and `image_uri`.
 * `s3_object_version` - (Optional) Object version containing the function's deployment package. Conflicts with `filename` and `image_uri`.
-* `source_code_hash` - (Optional) Used to trigger updates. Must be set to a base64-encoded SHA256 hash of the package file specified with either `filename` or `s3_key`. The usual way to set this is `filebase64sha256("file.zip")` (Terraform 0.11.12 and later) or `base64sha256(file("file.zip"))` (Terraform 0.11.11 and earlier), where "file.zip" is the local filename of the lambda function source archive.
+* `source_code_hash` - (Optional) Used to trigger updates. Must be set to a base64-encoded SHA256 hash of the package file specified with either `filename` or `s3_key`. The usual way to set this is `filebase64sha256("file.zip")`, where "file.zip" is the local filename of the lambda function source archive.
 * `tags` - (Optional) Map of tags to assign to the object.
 * `timeout` - (Optional) Amount of time your Lambda Function has to run in seconds. Defaults to `3`. See [Limits][5].
 * `tracing_config` - (Optional) Configuration block. Detailed below.
@@ -282,7 +273,7 @@ For network connectivity to AWS resources in a VPC, specify a list of security g
 In addition to all arguments above, the following attributes are exported:
 
 * `arn` - Amazon Resource Name (ARN) identifying your Lambda Function.
-* `invoke_arn` - ARN to be used for invoking Lambda Function from API Gateway - to be used in [`aws_api_gateway_integration`](/docs/providers/aws/r/api_gateway_integration.html)'s `uri`.
+* `invoke_arn` - ARN to be used for invoking Lambda Function from API Gateway - to be used in `aws_api_gateway_integration`'s `uri`.
 * `last_modified` - Date this resource was last modified.
 * `qualified_arn` - ARN identifying your Lambda Function Version (if versioning is enabled via `publish = true`).
 * `signing_job_arn` - ARN of the signing job.
@@ -301,7 +292,6 @@ In addition to all arguments above, the following attributes are exported:
 [8]: https://docs.aws.amazon.com/lambda/latest/dg/deployment-package-v2.html
 [9]: https://docs.aws.amazon.com/lambda/latest/dg/concurrent-executions.html
 [10]: https://docs.aws.amazon.com/lambda/latest/dg/configuration-layers.html
-[11]: https://learn.hashicorp.com/terraform/aws/lambda-api-gateway
 [12]: https://docs.aws.amazon.com/lambda/latest/dg/services-efs.html
 [13]: https://docs.aws.amazon.com/lambda/latest/dg/lambda-images.html
 

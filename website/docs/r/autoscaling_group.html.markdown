@@ -12,14 +12,13 @@ Provides an Auto Scaling Group resource.
 
 -> **Note:** You must specify either `launch_configuration`, `launch_template`, or `mixed_instances_policy`.
 
-~> **NOTE on Auto Scaling Groups and ASG Attachments:** Terraform currently provides
-both a standalone [`aws_autoscaling_attachment`](autoscaling_attachment.html) resource
-(describing an ASG attached to an ELB or ALB), and an [`aws_autoscaling_group`](autoscaling_group.html)
+~> **NOTE on Auto Scaling Groups and ASG Attachments:** This provider currently provides
+both a standalone `aws_autoscaling_attachment` resource
+(describing an ASG attached to an ELB or ALB), and an `aws_autoscaling_group`
 with `load_balancers` and `target_group_arns` defined in-line. These two methods are not
 mutually-exclusive. If `aws_autoscaling_attachment` resources are used, either alone or with inline
 `load_balancers` or `target_group_arns`, the `aws_autoscaling_group` resource must be configured
-to ignore changes to the `load_balancers` and `target_group_arns` arguments within a
-[`lifecycle` configuration block](https://www.terraform.io/docs/configuration/meta-arguments/lifecycle.html).
+to ignore changes to the `load_balancers` and `target_group_arns` arguments.
 
 ## Example Usage
 
@@ -357,11 +356,11 @@ Note that if you suspend either the `Launch` or `Terminate` process types, it ca
   wait for ASG instances to be healthy before timing out.  (See also [Waiting
   for Capacity](#waiting-for-capacity) below.) Setting this to "0" causes
   this provider to skip all Capacity Waiting behavior.
-* `min_elb_capacity` - (Optional) Setting this causes Terraform to wait for
+* `min_elb_capacity` - (Optional) Setting this causes the provider to wait for
   this number of instances from this Auto Scaling Group to show up healthy in the
   ELB only on creation. Updates will not wait on ELB instance number changes.
   (See also [Waiting for Capacity](#waiting-for-capacity) below.)
-* `wait_for_elb_capacity` - (Optional) Setting this will cause Terraform to wait
+* `wait_for_elb_capacity` - (Optional) Setting this will cause the provider to wait
   for exactly this number of healthy instances from this Auto Scaling Group in
   all attached load balancers on both create and update operations. (Takes
   precedence over `min_elb_capacity` behavior.)

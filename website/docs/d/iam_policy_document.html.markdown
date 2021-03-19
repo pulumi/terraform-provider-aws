@@ -8,11 +8,9 @@ description: |-
 
 # Data Source: aws_iam_policy_document
 
-Generates an IAM policy document in JSON format for use with resources that expect policy documents such as [`aws_iam_policy`](/docs/providers/aws/r/iam_policy.html).
+Generates an IAM policy document in JSON format for use with resources that expect policy documents such as `aws_iam_policy`.
 
 Using this data source to generate policy documents is *optional*. It is also valid to use literal JSON strings in your configuration or to use the `file` interpolation function to read a raw JSON policy document from a file.
-
-~> **NOTE:** AWS's IAM policy document syntax allows for replacement of [policy variables](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_variables.html) within a statement using `${...}`-style notation, which conflicts with Terraform's interpolation syntax. In order to use AWS policy variables with this data source, use `&{...}` notation for interpolations that should be processed by AWS rather than by Terraform.
 
 ## Example Usage
 
@@ -458,7 +456,7 @@ The following arguments are required:
 
 The `principals` and `not_principals` arguments define to whom a statement applies or does not apply, respectively.
 
-~> **NOTE**: Even though the [IAM Documentation](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_principal.html) states that `"Principal": "*"` and `"Principal": {"AWS": "*"}` are equivalent, those principal elements have different behavior in some situations, e.g. IAM Role Trust Policy. To have Terraform render JSON containing `"Principal": "*"`, use `type = "*"` and `identifiers = ["*"]`. To have Terraform render JSON containing `"Principal": {"AWS": "*"}`, use `type = "AWS"` and `identifiers = ["*"]`.
+~> **NOTE**: Even though the [IAM Documentation](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_principal.html) states that `"Principal": "*"` and `"Principal": {"AWS": "*"}` are equivalent, those principal elements have different behavior in some situations, e.g. IAM Role Trust Policy. To have the provider render JSON containing `"Principal": "*"`, use `type = "*"` and `identifiers = ["*"]`. To have the provider render JSON containing `"Principal": {"AWS": "*"}`, use `type = "AWS"` and `identifiers = ["*"]`.
 
 -> For more information about AWS principals, refer to the [AWS Identity and Access Management User Guide: AWS JSON policy elements: Principal](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_principal.html).
 

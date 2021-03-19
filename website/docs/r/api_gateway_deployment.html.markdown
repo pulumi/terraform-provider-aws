@@ -8,14 +8,14 @@ description: |-
 
 # Resource: aws_api_gateway_deployment
 
-Manages an API Gateway REST Deployment. A deployment is a snapshot of the REST API configuration. The deployment can then be published to callable endpoints via the [`aws_api_gateway_stage` resource](api_gateway_stage.html) and optionally managed further with the [`aws_api_gateway_base_path_mapping` resource](api_gateway_base_path_mapping.html), [`aws_api_gateway_domain_name` resource](api_gateway_domain_name.html), and [`aws_api_method_settings` resource](api_gateway_method_settings.html). For more information, see the [API Gateway Developer Guide](https://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-deploy-api.html).
+Manages an API Gateway REST Deployment. A deployment is a snapshot of the REST API configuration. The deployment can then be published to callable endpoints via the `aws_api_gateway_stage` resource and optionally managed further with the `aws_api_gateway_base_path_mapping` resource, `aws_api_gateway_domain_name` resource, and `aws_api_method_settings` resource. For more information, see the [API Gateway Developer Guide](https://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-deploy-api.html).
 
 To properly capture all REST API configuration in a deployment, this resource must have dependencies on all prior resources that manage resources/paths, methods, integrations, etc.
 
-* For REST APIs that are configured via OpenAPI specification ([`aws_api_gateway_rest_api` resource](api_gateway_rest_api.html) `body` argument), no special dependency setup is needed beyond referencing the  `id` attribute of that resource unless additional resources have further customized the REST API.
+* For REST APIs that are configured via OpenAPI specification (`aws_api_gateway_rest_api` resource `body` argument), no special dependency setup is needed beyond referencing the  `id` attribute of that resource unless additional resources have further customized the REST API.
 * When the REST API configuration involves other resources (`aws_api_gateway_integration` resource), the dependency setup can be done with implicit resource references in the `triggers` argument or explicit resource references using the [resource `dependsOn` custom option](https://www.pulumi.com/docs/intro/concepts/resources/#dependson). The `triggers` argument should be preferred over `depends_on`, since `depends_on` can only capture dependency ordering and will not cause the resource to recreate (redeploy the REST API) with upstream configuration changes.
 
-!> **WARNING:** It is recommended to use the [`aws_api_gateway_stage` resource](api_gateway_stage.html) instead of managing an API Gateway Stage via the `stage_name` argument of this resource. When this resource is recreated (REST API redeployment) with the `stage_name` configured, the stage is deleted and recreated. This will cause a temporary service interruption, increase provide plan differences, and can require a second apply to recreate any downstream stage configuration such as associated `aws_api_method_settings` resources.
+!> **WARNING:** It is recommended to use the `aws_api_gateway_stage` resource instead of managing an API Gateway Stage via the `stage_name` argument of this resource. When this resource is recreated (REST API redeployment) with the `stage_name` configured, the stage is deleted and recreated. This will cause a temporary service interruption, increase provide plan differences, and can require a second apply to recreate any downstream stage configuration such as associated `aws_api_method_settings` resources.
 
 ## Example Usage
 
@@ -99,7 +99,7 @@ resource "aws_api_gateway_deployment" "example" {
     # NOTE: The configuration below will satisfy ordering considerations,
     #       but not pick up all future REST API changes. More advanced patterns
     #       are possible, such as using the filesha1() function against the
-    #       Terraform configuration file(s) or removing the .id references to
+    #       configuration file(s) or removing the .id references to
     #       calculate a hash against whole resources. Be aware that using whole
     #       resources will show a difference after the initial implementation.
     #       It will stabilize to only change when resources change afterwards.
@@ -128,7 +128,7 @@ The following arguments are supported:
 
 * `rest_api_id` - (Required) REST API identifier.
 * `description` - (Optional) Description of the deployment
-* `stage_name` - (Optional) Name of the stage to create with this deployment. If the specified stage already exists, it will be updated to point to the new deployment. It is recommended to use the [`aws_api_gateway_stage` resource](api_gateway_stage.html) instead to manage stages.
+* `stage_name` - (Optional) Name of the stage to create with this deployment. If the specified stage already exists, it will be updated to point to the new deployment. It is recommended to use the `aws_api_gateway_stage` resource instead to manage stages.
 * `stage_description` - (Optional) Description to set on the stage managed by the `stage_name` argument.
 * `triggers` - (Optional) Map of arbitrary keys and values that, when changed, will trigger a redeployment.
 * `variables` - (Optional) Map to set on the stage managed by the `stage_name` argument.

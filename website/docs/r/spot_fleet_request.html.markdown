@@ -165,9 +165,9 @@ terminateInstancesWithExpiration.
 across different markets and instance types. Conflicts with `launch_template_config`. At least one of `launch_specification` or `launch_template_config` is required.
 
     **Note:** This takes in similar but not
-    identical inputs as [`aws_instance`](instance.html).  There are limitations on
+    identical inputs as `aws_instance`.  There are limitations on
     what you can specify. See the list of officially supported inputs in the
-    [reference documentation](http://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_SpotFleetLaunchSpecification.html). Any normal [`aws_instance`](instance.html) parameter that corresponds to those inputs may be used and it have
+    [reference documentation](http://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_SpotFleetLaunchSpecification.html). Any normal `aws_instance` parameter that corresponds to those inputs may be used and it have
     a additional parameter `iam_instance_profile_arn` takes `aws_iam_instance_profile` attribute `arn` as input.
 
 * `launch_template_config` - (Optional) Launch template configuration block. See [Launch Template Configs](#launch-template-configs) below for more details. Conflicts with `launch_specification`. At least one of `launch_specification` or `launch_template_config` is required.
@@ -217,7 +217,7 @@ The `launch_template_config` block supports the following:
 * `version` - (Optional) Template version. Unlike the autoscaling equivalent, does not support `$Latest` or `$Default`, so use the launch_template resource's attribute, e.g. `"${aws_launch_template.foo.latest_version}"`. It will use the default version if omitted.
 
     **Note:** The specified launch template can specify only a subset of the
-    inputs of [`aws_launch_template`](launch_template.html).  There are limitations on
+    inputs of `aws_launch_template`.  There are limitations on
     what you can specify as spot fleet does not support all the attributes that are supported by autoscaling groups. [AWS documentation](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-launch-templates.html#launch-templates-spot-fleet) is currently sparse, but at least `instance_initiated_shutdown_behavior` is confirmed unsupported.
 
 ### spot_maintenance_strategies

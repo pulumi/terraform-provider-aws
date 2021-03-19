@@ -25,9 +25,6 @@ must be set to `true`.
 ~> **Note:** using `apply_immediately` can result in a brief downtime as the
 server reboots. See the AWS Docs on [RDS Maintenance][2] for more information.
 
-~> **Note:** All arguments including the username and password will be stored in
-the raw state as plain-text.
-
 ## RDS Instance Class Types
 Amazon RDS supports three types of instance classes: Standard, Memory Optimized,
 and Burstable Performance. For more information please read the AWS RDS documentation
@@ -211,7 +208,7 @@ standalone database.
 
 -> **Note:** You can restore to any point in time before the source DB instance's `latest_restorable_time` or a point up to the number of days specified in the source DB instance's `backup_retention_period`.
 For more information, please refer to the [Developer Guide](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_PIT.html).
-This setting does not apply to `aurora-mysql` or `aurora-postgresql` DB engines. For Aurora, refer to the [`aws_rds_cluster` resource documentation](/docs/providers/aws/r/rds_cluster.html#restore_in_time).
+This setting does not apply to `aurora-mysql` or `aurora-postgresql` DB engines. For Aurora, refer to the `aws_rds_cluster` resource documentation.
 
 The `restore_to_point_in_time` block supports the following arguments:
 

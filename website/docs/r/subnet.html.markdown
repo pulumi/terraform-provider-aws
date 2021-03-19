@@ -29,7 +29,7 @@ resource "aws_subnet" "main" {
 
 ### Subnets In Secondary VPC CIDR Blocks
 
-When managing subnets in one of a VPC's secondary CIDR blocks created using a [`aws_vpc_ipv4_cidr_block_association`](vpc_ipv4_cidr_block_association.html)
+When managing subnets in one of a VPC's secondary CIDR blocks created using a `aws_vpc_ipv4_cidr_block_association`
 resource, it is recommended to reference that resource's `vpc_id` attribute to ensure correct dependency ordering.
 
 ```terraform

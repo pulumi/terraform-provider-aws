@@ -8,7 +8,7 @@ description: |-
 
 # Resource: aws_api_gateway_rest_api
 
-Manages an API Gateway REST API. The REST API can be configured via [importing an OpenAPI specification](https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-import-api.html) in the `body` argument (with other arguments serving as overrides) or via other Terraform resources to manage the resources ([`aws_api_gateway_resource` resource](api_gateway_resource.html)), methods ([`aws_api_gateway_method` resource](api_gateway_method.html)), integrations ([`aws_api_gateway_integration` resource](api_gateway_integration.html)), etc. of the REST API. Once the REST API is configured, the [`aws_api_gateway_deployment` resource](api_gateway_deployment.html) can be used along with the [`aws_api_gateway_stage` resource](api_gateway_stage.html) to publish the REST API.
+Manages an API Gateway REST API. The REST API can be configured via [importing an OpenAPI specification](https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-import-api.html) in the `body` argument (with other arguments serving as overrides) or via other provider resources to manage the resources (`aws_api_gateway_resource` resource), methods (`aws_api_gateway_method` resource), integrations (`aws_api_gateway_integration` resource), etc. of the REST API. Once the REST API is configured, the `aws_api_gateway_deployment` resource can be used along with the `aws_api_gateway_stage` resource to publish the REST API.
 
 -> **Note:** Amazon API Gateway Version 1 resources are used for creating and deploying REST APIs. To create and deploy WebSocket and HTTP APIs, use Amazon API Gateway Version 2.
 
@@ -16,7 +16,6 @@ Manages an API Gateway REST API. The REST API can be configured via [importing a
 
 ### OpenAPI Specification
 
-An end-to-end example of a REST API configured with OpenAPI can be found in the [`/examples/api-gateway-rest-api-openapi` directory within the GitHub repository](https://github.com/hashicorp/terraform-provider-aws/tree/main/examples/api-gateway-rest-api-openapi).
 
 ```terraform
 resource "aws_api_gateway_rest_api" "example" {
@@ -66,7 +65,7 @@ resource "aws_api_gateway_stage" "example" {
 }
 ```
 
-### Terraform Resources
+### Resources
 
 ```terraform
 resource "aws_api_gateway_rest_api" "example" {
@@ -100,7 +99,7 @@ resource "aws_api_gateway_deployment" "example" {
     # NOTE: The configuration below will satisfy ordering considerations,
     #       but not pick up all future REST API changes. More advanced patterns
     #       are possible, such as using the filesha1() function against the
-    #       Terraform configuration file(s) or removing the .id references to
+    #       configuration file(s) or removing the .id references to
     #       calculate a hash against whole resources. Be aware that using whole
     #       resources will show a difference after the initial implementation.
     #       It will stabilize to only change when resources change afterwards.

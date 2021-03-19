@@ -75,7 +75,7 @@ resource "aws_acm_certificate" "cert" {
 
 ### Referencing domain_validation_options With for_each Based Resources
 
-See the [`aws_acm_certificate_validation` resource](acm_certificate_validation.html) for a full example of performing DNS validation.
+See the `aws_acm_certificate_validation` resource for a full example of performing DNS validation.
 
 ```terraform
 resource "aws_route53_record" "example" {

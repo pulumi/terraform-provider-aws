@@ -16,8 +16,6 @@ Provides an IoT policy.
 resource "aws_iot_policy" "pubsub" {
   name = "PubSubToAnyTopic"
 
-  # Terraform's "jsonencode" function converts a
-  # Terraform expression result to valid JSON syntax.
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [

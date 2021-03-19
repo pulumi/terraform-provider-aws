@@ -10,7 +10,6 @@ description: |-
 
 Provides a Redshift Cluster Resource.
 
-~> **Note:** All arguments including the username and password will be stored in the raw state as plain-text.
 
 ## Example Usage
 

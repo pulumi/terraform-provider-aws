@@ -13,7 +13,7 @@ See [Amazon Elastic MapReduce Documentation](https://aws.amazon.com/documentatio
 
 ~> **NOTE:** At this time, Instance Fleets cannot be destroyed through the API nor
 web interface. Instance Fleets are destroyed when the EMR Cluster is destroyed.
-Terraform will resize any Instance Fleet to zero when destroying the resource.
+the provider will resize any Instance Fleet to zero when destroying the resource.
 
 ## Example Usage
 

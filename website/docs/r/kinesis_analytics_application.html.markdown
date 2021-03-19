@@ -13,7 +13,7 @@ allows processing and analyzing streaming data using standard SQL.
 
 For more details, see the [Amazon Kinesis Analytics Documentation][1].
 
--> **Note:** To manage Amazon Kinesis Data Analytics for Apache Flink applications, use the [`aws_kinesisanalyticsv2_application`](/docs/providers/aws/r/kinesisanalyticsv2_application.html) resource.
+-> **Note:** To manage Amazon Kinesis Data Analytics for Apache Flink applications, use the `aws_kinesisanalyticsv2_application` resource.
 
 ## Example Usage
 

@@ -58,7 +58,7 @@ The following arguments are required:
 The following attributes are optional:
 
 * `change_description` - (Optional) Change description of the component.
-* `data` - (Optional) Inline YAML string with data of the component. Exactly one of `data` and `uri` can be specified. Terraform will only perform drift detection of its value when present in a configuration.
+* `data` - (Optional) Inline YAML string with data of the component. Exactly one of `data` and `uri` can be specified. the provider will only perform drift detection of its value when present in a configuration.
 * `description` - (Optional) Description of the component.
 * `kms_key_id` - (Optional) Amazon Resource Name (ARN) of the Key Management Service (KMS) Key used to encrypt the component.
 * `supported_os_versions` - (Optional) Set of Operating Systems (OS) supported by the component.
@@ -83,4 +83,4 @@ In addition to all arguments above, the following attributes are exported:
 $ terraform import aws_imagebuilder_component.example arn:aws:imagebuilder:us-east-1:123456789012:component/example/1.0.0/1
 ```
 
-Certain resource arguments, such as `uri`, cannot be read via the API and imported into Terraform. Terraform will display a difference for these arguments the first run after import if declared in the Terraform configuration for an imported resource.
+Certain resource arguments, such as `uri`, cannot be read via the API and imported into the provider. The provider will display a difference for these arguments the first run after import if declared in the the provider configuration for an imported resource.

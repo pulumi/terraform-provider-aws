@@ -48,7 +48,7 @@ The following arguments are supported:
 * `kms_key_id` - (Optional) The full ARN of the KMS Key to use when encrypting the snapshots of an image during a copy operation. If not specified, then the default AWS KMS Key will be used
 * `tags` - (Optional) A map of tags to assign to the resource.
 
-This resource also exposes the full set of arguments from the [`aws_ami`](ami.html) resource.
+This resource also exposes the full set of arguments from the `aws_ami` resource.
 
 ### Timeouts
 
@@ -66,5 +66,5 @@ In addition to all arguments above, the following attributes are exported:
 * `id` - The ID of the created AMI.
 
 This resource also exports a full set of attributes corresponding to the arguments of the
-[`aws_ami`](/docs/providers/aws/r/ami.html) resource, allowing the properties of the created AMI to be used elsewhere in the
+`aws_ami` resource, allowing the properties of the created AMI to be used elsewhere in the
 configuration.

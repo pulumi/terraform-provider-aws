@@ -10,8 +10,6 @@ description: |-
 
 Manages an EC2 VPN connection. These objects can be connected to customer gateways, and allow you to establish tunnels between your network and Amazon.
 
-~> **Note:** All arguments including `tunnel1_preshared_key` and `tunnel2_preshared_key` will be stored in the raw state as plain-text.
-
 ~> **Note:** The CIDR blocks in the arguments `tunnel1_inside_cidr` and `tunnel2_inside_cidr` must have a prefix of /30 and be a part of a specific range.
 [Read more about this in the AWS documentation](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_VpnTunnelOptionsSpecification.html).
 
@@ -128,7 +126,7 @@ In addition to all arguments above, the following attributes are exported:
 * `customer_gateway_configuration` - The configuration information for the VPN connection's customer gateway (in the native XML format).
 * `customer_gateway_id` - The ID of the customer gateway to which the connection is attached.
 * `static_routes_only` - Whether the VPN connection uses static routes exclusively.
-* `transit_gateway_attachment_id` - When associated with an EC2 Transit Gateway (`transit_gateway_id` argument), the attachment ID. See also the [`aws_ec2_tag` resource](/docs/providers/aws/r/ec2_tag.html) for tagging the EC2 Transit Gateway VPN Attachment.
+* `transit_gateway_attachment_id` - When associated with an EC2 Transit Gateway (`transit_gateway_id` argument), the attachment ID. See also the `aws_ec2_tag` resource for tagging the EC2 Transit Gateway VPN Attachment.
 * `tunnel1_address` - The public IP address of the first VPN tunnel.
 * `tunnel1_cgw_inside_address` - The RFC 6890 link-local address of the first VPN tunnel (Customer Gateway Side).
 * `tunnel1_vgw_inside_address` - The RFC 6890 link-local address of the first VPN tunnel (VPN Gateway Side).

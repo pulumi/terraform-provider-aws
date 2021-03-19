@@ -35,11 +35,7 @@ only verified certificates can be used. This can be made either explicitly by ad
 from the validation resource where it will be available after the resource creation:
 `regional_certificate_arn = aws_acm_certificate_validation.cert.certificate_arn`.
 
-~> **Note:** All arguments including the private key will be stored in the raw state as plain-text.
-
 ## Example Usage
-
-An end-to-end example of a REST API configured with OpenAPI can be found in the [`/examples/api-gateway-rest-api-openapi` directory within the GitHub repository](https://github.com/hashicorp/terraform-provider-aws/tree/main/examples/api-gateway-rest-api-openapi).
 
 ### Edge Optimized (ACM Certificate)
 
