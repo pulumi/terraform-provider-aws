@@ -31,7 +31,7 @@ for more information.
 
 ### Aurora MySQL 2.x (MySQL 5.7)
 
-```hcl
+```terraform
 resource "aws_rds_cluster" "default" {
   cluster_identifier      = "aurora-cluster-demo"
   engine                  = "aurora-mysql"
@@ -47,7 +47,7 @@ resource "aws_rds_cluster" "default" {
 
 ### Aurora MySQL 1.x (MySQL 5.6)
 
-```hcl
+```terraform
 resource "aws_rds_cluster" "default" {
   cluster_identifier      = "aurora-cluster-demo"
   availability_zones      = ["us-west-2a", "us-west-2b", "us-west-2c"]
@@ -61,7 +61,7 @@ resource "aws_rds_cluster" "default" {
 
 ### Aurora with PostgreSQL engine
 
-```hcl
+```terraform
 resource "aws_rds_cluster" "postgresql" {
   cluster_identifier      = "aurora-cluster-demo"
   engine                  = "aurora-postgresql"
@@ -78,7 +78,7 @@ resource "aws_rds_cluster" "postgresql" {
 
 -> More information about Aurora Multi-Master Clusters can be found in the [RDS User Guide](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-multi-master.html).
 
-```hcl
+```terraform
 resource "aws_rds_cluster" "example" {
   cluster_identifier   = "example"
   db_subnet_group_name = aws_db_subnet_group.example.name
@@ -139,7 +139,7 @@ Full details on the core parameters and impacts are in the API Docs: [RestoreDBC
 
 ~> **NOTE:** RDS Aurora Serverless does not support loading data from S3, so its not possible to directly use `engine_mode` set to `serverless` with `s3_import`.
 
-```hcl
+```terraform
 resource "aws_rds_cluster" "db" {
   engine = "aurora"
 
@@ -167,7 +167,7 @@ This will not recreate the resource if the S3 object changes in some way. It's o
 
 Example:
 
-```hcl
+```terraform
 resource "aws_rds_cluster" "example-clone" {
   # ... other configuration ...
 
@@ -191,7 +191,7 @@ resource "aws_rds_cluster" "example-clone" {
 
 Example:
 
-```hcl
+```terraform
 resource "aws_rds_cluster" "example" {
   # ... other configuration ...
 

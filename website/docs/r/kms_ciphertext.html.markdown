@@ -17,7 +17,7 @@ the `aws_kms_ciphertext` data source.
 
 ## Example Usage
 
-```hcl
+```terraform
 resource "aws_kms_key" "oauth_config" {
   description = "oauth config"
   is_enabled  = true

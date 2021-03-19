@@ -14,7 +14,7 @@ Manages an IAM User Login Profile with limited support for password creation dur
 
 ## Example Usage
 
-```hcl
+```terraform
 resource "aws_iam_user" "example" {
   name          = "example"
   path          = "/"
@@ -60,7 +60,7 @@ $ terraform import aws_iam_user_login_profile.example myusername
 
 Since this provider has no method to read the PGP or password information during import, use [`ignore_changes` argument](https://www.pulumi.com/docs/intro/concepts/programming-model/#ignorechanges) to ignore them unless password recreation is desired. e.g.
 
-```hcl
+```terraform
 resource "aws_iam_user_login_profile" "example" {
   # ... other configuration ...
 

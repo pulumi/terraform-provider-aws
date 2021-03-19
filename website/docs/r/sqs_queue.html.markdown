@@ -10,7 +10,7 @@ description: |-
 
 ## Example Usage
 
-```hcl
+```terraform
 resource "aws_sqs_queue" "queue" {
   name                      = "example-queue"
   delay_seconds             = 90
@@ -30,7 +30,7 @@ resource "aws_sqs_queue" "queue" {
 
 ## FIFO queue
 
-```hcl
+```terraform
 resource "aws_sqs_queue" "queue" {
   name                        = "example-queue.fifo"
   fifo_queue                  = true
@@ -40,7 +40,7 @@ resource "aws_sqs_queue" "queue" {
 
 ## Server-side encryption (SSE)
 
-```hcl
+```terraform
 resource "aws_sqs_queue" "queue" {
   name                              = "example-queue"
   kms_master_key_id                 = "alias/aws/sqs"

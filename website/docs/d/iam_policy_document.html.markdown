@@ -17,7 +17,8 @@ Using this data source to generate policy documents is *optional*. It is also va
 ## Example Usage
 
 ### Basic Example
-```hcl
+
+```terraform
 data "aws_iam_policy_document" "example" {
   statement {
     sid = "1"
@@ -76,7 +77,7 @@ resource "aws_iam_policy" "example" {
 
 You can specify multiple principal blocks with different types. You can also use this data source to generate an assume-role policy.
 
-```hcl
+```terraform
 data "aws_iam_policy_document" "event_stream_bucket_role_assume_role_policy" {
   statement {
     actions = ["sts:AssumeRole"]
@@ -101,7 +102,7 @@ data "aws_iam_policy_document" "event_stream_bucket_role_assume_role_policy" {
 
 ### Example Using A Source Document
 
-```hcl
+```terraform
 data "aws_iam_policy_document" "source" {
   statement {
     actions   = ["ec2:*"]
@@ -159,7 +160,7 @@ data "aws_iam_policy_document" "source_json_example" {
 
 ### Example Using An Override Document
 
-```hcl
+```terraform
 data "aws_iam_policy_document" "override" {
   statement {
     sid = "SidToOverride"
@@ -216,7 +217,7 @@ data "aws_iam_policy_document" "override_json_example" {
 
 You can also combine `source_json` and `override_json` in the same document.
 
-```hcl
+```terraform
 data "aws_iam_policy_document" "source" {
   statement {
     sid       = "OverridePlaceholder"
@@ -259,7 +260,7 @@ data "aws_iam_policy_document" "politik" {
 
 Multiple documents can be combined using the `source_policy_documents` or `override_policy_documents` attributes. `source_policy_documents` requires that all documents have unique Sids, while `override_policy_documents` will iteratively override matching Sids.
 
-```hcl
+```terraform
 data "aws_iam_policy_document" "source_one" {
   statement {
     actions   = ["ec2:*"]
@@ -332,7 +333,7 @@ data "aws_iam_policy_document" "combined" {
 
 ### Example of Merging Override Documents
 
-```hcl
+```terraform
 data "aws_iam_policy_document" "policy_one" {
   statement {
     sid    = "OverridePlaceHolderOne"

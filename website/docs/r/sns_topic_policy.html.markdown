@@ -14,7 +14,7 @@ Provides an SNS topic policy resource
 
 ## Example Usage
 
-```hcl
+```terraform
 resource "aws_sns_topic" "test" {
   name = "my-topic-with-policy"
 }
@@ -72,6 +72,10 @@ The following arguments are supported:
 
 * `arn` - (Required) The ARN of the SNS topic
 * `policy` - (Required) The fully-formed AWS policy as JSON.
+
+## Attributes Reference
+
+No additional attributes are exported.
 
 ## Import
 

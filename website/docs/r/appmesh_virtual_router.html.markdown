@@ -24,7 +24,7 @@ The state associated with existing resources will automatically be migrated.
 
 ## Example Usage
 
-```hcl
+```terraform
 resource "aws_appmesh_virtual_router" "serviceb" {
   name      = "serviceB"
   mesh_name = aws_appmesh_mesh.simple.id

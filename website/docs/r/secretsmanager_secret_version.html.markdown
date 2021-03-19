@@ -16,7 +16,7 @@ Provides a resource to manage AWS Secrets Manager secret version including its s
 
 ### Simple String Value
 
-```hcl
+```terraform
 resource "aws_secretsmanager_secret_version" "example" {
   secret_id     = aws_secretsmanager_secret.example.id
   secret_string = "example-string-to-protect"
@@ -27,7 +27,7 @@ resource "aws_secretsmanager_secret_version" "example" {
 
 Secrets Manager also accepts key-value pairs in JSON.
 
-```hcl
+```terraform
 # The map here can come from other supported configurations
 # like locals, resource attribute, map() built-in, etc.
 variable "example" {

@@ -14,7 +14,7 @@ Provides a Cognito User Pool Client resource.
 
 ### Create a basic user pool client
 
-```hcl
+```terraform
 resource "aws_cognito_user_pool" "pool" {
   name = "pool"
 }
@@ -28,7 +28,7 @@ resource "aws_cognito_user_pool_client" "client" {
 
 ### Create a user pool client with no SRP authentication
 
-```hcl
+```terraform
 resource "aws_cognito_user_pool" "pool" {
   name = "pool"
 }
@@ -45,7 +45,7 @@ resource "aws_cognito_user_pool_client" "client" {
 
 ### Create a user pool client with pinpoint analytics
 
-```hcl
+```terraform
 data "aws_caller_identity" "current" {}
 
 resource "aws_cognito_user_pool" "test" {
@@ -155,7 +155,7 @@ Valid values for the following arguments are: `seconds`, `minutes`, `hours` or `
 * `id_token` - (Optional) Time unit in for the value in `id_token_validity`, defaults to `hours`.
 * `refresh_token` - (Optional) Time unit in for the value in `refresh_token_validity`, defaults to `days`.
 
-## Attribute Reference
+## Attributes Reference
 
 In addition to all arguments above, the following attributes are exported:
 

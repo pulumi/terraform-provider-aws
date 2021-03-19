@@ -17,7 +17,7 @@ More information can be found in the [Amazon API Gateway Developer Guide](https:
 
 ### Basic
 
-```hcl
+```terraform
 resource "aws_apigatewayv2_deployment" "example" {
   api_id      = aws_apigatewayv2_route.example.api_id
   description = "Example deployment"
@@ -30,7 +30,7 @@ resource "aws_apigatewayv2_deployment" "example" {
 
 ### Redeployment Triggers
 
-```hcl
+```terraform
 resource "aws_apigatewayv2_deployment" "example" {
   api_id      = aws_apigatewayv2_api.example.id
   description = "Example deployment"

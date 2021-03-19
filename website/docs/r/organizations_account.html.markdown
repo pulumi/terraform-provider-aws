@@ -16,7 +16,7 @@ Provides a resource to create a member account in the current organization.
 
 ## Example Usage
 
-```hcl
+```terraform
 resource "aws_organizations_account" "account" {
   name  = "my_new_account"
   email = "john@doe.org"
@@ -51,7 +51,7 @@ $ terraform import aws_organizations_account.my_org 111111111111
 
 Certain resource arguments, like `role_name`, do not have an Organizations API method for reading the information after account creation. If the argument is set in the this provider configuration on an imported resource, this provider will always show a difference. To workaround this behavior, either omit the argument from the this provider configuration or use [`ignoreChanges`](https://www.pulumi.com/docs/intro/concepts/programming-model/#ignorechanges) to hide the difference, e.g.
 
-```hcl
+```terraform
 resource "aws_organizations_account" "account" {
   name      = "my_new_account"
   email     = "john@doe.org"

@@ -89,6 +89,23 @@ func Provider() *schema.Provider {
 				Set:           schema.HashString,
 			},
 
+			"default_tags": {
+				Type:        schema.TypeList,
+				Optional:    true,
+				MaxItems:    1,
+				Description: "Configuration block with settings to default resource tags across all resources.",
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"tags": {
+							Type:        schema.TypeMap,
+							Optional:    true,
+							Elem:        &schema.Schema{Type: schema.TypeString},
+							Description: "Resource tags to default across all resources",
+						},
+					},
+				},
+			},
+
 			"endpoints": endpointsSchema(),
 
 			"ignore_tags": {
@@ -240,6 +257,7 @@ func Provider() *schema.Provider {
 			"aws_ec2_transit_gateway_dx_gateway_attachment":  dataSourceAwsEc2TransitGatewayDxGatewayAttachment(),
 			"aws_ec2_transit_gateway_peering_attachment":     dataSourceAwsEc2TransitGatewayPeeringAttachment(),
 			"aws_ec2_transit_gateway_route_table":            dataSourceAwsEc2TransitGatewayRouteTable(),
+			"aws_ec2_transit_gateway_route_tables":           dataSourceAwsEc2TransitGatewayRouteTables(),
 			"aws_ec2_transit_gateway_vpc_attachment":         dataSourceAwsEc2TransitGatewayVpcAttachment(),
 			"aws_ec2_transit_gateway_vpn_attachment":         dataSourceAwsEc2TransitGatewayVpnAttachment(),
 			"aws_ecr_authorization_token":                    dataSourceAwsEcrAuthorizationToken(),
@@ -292,6 +310,7 @@ func Provider() *schema.Provider {
 			"aws_iot_endpoint":                               dataSourceAwsIotEndpoint(),
 			"aws_ip_ranges":                                  dataSourceAwsIPRanges(),
 			"aws_kinesis_stream":                             dataSourceAwsKinesisStream(),
+			"aws_kinesis_stream_consumer":                    dataSourceAwsKinesisStreamConsumer(),
 			"aws_kms_alias":                                  dataSourceAwsKmsAlias(),
 			"aws_kms_ciphertext":                             dataSourceAwsKmsCiphertext(),
 			"aws_kms_key":                                    dataSourceAwsKmsKey(),
@@ -773,6 +792,7 @@ func Provider() *schema.Provider {
 			"aws_kinesisanalyticsv2_application":                      resourceAwsKinesisAnalyticsV2Application(),
 			"aws_kinesis_firehose_delivery_stream":                    resourceAwsKinesisFirehoseDeliveryStream(),
 			"aws_kinesis_stream":                                      resourceAwsKinesisStream(),
+			"aws_kinesis_stream_consumer":                             resourceAwsKinesisStreamConsumer(),
 			"aws_kinesis_video_stream":                                resourceAwsKinesisVideoStream(),
 			"aws_kms_alias":                                           resourceAwsKmsAlias(),
 			"aws_kms_external_key":                                    resourceAwsKmsExternalKey(),
@@ -1192,6 +1212,7 @@ func init() {
 		"appstream",
 		"appsync",
 		"athena",
+		"auditmanager",
 		"autoscaling",
 		"autoscalingplans",
 		"backup",
@@ -1343,6 +1364,7 @@ func providerConfigure(d *schema.ResourceData, terraformVersion string) (interfa
 		Token:                   d.Get("token").(string),
 		Region:                  d.Get("region").(string),
 		CredsFilename:           d.Get("shared_credentials_file").(string),
+		DefaultTagsConfig:       expandProviderDefaultTags(d.Get("default_tags").([]interface{})),
 		Endpoints:               make(map[string]string),
 		MaxRetries:              d.Get("max_retries").(int),
 		IgnoreTagsConfig:        expandProviderIgnoreTags(d.Get("ignore_tags").([]interface{})),
@@ -1526,6 +1548,20 @@ func endpointsSchema() *schema.Schema {
 			Schema: endpointsAttributes,
 		},
 	}
+}
+
+func expandProviderDefaultTags(l []interface{}) *keyvaluetags.DefaultConfig {
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	defaultConfig := &keyvaluetags.DefaultConfig{}
+	m := l[0].(map[string]interface{})
+
+	if v, ok := m["tags"].(map[string]interface{}); ok {
+		defaultConfig.Tags = keyvaluetags.New(v)
+	}
+	return defaultConfig
 }
 
 func expandProviderIgnoreTags(l []interface{}) *keyvaluetags.IgnoreConfig {

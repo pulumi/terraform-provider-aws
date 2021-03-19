@@ -16,7 +16,7 @@ Provides a Simple or Managed Microsoft directory in AWS Directory Service.
 
 ### SimpleAD
 
-```hcl
+```terraform
 resource "aws_directory_service_directory" "bar" {
   name     = "corp.notexample.com"
   password = "SuperSecretPassw0rd"
@@ -51,7 +51,7 @@ resource "aws_subnet" "bar" {
 
 ### Microsoft Active Directory (MicrosoftAD)
 
-```hcl
+```terraform
 resource "aws_directory_service_directory" "bar" {
   name     = "corp.notexample.com"
   password = "SuperSecretPassw0rd"
@@ -87,7 +87,7 @@ resource "aws_subnet" "bar" {
 
 ### Microsoft Active Directory Connector (ADConnector)
 
-```hcl
+```terraform
 resource "aws_directory_service_directory" "connector" {
   name     = "corp.notexample.com"
   password = "SuperSecretPassw0rd"

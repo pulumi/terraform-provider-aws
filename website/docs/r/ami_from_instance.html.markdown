@@ -28,7 +28,7 @@ to produce a fresh snapshot.
 
 ## Example Usage
 
-```hcl
+```terraform
 resource "aws_ami_from_instance" "example" {
   name               = "example"
   source_instance_id = "i-xxxxxxxx"

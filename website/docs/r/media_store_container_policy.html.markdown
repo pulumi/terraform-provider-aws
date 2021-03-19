@@ -12,7 +12,7 @@ Provides a MediaStore Container Policy.
 
 ## Example Usage
 
-```hcl
+```terraform
 data "aws_region" "current" {}
 
 data "aws_caller_identity" "current" {}
@@ -48,6 +48,10 @@ The following arguments are supported:
 
 * `container_name` - (Required) The name of the container.
 * `policy` - (Required) The contents of the policy.
+
+## Attributes Reference
+
+No additional attributes are exported.
 
 ## Import
 
