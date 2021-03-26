@@ -62,8 +62,7 @@ The following arguments are supported:
 
 ## Attributes Reference
 
-* `user` - The name of the IAM User
-* `groups` - The list of IAM Groups
+No additional attributes are exported.
 
 ## Import
 
