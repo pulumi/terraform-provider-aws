@@ -2,6 +2,7 @@ package aws
 
 import (
 	"bytes"
+	"context"
 	"fmt"
 	"log"
 	"math"
@@ -10,6 +11,7 @@ import (
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/arn"
+	"github.com/aws/aws-sdk-go/aws/request"
 	"github.com/aws/aws-sdk-go/service/ecs"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -1215,7 +1217,12 @@ func waitForSteadyState(conn *ecs.ECS, d *schema.ResourceData) error {
 		input.Cluster = aws.String(v.(string))
 	}
 
-	if err := conn.WaitUntilServicesStable(input); err != nil {
+	ctx := context.Background()
+	err := conn.WaitUntilServicesStableWithContext(ctx, input, func(w *request.Waiter) {
+		w.MaxAttempts = 60
+		w.Delay = func(attempt int) time.Duration { return 15 * time.Second }
+	})
+	if err != nil {
 		return fmt.Errorf("error waiting for service (%s) to reach a steady state: %w", d.Id(), err)
 	}
 	return nil
