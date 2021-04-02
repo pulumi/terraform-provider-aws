@@ -13,7 +13,7 @@ const (
 	EventSourceMappingDeleteTimeout      = 5 * time.Minute
 	LambdaFunctionCreateTimeout          = 5 * time.Minute
 	LambdaFunctionUpdateTimeout          = 5 * time.Minute
-	LambdaFunctionPublishTimeout         = 2 * time.Minute
+	LambdaFunctionPublishTimeout         = 5 * time.Minute
 	LambdaFunctionPutConcurrencyTimeout  = 1 * time.Minute
 	LambdaFunctionExtraThrottlingTimeout = 9 * time.Minute
 )
