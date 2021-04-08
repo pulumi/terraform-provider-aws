@@ -23,7 +23,7 @@ a conflict of rule settings and will overwrite rules.
 
 ## Example Usage
 
-Basic usage
+### Basic usage
 
 ```terraform
 resource "aws_security_group" "allow_tls" {
@@ -51,6 +51,34 @@ resource "aws_security_group" "allow_tls" {
   }
 }
 ```
+
+### Usage with prefix list IDs
+
+Prefix Lists are either managed by AWS internally, or created by the customer using a
+Prefix List resource. Prefix Lists provided by
+AWS are associated with a prefix list name, or service name, that is linked to a specific region.
+Prefix list IDs are exported on VPC Endpoints, so you can use this format:
+
+```terraform
+resource "aws_security_group" "example" {
+  name        = "allow_tls"
+  description = "Allow TLS inbound traffic"
+  vpc_id      = aws_vpc.main.id
+
+  egress {
+    from_port       = 0
+    to_port         = 0
+    protocol        = "-1"
+    prefix_list_ids = [aws_vpc_endpoint.my_endpoint.prefix_list_id]
+  }
+}
+
+resource "aws_vpc_endpoint" "my_endpoint" {
+  # ... other configuration ...
+}
+```
+
+You can also find a specific Prefix List using the `aws_prefix_list` data source.
 
 ## Argument Reference
 
@@ -126,32 +154,6 @@ resource "aws_security_group" "example" {
   }
 }
 ```
-
-## Usage with prefix list IDs
-
-Prefix Lists are either managed by AWS internally, or created by the customer using a
-[Prefix List resource](ec2_managed_prefix_list.html). Prefix Lists provided by
-AWS are associated with a prefix list name, or service name, that is linked to a specific region.
-Prefix list IDs are exported on VPC Endpoints, so you can use this format:
-
-```terraform
-resource "aws_security_group" "example" {
-  # ... other configuration ...
-
-  egress {
-    from_port       = 0
-    to_port         = 0
-    protocol        = "-1"
-    prefix_list_ids = [aws_vpc_endpoint.my_endpoint.prefix_list_id]
-  }
-}
-
-resource "aws_vpc_endpoint" "my_endpoint" {
-  # ... other configuration ...
-}
-```
-
-You can also find a specific Prefix List using the `aws_prefix_list` data source.
 
 ## Attributes Reference
 
