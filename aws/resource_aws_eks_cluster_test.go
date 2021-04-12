@@ -497,6 +497,48 @@ func TestAccAWSEksCluster_NetworkConfig_ServiceIpv4Cidr(t *testing.T) {
 	})
 }
 
+func TestAccAWSEksCluster_AssociateEncryptionConfig(t *testing.T) {
+	var cluster1, cluster2, cluster3 eks.Cluster
+
+	rName := fmt.Sprintf("tf-acc-test-%s", acctest.RandString(5))
+	resourceName := "aws_eks_cluster.test"
+	kmsKeyResourceName := "aws_kms_key.test"
+
+	resource.ParallelTest(t, resource.TestCase{
+		PreCheck:     func() { testAccPreCheck(t); testAccPreCheckAWSEks(t) },
+		ErrorCheck:   testAccErrorCheck(t, eks.EndpointsID),
+		Providers:    testAccProviders,
+		CheckDestroy: testAccCheckAWSEksClusterDestroy,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccAWSEksClusterConfig_EmptyEncryptionConfig(rName),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckAWSEksClusterExists(resourceName, &cluster1),
+					resource.TestCheckResourceAttr(resourceName, "encryption_config.#", "0"),
+				),
+			},
+			{
+				Config: testAccAWSEksClusterConfig_EncryptionConfig(rName),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckAWSEksClusterExists(resourceName, &cluster2),
+					testAccCheckAWSEksClusterNotRecreated(&cluster1, &cluster2),
+					resource.TestCheckResourceAttr(resourceName, "encryption_config.#", "1"),
+					resource.TestCheckResourceAttr(resourceName, "encryption_config.0.provider.#", "1"),
+					resource.TestCheckResourceAttrPair(resourceName, "encryption_config.0.provider.0.key_arn", kmsKeyResourceName, "arn"),
+					resource.TestCheckResourceAttr(resourceName, "encryption_config.0.resources.#", "1"),
+				),
+			},
+			{
+				Config: testAccAWSEksClusterConfig_EmptyEncryptionConfig(rName),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckAWSEksClusterExists(resourceName, &cluster3),
+					testAccCheckAWSEksClusterRecreated(&cluster2, &cluster3),
+				),
+			},
+		},
+	})
+}
+
 func testAccCheckAWSEksClusterExists(resourceName string, cluster *eks.Cluster) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[resourceName]
@@ -745,6 +787,26 @@ resource "aws_eks_cluster" "test" {
   depends_on = [aws_iam_role_policy_attachment.test-AmazonEKSClusterPolicy]
 }
 `, rName, tagKey1, tagValue1, tagKey2, tagValue2))
+}
+
+func testAccAWSEksClusterConfig_EmptyEncryptionConfig(rName string) string {
+	return composeConfig(testAccAWSEksClusterConfig_Base(rName), fmt.Sprintf(`
+resource "aws_kms_key" "test" {
+  description             = %[1]q
+  deletion_window_in_days = 7
+}
+
+resource "aws_eks_cluster" "test" {
+  name     = %[1]q
+  role_arn = aws_iam_role.test.arn
+
+  vpc_config {
+    subnet_ids = aws_subnet.test[*].id
+  }
+
+  depends_on = [aws_iam_role_policy_attachment.test-AmazonEKSClusterPolicy]
+}
+`, rName))
 }
 
 func testAccAWSEksClusterConfig_EncryptionConfig(rName string) string {

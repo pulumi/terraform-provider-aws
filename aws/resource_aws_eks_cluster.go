@@ -1,8 +1,10 @@
 package aws
 
 import (
+	"context"
 	"fmt"
 	"log"
+	"reflect"
 	"regexp"
 	"strings"
 	"time"
@@ -22,6 +24,22 @@ func resourceAwsEksCluster() *schema.Resource {
 		Read:   resourceAwsEksClusterRead,
 		Update: resourceAwsEksClusterUpdate,
 		Delete: resourceAwsEksClusterDelete,
+
+		CustomizeDiff: func(ctx context.Context, d *schema.ResourceDiff, meta interface{}) error {
+			// Ensure that Encryption Config is only ever added. Any other change needs to force a new resource.
+			oldConfigI, newConfigI := d.GetChange("encryption_config")
+			oldConfig := expandEksEncryptionConfig(oldConfigI.([]interface{}))
+			newConfig := expandEksEncryptionConfig(newConfigI.([]interface{}))
+			hasRealDiff := !reflect.DeepEqual(oldConfig, newConfig)
+			oldConfigHadECSet := oldConfig != nil && len(oldConfig) > 0
+			if hasRealDiff && oldConfigHadECSet {
+				if err := d.ForceNew("encryption_config"); err != nil {
+					return err
+				}
+			}
+
+			return nil
+		},
 
 		Importer: &schema.ResourceImporter{
 			State: schema.ImportStatePassthrough,
@@ -58,20 +76,17 @@ func resourceAwsEksCluster() *schema.Resource {
 				Type:     schema.TypeList,
 				MaxItems: 1,
 				Optional: true,
-				ForceNew: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"provider": {
 							Type:     schema.TypeList,
 							MaxItems: 1,
 							Required: true,
-							ForceNew: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"key_arn": {
 										Type:     schema.TypeString,
 										Required: true,
-										ForceNew: true,
 									},
 								},
 							},
@@ -80,7 +95,6 @@ func resourceAwsEksCluster() *schema.Resource {
 							Type:     schema.TypeSet,
 							MinItems: 1,
 							Required: true,
-							ForceNew: true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
 								ValidateFunc: validation.StringInSlice([]string{
@@ -453,6 +467,32 @@ func resourceAwsEksClusterUpdate(d *schema.ResourceData, meta interface{}) error
 		if err != nil {
 			return fmt.Errorf("error waiting for EKS Cluster (%s) config update (%s): %s", d.Id(), updateID, err)
 		}
+	}
+
+	if d.HasChange("encryption_config") {
+		oldConfigI, newConfigI := d.GetChange("encryption_config")
+		oldConfig := expandEksEncryptionConfig(oldConfigI.([]interface{}))
+		newConfig := expandEksEncryptionConfig(newConfigI.([]interface{}))
+
+		if oldConfig == nil && newConfig != nil {
+			resp, err := conn.AssociateEncryptionConfig(&eks.AssociateEncryptionConfigInput{
+				ClusterName:      aws.String(d.Id()),
+				EncryptionConfig: newConfig,
+			})
+			if err != nil {
+				return fmt.Errorf("error associating encryption config with existing cluster %s: %s", d.Id(), err)
+			}
+
+			if resp.Update == nil || resp.Update.Id == nil {
+				return fmt.Errorf("empty update response when associating encryption config with existing cluster %s", d.Id())
+			}
+			updateId := aws.StringValue(resp.Update.Id)
+
+			if err := waitForUpdateEksCluster(conn, d.Id(), updateId, d.Timeout(schema.TimeoutUpdate)); err != nil {
+				return fmt.Errorf("error waiting for EKS Cluster (%s) config update (%s): %s", d.Id(), updateId, err)
+			}
+		}
+
 	}
 
 	return resourceAwsEksClusterRead(d, meta)
