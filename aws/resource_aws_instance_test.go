@@ -22,6 +22,8 @@ import (
 )
 
 func init() {
+	RegisterServiceErrorCheckFunc(ec2.EndpointsID, testAccErrorCheckSkipEC2)
+
 	resource.AddTestSweepers("aws_instance", &resource.Sweeper{
 		Name: "aws_instance",
 		F:    testSweepInstances,
@@ -32,6 +34,12 @@ func init() {
 	})
 }
 
+func testAccErrorCheckSkipEC2(t *testing.T) resource.ErrorCheckFunc {
+	return testAccErrorCheckSkipMessagesContaining(t,
+		"VolumeTypeNotAvailableInRegion",
+	)
+}
+
 func testSweepInstances(region string) error {
 	client, err := sharedClientForRegion(region)
 	if err != nil {
@@ -39,7 +47,7 @@ func testSweepInstances(region string) error {
 	}
 	conn := client.(*AWSClient).ec2conn
 
-	err = conn.DescribeInstancesPages(&ec2.DescribeInstancesInput{}, func(page *ec2.DescribeInstancesOutput, isLast bool) bool {
+	err = conn.DescribeInstancesPages(&ec2.DescribeInstancesInput{}, func(page *ec2.DescribeInstancesOutput, lastPage bool) bool {
 		if len(page.Reservations) == 0 {
 			log.Print("[DEBUG] No EC2 Instances to sweep")
 			return false
@@ -79,7 +87,7 @@ func testSweepInstances(region string) error {
 				}
 			}
 		}
-		return !isLast
+		return !lastPage
 	})
 	if err != nil {
 		if testSweepSkipSweepError(err) {
