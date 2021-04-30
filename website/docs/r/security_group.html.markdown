@@ -150,6 +150,7 @@ In addition to all arguments above, the following attributes are exported:
 * `arn` - ARN of the security group.
 * `id` - ID of the security group.
 * `owner_id` - Owner ID.
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider .
 
 ## Timeouts
 

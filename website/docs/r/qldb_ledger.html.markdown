@@ -34,6 +34,7 @@ In addition to all arguments above, the following attributes are exported:
 
 * `id` - The Name of the QLDB Ledger
 * `arn` - The ARN of the QLDB Ledger
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider.
 
 ## Import
 

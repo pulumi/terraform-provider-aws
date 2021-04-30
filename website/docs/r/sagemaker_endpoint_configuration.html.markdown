@@ -75,6 +75,7 @@ In addition to all arguments above, the following attributes are exported:
 
 * `arn` - The Amazon Resource Name (ARN) assigned by AWS to this endpoint configuration.
 * `name` - The name of the endpoint configuration.
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider .
 
 ## Import
 

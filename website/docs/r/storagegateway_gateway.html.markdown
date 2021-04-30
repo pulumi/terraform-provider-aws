@@ -109,6 +109,7 @@ In addition to all arguments above, the following attributes are exported:
 * `endpoint_type` - The type of endpoint for your gateway.
 * `host_environment` - The type of hypervisor environment used by the host.
 * `gateway_network_interface` - An array that contains descriptions of the gateway network interfaces. See [Gateway Network Interface](#gateway-network-interface).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider .
 
 ### Gateway Network Interface
 
@@ -128,21 +129,4 @@ In addition to all arguments above, the following attributes are exported:
 $ terraform import aws_storagegateway_gateway.example arn:aws:storagegateway:us-east-1:123456789012:gateway/sgw-12345678
 ```
 
-<<<<<<< HEAD
 Certain resource arguments, like `gateway_ip_address` do not have a Storage Gateway API method for reading the information after creation, either omit the argument from the provider configuration or use `ignoreChanges` to hide the difference.
-=======
-Certain resource arguments, like `gateway_ip_address` do not have a Storage Gateway API method for reading the information after creation, either omit the argument from the provider configuration or use `ignore_changes` to hide the difference, e.g.
-
-
-```terraform
-resource "aws_storagegateway_gateway" "example" {
-  # ... other configuration ...
-
-  gateway_ip_address = aws_instance.sgw.private_ip
-  # There is no Storage Gateway API for reading gateway_ip_address
-  lifecycle {
-    ignore_changes = ["gateway_ip_address"]
-  }
-}
-```
->>>>>>> v3.33.0

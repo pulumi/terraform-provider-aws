@@ -279,6 +279,7 @@ In addition to all arguments above, the following attributes are exported:
 * `signing_job_arn` - ARN of the signing job.
 * `signing_profile_version_arn` - ARN of the signing profile version.
 * `source_code_size` - Size in bytes of the function .zip file.
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider .
 * `version` - Latest published version of your Lambda Function.
 * `vpc_config.vpc_id` - ID of the VPC.
 

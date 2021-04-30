@@ -107,6 +107,7 @@ attribute once the route resource is created.
 * `id` - The ID of the routing table.
 * `arn` - The ARN of the route table.
 * `owner_id` - The ID of the AWS account that owns the route table.
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider .
 
 ## Import
 

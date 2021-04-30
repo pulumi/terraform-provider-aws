@@ -15,6 +15,8 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
+
+	iamwaiter "github.com/terraform-providers/terraform-provider-aws/aws/internal/service/iam/waiter"
 	"github.com/terraform-providers/terraform-provider-aws/aws/internal/service/lambda/finder"
 	"github.com/terraform-providers/terraform-provider-aws/aws/internal/service/lambda/waiter"
 	"github.com/terraform-providers/terraform-provider-aws/aws/internal/tfresource"
@@ -115,14 +117,17 @@ func resourceAwsLambdaEventSourceMapping() *schema.Resource {
 			"maximum_retry_attempts": {
 				Type:         schema.TypeInt,
 				Optional:     true,
-				ValidateFunc: validation.IntBetween(0, 10000),
 				Computed:     true,
+				ValidateFunc: validation.IntBetween(-1, 10_000),
 			},
 			"maximum_record_age_in_seconds": {
-				Type:         schema.TypeInt,
-				Optional:     true,
-				ValidateFunc: validation.IntBetween(60, 604800),
-				Computed:     true,
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
+				ValidateFunc: validation.Any(
+					validation.IntInSlice([]int{-1}),
+					validation.IntBetween(60, 604_800),
+				),
 			},
 			"bisect_batch_on_function_error": {
 				Type:     schema.TypeBool,
@@ -190,8 +195,8 @@ func resourceAwsLambdaEventSourceMappingCreate(d *schema.ResourceData, meta inte
 		FunctionName: aws.String(d.Get("function_name").(string)),
 	}
 
-	if batchSize, ok := d.GetOk("batch_size"); ok {
-		input.BatchSize = aws.Int64(int64(batchSize.(int)))
+	if v, ok := d.GetOk("batch_size"); ok {
+		input.BatchSize = aws.Int64(int64(v.(int)))
 	}
 
 	if v, ok := d.GetOk("bisect_batch_on_function_error"); ok {
@@ -206,8 +211,8 @@ func resourceAwsLambdaEventSourceMappingCreate(d *schema.ResourceData, meta inte
 		input.EventSourceArn = aws.String(v.(string))
 	}
 
-	if batchWindow, ok := d.GetOk("maximum_batching_window_in_seconds"); ok {
-		input.MaximumBatchingWindowInSeconds = aws.Int64(int64(batchWindow.(int)))
+	if v, ok := d.GetOk("maximum_batching_window_in_seconds"); ok {
+		input.MaximumBatchingWindowInSeconds = aws.Int64(int64(v.(int)))
 	}
 
 	if v, ok := d.GetOk("maximum_record_age_in_seconds"); ok {
@@ -226,12 +231,8 @@ func resourceAwsLambdaEventSourceMappingCreate(d *schema.ResourceData, meta inte
 		input.StartingPosition = aws.String(v.(string))
 	}
 
-	if startingPosition, ok := d.GetOk("starting_position"); ok {
-		input.StartingPosition = aws.String(startingPosition.(string))
-	}
-
-	if startingPositionTimestamp, ok := d.GetOk("starting_position_timestamp"); ok {
-		t, _ := time.Parse(time.RFC3339, startingPositionTimestamp.(string))
+	if v, ok := d.GetOk("starting_position_timestamp"); ok {
+		t, _ := time.Parse(time.RFC3339, v.(string))
 		input.StartingPositionTimestamp = aws.Time(t)
 	}
 
@@ -253,7 +254,7 @@ func resourceAwsLambdaEventSourceMappingCreate(d *schema.ResourceData, meta inte
 	// retry
 	var eventSourceMappingConfiguration *lambda.EventSourceMappingConfiguration
 	var err error
-	err = resource.Retry(5*time.Minute, func() *resource.RetryError {
+	err = resource.Retry(iamwaiter.PropagationTimeout, func() *resource.RetryError {
 		eventSourceMappingConfiguration, err = conn.CreateEventSourceMapping(input)
 
 		if tfawserr.ErrCodeEquals(err, lambda.ErrCodeInvalidParameterValueException) {
@@ -263,11 +264,14 @@ func resourceAwsLambdaEventSourceMappingCreate(d *schema.ResourceData, meta inte
 		if err != nil {
 			return resource.NonRetryableError(err)
 		}
+
 		return nil
 	})
+
 	if tfresource.TimedOut(err) {
 		eventSourceMappingConfiguration, err = conn.CreateEventSourceMapping(input)
 	}
+
 	if err != nil {
 		return fmt.Errorf("error creating Lambda Event Source Mapping (%s): %w", aws.StringValue(target), err)
 	}
@@ -344,7 +348,7 @@ func resourceAwsLambdaEventSourceMappingDelete(d *schema.ResourceData, meta inte
 		UUID: aws.String(d.Id()),
 	}
 
-	err := resource.Retry(5*time.Minute, func() *resource.RetryError {
+	err := resource.Retry(waiter.EventSourceMappingPropagationTimeout, func() *resource.RetryError {
 		_, err := conn.DeleteEventSourceMapping(input)
 
 		if tfawserr.ErrCodeEquals(err, lambda.ErrCodeResourceNotFoundException) {
@@ -358,6 +362,7 @@ func resourceAwsLambdaEventSourceMappingDelete(d *schema.ResourceData, meta inte
 		if err != nil {
 			return resource.NonRetryableError(err)
 		}
+
 		return nil
 	})
 	if tfresource.TimedOut(err) {
@@ -367,6 +372,7 @@ func resourceAwsLambdaEventSourceMappingDelete(d *schema.ResourceData, meta inte
 	if tfawserr.ErrCodeEquals(err, lambda.ErrCodeResourceNotFoundException) {
 		return nil
 	}
+
 	if err != nil {
 		return fmt.Errorf("error deleting Lambda Event Source Mapping (%s): %w", d.Id(), err)
 	}
@@ -425,7 +431,7 @@ func resourceAwsLambdaEventSourceMappingUpdate(d *schema.ResourceData, meta inte
 		input.ParallelizationFactor = aws.Int64(int64(d.Get("parallelization_factor").(int)))
 	}
 
-	err := resource.Retry(5*time.Minute, func() *resource.RetryError {
+	err := resource.Retry(waiter.EventSourceMappingPropagationTimeout, func() *resource.RetryError {
 		_, err := conn.UpdateEventSourceMapping(input)
 
 		if tfawserr.ErrCodeEquals(err, lambda.ErrCodeInvalidParameterValueException) {

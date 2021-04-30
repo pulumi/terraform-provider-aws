@@ -87,6 +87,7 @@ In addition to all arguments above, the following attributes are exported:
 * `zone_id` - The Hosted Zone ID. This can be referenced by zone records.
 * `name_servers` - A list of name servers in associated (or default) delegation set.
   Find more about delegation sets in [AWS docs](https://docs.aws.amazon.com/Route53/latest/APIReference/actions-on-reusable-delegation-sets.html).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider .
 
 ## Import
 

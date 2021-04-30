@@ -56,6 +56,7 @@ In addition to all arguments above, the following attributes are exported:
 * `path` - The path of the policy in IAM.
 * `policy` - The policy document.
 * `policy_id` - The policy's ID.
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider.
 
 ## Import
 
