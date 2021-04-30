@@ -39,8 +39,9 @@ func resourceAwsFsxLustreFileSystem() *schema.Resource {
 		Importer: &schema.ResourceImporter{
 			State: schema.ImportStatePassthrough,
 		},
-		CustomizeDiff: customdiff.All(
+		CustomizeDiff: customdiff.Sequence(
 			resourceFsxLustreFileSystemSchemaCustomizeDiff,
+			SetTagsDiff,
 		),
 
 		Timeouts: &schema.ResourceTimeout{
@@ -200,8 +201,6 @@ func resourceAwsFsxLustreFileSystem() *schema.Resource {
 				Default:  false,
 			},
 		},
-
-		CustomizeDiff: SetTagsDiff,
 	}
 }
 

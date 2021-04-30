@@ -3,6 +3,7 @@ package aws
 import (
 	"context"
 	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/customdiff"
 	"log"
 	"reflect"
 	"regexp"
@@ -25,27 +26,28 @@ func resourceAwsEksCluster() *schema.Resource {
 		Update: resourceAwsEksClusterUpdate,
 		Delete: resourceAwsEksClusterDelete,
 
-		CustomizeDiff: func(ctx context.Context, d *schema.ResourceDiff, meta interface{}) error {
-			// Ensure that Encryption Config is only ever added. Any other change needs to force a new resource.
-			oldConfigI, newConfigI := d.GetChange("encryption_config")
-			oldConfig := expandEksEncryptionConfig(oldConfigI.([]interface{}))
-			newConfig := expandEksEncryptionConfig(newConfigI.([]interface{}))
-			hasRealDiff := !reflect.DeepEqual(oldConfig, newConfig)
-			oldConfigHadECSet := oldConfig != nil && len(oldConfig) > 0
-			if hasRealDiff && oldConfigHadECSet {
-				if err := d.ForceNew("encryption_config"); err != nil {
-					return err
-				}
-			}
-
-			return nil
-		},
-
 		Importer: &schema.ResourceImporter{
 			State: schema.ImportStatePassthrough,
 		},
 
-		CustomizeDiff: SetTagsDiff,
+		CustomizeDiff: customdiff.Sequence(
+			func(ctx context.Context, d *schema.ResourceDiff, meta interface{}) error {
+				// Ensure that Encryption Config is only ever added. Any other change needs to force a new resource.
+				oldConfigI, newConfigI := d.GetChange("encryption_config")
+				oldConfig := expandEksEncryptionConfig(oldConfigI.([]interface{}))
+				newConfig := expandEksEncryptionConfig(newConfigI.([]interface{}))
+				hasRealDiff := !reflect.DeepEqual(oldConfig, newConfig)
+				oldConfigHadECSet := oldConfig != nil && len(oldConfig) > 0
+				if hasRealDiff && oldConfigHadECSet {
+					if err := d.ForceNew("encryption_config"); err != nil {
+						return err
+					}
+				}
+
+				return nil
+			},
+			SetTagsDiff,
+		),
 
 		Timeouts: &schema.ResourceTimeout{
 			Create: schema.DefaultTimeout(30 * time.Minute),
