@@ -54,6 +54,7 @@ func resourceAwsSsmActivation() *schema.Resource {
 				Type:     schema.TypeInt,
 				Optional: true,
 				ForceNew: true,
+				Computed: true,
 			},
 			"registration_count": {
 				Type:     schema.TypeInt,

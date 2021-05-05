@@ -183,10 +183,10 @@ func resourceAwsEcsService() *schema.Resource {
 				ForceNew: true,
 				Optional: true,
 				Computed: true,
-				ValidateFunc: validation.StringInSlice([]string{
-					ecs.LaunchTypeEc2,
-					ecs.LaunchTypeFargate,
-				}, false),
+				//ValidateFunc: validation.StringInSlice([]string{
+				//	ecs.LaunchTypeEc2,
+				//	ecs.LaunchTypeFargate,
+				//}, false),
 			},
 			"load_balancer": {
 				Type:     schema.TypeSet,
