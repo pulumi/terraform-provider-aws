@@ -1,3 +1,39 @@
+## 3.39.0 (May 06, 2021)
+
+FEATURES:
+
+* **New Data Source:** `aws_cloudwatch_event_source` ([#19219](https://github.com/hashicorp/terraform-provider-aws/issues/19219))
+* **New Resource:** `aws_dynamodb_kinesis_streaming_destination` ([#16743](https://github.com/hashicorp/terraform-provider-aws/issues/16743))
+* **New Resource:** `aws_macie2_classification_job` ([#19165](https://github.com/hashicorp/terraform-provider-aws/issues/19165))
+
+ENHANCEMENTS:
+
+* data-source/aws_transfer_server: Add `certificate`, `endpoint_type`, `protocols` and `security_policy_name` attributes ([#13371](https://github.com/hashicorp/terraform-provider-aws/issues/13371))
+* resource/aws_cloudwatch_event_bus: Support partner event bus creation ([#19072](https://github.com/hashicorp/terraform-provider-aws/issues/19072))
+* resource/aws_cloudwatch_event_rule: Support partner event bus names ([#18491](https://github.com/hashicorp/terraform-provider-aws/issues/18491))
+* resource/aws_cloudwatch_event_target: Support partner event bus names ([#18491](https://github.com/hashicorp/terraform-provider-aws/issues/18491))
+* resource/aws_codebuild_project: Add `file_system_locations` argument ([#12130](https://github.com/hashicorp/terraform-provider-aws/issues/12130))
+* resource/aws_cognito_identity_pool: Add allow_classic_flow argument ([#19176](https://github.com/hashicorp/terraform-provider-aws/issues/19176))
+* resource/aws_datasync_location_s3: Add `s3_storage_class` argument ([#19190](https://github.com/hashicorp/terraform-provider-aws/issues/19190))
+* resource/aws_glue_connection: Add plan time validation for `connection_properties`, `description`, `match_criteria`, `name`, and `physical_connection_requirements.security_group_id_list` ([#19172](https://github.com/hashicorp/terraform-provider-aws/issues/19172))
+* resource/aws_msk_cluster: Support in-place `instance_type` updates ([#17447](https://github.com/hashicorp/terraform-provider-aws/issues/17447))
+* resource/aws_sfn_state_machine: Add `tracing_configuration` attribute ([#15434](https://github.com/hashicorp/terraform-provider-aws/issues/15434))
+* resource/aws_shield_protection: Add `tags` argument ([#19168](https://github.com/hashicorp/terraform-provider-aws/issues/19168))
+* resource/aws_transfer_server: Add `protocols` argument ([#13371](https://github.com/hashicorp/terraform-provider-aws/issues/13371))
+* resource/aws_transfer_server: Add `security_policy_name` argument ([#15375](https://github.com/hashicorp/terraform-provider-aws/issues/15375))
+
+BUG FIXES:
+
+* aws_batch_compute_environment: Allow update of just `service_role` for managed compute environments ([#19205](https://github.com/hashicorp/terraform-provider-aws/issues/19205))
+* aws_batch_compute_environment: `service_role` argument is optional ([#19205](https://github.com/hashicorp/terraform-provider-aws/issues/19205))
+* provider: Prevent `Provider produced inconsistent final plan` errors when lifecycle arguments apply to resource `tags` not known until apply ([#19251](https://github.com/hashicorp/terraform-provider-aws/issues/19251))
+* resource/aws_appautoscaling_target: Ignore `ObjectNotFoundException` on deletion ([#18115](https://github.com/hashicorp/terraform-provider-aws/issues/18115))
+* resource/aws_batch_job_definition: Prevent diff with default value of `fargatePlatformConfiguration` ([#19207](https://github.com/hashicorp/terraform-provider-aws/issues/19207))
+* resource/aws_lakeformation_permissions: Fix issues related to permissions not being revoked and attempts to revoke non-existent permissions ([#18505](https://github.com/hashicorp/terraform-provider-aws/issues/18505))
+* resource/aws_mwaa_environment: Correctly apply `plugins_s3_object_version` change ([#19266](https://github.com/hashicorp/terraform-provider-aws/issues/19266))
+* resource/aws_sfn_state_machine: Handle eventual consistency of state machine updates ([#15434](https://github.com/hashicorp/terraform-provider-aws/issues/15434))
+* resource/aws_ssoadmin_managed_policy_attachment: Retry attachment/detachment when other permission-set attachment event was not yet propagated, to avoid ConflictException. ([#19216](https://github.com/hashicorp/terraform-provider-aws/issues/19216))
+
 ## 3.38.0 (April 30, 2021)
 
 NOTES:
