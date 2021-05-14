@@ -22,6 +22,24 @@ func TestAccAWSMacie2_serial(t *testing.T) {
 			"complete":       testAccAwsMacie2ClassificationJob_complete,
 			"tags":           testAccAwsMacie2ClassificationJob_WithTags,
 		},
+		"CustomDataIdentifier": {
+			"basic":              testAccAwsMacie2CustomDataIdentifier_basic,
+			"name_generated":     testAccAwsMacie2CustomDataIdentifier_Name_Generated,
+			"name_prefix":        testAccAwsMacie2CustomDataIdentifier_disappears,
+			"disappears":         testAccAwsMacie2CustomDataIdentifier_NamePrefix,
+			"classification_job": testAccAwsMacie2CustomDataIdentifier_WithClassificationJob,
+			"tags":               testAccAwsMacie2CustomDataIdentifier_WithTags,
+		},
+		"FindingsFilter": {
+			"basic":          testAccAwsMacie2FindingsFilter_basic,
+			"name_generated": testAccAwsMacie2FindingsFilter_Name_Generated,
+			"name_prefix":    testAccAwsMacie2FindingsFilter_NamePrefix,
+			"disappears":     testAccAwsMacie2FindingsFilter_disappears,
+			"complete":       testAccAwsMacie2FindingsFilter_complete,
+			"date":           testAccAwsMacie2FindingsFilter_WithDate,
+			"number":         testAccAwsMacie2FindingsFilter_WithNumber,
+			"tags":           testAccAwsMacie2FindingsFilter_withTags,
+		},
 	}
 
 	for group, m := range testCases {
