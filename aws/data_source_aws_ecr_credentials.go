@@ -56,7 +56,9 @@ func dataSourceAwsEcrCredentialsRead(d *schema.ResourceData, meta interface{}) e
 	}
 
 	auth := out.AuthorizationData[0]
-	log.Printf("[DEBUG] Received ECR repository credentials %s", out)
+	debugDetails := auth
+	debugDetails.AuthorizationToken = nil
+	log.Printf("[DEBUG] Received ECR repository credentials %s", debugDetails)
 
 	d.SetId(registryID)
 	d.Set("authorization_token", auth.AuthorizationToken)
