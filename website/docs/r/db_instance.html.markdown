@@ -189,7 +189,7 @@ default is `false` if not specified.
 * `storage_type` - (Optional) One of "standard" (magnetic), "gp2" (general
 purpose SSD), or "io1" (provisioned IOPS SSD). The default is "io1" if `iops` is
 specified, "gp2" if not.
-* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) A map of tags to assign to the resource. .If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 * `timezone` - (Optional) Time zone of the DB instance. `timezone` is currently
 only supported by Microsoft SQL Server. The `timezone` can only be set on
 creation. See [MSSQL User

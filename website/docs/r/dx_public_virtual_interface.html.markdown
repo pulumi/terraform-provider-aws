@@ -44,7 +44,7 @@ The following arguments are supported:
 * `bgp_auth_key` - (Optional) The authentication key for BGP configuration.
 * `customer_address` - (Optional) The IPv4 CIDR destination address to which Amazon should send traffic. Required for IPv4 BGP peers.
 * `route_filter_prefixes` - (Required) A list of routes to be advertised to the AWS network in this region.
-* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) A map of tags to assign to the resource. .If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ## Attributes Reference
 

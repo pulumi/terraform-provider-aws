@@ -45,7 +45,7 @@ The following arguments are supported:
 * `allowed_principals` - (Optional) The ARNs of one or more principals allowed to discover the endpoint service.
 * `gateway_load_balancer_arns` - (Optional) Amazon Resource Names (ARNs) of one or more Gateway Load Balancers for the endpoint service.
 * `network_load_balancer_arns` - (Optional) Amazon Resource Names (ARNs) of one or more Network Load Balancers for the endpoint service.
-* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) A map of tags to assign to the resource. .If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 * `private_dns_name` - (Optional) The private DNS name for the service.
 
 ## Attributes Reference

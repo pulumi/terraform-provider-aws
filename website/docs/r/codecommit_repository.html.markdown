@@ -26,7 +26,7 @@ The following arguments are supported:
 * `repository_name` - (Required) The name for the repository. This needs to be less than 100 characters.
 * `description` - (Optional) The description of the repository. This needs to be less than 1000 characters
 * `default_branch` - (Optional) The default branch of the repository. The branch specified here needs to exist.
-* `tags` - (Optional) Key-value map of resource tags. If configured with a provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Key-value map of resource tags. .If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ## Attributes Reference
 

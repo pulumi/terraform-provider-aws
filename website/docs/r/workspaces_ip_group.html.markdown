@@ -38,7 +38,7 @@ The following arguments are supported:
 * `name` - (Required) The name of the IP group.
 * `description` - (Optional) The description of the IP group.
 * `rules` - (Optional) One or more pairs specifying the IP group rule (in CIDR format) from which web requests originate.
-* `tags` – (Optional) A map of tags assigned to the WorkSpaces directory. If configured with a provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` – (Optional) A map of tags assigned to the WorkSpaces directory. .If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ## Nested Blocks
 

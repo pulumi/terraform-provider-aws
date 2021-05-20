@@ -63,7 +63,7 @@ The following arguments are supported:
     that network interfaces created in the specified subnet should be
     assigned an IPv6 address. Default is `false`
 * `vpc_id` - (Required) The VPC ID.
-* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) A map of tags to assign to the resource. .If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ## Attributes Reference
 

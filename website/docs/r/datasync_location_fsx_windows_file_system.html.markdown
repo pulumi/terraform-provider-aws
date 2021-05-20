@@ -31,7 +31,7 @@ The following arguments are supported:
 * `domain` - (Optional) The name of the Windows domain that the FSx for Windows server belongs to.
 * `security_group_arns` - (Optional) The Amazon Resource Names (ARNs) of the security groups that are to use to configure the FSx for Windows file system.
 * `subdirectory` - (Optional) Subdirectory to perform actions as source or destination.
-* `tags` - (Optional) Key-value pairs of resource tags to assign to the DataSync Location. If configured with a provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Key-value pairs of resource tags to assign to the DataSync Location. .If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ## Attributes Reference
 

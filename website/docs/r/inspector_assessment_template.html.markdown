@@ -35,7 +35,7 @@ The following arguments are supported:
 * `target_arn` - (Required) The assessment target ARN to attach the template to.
 * `duration` - (Required) The duration of the inspector run.
 * `rules_package_arns` - (Required) The rules to be used during the run.
-* `tags` - (Optional) Key-value map of tags for the Inspector assessment template. If configured with a provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Key-value map of tags for the Inspector assessment template. .If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ## Attributes Reference
 

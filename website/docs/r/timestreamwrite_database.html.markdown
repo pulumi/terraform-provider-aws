@@ -49,7 +49,7 @@ In addition to all arguments above, the following attributes are exported:
 * `arn` - The ARN that uniquely identifies this database.
 * `kms_key_id` - The ARN of the KMS key used to encrypt the data stored in the database.
 * `table_count` - The total number of tables found within the Timestream database.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

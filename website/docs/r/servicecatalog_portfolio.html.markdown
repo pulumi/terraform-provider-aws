@@ -27,7 +27,7 @@ The following arguments are supported:
 * `name` - (Required) The name of the portfolio.
 * `description` - (Required) Description of the portfolio
 * `provider_name` - (Required) Name of the person or organization who owns the portfolio.
-* `tags` - (Optional) Tags to apply to the connection. If configured with a provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Tags to apply to the connection. .If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ## Attributes Reference
 

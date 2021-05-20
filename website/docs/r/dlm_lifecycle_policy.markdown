@@ -108,7 +108,7 @@ The following arguments are supported:
 * `execution_role_arn` - (Required) The ARN of an IAM role that is able to be assumed by the DLM service.
 * `policy_details` - (Required) See the [`policy_details` configuration](#policy-details-arguments) block. Max of 1.
 * `state` - (Optional) Whether the lifecycle policy should be enabled or disabled. `ENABLED` or `DISABLED` are valid values. Defaults to `ENABLED`.
-* `tags` - (Optional) Key-value map of resource tags. If configured with a provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Key-value map of resource tags. .If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 #### Policy Details arguments
 

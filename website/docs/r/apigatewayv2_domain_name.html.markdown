@@ -63,7 +63,7 @@ The following arguments are supported:
 * `domain_name` - (Required) The domain name. Must be between 1 and 512 characters in length.
 * `domain_name_configuration` - (Required) The domain name configuration.
 * `mutual_tls_authentication` - (Optional) The mutual TLS authentication configuration for the domain name.
-* `tags` - (Optional) A map of tags to assign to the domain name. If configured with a provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) A map of tags to assign to the domain name. .If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 The `domain_name_configuration` object supports the following:
 

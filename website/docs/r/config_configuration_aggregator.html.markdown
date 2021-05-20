@@ -72,7 +72,7 @@ The following arguments are supported:
 * `name` - (Required) The name of the configuration aggregator.
 * `account_aggregation_source` - (Optional) The account(s) to aggregate config data from as documented below.
 * `organization_aggregation_source` - (Optional) The organization to aggregate config data from as documented below.
-* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) A map of tags to assign to the resource. .If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 Either `account_aggregation_source` or `organization_aggregation_source` must be specified.
 

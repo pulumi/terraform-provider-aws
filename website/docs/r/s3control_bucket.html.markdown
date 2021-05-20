@@ -27,7 +27,7 @@ The following arguments are required:
 
 * `bucket` - (Required) Name of the bucket.
 * `outpost_id` - (Required) Identifier of the Outpost to contain this bucket.
-* `tags` - (Optional) Key-value map of resource tags. If configured with a provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Key-value map of resource tags. .If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ## Attributes Reference
 

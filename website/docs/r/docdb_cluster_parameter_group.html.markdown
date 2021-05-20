@@ -34,7 +34,7 @@ The following arguments are supported:
 * `family` - (Required, Forces new resource) The family of the documentDB cluster parameter group.
 * `description` - (Optional, Forces new resource) The description of the documentDB cluster parameter group. Defaults to "Managed by Pulumi".
 * `parameter` - (Optional) A list of documentDB parameters to apply. Setting parameters to system default values may show a difference on imported resources.
-* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) A map of tags to assign to the resource. .If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 Parameter blocks support the following:
 

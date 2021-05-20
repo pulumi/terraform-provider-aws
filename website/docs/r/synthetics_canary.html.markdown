@@ -49,7 +49,7 @@ The following arguments are optional:
 * `s3_version` - (Optional) S3 version ID of your script. **Conflicts with `zip_file`.**
 * `start_canary` - (Optional) Whether to run or stop the canary.
 * `success_retention_period` - (Optional) Number of days to retain data about successful runs of this canary. If you omit this field, the default of 31 days is used. The valid range is 1 to 455 days.
-* `tags` - (Optional) Key-value map of resource tags. If configured with a provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Key-value map of resource tags. .If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 * `vpc_config` - (Optional) Configuration block. Detailed below.
 * `zip_file` - (Optional) ZIP file that contains the script, if you input your canary script directly into the canary instead of referring to an S3 location. It can be up to 5 MB. **Conflicts with `s3_bucket`, `s3_key`, and `s3_version`.**
 

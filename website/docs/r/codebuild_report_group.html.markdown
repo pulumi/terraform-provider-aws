@@ -66,7 +66,7 @@ The following arguments are supported:
 * `type` - (Required) The type of the Report Group. Valid value are `TEST` and `CODE_COVERAGE`.
 * `export_config` - (Required) Information about the destination where the raw data of this Report Group is exported. see [Export Config](#export-config) documented below.
 * `delete_reports` - (Optional) If `true`, deletes any reports that belong to a report group before deleting the report group. If `false`, you must delete any reports in the report group before deleting it. Default value is `false`.
-* `tags` - (Optional) Key-value mapping of resource tags. If configured with a provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Key-value mapping of resource tags. .If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ### Export Config
 

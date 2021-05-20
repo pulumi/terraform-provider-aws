@@ -61,7 +61,7 @@ In addition to all arguments above, the following attributes are exported:
 
 * `id` - The `table_name` and `database_name` separated by a colon (`:`).
 * `arn` - The ARN that uniquely identifies this table.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

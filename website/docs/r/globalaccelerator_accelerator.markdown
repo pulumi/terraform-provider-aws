@@ -34,7 +34,7 @@ The following arguments are supported:
 * `ip_address_type` - (Optional) The value for the address type. Defaults to `IPV4`. Valid values: `IPV4`.
 * `enabled` - (Optional) Indicates whether the accelerator is enabled. Defaults to `true`. Valid values: `true`, `false`.
 * `attributes` - (Optional) The attributes of the accelerator. Fields documented below.
-* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) A map of tags to assign to the resource. .If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 **attributes** supports the following attributes:
 

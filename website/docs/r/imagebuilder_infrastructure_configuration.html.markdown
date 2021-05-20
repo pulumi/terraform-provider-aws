@@ -54,7 +54,7 @@ The following arguments are optional:
 * `security_group_ids` - (Optional) Set of EC2 Security Group identifiers.
 * `sns_topic_arn` - (Optional) Amazon Resource Name (ARN) of SNS Topic.
 * `subnet_id` - (Optional) EC2 Subnet identifier. Also requires `security_group_ids` argument.
-* `tags` - (Optional) Key-value map of resource tags to assign to the configuration. If configured with a provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Key-value map of resource tags to assign to the configuration. .If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 * `terminate_instance_on_failure` - (Optional) Enable if the instance should be terminated when the pipeline fails. Defaults to `false`.
 
 ### logging

@@ -62,7 +62,7 @@ The following attributes are optional:
 * `description` - (Optional) Description of the component.
 * `kms_key_id` - (Optional) Amazon Resource Name (ARN) of the Key Management Service (KMS) Key used to encrypt the component.
 * `supported_os_versions` - (Optional) Set of Operating Systems (OS) supported by the component.
-* `tags` - (Optional) Key-value map of resource tags for the component. If configured with a provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Key-value map of resource tags for the component. .If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 * `uri` - (Optional) S3 URI with data of the component. Exactly one of `data` and `uri` can be specified.
 
 ## Attributes Reference

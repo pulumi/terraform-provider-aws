@@ -122,7 +122,7 @@ Defaults to `false`.
 * `route_table_ids` - (Optional) One or more route table IDs. Applicable for endpoints of type `Gateway`.
 * `subnet_ids` - (Optional) The ID of one or more subnets in which to create a network interface for the endpoint. Applicable for endpoints of type `GatewayLoadBalancer` and `Interface`.
 * `security_group_ids` - (Optional) The ID of one or more security groups to associate with the network interface. Required for endpoints of type `Interface`.
-* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) A map of tags to assign to the resource. .If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 * `vpc_endpoint_type` - (Optional) The VPC endpoint type, `Gateway`, `GatewayLoadBalancer`, or `Interface`. Defaults to `Gateway`.
 
 ### Timeouts

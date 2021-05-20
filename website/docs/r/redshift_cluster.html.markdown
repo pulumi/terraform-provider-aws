@@ -69,7 +69,7 @@ string.
 * `iam_roles` - (Optional) A list of IAM Role ARNs to associate with the cluster. A Maximum of 10 can be associated to the cluster at any time.
 * `logging` - (Optional) Logging, documented below.
 * `snapshot_copy` - (Optional) Configuration of automatic copy of snapshots from one region to another. Documented below.
-* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) A map of tags to assign to the resource. .If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ### Timeouts
 

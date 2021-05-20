@@ -32,7 +32,7 @@ The following arguments are optional:
 * `distribution_configuration_arn` - (Optional) Amazon Resource Name (ARN) of the Image Builder Distribution Configuration.
 * `enhanced_image_metadata_enabled` - (Optional) Whether additional information about the image being created is collected. Defaults to `true`.
 * `image_tests_configuration` - (Optional) Configuration block with image tests configuration. Detailed below.
-* `tags` - (Optional) Key-value map of resource tags for the Image Builder Image. If configured with a provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Key-value map of resource tags for the Image Builder Image. .If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ### image_tests_configuration
 

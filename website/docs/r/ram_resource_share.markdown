@@ -29,7 +29,7 @@ The following arguments are supported:
 
 * `name` - (Required) The name of the resource share.
 * `allow_external_principals` - (Optional) Indicates whether principals outside your organization can be associated with a resource share.
-* `tags` - (Optional) A map of tags to assign to the resource share. If configured with a provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) A map of tags to assign to the resource share. .If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ## Attributes Reference
 

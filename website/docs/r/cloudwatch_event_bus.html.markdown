@@ -38,7 +38,7 @@ The following arguments are supported:
 
 * `name` - (Required) The name of the new event bus. The names of custom event buses can't contain the / character. To create a partner event bus, ensure the `name` matches the `event_source_name`.
 * `event_source_name` (Optional) The partner event source that the new event bus will be matched with. Must match `name`.
-* `tags` - (Optional)  A map of tags to assign to the resource. If configured with a provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional)  A map of tags to assign to the resource. .If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ## Attributes Reference
 

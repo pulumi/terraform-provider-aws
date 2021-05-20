@@ -137,7 +137,7 @@ The following arguments are supported:
 * `user_pool_config` - (Optional) The Amazon Cognito User Pool configuration. Defined below.
 * `schema` - (Optional) The schema definition, in GraphQL schema language format. This provider cannot perform drift detection of this configuration.
 * `additional_authentication_provider` - (Optional) One or more additional authentication providers for the GraphqlApi. Defined below.
-* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) A map of tags to assign to the resource. .If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 * `xray_enabled` - (Optional) Whether tracing with X-ray is enabled. Defaults to false.
 
 ### log_config

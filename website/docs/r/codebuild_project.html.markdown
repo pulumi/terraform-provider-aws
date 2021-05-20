@@ -243,7 +243,7 @@ The following arguments are optional:
 * `secondary_sources` - (Optional) Configuration block. Detailed below.
 * `service_role` - (Required) Amazon Resource Name (ARN) of the AWS Identity and Access Management (IAM) role that enables AWS CodeBuild to interact with dependent AWS services on behalf of the AWS account.
 * `source_version` - (Optional) Version of the build input to be built for this project. If not specified, the latest version is used.
-* `tags` - (Optional) Map of tags to assign to the resource. If configured with a provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Map of tags to assign to the resource. .If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 * `vpc_config` - (Optional) Configuration block. Detailed below.
 
 ### artifacts

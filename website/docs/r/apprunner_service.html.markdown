@@ -81,7 +81,7 @@ The following arguments are optional:
 * `encryption_configuration` - (Forces new resource) An optional custom encryption key that App Runner uses to encrypt the copy of your source repository that it maintains and your service logs. By default, App Runner uses an AWS managed CMK. See [Encryption Configuration](#encryption-configuration) below for more details.
 * `health_check_configuration` - (Forces new resource) Settings of the health check that AWS App Runner performs to monitor the health of your service. See [Health Check Configuration](#health-check-configuration) below for more details.
 * `instance_configuration` - The runtime configuration of instances (scaling units) of the App Runner service. See [Instance Configuration](#instance-configuration) below for more details.
-* `tags` - Key-value map of resource tags. If configured with a provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - Key-value map of resource tags. .If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ### Encryption Configuration
 
@@ -187,7 +187,7 @@ In addition to all arguments above, the following attributes are exported:
 * `service_id` - An alphanumeric ID that App Runner generated for this service. Unique within the AWS Region.
 * `service_url` - A subdomain URL that App Runner generated for this service. You can use this URL to access your service web application.
 * `status` - The current state of the App Runner service.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

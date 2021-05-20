@@ -81,7 +81,7 @@ The following arguments are supported:
 * `health_check_config` - (Optional) A complex type that contains settings for an optional health check. Only for Public DNS namespaces.
 * `health_check_custom_config` - (Optional, ForceNew) A complex type that contains settings for ECS managed health checks.
 * `namespace_id` - (Optional) The ID of the namespace that you want to use to create the service.
-* `tags` - (Optional) A map of tags to assign to the service. If configured with a provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) A map of tags to assign to the service. .If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ### dns_config
 

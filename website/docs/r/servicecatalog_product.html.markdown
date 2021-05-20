@@ -51,7 +51,7 @@ The following arguments are optional:
 * `support_description` - (Optional) Support information about the product.
 * `support_email` - (Optional) Contact email for product support.
 * `support_url` - (Optional) Contact URL for product support.
-* `tags` - (Optional) Tags to apply to the product. If configured with a provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Tags to apply to the product. .If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ### provisioning_artifact_parameters
 

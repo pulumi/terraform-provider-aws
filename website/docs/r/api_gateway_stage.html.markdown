@@ -111,7 +111,7 @@ The following arguments are supported:
 * `description` - (Optional) The description of the stage
 * `documentation_version` - (Optional) The version of the associated API documentation
 * `variables` - (Optional) A map that defines the stage variables
-* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) A map of tags to assign to the resource. .If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 * `xray_tracing_enabled` - (Optional) Whether active tracing with X-ray is enabled. Defaults to `false`.
 
 ### Nested Blocks

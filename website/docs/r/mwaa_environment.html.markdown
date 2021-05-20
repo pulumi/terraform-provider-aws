@@ -144,7 +144,7 @@ The following arguments are supported:
 * `source_bucket_arn` - (Required) The Amazon Resource Name (ARN) of your Amazon S3 storage bucket. For example, arn:aws:s3:::airflow-mybucketname.
 * `webserver_access_mode` - (Optional) Specifies whether the webserver should be accessible over the internet or via your specified VPC. Possible options: `PRIVATE_ONLY` (default) and `PUBLIC_ONLY`.
 * `weekly_maintenance_window_start` - (Optional) Specifies the start date for the weekly maintenance window.
-* `tags` - (Optional) A map of resource tags to associate with the resource. If configured with a provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) A map of resource tags to associate with the resource. .If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ### Logging configurations
 

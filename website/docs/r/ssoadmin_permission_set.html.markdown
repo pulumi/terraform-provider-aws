@@ -35,7 +35,7 @@ The following arguments are supported:
 * `name` - (Required, Forces new resource) The name of the Permission Set.
 * `relay_state` - (Optional) The relay state URL used to redirect users within the application during the federation authentication process.
 * `session_duration` - (Optional) The length of time that the application user sessions are valid in the ISO-8601 standard. Default: `PT1H`.
-* `tags` - (Optional) Key-value map of resource tags. If configured with a provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Key-value map of resource tags. .If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ## Attributes Reference
 

@@ -64,7 +64,7 @@ The following arguments are supported:
 * `name` - (Optional) Name of the DataSync Task.
 * `options` - (Optional) Configuration block containing option that controls the default behavior when you start an execution of this DataSync Task. For each individual task execution, you can override these options by specifying an overriding configuration in those executions.
 * `schedule` - (Optional) Specifies a schedule used to periodically transfer files from a source to a destination location.
-* `tags` - (Optional) Key-value pairs of resource tags to assign to the DataSync Task. If configured with a provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Key-value pairs of resource tags to assign to the DataSync Task. .If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ### options Argument Reference
 

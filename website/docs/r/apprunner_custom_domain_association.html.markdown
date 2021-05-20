@@ -35,7 +35,7 @@ In addition to all arguments above, the following attributes are exported:
 
 * `id` - The `domain_name` and `service_arn` separated by a comma (`,`).
 * `certificate_validation_records` - A set of certificate CNAME records used for this domain name. See [Certificate Validation Records](#certificate-validation-records) below for more details.
-* `dns_target` - The App Runner subdomain of the App Runner service. The custom domain name is mapped to this target name. Attribute only available if resource created (not imported) with Terraform.
+* `dns_target` - The App Runner subdomain of the App Runner service. The custom domain name is mapped to this target name. Attribute only available if resource created (not imported) with this provider.
 
 ### Certificate Validation Records
 

@@ -35,7 +35,7 @@ The following arguments are supported:
 * `ip_address` - (Required) The IP address of the gateway's Internet-routable external interface.
 * `type` - (Required) The type of customer gateway. The only type AWS
   supports at this time is "ipsec.1".
-* `tags` - (Optional) Tags to apply to the gateway. If configured with a provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Tags to apply to the gateway. .If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ## Attributes Reference
 

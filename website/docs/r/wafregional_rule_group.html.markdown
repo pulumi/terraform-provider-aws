@@ -40,7 +40,7 @@ The following arguments are supported:
 * `name` - (Required) A friendly name of the rule group
 * `metric_name` - (Required) A friendly name for the metrics from the rule group
 * `activated_rule` - (Optional) A list of activated rules, see below
-* `tags` - (Optional) Key-value map of resource tags. If configured with a provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Key-value map of resource tags. .If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ## Nested Blocks
 

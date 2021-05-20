@@ -14,7 +14,7 @@ Retrieves information about a Service Discovery private or public DNS namespace.
 
 ```hcl
 data "aws_service_discovery_dns_namespace" "test" {
-  name = "example.terraform.local"
+  name = "example.service.local"
   type = "DNS_PRIVATE"
 }
 ```

@@ -144,7 +144,7 @@ The following arguments are supported:
 * `mesh_owner` - (Optional) The AWS account ID of the service mesh's owner. Defaults to the account ID the [AWS provider][1] is currently connected to.
 * `virtual_router_name` - (Required) The name of the virtual router in which to create the route. Must be between 1 and 255 characters in length.
 * `spec` - (Required) The route specification to apply.
-* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) A map of tags to assign to the resource. .If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 The `spec` object supports the following:
 

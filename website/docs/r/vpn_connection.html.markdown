@@ -74,7 +74,7 @@ Other arguments:
 
 * `static_routes_only` - (Optional, Default `false`) Whether the VPN connection uses static routes exclusively. Static routes must be used for devices that don't support BGP.
 * `enable_acceleration` - (Optional, Default `false`) Indicate whether to enable acceleration for the VPN connection. Supports only EC2 Transit Gateway.
-* `tags` - (Optional) Tags to apply to the connection. If configured with a provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Tags to apply to the connection. .If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 * `local_ipv4_network_cidr` - (Optional, Default `0.0.0.0/0`) The IPv4 CIDR on the customer gateway (on-premises) side of the VPN connection.
 * `local_ipv6_network_cidr` - (Optional, Default `::/0`) The IPv6 CIDR on the customer gateway (on-premises) side of the VPN connection.
 * `remote_ipv4_network_cidr` - (Optional, Default `0.0.0.0/0`) The IPv4 CIDR on the AWS side of the VPN connection.

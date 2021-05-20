@@ -54,7 +54,7 @@ The following arguments are supported:
 * `name` - (Required) The name of the Redshift Subnet group.
 * `description` - (Optional) The description of the Redshift Subnet group. Defaults to "Managed by Pulumi".
 * `subnet_ids` - (Required) An array of VPC subnet IDs.
-* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) A map of tags to assign to the resource. .If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ## Attributes Reference
 

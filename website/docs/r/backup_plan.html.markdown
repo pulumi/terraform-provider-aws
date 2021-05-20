@@ -38,7 +38,7 @@ The following arguments are supported:
 * `name` - (Required) The display name of a backup plan.
 * `rule` - (Required) A rule object that specifies a scheduled task that is used to back up a selection of resources.
 * `advanced_backup_setting` - (Optional) An object that specifies backup options for each resource type.
-* `tags` - (Optional) Metadata that you can assign to help organize the plans you create. If configured with a provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Metadata that you can assign to help organize the plans you create. .If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ### Rule Arguments
 For **rule** the following attributes are supported:
