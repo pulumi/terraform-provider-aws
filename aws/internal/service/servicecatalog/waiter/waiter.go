@@ -29,11 +29,20 @@ const (
 	ServiceActionReadyTimeout  = 3 * time.Minute
 	ServiceActionDeleteTimeout = 3 * time.Minute
 
+	BudgetResourceAssociationReadyTimeout  = 3 * time.Minute
+	BudgetResourceAssociationDeleteTimeout = 3 * time.Minute
+
+	TagOptionResourceAssociationReadyTimeout  = 3 * time.Minute
+	TagOptionResourceAssociationDeleteTimeout = 3 * time.Minute
+
+	ProvisioningArtifactReadyTimeout   = 3 * time.Minute
+	ProvisioningArtifactDeletedTimeout = 3 * time.Minute
+
 	StatusNotFound    = "NOT_FOUND"
 	StatusUnavailable = "UNAVAILABLE"
 
 	// AWS documentation is wrong, says that status will be "AVAILABLE" but it is actually "CREATED"
-	ProductStatusCreated = "CREATED"
+	StatusCreated = "CREATED"
 
 	OrganizationAccessStatusError = "ERROR"
 )
@@ -41,7 +50,7 @@ const (
 func ProductReady(conn *servicecatalog.ServiceCatalog, acceptLanguage, productID string) (*servicecatalog.DescribeProductAsAdminOutput, error) {
 	stateConf := &resource.StateChangeConf{
 		Pending: []string{servicecatalog.StatusCreating, StatusNotFound, StatusUnavailable},
-		Target:  []string{servicecatalog.StatusAvailable, ProductStatusCreated},
+		Target:  []string{servicecatalog.StatusAvailable, StatusCreated},
 		Refresh: ProductStatus(conn, acceptLanguage, productID),
 		Timeout: ProductReadyTimeout,
 	}
@@ -57,7 +66,7 @@ func ProductReady(conn *servicecatalog.ServiceCatalog, acceptLanguage, productID
 
 func ProductDeleted(conn *servicecatalog.ServiceCatalog, acceptLanguage, productID string) (*servicecatalog.DescribeProductAsAdminOutput, error) {
 	stateConf := &resource.StateChangeConf{
-		Pending: []string{servicecatalog.StatusCreating, servicecatalog.StatusAvailable, ProductStatusCreated, StatusUnavailable},
+		Pending: []string{servicecatalog.StatusCreating, servicecatalog.StatusAvailable, StatusCreated, StatusUnavailable},
 		Target:  []string{StatusNotFound},
 		Refresh: ProductStatus(conn, acceptLanguage, productID),
 		Timeout: ProductDeleteTimeout,
@@ -299,4 +308,102 @@ func ServiceActionDeleted(conn *servicecatalog.ServiceCatalog, acceptLanguage, i
 	}
 
 	return err
+}
+
+func BudgetResourceAssociationReady(conn *servicecatalog.ServiceCatalog, budgetName, resourceID string) (*servicecatalog.BudgetDetail, error) {
+	stateConf := &resource.StateChangeConf{
+		Pending: []string{StatusNotFound, StatusUnavailable},
+		Target:  []string{servicecatalog.StatusAvailable},
+		Refresh: BudgetResourceAssociationStatus(conn, budgetName, resourceID),
+		Timeout: BudgetResourceAssociationReadyTimeout,
+	}
+
+	outputRaw, err := stateConf.WaitForState()
+
+	if output, ok := outputRaw.(*servicecatalog.BudgetDetail); ok {
+		return output, err
+	}
+
+	return nil, err
+}
+
+func BudgetResourceAssociationDeleted(conn *servicecatalog.ServiceCatalog, budgetName, resourceID string) error {
+	stateConf := &resource.StateChangeConf{
+		Pending: []string{servicecatalog.StatusAvailable},
+		Target:  []string{StatusNotFound, StatusUnavailable},
+		Refresh: BudgetResourceAssociationStatus(conn, budgetName, resourceID),
+		Timeout: BudgetResourceAssociationDeleteTimeout,
+	}
+
+	_, err := stateConf.WaitForState()
+
+	return err
+}
+
+func TagOptionResourceAssociationReady(conn *servicecatalog.ServiceCatalog, tagOptionID, resourceID string) (*servicecatalog.ResourceDetail, error) {
+	stateConf := &resource.StateChangeConf{
+		Pending: []string{StatusNotFound, StatusUnavailable},
+		Target:  []string{servicecatalog.StatusAvailable},
+		Refresh: TagOptionResourceAssociationStatus(conn, tagOptionID, resourceID),
+		Timeout: TagOptionResourceAssociationReadyTimeout,
+	}
+
+	outputRaw, err := stateConf.WaitForState()
+
+	if output, ok := outputRaw.(*servicecatalog.ResourceDetail); ok {
+		return output, err
+	}
+
+	return nil, err
+}
+
+func TagOptionResourceAssociationDeleted(conn *servicecatalog.ServiceCatalog, tagOptionID, resourceID string) error {
+	stateConf := &resource.StateChangeConf{
+		Pending: []string{servicecatalog.StatusAvailable},
+		Target:  []string{StatusNotFound, StatusUnavailable},
+		Refresh: TagOptionResourceAssociationStatus(conn, tagOptionID, resourceID),
+		Timeout: TagOptionResourceAssociationDeleteTimeout,
+	}
+
+	_, err := stateConf.WaitForState()
+
+	return err
+}
+
+func ProvisioningArtifactReady(conn *servicecatalog.ServiceCatalog, id, productID string) (*servicecatalog.DescribeProvisioningArtifactOutput, error) {
+	stateConf := &resource.StateChangeConf{
+		Pending: []string{servicecatalog.StatusCreating, StatusNotFound, StatusUnavailable},
+		Target:  []string{servicecatalog.StatusAvailable, StatusCreated},
+		Refresh: ProvisioningArtifactStatus(conn, id, productID),
+		Timeout: ProvisioningArtifactReadyTimeout,
+	}
+
+	outputRaw, err := stateConf.WaitForState()
+
+	if output, ok := outputRaw.(*servicecatalog.DescribeProvisioningArtifactOutput); ok {
+		return output, err
+	}
+
+	return nil, err
+}
+
+func ProvisioningArtifactDeleted(conn *servicecatalog.ServiceCatalog, id, productID string) error {
+	stateConf := &resource.StateChangeConf{
+		Pending: []string{servicecatalog.StatusCreating, servicecatalog.StatusAvailable, StatusCreated, StatusUnavailable},
+		Target:  []string{StatusNotFound},
+		Refresh: ProvisioningArtifactStatus(conn, id, productID),
+		Timeout: ProvisioningArtifactDeletedTimeout,
+	}
+
+	_, err := stateConf.WaitForState()
+
+	if tfawserr.ErrCodeEquals(err, servicecatalog.ErrCodeResourceNotFoundException) {
+		return nil
+	}
+
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

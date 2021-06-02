@@ -73,6 +73,7 @@ The Terraform AWS Provider allows the following endpoints to be customized:
   <li><code>backup</code></li>
   <li><code>batch</code></li>
   <li><code>budgets</code></li>
+  <li><code>chime</code></li>
   <li><code>cloud9</code></li>
   <li><code>cloudformation</code></li>
   <li><code>cloudfront</code></li>
@@ -183,6 +184,7 @@ The Terraform AWS Provider allows the following endpoints to be customized:
   <li><code>s3control</code></li>
   <li><code>s3outposts</code></li>
   <li><code>sagemaker</code></li>
+  <li><code>schemas</code></li>
   <li><code>sdb</code></li>
   <li><code>secretsmanager</code></li>
   <li><code>securityhub</code></li>
