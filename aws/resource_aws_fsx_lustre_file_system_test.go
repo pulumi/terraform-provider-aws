@@ -331,6 +331,49 @@ func TestAccAWSFsxLustreFileSystem_StorageCapacity(t *testing.T) {
 	})
 }
 
+func TestAccAWSFsxLustreFileSystem_StorageCapacityUpdate(t *testing.T) {
+	var filesystem1, filesystem2, filesystem3 fsx.FileSystem
+	resourceName := "aws_fsx_lustre_file_system.test"
+
+	resource.ParallelTest(t, resource.TestCase{
+		PreCheck:     func() { testAccPreCheck(t); testAccPartitionHasServicePreCheck(fsx.EndpointsID, t) },
+		ErrorCheck:   testAccErrorCheck(t, fsx.EndpointsID),
+		Providers:    testAccProviders,
+		CheckDestroy: testAccCheckFsxLustreFileSystemDestroy,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccAwsFsxLustreFileSystemConfigStorageCapacityScratch2(7200),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFsxLustreFileSystemExists(resourceName, &filesystem1),
+					resource.TestCheckResourceAttr(resourceName, "storage_capacity", "7200"),
+				),
+			},
+			{
+				ResourceName:            resourceName,
+				ImportState:             true,
+				ImportStateVerify:       true,
+				ImportStateVerifyIgnore: []string{"security_group_ids"},
+			},
+			{
+				Config: testAccAwsFsxLustreFileSystemConfigStorageCapacityScratch2(1200),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFsxLustreFileSystemExists(resourceName, &filesystem2),
+					testAccCheckFsxLustreFileSystemRecreated(&filesystem1, &filesystem2),
+					resource.TestCheckResourceAttr(resourceName, "storage_capacity", "1200"),
+				),
+			},
+			{
+				Config: testAccAwsFsxLustreFileSystemConfigStorageCapacityScratch2(7200),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFsxLustreFileSystemExists(resourceName, &filesystem3),
+					testAccCheckFsxLustreFileSystemNotRecreated(&filesystem2, &filesystem3),
+					resource.TestCheckResourceAttr(resourceName, "storage_capacity", "7200"),
+				),
+			},
+		},
+	})
+}
+
 func TestAccAWSFsxLustreFileSystem_Tags(t *testing.T) {
 	var filesystem1, filesystem2, filesystem3 fsx.FileSystem
 	resourceName := "aws_fsx_lustre_file_system.test"
@@ -930,6 +973,16 @@ resource "aws_fsx_lustre_file_system" "test" {
   storage_capacity = %[1]d
   subnet_ids       = [aws_subnet.test1.id]
   deployment_type  = "SCRATCH_2" # SCRATCH_1 deployment_types do not support resizing
+}
+`, storageCapacity))
+}
+
+func testAccAwsFsxLustreFileSystemConfigStorageCapacityScratch2(storageCapacity int) string {
+	return composeConfig(testAccAwsFsxLustreFileSystemConfigBase(), fmt.Sprintf(`
+resource "aws_fsx_lustre_file_system" "test" {
+  storage_capacity = %[1]d
+  subnet_ids       = [aws_subnet.test1.id]
+  deployment_type  = "SCRATCH_2"
 }
 `, storageCapacity))
 }

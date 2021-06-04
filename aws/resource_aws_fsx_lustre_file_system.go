@@ -16,20 +16,6 @@ import (
 	"github.com/terraform-providers/terraform-provider-aws/aws/internal/keyvaluetags"
 )
 
-func resourceFsxLustreFileSystemSchemaCustomizeDiff(_ context.Context, d *schema.ResourceDiff, meta interface{}) error {
-	// we want to force a new resource if the new storage capacity is less than the old one
-	if d.HasChange("storage_capacity") {
-		o, n := d.GetChange("storage_capacity")
-		if n.(int) < o.(int) {
-			if err := d.ForceNew("storage_capacity"); err != nil {
-				return err
-			}
-		}
-	}
-
-	return nil
-}
-
 func resourceAwsFsxLustreFileSystem() *schema.Resource {
 	return &schema.Resource{
 		Create: resourceAwsFsxLustreFileSystemCreate,
@@ -39,10 +25,6 @@ func resourceAwsFsxLustreFileSystem() *schema.Resource {
 		Importer: &schema.ResourceImporter{
 			State: schema.ImportStatePassthrough,
 		},
-		CustomizeDiff: customdiff.Sequence(
-			resourceFsxLustreFileSystemSchemaCustomizeDiff,
-			SetTagsDiff,
-		),
 
 		Timeouts: &schema.ResourceTimeout{
 			Create: schema.DefaultTimeout(30 * time.Minute),
@@ -201,7 +183,26 @@ func resourceAwsFsxLustreFileSystem() *schema.Resource {
 				Default:  false,
 			},
 		},
+
+		CustomizeDiff: customdiff.Sequence(
+			SetTagsDiff,
+			resourceFsxLustreFileSystemSchemaCustomizeDiff,
+		),
 	}
+}
+
+func resourceFsxLustreFileSystemSchemaCustomizeDiff(_ context.Context, d *schema.ResourceDiff, meta interface{}) error {
+	// we want to force a new resource if the new storage capacity is less than the old one
+	if d.HasChange("storage_capacity") {
+		o, n := d.GetChange("storage_capacity")
+		if n.(int) < o.(int) || d.Get("deployment_type").(string) == fsx.LustreDeploymentTypeScratch1 {
+			if err := d.ForceNew("storage_capacity"); err != nil {
+				return err
+			}
+		}
+	}
+
+	return nil
 }
 
 func resourceAwsFsxLustreFileSystemCreate(d *schema.ResourceData, meta interface{}) error {
