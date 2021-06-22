@@ -1,3 +1,35 @@
+## 3.46.0 (June 17, 2021)
+
+FEATURES:
+
+* **New Data Source:** `aws_appmesh_virtual_service` ([#19774](https://github.com/hashicorp/terraform-provider-aws/issues/19774))
+* **New Data Source:** `aws_servicecatalog_portfolio` ([#19500](https://github.com/hashicorp/terraform-provider-aws/issues/19500))
+* **New Resource:** `aws_budgets_budget_action` ([#19554](https://github.com/hashicorp/terraform-provider-aws/issues/19554))
+* **New Resource:** `aws_route53_resolver_firewall_config` ([#18733](https://github.com/hashicorp/terraform-provider-aws/issues/18733))
+
+ENHANCEMENTS:
+
+* resource/aws_cloudwatch_log_metric_filter: Add support for `unit` in the `metric_transformation` block. ([#19804](https://github.com/hashicorp/terraform-provider-aws/issues/19804))
+* resource/aws_datasync_location_nfs: Add `mount_options` argument. ([#19767](https://github.com/hashicorp/terraform-provider-aws/issues/19767))
+* resource/aws_datasync_location_nfs: Add plan time validation for `on_prem_config.agent_arns`, `server_hostname`, and `subdirectory`. ([#19767](https://github.com/hashicorp/terraform-provider-aws/issues/19767))
+* resource/aws_datasync_location_nfs: Add support for updating. ([#19767](https://github.com/hashicorp/terraform-provider-aws/issues/19767))
+* resource/aws_ecs_cluster: Add plan time validation for `name`. ([#19785](https://github.com/hashicorp/terraform-provider-aws/issues/19785))
+* resource/aws_ecs_cluster: Add support for `configuration`. ([#19785](https://github.com/hashicorp/terraform-provider-aws/issues/19785))
+* resource/aws_eks_node_group: Allow minimum value of `0` for `desired_size` and `min_size` in the `scaling_config` configuration block ([#19810](https://github.com/hashicorp/terraform-provider-aws/issues/19810))
+* resource/aws_spot_fleet_request: Add `on_demand_allocation_strategy`, `on_demand_max_total_price`, and `on_demand_target_capacity` arguments ([#13127](https://github.com/hashicorp/terraform-provider-aws/issues/13127))
+
+BUG FIXES:
+
+* data-source/aws_directory_service_directory: Check VpcSettings and ConnectSettings for nil values ([#19820](https://github.com/hashicorp/terraform-provider-aws/issues/19820))
+* data-source/aws_lakeformation_permissions: Fix diffs resulting from order of column names and exclude column names ([#19817](https://github.com/hashicorp/terraform-provider-aws/issues/19817))
+* resource/aws_cognito_identity_provider: Fix updating `idp_identifiers` crash. ([#19819](https://github.com/hashicorp/terraform-provider-aws/issues/19819))
+* resource/aws_glue_trigger: Fix default timeouts for Create and Delete operations ([#19827](https://github.com/hashicorp/terraform-provider-aws/issues/19827))
+* resource/aws_lakeformation_permissions: Fix bug preventing updates (inconsistent result) ([#19817](https://github.com/hashicorp/terraform-provider-aws/issues/19817))
+* resource/aws_lakeformation_permissions: Fix bug where resource is not properly removed from state ([#19817](https://github.com/hashicorp/terraform-provider-aws/issues/19817))
+* resource/aws_lakeformation_permissions: Fix diffs resulting only from order of column names and exclude column names ([#19817](https://github.com/hashicorp/terraform-provider-aws/issues/19817))
+* resource/aws_lambda_event_source_mapping: Enhance handling of IAM eventual consistency errors during create ([#19831](https://github.com/hashicorp/terraform-provider-aws/issues/19831))
+* resource/aws_sqs_queue: Correctly handle the default `kms_data_key_reuse_period_seconds` value of `300` for unencrypted queues ([#19834](https://github.com/hashicorp/terraform-provider-aws/issues/19834))
+
 ## 3.45.0 (June 10, 2021)
 
 FEATURES:
@@ -34,6 +66,7 @@ BUG FIXES:
 * data-source/aws_acmpca_certificate_authority: Fix `error setting tags` ([#19681](https://github.com/hashicorp/terraform-provider-aws/issues/19681))
 * data-source/aws_servicequotas_service_quota: Correctly handle errors embedded in API struct ([#19722](https://github.com/hashicorp/terraform-provider-aws/issues/19722))
 * resource/aws_batch_job_definition: Suppress differences for empty `linuxParameters.devices` and `linuxParameters.tmpfs` arrays in the `container_properties` argument ([#19666](https://github.com/hashicorp/terraform-provider-aws/issues/19666))
+* resource/aws_cloudwatch_event_target: Fix `ecs_target.launch_type` not allowing empty string values. ([#19703](https://github.com/hashicorp/terraform-provider-aws/issues/19555))
 * resource/aws_cloudwatch_event_target: Increase the maximum allowed value for the `input_transformer` `input_paths` argument to 100 ([#19703](https://github.com/hashicorp/terraform-provider-aws/issues/19703))
 * resource/aws_cloudwatch_metric_alarm: Allow extended statistics in the `stat` argument of the `metric` configuration block ([#19668](https://github.com/hashicorp/terraform-provider-aws/issues/19668))
 * resource/aws_cognito_user_pool: Suppress diff for empty `account_recovery_setting`. ([#19704](https://github.com/hashicorp/terraform-provider-aws/issues/19704))
