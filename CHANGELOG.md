@@ -1,3 +1,42 @@
+## 3.50.0 (July 15, 2021)
+
+NOTES:
+
+* resource/aws_dx_gateway_association_proposal: If an accepted Proposal reaches end-of-life and is removed by AWS do not recreate the resource, instead refreshing Terraform state from the resource's Direct Connect Gateway ID and Associated Gateway ID. ([#19741](https://github.com/hashicorp/terraform-provider-aws/issues/19741))
+
+FEATURES:
+
+* **New Resource:** `aws_appconfig_application` ([#19307](https://github.com/hashicorp/terraform-provider-aws/issues/19307))
+* **New Resource:** `aws_appconfig_configuration_profile` ([#19320](https://github.com/hashicorp/terraform-provider-aws/issues/19320))
+* **New Resource:** `aws_appconfig_deployment_strategy` ([#19359](https://github.com/hashicorp/terraform-provider-aws/issues/19359))
+* **New Resource:** `aws_appconfig_environment` ([#19307](https://github.com/hashicorp/terraform-provider-aws/issues/19307))
+* **New Resource:** `aws_appconfig_hosted_configuration_version` ([#19324](https://github.com/hashicorp/terraform-provider-aws/issues/19324))
+* **New Resource:** `aws_config_organization_conformance_pack` ([#17298](https://github.com/hashicorp/terraform-provider-aws/issues/17298))
+* **New Resource:** `aws_securityhub_organization_configuration` ([#19108](https://github.com/hashicorp/terraform-provider-aws/issues/19108))
+* **New Resource:** `aws_securityhub_standards_control` ([#14714](https://github.com/hashicorp/terraform-provider-aws/issues/14714))
+
+ENHANCEMENTS:
+
+* resource/aws_cloudwatch_event_target: Add `enable_ecs_managed_tags`, `enable_execute_command`, `placement_constraints`, `propagate_tags`, and `tags` arguments to `ecs_target` block. ([#19975](https://github.com/hashicorp/terraform-provider-aws/issues/19975))
+* resource/aws_cognito_user_pool_client: Add the `enable_token_revocation` argument to support targeted sign out ([#20031](https://github.com/hashicorp/terraform-provider-aws/issues/20031))
+* resource/aws_fsx_windows_file_system: Add `aliases` argument ([#20054](https://github.com/hashicorp/terraform-provider-aws/issues/20054))
+* resource/aws_guardduty_detector: Add `datasources` argument ([#19954](https://github.com/hashicorp/terraform-provider-aws/issues/19954))
+* resource/aws_guardduty_organization_configuration: Add `datasources` argument ([#15241](https://github.com/hashicorp/terraform-provider-aws/issues/15241))
+* resource/aws_iam_access_key: Add encrypted SES SMTP password ([#19579](https://github.com/hashicorp/terraform-provider-aws/issues/19579))
+* resource/aws_kms_key: Add plan time validation to `description`. ([#19967](https://github.com/hashicorp/terraform-provider-aws/issues/19967))
+* resource/aws_s3_bucket: Add the delete_marker_replication_status argument for V2 replication configurations ([#19323](https://github.com/hashicorp/terraform-provider-aws/issues/19323))
+* resource/aws_s3_bucket_object: Add `source_hash` argument to compliment `etag`'s encryption limitations ([#11522](https://github.com/hashicorp/terraform-provider-aws/issues/11522))
+* resource/aws_sagemaker_domain: Add support for `retention_policy` ([#18562](https://github.com/hashicorp/terraform-provider-aws/issues/18562))
+* resource/aws_wafv2_web_acl: Support `scope_down_statement` on `managed_rule_group_statement` ([#19407](https://github.com/hashicorp/terraform-provider-aws/issues/19407))
+
+BUG FIXES:
+
+* resource/aws_cognito_user_pool_client: Allow the `default_redirect_uri` argument value to be an empty string ([#20031](https://github.com/hashicorp/terraform-provider-aws/issues/20031))
+* resource/aws_cognito_user_pool_client: Retry on `ConcurrentModificationException` ([#20031](https://github.com/hashicorp/terraform-provider-aws/issues/20031))
+* resource/aws_datasync_location_s3: Correctly parse S3 on Outposts location URI ([#19859](https://github.com/hashicorp/terraform-provider-aws/issues/19859))
+* resource/aws_db_instance: Ignore allocated_storage for replica at creation time ([#12548](https://github.com/hashicorp/terraform-provider-aws/issues/12548))
+* resource/aws_elasticache_replication_group: Cannot set `cluster_mode.replicas_per_node_group` when member of Global Replication Group ([#20111](https://github.com/hashicorp/terraform-provider-aws/issues/20111))
+
 ## 3.49.0 (July 08, 2021)
 
 FEATURES:
@@ -53,7 +92,7 @@ ENHANCEMENTS:
 * resource/aws_eks_cluster: Allow updates to `encryption_config` ([#19144](https://github.com/hashicorp/terraform-provider-aws/issues/19144))
 * resource/aws_lb_target_group: Add support for `app_cookie` stickiness type and `cookie_name` argument ([#18102](https://github.com/hashicorp/terraform-provider-aws/issues/18102))
 * resource/aws_main_route_table_association: Wait for association to reach the required state ([#19426](https://github.com/hashicorp/terraform-provider-aws/issues/19426))
-* resource/aws_neptune_cluster: Add `copy_snapshot_to_tags` argument ([#19899](https://github.com/hashicorp/terraform-provider-aws/issues/19899))
+* resource/aws_neptune_cluster: Add `copy_tags_to_snapshot` argument ([#19899](https://github.com/hashicorp/terraform-provider-aws/issues/19899))
 * resource/aws_route: Add retries when creating, deleting and replacing routes ([#19426](https://github.com/hashicorp/terraform-provider-aws/issues/19426))
 * resource/aws_route_table: Add retries when creating, deleting and replacing routes ([#19426](https://github.com/hashicorp/terraform-provider-aws/issues/19426))
 * resource/aws_route_table_association: Wait for association to reach the required state ([#19426](https://github.com/hashicorp/terraform-provider-aws/issues/19426))
