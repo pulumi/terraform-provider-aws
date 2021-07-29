@@ -12,6 +12,8 @@ Provides an ECS cluster.
 
 ## Example Usage
 
+### Basic Example
+
 ```terraform
 resource "aws_ecs_cluster" "foo" {
   name = "white-hart"
@@ -23,7 +25,7 @@ resource "aws_ecs_cluster" "foo" {
 }
 ```
 
-## Example W/Log Configuration
+### Example W/Log Configuration
 
 ```terraform
 resource "aws_kms_key" "example" {
