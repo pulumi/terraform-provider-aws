@@ -22,15 +22,16 @@ For more information, see the Amazon VPC User Guide on [Route Tables](https://do
 resource "aws_default_route_table" "example" {
   default_route_table_id = aws_vpc.example.default_route_table_id
 
-  route {
-    cidr_block = "10.0.1.0/24"
-    gateway_id = aws_internet_gateway.example.id
-  }
-
-  route {
-    ipv6_cidr_block        = "::/0"
-    egress_only_gateway_id = aws_egress_only_internet_gateway.example.id
-  }
+  route = [
+    {
+      cidr_block = "10.0.1.0/24"
+      gateway_id = aws_internet_gateway.example.id
+    },
+    {
+      ipv6_cidr_block        = "::/0"
+      egress_only_gateway_id = aws_egress_only_internet_gateway.example.id
+    }
+  ]
 
   tags = {
     Name = "example"
@@ -61,8 +62,8 @@ The following arguments are required:
 The following arguments are optional:
 
 * `propagating_vgws` - (Optional) List of virtual gateways for propagation.
-* `route` - (Optional) Configuration block of routes. Detailed below. This argument is processed in [attribute-as-blocks mode](https://www.terraform.io/docs/configuration/attr-as-blocks.html). This means that omitting this argument is interpreted as ignoring any existing routes. To remove all managed routes an empty list should be specified. See the example above.
-* `tags` - (Optional) Map of tags to assign to the resource. .If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+* `route` - (Optional) Set of objects. Detailed below
+* `tags` - (Optional) Map of tags to assign to the resource. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ### route
 
@@ -70,7 +71,7 @@ One of the following destination arguments must be supplied:
 
 * `cidr_block` - (Required) The CIDR block of the route.
 * `ipv6_cidr_block` - (Optional) The Ipv6 CIDR block of the route
-* `destination_prefix_list_id` - (Optional) The ID of a [managed prefix list](ec2_managed_prefix_list.html) destination of the route.
+* `destination_prefix_list_id` - (Optional) The ID of a managed prefix list destination of the route.
 
 One of the following target arguments must be supplied:
 
