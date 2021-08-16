@@ -1,3 +1,26 @@
+## 3.54.0 (August 12, 2021)
+
+FEATURES:
+
+* **New Resource:** `aws_chime_voice_connector` ([#19504](https://github.com/hashicorp/terraform-provider-aws/issues/19504))
+* **New Resource:** `aws_shield_protection_group` ([#20491](https://github.com/hashicorp/terraform-provider-aws/issues/20491))
+
+ENHANCEMENTS:
+
+* data-source/aws_workspaces_directory: Add `workspace_access_properties.device_type_linux` attribute ([#20462](https://github.com/hashicorp/terraform-provider-aws/issues/20462))
+* resource/aws_athena_workgroup: Add `requester_pays_enabled` argument ([#20457](https://github.com/hashicorp/terraform-provider-aws/issues/20457))
+* resource/aws_cloudwatch_metric_alarm: Add support for `account_id` ([#20541](https://github.com/hashicorp/terraform-provider-aws/issues/20541))
+* resource/aws_codebuild_webhook: Add support for `build_type` ([#20480](https://github.com/hashicorp/terraform-provider-aws/issues/20480))
+* resource/aws_db_instance: Use engine_version and engine_version_actual to set and track engine versions ([#20207](https://github.com/hashicorp/terraform-provider-aws/issues/20207))
+* resource/aws_workspaces_directory: Add `workspace_access_properties.device_type_linux` argument ([#20462](https://github.com/hashicorp/terraform-provider-aws/issues/20462))
+
+BUG FIXES:
+
+* aws/resource_aws_imagebuilder_infrastructure_configuration: Always set `terminate_instance_on_failure` on create and update ([#20464](https://github.com/hashicorp/terraform-provider-aws/issues/20464))
+* resource/aws_iot_topic_rule: Correctly update resource on `error_action` change ([#16471](https://github.com/hashicorp/terraform-provider-aws/issues/16471))
+* resource/aws_iot_topic_rule: Enhance handling of IAM eventual consistency errors during create ([#20467](https://github.com/hashicorp/terraform-provider-aws/issues/20467))
+* resource/aws_synthetics_canary: Correctly report any resource creation errors ([#20463](https://github.com/hashicorp/terraform-provider-aws/issues/20463))
+
 ## 3.53.0 (August 05, 2021)
 
 ENHANCEMENTS:
