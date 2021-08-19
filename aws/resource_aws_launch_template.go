@@ -609,7 +609,7 @@ func resourceAwsLaunchTemplate() *schema.Resource {
 				Optional: true,
 			},
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 			"hibernation_options": {
 				Type:     schema.TypeList,
 				Optional: true,

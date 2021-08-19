@@ -369,7 +369,7 @@ func resourceAwsEcsService() *schema.Resource {
 				},
 			},
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 			"task_definition": {
 				Type:     schema.TypeString,
 				Optional: true,

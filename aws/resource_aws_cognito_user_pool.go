@@ -484,7 +484,7 @@ func resourceAwsCognitoUserPool() *schema.Resource {
 				},
 			},
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 			"username_attributes": {
 				Type:     schema.TypeSet,
 				Optional: true,

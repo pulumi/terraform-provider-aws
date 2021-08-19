@@ -88,7 +88,7 @@ func resourceAwsSfnStateMachine() *schema.Resource {
 			},
 
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 
 			"type": {
 				Type:         schema.TypeString,

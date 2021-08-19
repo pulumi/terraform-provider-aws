@@ -29,6 +29,14 @@ func tagsSchemaComputed() *schema.Schema {
 	}
 }
 
+func tagsSchemaTrulyComputed() *schema.Schema {
+	return &schema.Schema{
+		Type:     schema.TypeMap,
+		Computed: true,
+		Elem:     &schema.Schema{Type: schema.TypeString},
+	}
+}
+
 func tagsSchemaForceNew() *schema.Schema {
 	return &schema.Schema{
 		Type:     schema.TypeMap,

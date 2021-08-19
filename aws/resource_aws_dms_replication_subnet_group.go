@@ -44,7 +44,7 @@ func resourceAwsDmsReplicationSubnetGroup() *schema.Resource {
 				Required: true,
 			},
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 			"vpc_id": {
 				Type:     schema.TypeString,
 				Computed: true,

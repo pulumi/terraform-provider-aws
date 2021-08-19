@@ -111,7 +111,7 @@ func resourceAwsNetworkInterface() *schema.Resource {
 			},
 
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 			"ipv6_address_count": {
 				Type:          schema.TypeInt,
 				Optional:      true,

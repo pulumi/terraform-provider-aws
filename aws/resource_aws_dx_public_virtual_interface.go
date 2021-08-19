@@ -93,7 +93,7 @@ func resourceAwsDxPublicVirtualInterface() *schema.Resource {
 				MinItems: 1,
 			},
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 			"vlan": {
 				Type:         schema.TypeInt,
 				Required:     true,

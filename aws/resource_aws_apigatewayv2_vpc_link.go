@@ -48,7 +48,7 @@ func resourceAwsApiGatewayV2VpcLink() *schema.Resource {
 				Set:      schema.HashString,
 			},
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 		},
 
 		CustomizeDiff: SetTagsDiff,

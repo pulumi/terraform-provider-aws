@@ -268,7 +268,7 @@ func resourceAwsLbTargetGroup() *schema.Resource {
 				ValidateFunc: validation.StringInSlice(elbv2.TargetTypeEnum_Values(), false),
 			},
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 			"vpc_id": {
 				Type:     schema.TypeString,
 				Optional: true,

@@ -73,7 +73,7 @@ func resourceAwsAppconfigDeployment() *schema.Resource {
 				ValidateFunc: validation.StringMatch(regexp.MustCompile(`[a-z0-9]{4,7}`), ""),
 			},
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 		},
 		CustomizeDiff: SetTagsDiff,
 	}

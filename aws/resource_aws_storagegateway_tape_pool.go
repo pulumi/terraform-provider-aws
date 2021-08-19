@@ -53,7 +53,7 @@ func resourceAwsStorageGatewayTapePool() *schema.Resource {
 				ValidateFunc: validation.IntBetween(0, 36500),
 			},
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 		},
 
 		CustomizeDiff: SetTagsDiff,

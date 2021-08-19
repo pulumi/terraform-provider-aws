@@ -133,7 +133,7 @@ func resourceAwsApiGatewayV2Api() *schema.Resource {
 				Default:  "$request.method $request.path",
 			},
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 			"target": {
 				Type:     schema.TypeString,
 				Optional: true,

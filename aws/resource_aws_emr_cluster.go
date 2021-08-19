@@ -449,7 +449,7 @@ func resourceAwsEMRCluster() *schema.Resource {
 				},
 			},
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 			"configurations": {
 				Type:          schema.TypeString,
 				ForceNew:      true,

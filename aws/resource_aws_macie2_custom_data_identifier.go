@@ -84,7 +84,7 @@ func resourceAwsMacie2CustomDataIdentifier() *schema.Resource {
 				ValidateFunc: validation.IntBetween(1, 300),
 			},
 			"tags":     tagsSchemaForceNew(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 			"created_at": {
 				Type:     schema.TypeString,
 				Computed: true,

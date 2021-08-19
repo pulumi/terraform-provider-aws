@@ -209,7 +209,7 @@ func resourceAwsSagemakerUserProfile() *schema.Resource {
 				},
 			},
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 			"home_efs_file_system_uid": {
 				Type:     schema.TypeString,
 				Computed: true,

@@ -74,7 +74,7 @@ func resourceAwsDataSyncAgent() *schema.Resource {
 				Elem:     &schema.Schema{Type: schema.TypeString},
 			},
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 			"vpc_endpoint_id": {
 				Type:     schema.TypeString,
 				Optional: true,

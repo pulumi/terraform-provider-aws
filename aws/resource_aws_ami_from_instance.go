@@ -201,7 +201,7 @@ func resourceAwsAmiFromInstance() *schema.Resource {
 				Computed: true,
 			},
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 			"usage_operation": {
 				Type:     schema.TypeString,
 				Computed: true,

@@ -126,7 +126,7 @@ func resourceAwsGlueJob() *schema.Resource {
 				ValidateFunc: validateArn,
 			},
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 			"timeout": {
 				Type:     schema.TypeInt,
 				Optional: true,

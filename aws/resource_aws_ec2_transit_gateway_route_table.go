@@ -38,7 +38,7 @@ func resourceAwsEc2TransitGatewayRouteTable() *schema.Resource {
 				Computed: true,
 			},
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 			"transit_gateway_id": {
 				Type:         schema.TypeString,
 				Required:     true,

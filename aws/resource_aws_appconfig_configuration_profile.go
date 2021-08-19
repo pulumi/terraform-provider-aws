@@ -62,7 +62,7 @@ func resourceAwsAppconfigConfigurationProfile() *schema.Resource {
 				ValidateFunc: validateArn,
 			},
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 			"validator": {
 				Type:     schema.TypeSet,
 				Optional: true,

@@ -179,7 +179,7 @@ func resourceAwsDefaultSecurityGroup() *schema.Resource {
 				Computed: true,
 			},
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 			// This is not implemented. Added to prevent breaking changes.
 			"revoke_rules_on_delete": {
 				Type:     schema.TypeBool,

@@ -95,7 +95,7 @@ func resourceAwsSagemakerEndpointConfiguration() *schema.Resource {
 			},
 
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 
 			"data_capture_config": {
 				Type:     schema.TypeList,

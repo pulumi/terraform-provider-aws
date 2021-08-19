@@ -95,7 +95,7 @@ func resourceAwsEfsFileSystem() *schema.Resource {
 				Computed: true,
 			},
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 
 			"throughput_mode": {
 				Type:         schema.TypeString,

@@ -164,7 +164,7 @@ func resourceAwsSsmDocument() *schema.Resource {
 				},
 			},
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 			"target_type": {
 				Type:     schema.TypeString,
 				Optional: true,

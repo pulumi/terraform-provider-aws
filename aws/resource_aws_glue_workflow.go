@@ -49,7 +49,7 @@ func resourceAwsGlueWorkflow() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(1, 255),
 			},
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 		},
 	}
 }

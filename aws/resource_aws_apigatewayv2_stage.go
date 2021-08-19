@@ -175,7 +175,7 @@ func resourceAwsApiGatewayV2Stage() *schema.Resource {
 				Elem:     &schema.Schema{Type: schema.TypeString},
 			},
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 		},
 
 		CustomizeDiff: SetTagsDiff,

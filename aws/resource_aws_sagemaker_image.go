@@ -57,7 +57,7 @@ func resourceAwsSagemakerImage() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(1, 512),
 			},
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 		},
 
 		CustomizeDiff: SetTagsDiff,

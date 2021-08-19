@@ -58,7 +58,7 @@ func resourceAwsRedshiftSnapshotSchedule() *schema.Resource {
 				Default:  false,
 			},
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 		},
 
 		CustomizeDiff: SetTagsDiff,

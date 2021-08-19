@@ -101,7 +101,7 @@ func resourceAwsEc2TransitGateway() *schema.Resource {
 				Computed: true,
 			},
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 			"vpn_ecmp_support": {
 				Type:     schema.TypeString,
 				Optional: true,

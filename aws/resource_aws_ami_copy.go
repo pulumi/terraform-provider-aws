@@ -219,7 +219,7 @@ func resourceAwsAmiCopy() *schema.Resource {
 				Computed: true,
 			},
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 			"virtualization_type": {
 				Type:     schema.TypeString,
 				Computed: true,

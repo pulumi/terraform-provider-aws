@@ -58,7 +58,7 @@ func resourceAwsDbProxyEndpoint() *schema.Resource {
 				Computed: true,
 			},
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 			"target_role": {
 				Type:         schema.TypeString,
 				Optional:     true,

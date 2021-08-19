@@ -67,7 +67,7 @@ func resourceAwsAppconfigDeploymentStrategy() *schema.Resource {
 				ValidateFunc: validation.StringInSlice(appconfig.ReplicateTo_Values(), false),
 			},
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 		},
 		CustomizeDiff: SetTagsDiff,
 	}

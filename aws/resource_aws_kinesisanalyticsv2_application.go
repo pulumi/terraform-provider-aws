@@ -910,7 +910,7 @@ func resourceAwsKinesisAnalyticsV2Application() *schema.Resource {
 
 			"tags": tagsSchema(),
 
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 
 			"version_id": {
 				Type:     schema.TypeInt,

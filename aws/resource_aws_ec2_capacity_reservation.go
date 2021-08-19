@@ -108,7 +108,7 @@ func resourceAwsEc2CapacityReservation() *schema.Resource {
 				Computed: true,
 			},
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 			"tenancy": {
 				Type:     schema.TypeString,
 				Optional: true,

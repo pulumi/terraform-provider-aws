@@ -85,7 +85,7 @@ func resourceAwsDataSyncLocationNfs() *schema.Resource {
 				},
 			},
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 			"uri": {
 				Type:     schema.TypeString,
 				Computed: true,

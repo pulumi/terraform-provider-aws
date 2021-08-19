@@ -132,7 +132,7 @@ func resourceAwsImageBuilderDistributionConfiguration() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(1, 126),
 			},
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 		},
 
 		CustomizeDiff: SetTagsDiff,

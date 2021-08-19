@@ -41,7 +41,7 @@ func resourceAwsEc2TransitGatewayPeeringAttachment() *schema.Resource {
 				ForceNew: true,
 			},
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 			"transit_gateway_id": {
 				Type:     schema.TypeString,
 				Required: true,

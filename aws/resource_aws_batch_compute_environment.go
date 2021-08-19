@@ -179,7 +179,7 @@ func resourceAwsBatchComputeEnvironment() *schema.Resource {
 				Default:      batch.CEStateEnabled,
 			},
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 			"type": {
 				Type:     schema.TypeString,
 				Required: true,

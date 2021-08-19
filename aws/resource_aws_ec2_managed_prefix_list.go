@@ -82,7 +82,7 @@ func resourceAwsEc2ManagedPrefixList() *schema.Resource {
 				Computed: true,
 			},
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 			"version": {
 				Type:     schema.TypeInt,
 				Computed: true,

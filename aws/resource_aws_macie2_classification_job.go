@@ -321,7 +321,7 @@ func resourceAwsMacie2ClassificationJob() *schema.Resource {
 				},
 			},
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 			"job_id": {
 				Type:     schema.TypeString,
 				Computed: true,

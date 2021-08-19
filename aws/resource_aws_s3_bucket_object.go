@@ -167,7 +167,7 @@ func resourceAwsS3BucketObject() *schema.Resource {
 			},
 
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 
 			"website_redirect": {
 				Type:     schema.TypeString,

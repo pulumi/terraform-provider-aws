@@ -116,7 +116,7 @@ func resourceAwsGlueDevEndpoint() *schema.Resource {
 				RequiredWith: []string{"security_group_ids"},
 			},
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 			"private_address": {
 				Type:     schema.TypeString,
 				Computed: true,

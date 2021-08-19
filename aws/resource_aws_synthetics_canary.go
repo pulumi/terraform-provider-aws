@@ -163,7 +163,7 @@ func resourceAwsSyntheticsCanary() *schema.Resource {
 				ValidateFunc: validation.IntBetween(1, 455),
 			},
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 			"timeline": {
 				Type:     schema.TypeList,
 				Computed: true,

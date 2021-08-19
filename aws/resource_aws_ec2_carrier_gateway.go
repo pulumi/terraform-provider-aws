@@ -39,7 +39,7 @@ func resourceAwsEc2CarrierGateway() *schema.Resource {
 			},
 
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 
 			"vpc_id": {
 				Type:     schema.TypeString,

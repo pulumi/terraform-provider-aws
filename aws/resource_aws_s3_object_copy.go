@@ -272,7 +272,7 @@ func resourceAwsS3ObjectCopy() *schema.Resource {
 				ValidateFunc: validation.StringInSlice(s3.TaggingDirective_Values(), false),
 			},
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 			"version_id": {
 				Type:     schema.TypeString,
 				Computed: true,

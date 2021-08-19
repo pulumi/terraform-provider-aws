@@ -45,7 +45,7 @@ func resourceAwsElasticacheUserGroup() *schema.Resource {
 				},
 			},
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 			"user_group_id": {
 				Type:     schema.TypeString,
 				Required: true,

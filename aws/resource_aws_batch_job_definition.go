@@ -130,7 +130,7 @@ func resourceAwsBatchJobDefinition() *schema.Resource {
 				},
 			},
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 			"propagate_tags": {
 				Type:     schema.TypeBool,
 				Optional: true,

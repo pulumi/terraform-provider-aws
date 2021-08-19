@@ -54,7 +54,7 @@ func resourceAwsDmsCertificate() *schema.Resource {
 				Sensitive: true,
 			},
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 		},
 
 		CustomizeDiff: SetTagsDiff,

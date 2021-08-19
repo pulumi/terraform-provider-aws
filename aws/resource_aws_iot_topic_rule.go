@@ -426,7 +426,7 @@ func resourceAwsIotTopicRule() *schema.Resource {
 				},
 			},
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 			"error_action": {
 				Type:     schema.TypeList,
 				Optional: true,

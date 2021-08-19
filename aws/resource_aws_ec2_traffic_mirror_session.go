@@ -65,7 +65,7 @@ func resourceAwsEc2TrafficMirrorSession() *schema.Resource {
 				ValidateFunc: validation.IntBetween(1, 16777216),
 			},
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 		},
 	}
 }

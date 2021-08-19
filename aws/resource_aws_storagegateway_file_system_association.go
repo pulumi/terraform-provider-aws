@@ -79,7 +79,7 @@ func resourceAwsStorageGatewayFileSystemAssociation() *schema.Resource {
 				),
 			},
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 			"username": {
 				Type:     schema.TypeString,
 				Required: true,

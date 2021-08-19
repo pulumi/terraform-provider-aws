@@ -68,7 +68,7 @@ func resourceAwsElasticacheParameterGroup() *schema.Resource {
 				Set: resourceAwsElasticacheParameterHash,
 			},
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 		},
 		CustomizeDiff: SetTagsDiff,
 	}

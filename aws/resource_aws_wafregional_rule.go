@@ -57,7 +57,7 @@ func resourceAwsWafRegionalRule() *schema.Resource {
 				},
 			},
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 			"arn": {
 				Type:     schema.TypeString,
 				Computed: true,

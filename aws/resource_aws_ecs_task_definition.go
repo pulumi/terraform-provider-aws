@@ -378,7 +378,7 @@ func resourceAwsEcsTaskDefinition() *schema.Resource {
 			},
 
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 			"inference_accelerator": {
 				Type:     schema.TypeSet,
 				Optional: true,

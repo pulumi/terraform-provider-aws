@@ -98,7 +98,7 @@ func resourceAwsKmsExternalKey() *schema.Resource {
 			},
 
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 
 			"valid_to": {
 				Type:         schema.TypeString,

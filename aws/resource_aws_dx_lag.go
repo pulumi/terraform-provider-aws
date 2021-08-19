@@ -53,7 +53,7 @@ func resourceAwsDxLag() *schema.Resource {
 				Computed: true,
 			},
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 			"has_logical_redundancy": {
 				Type:     schema.TypeString,
 				Computed: true,

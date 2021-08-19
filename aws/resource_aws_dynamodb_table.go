@@ -285,7 +285,7 @@ func resourceAwsDynamoDbTable() *schema.Resource {
 				}, false),
 			},
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 			"ttl": {
 				Type:     schema.TypeList,
 				Optional: true,

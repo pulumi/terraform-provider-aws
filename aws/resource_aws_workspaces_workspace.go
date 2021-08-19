@@ -132,7 +132,7 @@ func resourceAwsWorkspacesWorkspace() *schema.Resource {
 				},
 			},
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 		},
 		Timeouts: &schema.ResourceTimeout{
 			Create: schema.DefaultTimeout(waiter.WorkspaceAvailableTimeout),

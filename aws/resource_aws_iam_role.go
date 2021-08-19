@@ -111,7 +111,7 @@ func resourceAwsIamRole() *schema.Resource {
 			},
 
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 
 			"inline_policy": {
 				Type:     schema.TypeSet,

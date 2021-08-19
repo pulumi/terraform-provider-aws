@@ -225,7 +225,7 @@ func resourceAwsSagemakerDomain() *schema.Resource {
 				},
 			},
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 			"retention_policy": {
 				Type:     schema.TypeList,
 				Optional: true,

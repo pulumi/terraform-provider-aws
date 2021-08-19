@@ -90,7 +90,7 @@ func resourceAwsImageBuilderComponent() *schema.Resource {
 				MaxItems: 25,
 			},
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 			"type": {
 				Type:     schema.TypeString,
 				Computed: true,

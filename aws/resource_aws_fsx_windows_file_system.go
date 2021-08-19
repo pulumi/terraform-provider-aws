@@ -203,7 +203,7 @@ func resourceAwsFsxWindowsFileSystem() *schema.Resource {
 				Elem:     &schema.Schema{Type: schema.TypeString},
 			},
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 			"throughput_capacity": {
 				Type:         schema.TypeInt,
 				Required:     true,

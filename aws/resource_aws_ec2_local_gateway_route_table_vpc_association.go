@@ -39,7 +39,7 @@ func resourceAwsEc2LocalGatewayRouteTableVpcAssociation() *schema.Resource {
 				ForceNew: true,
 			},
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 			"vpc_id": {
 				Type:     schema.TypeString,
 				Required: true,

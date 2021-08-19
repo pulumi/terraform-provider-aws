@@ -93,7 +93,7 @@ func resourceAwsRoute53Zone() *schema.Resource {
 			},
 
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 
 			"force_destroy": {
 				Type:     schema.TypeBool,

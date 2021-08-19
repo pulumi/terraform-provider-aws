@@ -95,7 +95,7 @@ func resourceAwsNetworkFirewallFirewallPolicy() *schema.Resource {
 				ForceNew: true,
 			},
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 			"update_token": {
 				Type:     schema.TypeString,
 				Computed: true,

@@ -197,7 +197,7 @@ func resourceAwsAppsyncGraphqlApi() *schema.Resource {
 				Elem:     &schema.Schema{Type: schema.TypeString},
 			},
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 			"xray_enabled": {
 				Type:     schema.TypeBool,
 				Optional: true,

@@ -234,7 +234,7 @@ func resourceAwsEc2Fleet() *schema.Resource {
 				},
 			},
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 			"target_capacity_specification": {
 				Type:     schema.TypeList,
 				Required: true,

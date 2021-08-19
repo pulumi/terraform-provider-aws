@@ -130,7 +130,7 @@ func resourceAwsVpcEndpoint() *schema.Resource {
 				Set:      schema.HashString,
 			},
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 			"vpc_endpoint_type": {
 				Type:         schema.TypeString,
 				Optional:     true,

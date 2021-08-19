@@ -74,7 +74,7 @@ func resourceAwsSagemakerApp() *schema.Resource {
 				},
 			},
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 			"user_profile_name": {
 				Type:     schema.TypeString,
 				ForceNew: true,

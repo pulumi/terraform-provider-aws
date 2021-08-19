@@ -31,7 +31,7 @@ func resourceAwsEgressOnlyInternetGateway() *schema.Resource {
 				ForceNew: true,
 			},
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 		},
 	}
 }

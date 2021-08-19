@@ -59,7 +59,7 @@ func resourceAwsElasticacheUser() *schema.Resource {
 				Elem:     &schema.Schema{Type: schema.TypeString},
 			},
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 			"user_id": {
 				Type:     schema.TypeString,
 				Required: true,

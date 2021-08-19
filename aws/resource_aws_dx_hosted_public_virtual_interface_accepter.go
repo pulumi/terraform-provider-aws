@@ -28,7 +28,7 @@ func resourceAwsDxHostedPublicVirtualInterfaceAccepter() *schema.Resource {
 				Computed: true,
 			},
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 			"virtual_interface_id": {
 				Type:     schema.TypeString,
 				Required: true,

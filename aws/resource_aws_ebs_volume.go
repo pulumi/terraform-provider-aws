@@ -90,7 +90,7 @@ func resourceAwsEbsVolume() *schema.Resource {
 				Computed: true,
 			},
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 			"throughput": {
 				Type:         schema.TypeInt,
 				Optional:     true,

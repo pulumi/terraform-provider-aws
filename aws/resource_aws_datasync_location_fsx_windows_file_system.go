@@ -86,7 +86,7 @@ func resourceAwsDataSyncLocationFsxWindowsFileSystem() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(1, 4096),
 			},
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 			"uri": {
 				Type:     schema.TypeString,
 				Computed: true,

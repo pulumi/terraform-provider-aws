@@ -229,7 +229,7 @@ func resourceAwsSecurityGroup() *schema.Resource {
 			},
 
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 
 			"revoke_rules_on_delete": {
 				Type:     schema.TypeBool,

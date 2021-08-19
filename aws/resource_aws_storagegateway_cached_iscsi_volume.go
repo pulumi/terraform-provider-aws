@@ -87,7 +87,7 @@ func resourceAwsStorageGatewayCachedIscsiVolume() *schema.Resource {
 				ForceNew: true,
 			},
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 			"kms_encrypted": {
 				Type:     schema.TypeBool,
 				Optional: true,

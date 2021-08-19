@@ -30,7 +30,7 @@ func resourceAwsBackupVault() *schema.Resource {
 				ValidateFunc: validation.StringMatch(regexp.MustCompile(`^[a-zA-Z0-9\-\_\.]{1,50}$`), "must consist of lowercase letters, numbers, and hyphens."),
 			},
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 			"kms_key_arn": {
 				Type:         schema.TypeString,
 				Optional:     true,

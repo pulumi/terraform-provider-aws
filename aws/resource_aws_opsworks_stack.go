@@ -172,7 +172,7 @@ func resourceAwsOpsworksStack() *schema.Resource {
 			},
 
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 
 			"use_custom_cookbooks": {
 				Type:     schema.TypeBool,

@@ -393,7 +393,7 @@ func resourceAwsVpnConnection() *schema.Resource {
 
 			"tags": tagsSchema(),
 
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 
 			// Begin read only attributes
 			"customer_gateway_configuration": {

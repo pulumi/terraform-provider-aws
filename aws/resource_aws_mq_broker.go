@@ -279,7 +279,7 @@ func resourceAwsMqBroker() *schema.Resource {
 				ForceNew: true,
 			},
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 			"user": {
 				Type:     schema.TypeSet,
 				Required: true,

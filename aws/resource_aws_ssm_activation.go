@@ -65,7 +65,7 @@ func resourceAwsSsmActivation() *schema.Resource {
 				Computed: true,
 			},
 			"tags":     tagsSchemaForceNew(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 		},
 
 		CustomizeDiff: SetTagsDiff,

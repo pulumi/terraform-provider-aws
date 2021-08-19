@@ -46,7 +46,7 @@ func resourceAwsIamSamlProvider() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(1000, 10000000),
 			},
 			"tags":     tagsSchema(),
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 		},
 
 		CustomizeDiff: SetTagsDiff,

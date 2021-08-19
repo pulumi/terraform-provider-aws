@@ -827,7 +827,7 @@ func resourceAwsKinesisFirehoseDeliveryStream() *schema.Resource {
 
 			"tags": tagsSchema(),
 
-			"tags_all": tagsSchemaComputed(),
+			"tags_all": tagsSchemaTrulyComputed(),
 
 			"server_side_encryption": {
 				Type:             schema.TypeList,
