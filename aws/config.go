@@ -176,7 +176,6 @@ import (
 	"github.com/hashicorp/aws-sdk-go-base/tfawserr"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/logging"
 	"github.com/terraform-providers/terraform-provider-aws/aws/internal/keyvaluetags"
-	"github.com/terraform-providers/terraform-provider-aws/version"
 )
 
 type Config struct {
@@ -444,9 +443,8 @@ func (c *Config) Client() (interface{}, error) {
 		Token:                       c.Token,
 		UserAgentProducts: []*awsbase.UserAgentProduct{
 			{Name: "APN", Version: "1.0"},
-			{Name: "HashiCorp", Version: "1.0"},
-			{Name: "Terraform", Version: c.terraformVersion, Extra: []string{"+https://www.terraform.io"}},
-			{Name: "terraform-provider-aws", Version: version.ProviderVersion, Extra: []string{"+https://registry.terraform.io/providers/hashicorp/aws"}},
+			{Name: "Pulumi", Version: "1.0"},
+			{Name: "Pulumi-Aws", Version: c.terraformVersion, Extra: []string{"+https://www.pulumi.com"}},
 		},
 	}
 

@@ -1,6 +1,7 @@
 package aws
 
 import (
+	"github.com/terraform-providers/terraform-provider-aws/version"
 	"log"
 	"strings"
 
@@ -1488,7 +1489,7 @@ func providerConfigure(d *schema.ResourceData, terraformVersion string) (interfa
 		SkipRequestingAccountId: d.Get("skip_requesting_account_id").(bool),
 		SkipMetadataApiCheck:    d.Get("skip_metadata_api_check").(bool),
 		S3ForcePathStyle:        d.Get("s3_force_path_style").(bool),
-		terraformVersion:        terraformVersion,
+		terraformVersion:        version.ProviderVersion,
 	}
 
 	if l, ok := d.Get("assume_role").([]interface{}); ok && len(l) > 0 && l[0] != nil {
