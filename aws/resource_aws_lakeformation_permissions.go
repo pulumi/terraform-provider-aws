@@ -32,8 +32,8 @@ func resourceAwsLakeFormationPermissions() *schema.Resource {
 				ValidateFunc: validateAwsAccountId,
 			},
 			"catalog_resource": {
-				Type:     schema.TypeBool,
-				Default:  false,
+				Type: schema.TypeBool,
+				//Default:  false,
 				ForceNew: true,
 				Optional: true,
 				ExactlyOneOf: []string{
