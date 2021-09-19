@@ -343,8 +343,8 @@ The following arguments are supported:
 * `capacity_rebalance` - (Optional) Indicates whether capacity rebalance is enabled. Otherwise, capacity rebalance is disabled.
 * `default_cooldown` - (Optional) The amount of time, in seconds, after a scaling activity completes before another scaling activity can start.
 * `launch_configuration` - (Optional) The name of the launch configuration to use.
-* `launch_template` - (Optional) Nested argument with Launch template specification to use to launch instances. Defined below.
-* `mixed_instances_policy` (Optional) Configuration block containing settings to define launch targets for Auto Scaling groups. Defined below.
+* `launch_template` - (Optional) Nested argument with Launch template specification to use to launch instances. See [Launch Template](#launch_template) below for more details.
+* `mixed_instances_policy` (Optional) Configuration block containing settings to define launch targets for Auto Scaling groups. See [Mixed Instances Policy](#mixed_instances_policy) below for more details.
 * `initial_lifecycle_hook` - (Optional) One or more
   [Lifecycle Hooks](http://docs.aws.amazon.com/autoscaling/latest/userguide/lifecycle-hooks.html)
   to attach to the Auto Scaling Group **before** instances are launched. The
@@ -392,7 +392,7 @@ Note that if you suspend either the `Launch` or `Terminate` process types, it ca
    Auto Scaling Group will not select instances with this setting for termination
    during scale in events.
 * `service_linked_role_arn` (Optional) The ARN of the service-linked role that the ASG will use to call other AWS services
-* `max_instance_lifetime` (Optional) The maximum amount of time, in seconds, that an instance can be in service, values must be either equal to 0 or between 604800 and 31536000 seconds.
+* `max_instance_lifetime` (Optional) The maximum amount of time, in seconds, that an instance can be in service, values must be either equal to 0 or between 86400 and 31536000 seconds.
 * `instance_refresh` - (Optional) If this block is configured, start an
    [Instance Refresh](https://docs.aws.amazon.com/autoscaling/ec2/userguide/asg-instance-refresh.html)
    when this Auto Scaling Group is updated. Defined [below](#instance_refresh).
