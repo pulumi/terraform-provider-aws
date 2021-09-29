@@ -38,6 +38,13 @@ func dataSourceAwsLambdaLayerVersion() *schema.Resource {
 					Type: schema.TypeString,
 				},
 			},
+			"compatible_architectures": {
+				Type:     schema.TypeSet,
+				Computed: true,
+				Elem: &schema.Schema{
+					Type: schema.TypeString,
+				},
+			},
 			"description": {
 				Type:     schema.TypeString,
 				Computed: true,
@@ -128,6 +135,9 @@ func dataSourceAwsLambdaLayerVersionRead(d *schema.ResourceData, meta interface{
 	}
 	if err := d.Set("compatible_runtimes", flattenStringList(output.CompatibleRuntimes)); err != nil {
 		return fmt.Errorf("error setting lambda layer compatible runtimes: %w", err)
+	}
+	if err := d.Set("compatible_architectures", flattenStringList(output.CompatibleArchitectures)); err != nil {
+		return fmt.Errorf("error setting lambda layer compatible architectures: %w", err)
 	}
 	if err := d.Set("description", output.Description); err != nil {
 		return fmt.Errorf("error setting lambda layer description: %w", err)

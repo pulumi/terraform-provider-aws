@@ -34,6 +34,7 @@ The following arguments are supported:
 
 In addition to all arguments above, the following attributes are exported:
 
+* `compatible_architectures` - The compatible architectures of the specific Lambda Layer Version.
 * `description` - Description of the specific Lambda Layer version.
 * `license_info` - License info associated with the specific Lambda Layer version.
 * `compatible_runtimes` - A list of [Runtimes][1] the specific Lambda Layer version is compatible with.

@@ -315,6 +315,15 @@ func resourceAwsLambdaFunction() *schema.Resource {
 				Optional:     true,
 				ValidateFunc: validateArn,
 			},
+			"architectures": {
+				Type:     schema.TypeSet,
+				Optional: true,
+				Computed: true,
+				Elem: &schema.Schema{
+					Type:         schema.TypeString,
+					ValidateFunc: validation.StringInSlice(lambda.Architecture_Values(), false),
+				},
+			},
 			"tags":     tagsSchema(),
 			"tags_all": tagsSchemaTrulyComputed(),
 		},
@@ -449,6 +458,10 @@ func resourceAwsLambdaFunctionCreate(d *schema.ResourceData, meta interface{}) e
 
 	if v, ok := d.GetOk("layers"); ok && len(v.([]interface{})) > 0 {
 		params.Layers = expandStringList(v.([]interface{}))
+	}
+
+	if v, ok := d.GetOk("architectures"); ok && v.(*schema.Set).Len() > 0 {
+		params.Architectures = expandStringSet(v.(*schema.Set))
 	}
 
 	if v, ok := d.GetOk("file_system_config"); ok && len(v.([]interface{})) > 0 {
@@ -767,6 +780,12 @@ func resourceAwsLambdaFunctionRead(d *schema.ResourceData, meta interface{}) err
 		return fmt.Errorf("error setting layers for Lambda Function (%s): %w", d.Id(), err)
 	}
 
+	architectures := flattenStringList(function.Architectures)
+	log.Printf("[INFO] Setting Lambda %s Architectures %#v from API", d.Id(), architectures)
+	if err := d.Set("architectures", architectures); err != nil {
+		return fmt.Errorf("error setting architectures for Lambda Function (%s): %w", d.Id(), err)
+	}
+
 	config := flattenLambdaVpcConfigResponse(function.VpcConfig)
 	log.Printf("[INFO] Setting Lambda %s VPC config %#v from API", d.Id(), config)
 	if err := d.Set("vpc_config", config); err != nil {
@@ -918,8 +937,8 @@ func needsFunctionCodeUpdate(d resourceDiffer) bool {
 		d.HasChange("s3_bucket") ||
 		d.HasChange("s3_key") ||
 		d.HasChange("s3_object_version") ||
-		d.HasChange("image_uri")
-
+		d.HasChange("image_uri") ||
+		d.HasChange("architectures")
 }
 
 // resourceAwsLambdaFunctionUpdate maps to:
@@ -1170,6 +1189,10 @@ func resourceAwsLambdaFunctionUpdate(d *schema.ResourceData, meta interface{}) e
 			if versionOk {
 				codeReq.S3ObjectVersion = aws.String(s3ObjectVersion.(string))
 			}
+		}
+
+		if v, ok := d.GetOk("architectures"); ok && v.(*schema.Set).Len() > 0 {
+			codeReq.Architectures = expandStringSet(v.(*schema.Set))
 		}
 
 		log.Printf("[DEBUG] Send Update Lambda Function Code request: %#v", codeReq)

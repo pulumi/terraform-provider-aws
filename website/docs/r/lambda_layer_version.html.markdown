@@ -14,6 +14,8 @@ For information about Lambda Layers and how to use them, see [AWS Lambda Layers]
 
 ## Example Usage
 
+### Basic Example
+
 ```terraform
 resource "aws_lambda_layer_version" "lambda_layer" {
   filename   = "lambda_layer_payload.zip"
@@ -22,6 +24,19 @@ resource "aws_lambda_layer_version" "lambda_layer" {
   compatible_runtimes = ["nodejs12.x"]
 }
 ```
+
+### Lambda Layer with Compatible Architectures
+
+```terraform
+resource "aws_lambda_layer_version" "lambda_layer" {
+  filename   = "lambda_layer_payload.zip"
+  layer_name = "lambda_layer_name"
+
+  compatible_runtimes = ["nodejs12.x"]
+  compatible_architectures = ["arm64", "x86_64"]
+}
+```
+
 
 ## Specifying the Deployment Package
 
@@ -38,6 +53,7 @@ large files efficiently.
 ## Argument Reference
 
 * `layer_name` (Required) A unique name for your Lambda Layer
+* `compatible_architectures` - (Optional) The compatible architectures for the specific Lambda Layer Version. Valid values are `arm64` and `x86_64`. If not supplied, a value of `null` is assumed and will default to the value used for the function architecture.
 * `filename` (Optional) The path to the function's deployment package within the local filesystem. If defined, The `s3_`-prefixed options cannot be used.
 * `s3_bucket` - (Optional) The S3 bucket location containing the function's deployment package. Conflicts with `filename`. This bucket must reside in the same AWS region where you are creating the Lambda function.
 * `s3_key` - (Optional) The S3 key of an object containing the function's deployment package. Conflicts with `filename`.

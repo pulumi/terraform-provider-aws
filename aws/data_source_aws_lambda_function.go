@@ -182,6 +182,13 @@ func dataSourceAwsLambdaFunction() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"architectures": {
+				Type:     schema.TypeSet,
+				Computed: true,
+				Elem: &schema.Schema{
+					Type: schema.TypeString,
+				},
+			},
 		},
 	}
 }
@@ -251,6 +258,10 @@ func dataSourceAwsLambdaFunctionRead(d *schema.ResourceData, meta interface{}) e
 
 	if err := d.Set("layers", flattenLambdaLayers(function.Layers)); err != nil {
 		return fmt.Errorf("Error setting layers for Lambda Function (%s): %w", d.Id(), err)
+	}
+
+	if err := d.Set("architectures", flattenStringList(function.Architectures)); err != nil {
+		return fmt.Errorf("Error setting architectures for Lambda Function (%s): %w", d.Id(), err)
 	}
 
 	fileSystemConfigs := flattenLambdaFileSystemConfigs(function.FileSystemConfigs)
