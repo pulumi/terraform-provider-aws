@@ -107,6 +107,12 @@ func Provider() *schema.Provider {
 				},
 			},
 
+			"http_proxy": {
+				Type:        schema.TypeString,
+				Optional:    true,
+				Description: descriptions["http_proxy"],
+			},
+
 			"endpoints": endpointsSchema(),
 
 			"ignore_tags": {
@@ -212,6 +218,7 @@ func Provider() *schema.Provider {
 			"aws_billing_service_account":                    dataSourceAwsBillingServiceAccount(),
 			"aws_caller_identity":                            dataSourceAwsCallerIdentity(),
 			"aws_canonical_user_id":                          dataSourceAwsCanonicalUserId(),
+			"aws_cloudcontrolapi_resource":                   dataSourceAwsCloudControlApiResource(),
 			"aws_cloudformation_export":                      dataSourceAwsCloudFormationExport(),
 			"aws_cloudformation_stack":                       dataSourceAwsCloudFormationStack(),
 			"aws_cloudformation_type":                        dataSourceAwsCloudFormationType(),
@@ -238,6 +245,7 @@ func Provider() *schema.Provider {
 			"aws_db_cluster_snapshot":                        dataSourceAwsDbClusterSnapshot(),
 			"aws_db_event_categories":                        dataSourceAwsDbEventCategories(),
 			"aws_db_instance":                                dataSourceAwsDbInstance(),
+			"aws_db_proxy":                                   dataSourceAwsDbProxy(),
 			"aws_db_snapshot":                                dataSourceAwsDbSnapshot(),
 			"aws_db_subnet_group":                            dataSourceAwsDbSubnetGroup(),
 			"aws_dedicated_host":                             dataSourceAwsDedicatedHost(),
@@ -257,6 +265,7 @@ func Provider() *schema.Provider {
 			"aws_ebs_volumes":                                dataSourceAwsEbsVolumes(),
 			"aws_ec2_coip_pool":                              dataSourceAwsEc2CoipPool(),
 			"aws_ec2_coip_pools":                             dataSourceAwsEc2CoipPools(),
+			"aws_ec2_host":                                   dataSourceAwsEc2Host(),
 			"aws_ec2_instance_type":                          dataSourceAwsEc2InstanceType(),
 			"aws_ec2_instance_type_offering":                 dataSourceAwsEc2InstanceTypeOffering(),
 			"aws_ec2_instance_type_offerings":                dataSourceAwsEc2InstanceTypeOfferings(),
@@ -336,6 +345,7 @@ func Provider() *schema.Provider {
 			"aws_internet_gateway":                           dataSourceAwsInternetGateway(),
 			"aws_iot_endpoint":                               dataSourceAwsIotEndpoint(),
 			"aws_ip_ranges":                                  dataSourceAwsIPRanges(),
+			"aws_kinesis_firehose_delivery_stream":           dataSourceAwsKinesisFirehoseDeliveryStream(),
 			"aws_kinesis_stream":                             dataSourceAwsKinesisStream(),
 			"aws_kinesis_stream_consumer":                    dataSourceAwsKinesisStreamConsumer(),
 			"aws_kms_alias":                                  dataSourceAwsKmsAlias(),
@@ -425,6 +435,7 @@ func Provider() *schema.Provider {
 			"aws_sqs_queue":                                  dataSourceAwsSqsQueue(),
 			"aws_ssm_document":                               dataSourceAwsSsmDocument(),
 			"aws_ssm_parameter":                              dataSourceAwsSsmParameter(),
+			"aws_ssm_parameters_by_path":                     dataSourceAwsSsmParametersByPath(),
 			"aws_ssm_patch_baseline":                         dataSourceAwsSsmPatchBaseline(),
 			"aws_ssoadmin_instances":                         dataSourceAwsSsoAdminInstances(),
 			"aws_ssoadmin_permission_set":                    dataSourceAwsSsoAdminPermissionSet(),
@@ -544,6 +555,7 @@ func Provider() *schema.Provider {
 			"aws_apprunner_service":                                   resourceAwsAppRunnerService(),
 			"aws_appstream_stack":                                     resourceAwsAppStreamStack(),
 			"aws_appstream_fleet":                                     resourceAwsAppStreamFleet(),
+			"aws_appstream_image_builder":                             resourceAwsAppStreamImageBuilder(),
 			"aws_appsync_api_key":                                     resourceAwsAppsyncApiKey(),
 			"aws_appsync_datasource":                                  resourceAwsAppsyncDatasource(),
 			"aws_appsync_function":                                    resourceAwsAppsyncFunction(),
@@ -576,6 +588,7 @@ func Provider() *schema.Provider {
 			"aws_chime_voice_connector_origination":                   resourceAwsChimeVoiceConnectorOrigination(),
 			"aws_chime_voice_connector_termination":                   resourceAwsChimeVoiceConnectorTermination(),
 			"aws_cloud9_environment_ec2":                              resourceAwsCloud9EnvironmentEc2(),
+			"aws_cloudcontrolapi_resource":                            resourceAwsCloudControlApiResource(),
 			"aws_cloudformation_stack":                                resourceAwsCloudFormationStack(),
 			"aws_cloudformation_stack_set":                            resourceAwsCloudFormationStackSet(),
 			"aws_cloudformation_stack_set_instance":                   resourceAwsCloudFormationStackSetInstance(),
@@ -730,6 +743,7 @@ func Provider() *schema.Provider {
 			"aws_ec2_client_vpn_network_association":                  resourceAwsEc2ClientVpnNetworkAssociation(),
 			"aws_ec2_client_vpn_route":                                resourceAwsEc2ClientVpnRoute(),
 			"aws_ec2_fleet":                                           resourceAwsEc2Fleet(),
+			"aws_ec2_host":                                            resourceAwsEc2Host(),
 			"aws_ec2_local_gateway_route":                             resourceAwsEc2LocalGatewayRoute(),
 			"aws_ec2_local_gateway_route_table_vpc_association":       resourceAwsEc2LocalGatewayRouteTableVpcAssociation(),
 			"aws_ec2_managed_prefix_list":                             resourceAwsEc2ManagedPrefixList(),
@@ -873,6 +887,7 @@ func Provider() *schema.Provider {
 			"aws_inspector_resource_group":                            resourceAWSInspectorResourceGroup(),
 			"aws_instance":                                            resourceAwsInstance(),
 			"aws_internet_gateway":                                    resourceAwsInternetGateway(),
+			"aws_iot_authorizer":                                      resourceAwsIoTAuthorizer(),
 			"aws_iot_certificate":                                     resourceAwsIotCertificate(),
 			"aws_iot_policy":                                          resourceAwsIotPolicy(),
 			"aws_iot_policy_attachment":                               resourceAwsIotPolicyAttachment(),
@@ -989,6 +1004,7 @@ func Provider() *schema.Provider {
 			"aws_prometheus_workspace":                                resourceAwsPrometheusWorkspace(),
 			"aws_proxy_protocol_policy":                               resourceAwsProxyProtocolPolicy(),
 			"aws_qldb_ledger":                                         resourceAwsQLDBLedger(),
+			"aws_quicksight_data_source":                              resourceAwsQuickSightDataSource(),
 			"aws_quicksight_group":                                    resourceAwsQuickSightGroup(),
 			"aws_quicksight_group_membership":                         resourceAwsQuickSightGroupMembership(),
 			"aws_quicksight_user":                                     resourceAwsQuickSightUser(),
@@ -1010,6 +1026,7 @@ func Provider() *schema.Provider {
 			"aws_redshift_snapshot_schedule":                          resourceAwsRedshiftSnapshotSchedule(),
 			"aws_redshift_snapshot_schedule_association":              resourceAwsRedshiftSnapshotScheduleAssociation(),
 			"aws_redshift_event_subscription":                         resourceAwsRedshiftEventSubscription(),
+			"aws_redshift_scheduled_action":                           resourceAwsRedshiftScheduledAction(),
 			"aws_resourcegroups_group":                                resourceAwsResourceGroupsGroup(),
 			"aws_route53_delegation_set":                              resourceAwsRoute53DelegationSet(),
 			"aws_route53_hosted_zone_dnssec":                          resourceAwsRoute53HostedZoneDnssec(),
@@ -1059,6 +1076,7 @@ func Provider() *schema.Provider {
 			"aws_sagemaker_model_package_group":                       resourceAwsSagemakerModelPackageGroup(),
 			"aws_sagemaker_notebook_instance_lifecycle_configuration": resourceAwsSagemakerNotebookInstanceLifeCycleConfiguration(),
 			"aws_sagemaker_notebook_instance":                         resourceAwsSagemakerNotebookInstance(),
+			"aws_sagemaker_studio_lifecycle_config":                   resourceAwsSagemakerStudioLifecycleConfig(),
 			"aws_sagemaker_user_profile":                              resourceAwsSagemakerUserProfile(),
 			"aws_sagemaker_workforce":                                 resourceAwsSagemakerWorkforce(),
 			"aws_sagemaker_workteam":                                  resourceAwsSagemakerWorkteam(),
@@ -1324,9 +1342,12 @@ func init() {
 			"being executed. If the API request still fails, an error is\n" +
 			"thrown.",
 
+		"http_proxy": "The address of an HTTP proxy to use when accessing the AWS API. " +
+			"Can also be configured using the `HTTP_PROXY` or `HTTPS_PROXY` environment variables.",
+
 		"endpoint": "Use this to override the default service endpoint URL",
 
-		"insecure": "Explicitly allow the provider to perform \"insecure\" SSL requests. If omitted," +
+		"insecure": "Explicitly allow the provider to perform \"insecure\" SSL requests. If omitted, " +
 			"default value is `false`",
 
 		"skip_credentials_validation": "Skip the credentials validation via STS API. " +
@@ -1372,6 +1393,7 @@ func init() {
 		"budgets",
 		"chime",
 		"cloud9",
+		"cloudcontrolapi",
 		"cloudformation",
 		"cloudfront",
 		"cloudhsm",
@@ -1528,6 +1550,7 @@ func providerConfigure(d *schema.ResourceData, terraformVersion string) (interfa
 		MaxRetries:              d.Get("max_retries").(int),
 		IgnoreTagsConfig:        expandProviderIgnoreTags(d.Get("ignore_tags").([]interface{})),
 		Insecure:                d.Get("insecure").(bool),
+		HTTPProxy:               d.Get("http_proxy").(string),
 		SkipCredsValidation:     d.Get("skip_credentials_validation").(bool),
 		SkipGetEC2Platforms:     d.Get("skip_get_ec2_platforms").(bool),
 		SkipRegionValidation:    d.Get("skip_region_validation").(bool),

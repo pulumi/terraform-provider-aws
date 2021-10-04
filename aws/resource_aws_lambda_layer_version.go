@@ -27,6 +27,16 @@ func resourceAwsLambdaLayerVersion() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"compatible_architectures": {
+				Type:     schema.TypeSet,
+				Optional: true,
+				ForceNew: true,
+				MaxItems: 2,
+				Elem: &schema.Schema{
+					Type:         schema.TypeString,
+					ValidateFunc: validation.StringInSlice(lambda.Architecture_Values(), false),
+				},
+			},
 			"layer_name": {
 				Type:     schema.TypeString,
 				Required: true,
@@ -65,15 +75,6 @@ func resourceAwsLambdaLayerVersion() *schema.Resource {
 				Elem: &schema.Schema{
 					Type:         schema.TypeString,
 					ValidateFunc: validation.StringInSlice(lambda.Runtime_Values(), false),
-				},
-			},
-			"compatible_architectures": {
-				Type:     schema.TypeSet,
-				Optional: true,
-				ForceNew: true,
-				Elem: &schema.Schema{
-					Type:         schema.TypeString,
-					ValidateFunc: validation.StringInSlice(lambda.Architecture_Values(), false),
 				},
 			},
 			"description": {
@@ -247,6 +248,10 @@ func resourceAwsLambdaLayerVersionRead(d *schema.ResourceData, meta interface{})
 	if err := d.Set("compatible_runtimes", flattenStringList(layerVersion.CompatibleRuntimes)); err != nil {
 		return fmt.Errorf("Error setting lambda layer compatible runtimes: %s", err)
 	}
+	if err := d.Set("compatible_architectures", flattenStringList(layerVersion.CompatibleArchitectures)); err != nil {
+		return fmt.Errorf("Error setting lambda layer compatible architectures: %s", err)
+	}
+
 	if err := d.Set("compatible_architectures", flattenStringList(layerVersion.CompatibleArchitectures)); err != nil {
 		return fmt.Errorf("Error setting lambda layer compatible architectures: %s", err)
 	}

@@ -183,7 +183,7 @@ func dataSourceAwsLambdaFunction() *schema.Resource {
 				Computed: true,
 			},
 			"architectures": {
-				Type:     schema.TypeSet,
+				Type:     schema.TypeList,
 				Computed: true,
 				Elem: &schema.Schema{
 					Type: schema.TypeString,

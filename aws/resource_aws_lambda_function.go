@@ -47,6 +47,15 @@ func resourceAwsLambdaFunction() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"architectures": {
+				Type:     schema.TypeList,
+				Optional: true,
+				Computed: true,
+				Elem: &schema.Schema{
+					Type:         schema.TypeString,
+					ValidateFunc: validation.StringInSlice(lambda.Architecture_Values(), false),
+				},
+			},
 			"filename": {
 				Type:          schema.TypeString,
 				Optional:      true,
@@ -315,15 +324,6 @@ func resourceAwsLambdaFunction() *schema.Resource {
 				Optional:     true,
 				ValidateFunc: validateArn,
 			},
-			"architectures": {
-				Type:     schema.TypeSet,
-				Optional: true,
-				Computed: true,
-				Elem: &schema.Schema{
-					Type:         schema.TypeString,
-					ValidateFunc: validation.StringInSlice(lambda.Architecture_Values(), false),
-				},
-			},
 			"tags":     tagsSchema(),
 			"tags_all": tagsSchemaTrulyComputed(),
 		},
@@ -447,6 +447,10 @@ func resourceAwsLambdaFunctionCreate(d *schema.ResourceData, meta interface{}) e
 		PackageType:  aws.String(packageType),
 	}
 
+	if v, ok := d.GetOk("architectures"); ok && len(v.([]interface{})) > 0 {
+		params.Architectures = expandStringList(v.([]interface{}))
+	}
+
 	if packageType == lambda.PackageTypeZip {
 		params.Handler = aws.String(d.Get("handler").(string))
 		params.Runtime = aws.String(d.Get("runtime").(string))
@@ -459,11 +463,6 @@ func resourceAwsLambdaFunctionCreate(d *schema.ResourceData, meta interface{}) e
 	if v, ok := d.GetOk("layers"); ok && len(v.([]interface{})) > 0 {
 		params.Layers = expandStringList(v.([]interface{}))
 	}
-
-	if v, ok := d.GetOk("architectures"); ok && v.(*schema.Set).Len() > 0 {
-		params.Architectures = expandStringSet(v.(*schema.Set))
-	}
-
 	if v, ok := d.GetOk("file_system_config"); ok && len(v.([]interface{})) > 0 {
 		for _, config := range v.([]interface{}) {
 			params.FileSystemConfigs = append(params.FileSystemConfigs, &lambda.FileSystemConfig{
@@ -697,6 +696,12 @@ func resourceAwsLambdaFunctionRead(d *schema.ResourceData, meta interface{}) err
 
 	function := getFunctionOutput.Configuration
 
+	architectures := flattenStringList(function.Architectures)
+	log.Printf("[INFO] Setting Lambda %s Architecture %#v from API", d.Id(), architectures)
+	if err := d.Set("architectures", architectures); err != nil {
+		return fmt.Errorf("error setting architectures for Lambda Function (%s): %w", d.Id(), err)
+	}
+
 	if err := d.Set("arn", function.FunctionArn); err != nil {
 		return fmt.Errorf("error setting function arn for Lambda Function: %w", err)
 	}
@@ -779,13 +784,6 @@ func resourceAwsLambdaFunctionRead(d *schema.ResourceData, meta interface{}) err
 	if err := d.Set("layers", layers); err != nil {
 		return fmt.Errorf("error setting layers for Lambda Function (%s): %w", d.Id(), err)
 	}
-
-	architectures := flattenStringList(function.Architectures)
-	log.Printf("[INFO] Setting Lambda %s Architectures %#v from API", d.Id(), architectures)
-	if err := d.Set("architectures", architectures); err != nil {
-		return fmt.Errorf("error setting architectures for Lambda Function (%s): %w", d.Id(), err)
-	}
-
 	config := flattenLambdaVpcConfigResponse(function.VpcConfig)
 	log.Printf("[INFO] Setting Lambda %s VPC config %#v from API", d.Id(), config)
 	if err := d.Set("vpc_config", config); err != nil {
@@ -1164,6 +1162,13 @@ func resourceAwsLambdaFunctionUpdate(d *schema.ResourceData, meta interface{}) e
 	if codeUpdate {
 		codeReq := &lambda.UpdateFunctionCodeInput{
 			FunctionName: aws.String(d.Id()),
+		}
+
+		if d.HasChange("architectures") {
+			architectures := d.Get("architectures").([]interface{})
+			if len(architectures) > 0 {
+				codeReq.Architectures = expandStringList(architectures)
+			}
 		}
 
 		if v, ok := d.GetOk("filename"); ok {
