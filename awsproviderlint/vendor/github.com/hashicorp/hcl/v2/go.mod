@@ -21,5 +21,8 @@ require (
 	golang.org/x/sys v0.0.0-20190502175342-a43fa875dd82 // indirect
 	golang.org/x/text v0.3.2 // indirect
 )
+<<<<<<< HEAD
 
 go 1.13
+=======
+>>>>>>> v3.62.0
