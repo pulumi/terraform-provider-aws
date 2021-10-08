@@ -1196,10 +1196,6 @@ func resourceAwsLambdaFunctionUpdate(d *schema.ResourceData, meta interface{}) e
 			}
 		}
 
-		if v, ok := d.GetOk("architectures"); ok && v.(*schema.Set).Len() > 0 {
-			codeReq.Architectures = expandStringSet(v.(*schema.Set))
-		}
-
 		log.Printf("[DEBUG] Send Update Lambda Function Code request: %#v", codeReq)
 
 		_, err := conn.UpdateFunctionCode(codeReq)
