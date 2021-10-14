@@ -94,6 +94,14 @@ const (
 	ErrCodeInvalidPermissionNotFound  = "InvalidPermission.NotFound"
 )
 
+const (
+	ErrCodeInvalidFlowLogIdNotFound = "InvalidFlowLogId.NotFound"
+)
+
+const (
+	ErrCodeInvalidPlacementGroupUnknown = "InvalidPlacementGroup.Unknown"
+)
+
 // See https://docs.aws.amazon.com/vm-import/latest/userguide/vmimport-image-import.html#check-import-task-status
 const (
 	EbsSnapshotImportActive     = "active"

@@ -87,6 +87,25 @@ resource "aws_s3_bucket" "example" {
 }
 ```
 
+### S3 Logging in Apache Parquet format with per-hour partitions
+
+```terraform
+resource "aws_flow_log" "example" {
+  log_destination      = aws_s3_bucket.example.arn
+  log_destination_type = "s3"
+  traffic_type         = "ALL"
+  vpc_id               = aws_vpc.example.id
+  destination_options {
+    file_format        = "parquet"
+    per_hour_partition = true
+  }
+}
+
+resource "aws_s3_bucket" "example" {
+  bucket = "example"
+}
+```
+
 ## Argument Reference
 
 ~> **NOTE:** One of `eni_id`, `subnet_id`, or `vpc_id` must be specified.
@@ -107,6 +126,15 @@ The following arguments are supported:
   log record. Valid Values: `60` seconds (1 minute) or `600` seconds (10
   minutes). Default: `600`.
 * `tags` - (Optional) Key-value map of resource tags. .If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+* `destination_options` - (Optional) Describes the destination options for a flow log. More details below.
+
+### destination_options
+
+Describes the destination options for a flow log.
+
+* `file_format` - (Optional) The format for the flow log. Default value: `plain-text`. Valid values: `plain-text`, `parquet`.
+* `hive_compatible_partitions` - (Optional) Indicates whether to use Hive-compatible prefixes for flow logs stored in Amazon S3. Default value: `false`.
+* `per_hour_partition` - (Optional) Indicates whether to partition the flow log per hour. This reduces the cost and response time for queries. Default value: `false`.
 
 ## Attributes Reference
 
