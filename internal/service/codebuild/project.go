@@ -618,13 +618,13 @@ func ResourceProject() *schema.Resource {
 			"build_timeout": {
 				Type:         schema.TypeInt,
 				Optional:     true,
-				Default:      "60",
+				Default:      60,
 				ValidateFunc: validation.IntBetween(5, 480),
 			},
 			"queued_timeout": {
 				Type:         schema.TypeInt,
 				Optional:     true,
-				Default:      "480",
+				Default:      480,
 				ValidateFunc: validation.IntBetween(5, 480),
 			},
 			"badge_enabled": {
