@@ -1,3 +1,10 @@
+## 3.64.1 (November 05, 2021)
+
+BUG FIXES:
+
+* provider: Fix bug preventing custom endpoints from being set ([#21639](https://github.com/hashicorp/terraform-provider-aws/issues/21639))
+* provider: Fix bug preventing proper assignment of custom endpoints ([#21641](https://github.com/hashicorp/terraform-provider-aws/issues/21641))
+
 ## 3.64.0 (November 04, 2021)
 
 FEATURES:
