@@ -52,7 +52,7 @@ In addition to all arguments above, the following attributes are exported:
 
 ## Import
 
-IAM User Login Profiles can be imported without password information support via the IAM User name, e.g.
+IAM User Login Profiles can be imported without password information support via the IAM User name, e.g.,
 
 ```sh
 $ terraform import aws_iam_user_login_profile.example myusername

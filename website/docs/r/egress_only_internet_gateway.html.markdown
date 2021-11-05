@@ -42,11 +42,11 @@ The following arguments are supported:
 In addition to all arguments above, the following attributes are exported:
 
 * `id` - The ID of the egress-only Internet gateway.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://www.terraform.io/docs/providers/aws/index.html#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 
-Egress-only Internet gateways can be imported using the `id`, e.g.
+Egress-only Internet gateways can be imported using the `id`, e.g.,
 
 ```
 $ terraform import aws_egress_only_internet_gateway.example eigw-015e0e244e24dfe8a

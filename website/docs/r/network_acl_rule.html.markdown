@@ -11,7 +11,7 @@ description: |-
 Creates an entry (a rule) in a network ACL with the specified rule number.
 
 ~> **NOTE on Network ACLs and Network ACL Rules:** This provider currently
-provides both a standalone Network ACL Rule resource and a [Network ACL](network_acl.html) resource with rules
+provides both a standalone Network ACL Rule resource and a Network ACL resource with rules
 defined in-line. At this time you cannot use a Network ACL with in-line rules
 in conjunction with any Network ACL Rule resources. Doing so will cause
 a conflict of rule settings and will overwrite rules.
@@ -50,8 +50,8 @@ The following arguments are supported:
 * `ipv6_cidr_block` - (Optional) The IPv6 CIDR block to allow or deny.
 * `from_port` - (Optional) The from port to match.
 * `to_port` - (Optional) The to port to match.
-* `icmp_type` - (Optional) ICMP protocol: The ICMP type. Required if specifying ICMP for the protocol. e.g. -1
-* `icmp_code` - (Optional) ICMP protocol: The ICMP code. Required if specifying ICMP for the protocol. e.g. -1
+* `icmp_type` - (Optional) ICMP protocol: The ICMP type. Required if specifying ICMP for the protocolE.g., -1
+* `icmp_code` - (Optional) ICMP protocol: The ICMP code. Required if specifying ICMP for the protocolE.g., -1
 
 ~> **NOTE:** If the value of `protocol` is `-1` or `all`, the `from_port` and `to_port` values will be ignored and the rule will apply to all ports.
 

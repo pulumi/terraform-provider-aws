@@ -126,7 +126,7 @@ In addition to all arguments above, the following attributes are exported:
 * `private_ip` - Contains the private IP address (if in VPC).
 * `public_dns` - Public DNS associated with the Elastic IP address.
 * `public_ip` - Contains the public IP address.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://www.terraform.io/docs/providers/aws/index.html#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ~> **Note:** The resource computes the `public_dns` and `private_dns` attributes according to the [VPC DNS Guide](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-dns.html#vpc-dns-hostnames) as they are not available with the EC2 API.
 
@@ -140,13 +140,13 @@ In addition to all arguments above, the following attributes are exported:
 
 ## Import
 
-EIPs in a VPC can be imported using their Allocation ID, e.g.
+EIPs in a VPC can be imported using their Allocation ID, e.g.,
 
 ```
 $ terraform import aws_eip.bar eipalloc-00a10e96
 ```
 
-EIPs in EC2 Classic can be imported using their Public IP, e.g.
+EIPs in EC2 Classic can be imported using their Public IP, e.g.,
 
 ```
 $ terraform import aws_eip.bar 52.0.0.0

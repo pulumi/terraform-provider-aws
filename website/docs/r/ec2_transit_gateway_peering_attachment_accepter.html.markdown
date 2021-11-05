@@ -37,11 +37,11 @@ In addition to all arguments above, the following attributes are exported:
 * `transit_gateway_id` - Identifier of EC2 Transit Gateway.
 * `peer_transit_gateway_id` - Identifier of EC2 Transit Gateway to peer with.
 * `peer_account_id` - Identifier of the AWS account that owns the EC2 TGW peering.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://www.terraform.io/docs/providers/aws/index.html#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 
-`aws_ec2_transit_gateway_peering_attachment_accepter` can be imported by using the EC2 Transit Gateway Attachment identifier, e.g.
+`aws_ec2_transit_gateway_peering_attachment_accepter` can be imported by using the EC2 Transit Gateway Attachment identifier, e.g.,
 
 ```
 $ terraform import aws_ec2_transit_gateway_peering_attachment_accepter.example tgw-attach-12345678

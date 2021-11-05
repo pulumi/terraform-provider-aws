@@ -121,7 +121,7 @@ resource "aws_ec2_fleet" "example" {
 In addition to all arguments above, the following attributes are exported:
 
 * `id` - Fleet identifier
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://www.terraform.io/docs/providers/aws/index.html#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Timeouts
 
@@ -133,7 +133,7 @@ In addition to all arguments above, the following attributes are exported:
 
 ## Import
 
-`aws_ec2_fleet` can be imported by using the Fleet identifier, e.g.
+`aws_ec2_fleet` can be imported by using the Fleet identifier, e.g.,
 
 ```
 $ terraform import aws_ec2_fleet.example fleet-b9b55d27-c5fc-41ac-a6f3-48fcc91f080c

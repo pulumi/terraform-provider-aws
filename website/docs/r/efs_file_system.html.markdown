@@ -65,12 +65,12 @@ In addition to all arguments above, the following attributes are exported:
 
 * `arn` - Amazon Resource Name of the file system.
 * `availability_zone_id` - The identifier of the Availability Zone in which the file system's One Zone storage classes exist.
-* `id` - The ID that identifies the file system (e.g. fs-ccfc0d65).
+* `id` - The ID that identifies the file system (e.g., fs-ccfc0d65).
 * `dns_name` - The DNS name for the filesystem per [documented convention](http://docs.aws.amazon.com/efs/latest/ug/mounting-fs-mount-cmd-dns-name.html).
 * `owner_id` - The AWS account that created the file system. If the file system was createdby an IAM user, the parent account to which the user belongs is the owner.
 * `number_of_mount_targets` - The current number of mount targets that the file system has.
 * `size_in_bytes` - The latest known metered size (in bytes) of data stored in the file system, the value is not the exact size that the file system was at any point in time. See [Size In Bytes](#size-in-bytes).
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://www.terraform.io/docs/providers/aws/index.html#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ### Size In Bytes
 
@@ -80,7 +80,7 @@ In addition to all arguments above, the following attributes are exported:
 
 ## Import
 
-The EFS file systems can be imported using the `id`, e.g.
+The EFS file systems can be imported using the `id`, e.g.,
 
 ```
 $ terraform import aws_efs_file_system.foo fs-6fa144c6

@@ -50,12 +50,12 @@ Application version lifecycle (`appversion_lifecycle`) supports the following se
 In addition to all arguments above, the following attributes are exported:
 
 * `arn` - The ARN assigned by AWS for this Elastic Beanstalk Application.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://www.terraform.io/docs/providers/aws/index.html#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 
 ## Import
 
-Elastic Beanstalk Applications can be imported using the `name`, e.g.
+Elastic Beanstalk Applications can be imported using the `name`, e.g.,
 
 ```
 $ terraform import aws_elastic_beanstalk_application.tf_test tf-test-name

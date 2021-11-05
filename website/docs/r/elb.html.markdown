@@ -146,11 +146,11 @@ In addition to all arguments above, the following attributes are exported:
   part of your inbound rules for your load balancer's back-end application
   instances. Only available on ELBs launched in a VPC.
 * `zone_id` - The canonical hosted zone ID of the ELB (to be used in a Route 53 Alias record)
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://www.terraform.io/docs/providers/aws/index.html#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 
-ELBs can be imported using the `name`, e.g.
+ELBs can be imported using the `name`, e.g.,
 
 ```
 $ terraform import aws_elb.bar elb-production-12345

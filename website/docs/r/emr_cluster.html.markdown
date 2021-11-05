@@ -824,7 +824,7 @@ In addition to all arguments above, the following attributes are exported:
 
 ## Import
 
-EMR clusters can be imported using the `id`, e.g.
+EMR clusters can be imported using the `id`, e.g.,
 
 ```
 $ terraform import aws_emr_cluster.cluster j-123456ABCDEF

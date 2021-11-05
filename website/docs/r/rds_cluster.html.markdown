@@ -259,7 +259,7 @@ any cleanup task during the destroying process.
 
 ## Import
 
-RDS Clusters can be imported using the `cluster_identifier`, e.g.
+RDS Clusters can be imported using the `cluster_identifier`, e.g.,
 
 ```
 $ terraform import aws_rds_cluster.aurora_cluster aurora-prod-cluster

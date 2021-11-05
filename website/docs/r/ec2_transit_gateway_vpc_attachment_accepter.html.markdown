@@ -42,7 +42,7 @@ The following arguments are supported:
 In addition to all arguments above, the following attributes are exported:
 
 * `id` - EC2 Transit Gateway Attachment identifier
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://www.terraform.io/docs/providers/aws/index.html#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 * `appliance_mode_support` - Whether Appliance Mode support is enabled. Valid values: `disable`, `enable`.
 * `dns_support` - Whether DNS support is enabled. Valid values: `disable`, `enable`.
 * `ipv6_support` - Whether IPv6 support is enabled. Valid values: `disable`, `enable`.
@@ -53,7 +53,7 @@ In addition to all arguments above, the following attributes are exported:
 
 ## Import
 
-`aws_ec2_transit_gateway_vpc_attachment_accepter` can be imported by using the EC2 Transit Gateway Attachment identifier, e.g.
+`aws_ec2_transit_gateway_vpc_attachment_accepter` can be imported by using the EC2 Transit Gateway Attachment identifier, e.g.,
 
 ```
 $ terraform import aws_ec2_transit_gateway_vpc_attachment_accepter.example tgw-attach-12345678

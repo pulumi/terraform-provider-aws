@@ -45,11 +45,11 @@ In addition to all arguments above, the following attributes are exported:
 * `key_name` - The key pair name.
 * `key_pair_id` - The key pair ID.
 * `fingerprint` - The MD5 public key fingerprint as specified in section 4 of RFC 4716.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://www.terraform.io/docs/providers/aws/index.html#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 
-Key Pairs can be imported using the `key_name`, e.g.
+Key Pairs can be imported using the `key_name`, e.g.,
 
 ```
 $ terraform import aws_key_pair.deployer deployer-key

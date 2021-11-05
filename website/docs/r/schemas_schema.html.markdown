@@ -65,13 +65,13 @@ In addition to all arguments above, the following attributes are exported:
 
 * `arn` - The Amazon Resource Name (ARN) of the discoverer.
 * `last_modified` - The last modified date of the schema.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://www.terraform.io/docs/providers/aws/index.html#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 * `version` - The version of the schema.
 * `version_created_date` - The created date of the version of the schema.
 
 ## Import
 
-EventBridge schema can be imported using the `name` and `registry_name`, e.g.
+EventBridge schema can be imported using the `name` and `registry_name`, e.g.,
 
 ```console
 $ terraform import aws_schemas_schema.test name/registry

@@ -114,7 +114,7 @@ connection in the peer VPC over the VPC Peering Connection.
 
 ## Import
 
-VPC Peering Connection Accepters can be imported by using the Peering Connection ID, e.g.
+VPC Peering Connection Accepters can be imported by using the Peering Connection ID, e.g.,
 
 ```sh
 $ terraform import aws_vpc_peering_connection_accepter.example pcx-12345678

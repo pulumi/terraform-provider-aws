@@ -54,7 +54,7 @@ In addition to all arguments above, the following attributes are exported:
 * `name` - The unique Stream name
 * `shard_count` - The count of Shards for this Stream
 * `arn` - The Amazon Resource Name (ARN) specifying the Stream (same as `id`)
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://www.terraform.io/docs/providers/aws/index.html#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Timeouts
 
@@ -66,7 +66,7 @@ In addition to all arguments above, the following attributes are exported:
 
 ## Import
 
-Kinesis Streams can be imported using the `name`, e.g.
+Kinesis Streams can be imported using the `name`, e.g.,
 
 ```
 $ terraform import aws_kinesis_stream.test_stream kinesis-test

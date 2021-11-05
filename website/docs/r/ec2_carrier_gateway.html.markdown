@@ -36,12 +36,12 @@ In addition to all arguments above, the following attributes are exported:
 * `arn` - The ARN of the carrier gateway.
 * `id` - The ID of the carrier gateway.
 * `owner_id` - The AWS account ID of the owner of the carrier gateway.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://www.terraform.io/docs/providers/aws/index.html#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 
 `aws_ec2_carrier_gateway` can be imported using the carrier gateway's ID,
-e.g.
+e.g.,
 
 ```
 $ terraform import aws_ec2_carrier_gateway.example cgw-12345

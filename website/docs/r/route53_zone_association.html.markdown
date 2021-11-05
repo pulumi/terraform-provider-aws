@@ -35,7 +35,7 @@ resource "aws_route53_zone" "example" {
   # NOTE: The aws_route53_zone vpc argument accepts multiple configuration
   #       blocks. The below usage of the single vpc configuration, the
   #       lifecycle configuration, and the aws_route53_zone_association
-  #       resource is for illustrative purposes (e.g. for a separate
+  #       resource is for illustrative purposes (e.g., for a separate
   #       cross-account authorization process, which is not shown here).
   vpc {
     vpc_id = aws_vpc.primary.id
@@ -69,7 +69,7 @@ In addition to all arguments above, the following attributes are exported:
 
 ## Import
 
-Route 53 Hosted Zone Associations can be imported via the Hosted Zone ID and VPC ID, separated by a colon (`:`), e.g.
+Route 53 Hosted Zone Associations can be imported via the Hosted Zone ID and VPC ID, separated by a colon (`:`), e.g.,
 
 ```
 $ terraform import aws_route53_zone_association.example Z123456ABCDEFG:vpc-12345678

@@ -56,7 +56,7 @@ The following arguments are supported:
 In addition to all arguments above, the following attributes are exported:
 
 * `arn` - Amazon Resource Name (ARN) of the EBS Snapshot.
-* `id` - The snapshot ID (e.g. snap-59fcb34e).
+* `id` - The snapshot ID (e.g., snap-59fcb34e).
 * `owner_id` - The AWS account ID of the snapshot owner.
 * `owner_alias` - Value from an Amazon-maintained list (`amazon`, `aws-marketplace`, `microsoft`) of snapshot owners.
 * `encrypted` - Whether the snapshot is encrypted.
@@ -66,4 +66,4 @@ In addition to all arguments above, the following attributes are exported:
 * `source_snapshot_id` The ARN of the copied snapshot.
 * `source_region` The region of the source snapshot.
 * `tags` - A map of tags for the snapshot.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://www.terraform.io/docs/providers/aws/index.html#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.

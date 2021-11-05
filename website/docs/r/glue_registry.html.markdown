@@ -32,11 +32,11 @@ In addition to all arguments above, the following attributes are exported:
 
 * `arn` - Amazon Resource Name (ARN) of Glue Registry.
 * `id` - Amazon Resource Name (ARN) of Glue Registry.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://www.terraform.io/docs/providers/aws/index.html#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 
-Glue Registries can be imported using `arn`, e.g.
+Glue Registries can be imported using `arn`, e.g.,
 
 ```
 $ terraform import aws_glue_registry.example arn:aws:glue:us-west-2:123456789012:registry/example

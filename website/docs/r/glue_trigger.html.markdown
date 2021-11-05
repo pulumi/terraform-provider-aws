@@ -150,7 +150,7 @@ In addition to all arguments above, the following attributes are exported:
 * `arn` - Amazon Resource Name (ARN) of Glue Trigger
 * `id` - Trigger name
 * `state` - The current state of the trigger.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://www.terraform.io/docs/providers/aws/index.html#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Timeouts
 
@@ -162,7 +162,7 @@ configuration options:
 
 ## Import
 
-Glue Triggers can be imported using `name`, e.g.
+Glue Triggers can be imported using `name`, e.g.,
 
 ```
 $ terraform import aws_glue_trigger.MyTrigger MyTrigger

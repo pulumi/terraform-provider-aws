@@ -44,7 +44,7 @@ In addition to all arguments above, the following attributes are exported:
 
 ## Import
 
-The AWS member account can be imported by using the `account_id`, e.g.
+The AWS member account can be imported by using the `account_id`, e.g.,
 
 ```
 $ terraform import aws_organizations_account.my_org 111111111111

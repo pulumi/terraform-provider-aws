@@ -56,7 +56,7 @@ In addition to all arguments above, the following attributes are exported:
 
 ## Import
 
-GuardDuty Organization Configurations can be imported using the GuardDuty Detector ID, e.g.
+GuardDuty Organization Configurations can be imported using the GuardDuty Detector ID, e.g.,
 
 ```
 $ terraform import aws_guardduty_organization_configuration.example 00b00fd5aecc0ab60a708659477e9617

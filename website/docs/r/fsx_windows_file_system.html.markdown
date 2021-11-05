@@ -94,8 +94,8 @@ The following arguments are supported for `self_managed_active_directory` config
 In addition to all arguments above, the following attributes are exported:
 
 * `arn` - Amazon Resource Name of the file system.
-* `dns_name` - DNS name for the file system, e.g. `fs-12345678.corp.example.com` (domain name matching the Active Directory domain name)
-* `id` - Identifier of the file system, e.g. `fs-12345678`
+* `dns_name` - DNS name for the file system, e.g., `fs-12345678.corp.example.com` (domain name matching the Active Directory domain name)
+* `id` - Identifier of the file system, e.g., `fs-12345678`
 * `network_interface_ids` - Set of Elastic Network Interface identifiers from which the file system is accessible.
 * `owner_id` - AWS account identifier that created the file system.
 * `tags_all` - A map of tags assigned to the resource, including those inherited from the provider .
@@ -114,7 +114,7 @@ configuration options:
 
 ## Import
 
-FSx File Systems can be imported using the `id`, e.g.
+FSx File Systems can be imported using the `id`, e.g.,
 
 ```
 $ terraform import aws_fsx_windows_file_system.example fs-543ab12b1ca672f33

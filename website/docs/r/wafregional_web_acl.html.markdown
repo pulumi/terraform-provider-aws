@@ -116,7 +116,7 @@ The following arguments are supported:
 
 ### `default_action` Configuration Block
 
-* `type` - (Required) Specifies how you want AWS WAF Regional to respond to requests that match the settings in a rule. e.g. `ALLOW`, `BLOCK` or `COUNT`
+* `type` - (Required) Specifies how you want AWS WAF Regional to respond to requests that match the settings in a ruleE.g., `ALLOW`, `BLOCK` or `COUNT`
 
 ### `logging_configuration` Configuration Block
 
@@ -132,7 +132,7 @@ The following arguments are supported:
 -> Additional information about this configuration can be found in the [AWS WAF Regional API Reference](https://docs.aws.amazon.com/waf/latest/APIReference/API_regional_FieldToMatch.html).
 
 * `data` - (Optional) When the value of `type` is `HEADER`, enter the name of the header that you want the WAF to search, for example, `User-Agent` or `Referer`. If the value of `type` is any other value, omit `data`.
-* `type` - (Required) The part of the web request that you want AWS WAF to search for a specified string. e.g. `HEADER` or `METHOD`
+* `type` - (Required) The part of the web request that you want AWS WAF to search for a specified stringE.g., `HEADER` or `METHOD`
 
 ### `rule` Configuration Block
 
@@ -147,7 +147,7 @@ The following arguments are supported:
 
 #### `action` / `override_action` Configuration Block
 
-* `type` - (Required) Specifies how you want AWS WAF Regional to respond to requests that match the settings in a rule. e.g. `ALLOW`, `BLOCK` or `COUNT`
+* `type` - (Required) Specifies how you want AWS WAF Regional to respond to requests that match the settings in a ruleE.g., `ALLOW`, `BLOCK` or `COUNT`
 
 ## Attributes Reference
 
@@ -159,7 +159,7 @@ In addition to all arguments above, the following attributes are exported:
 
 ## Import
 
-WAF Regional Web ACL can be imported using the id, e.g.
+WAF Regional Web ACL can be imported using the id, e.g.,
 
 ```
 $ terraform import aws_wafregional_web_acl.wafacl a1b2c3d4-d5f6-7777-8888-9999aaaabbbbcccc

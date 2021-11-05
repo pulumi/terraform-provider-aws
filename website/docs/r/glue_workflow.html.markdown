@@ -63,11 +63,11 @@ In addition to all arguments above, the following attributes are exported:
 
 * `arn` - Amazon Resource Name (ARN) of Glue Workflow
 * `id` - Workflow name
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://www.terraform.io/docs/providers/aws/index.html#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 
-Glue Workflows can be imported using `name`, e.g.
+Glue Workflows can be imported using `name`, e.g.,
 
 ```
 $ terraform import aws_glue_workflow.MyWorkflow MyWorkflow

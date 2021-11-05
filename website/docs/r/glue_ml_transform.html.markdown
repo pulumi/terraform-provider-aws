@@ -164,7 +164,7 @@ In addition to all arguments above, the following attributes are exported:
 * `id` - Glue ML Transform ID.
 * `label_count` - The number of labels available for this transform.
 * `schema` - The object that represents the schema that this transform accepts. see [Schema](#schema).
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://www.terraform.io/docs/providers/aws/index.html#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ### schema
 
@@ -173,7 +173,7 @@ In addition to all arguments above, the following attributes are exported:
 
 ## Import
 
-Glue ML Transforms can be imported using `id`, e.g.
+Glue ML Transforms can be imported using `id`, e.g.,
 
 ```
 $ terraform import aws_glue_ml_transform.example tfm-c2cafbe83b1c575f49eaca9939220e2fcd58e2d5

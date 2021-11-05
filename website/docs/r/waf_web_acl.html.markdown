@@ -98,7 +98,7 @@ The following arguments are supported:
 ### `default_action` Configuration Block
 
 * `type` - (Required) Specifies how you want AWS WAF to respond to requests that don't match the criteria in any of the `rules`.
-  e.g. `ALLOW`, `BLOCK` or `COUNT`
+  e.g., `ALLOW`, `BLOCK` or `COUNT`
 
 ### `logging_configuration` Configuration Block
 
@@ -114,7 +114,7 @@ The following arguments are supported:
 -> Additional information about this configuration can be found in the [AWS WAF Regional API Reference](https://docs.aws.amazon.com/waf/latest/APIReference/API_regional_FieldToMatch.html).
 
 * `data` - (Optional) When the value of `type` is `HEADER`, enter the name of the header that you want the WAF to search, for example, `User-Agent` or `Referer`. If the value of `type` is any other value, omit `data`.
-* `type` - (Required) The part of the web request that you want AWS WAF to search for a specified string. e.g. `HEADER` or `METHOD`
+* `type` - (Required) The part of the web request that you want AWS WAF to search for a specified stringE.g., `HEADER` or `METHOD`
 
 ### `rules` Configuration Block
 
@@ -139,7 +139,7 @@ In addition to all arguments above, the following attributes are exported:
 
 ## Import
 
-WAF Web ACL can be imported using the `id`, e.g.
+WAF Web ACL can be imported using the `id`, e.g.,
 
 ```
 $ terraform import aws_waf_web_acl.main 0c8e583e-18f3-4c13-9e2a-67c4805d2f94

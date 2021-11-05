@@ -53,12 +53,12 @@ In addition to all arguments above, the following attributes are exported:
 
 * `arn` - The ARN of the traffic mirror session.
 * `id` - The name of the session.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://www.terraform.io/docs/providers/aws/index.html#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 * `owner_id` - The AWS account ID of the session owner.
 
 ## Import
 
-Traffic mirror sessions can be imported using the `id`, e.g.
+Traffic mirror sessions can be imported using the `id`, e.g.,
 
 ```
 $ terraform import aws_ec2_traffic_mirror_session.session tms-0d8aa3ca35897b82e

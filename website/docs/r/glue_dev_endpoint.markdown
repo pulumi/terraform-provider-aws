@@ -76,11 +76,11 @@ In addition to all arguments above, the following attributes are exported:
 * `vpc_id` - he ID of the VPC used by this endpoint.
 * `status` - The current status of this endpoint.
 * `failure_reason` - The reason for a current failure in this endpoint.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://www.terraform.io/docs/providers/aws/index.html#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 
-A Glue Development Endpoint can be imported using the `name`, e.g.
+A Glue Development Endpoint can be imported using the `name`, e.g.,
 
 ```
 $ terraform import aws_glue_dev_endpoint.example foo

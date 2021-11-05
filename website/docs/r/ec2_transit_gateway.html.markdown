@@ -38,13 +38,13 @@ In addition to all arguments above, the following attributes are exported:
 * `arn` - EC2 Transit Gateway Amazon Resource Name (ARN)
 * `association_default_route_table_id` - Identifier of the default association route table
 * `id` - EC2 Transit Gateway identifier
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://www.terraform.io/docs/providers/aws/index.html#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 * `owner_id` - Identifier of the AWS account that owns the EC2 Transit Gateway
 * `propagation_default_route_table_id` - Identifier of the default propagation route table
 
 ## Import
 
-`aws_ec2_transit_gateway` can be imported by using the EC2 Transit Gateway identifier, e.g.
+`aws_ec2_transit_gateway` can be imported by using the EC2 Transit Gateway identifier, e.g.,
 
 ```
 $ terraform import aws_ec2_transit_gateway.example tgw-12345678

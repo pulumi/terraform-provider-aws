@@ -81,7 +81,7 @@ In addition to all arguments above, the following attributes are exported:
 
 ## Import
 
-SNS Topic Policy can be imported using the topic ARN, e.g.
+SNS Topic Policy can be imported using the topic ARN, e.g.,
 
 ```
 $ terraform import aws_sns_topic_policy.user_updates arn:aws:sns:us-west-2:0123456789012:my-topic

@@ -350,13 +350,13 @@ In addition to all arguments above, the following attributes are exported:
 * `last_update_timestamp` - The Timestamp when the application was last updated.
 * `status` - The Status of the application.
 * `version` - The Version of the application.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://www.terraform.io/docs/providers/aws/index.html#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 [1]: https://docs.aws.amazon.com/kinesisanalytics/latest/dev/what-is.html
 
 ## Import
 
-Kinesis Analytics Application can be imported by using ARN, e.g.
+Kinesis Analytics Application can be imported by using ARN, e.g.,
 
 ```
 $ terraform import aws_kinesis_analytics_application.example arn:aws:kinesisanalytics:us-west-2:1234567890:application/example

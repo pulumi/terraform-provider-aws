@@ -44,11 +44,11 @@ In addition to all arguments above, the following attributes are exported:
 * `latest_schema_version` - The latest version of the schema associated with the returned schema definition.
 * `next_schema_version` - The next version of the schema associated with the returned schema definition.
 * `schema_checkpoint` - The version number of the checkpoint (the last time the compatibility mode was changed).
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://www.terraform.io/docs/providers/aws/index.html#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 
-Glue Registries can be imported using `arn`, e.g.
+Glue Registries can be imported using `arn`, e.g.,
 
 ```
 $ terraform import aws_glue_schema.example arn:aws:glue:us-west-2:123456789012:schema/example/example

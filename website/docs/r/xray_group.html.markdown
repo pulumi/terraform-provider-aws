@@ -31,11 +31,11 @@ In addition to all arguments above, the following attributes are exported:
 
 * `id` - The ARN of the Group.
 * `arn` - The ARN of the Group.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://www.terraform.io/docs/providers/aws/index.html#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 
-XRay Groups can be imported using the ARN, e.g.
+XRay Groups can be imported using the ARN, e.g.,
 
 ```
 $ terraform import aws_xray_group.example arn:aws:xray:us-west-2:1234567890:group/example-group/TNGX7SW5U6QY36T4ZMOUA3HVLBYCZTWDIOOXY3CJAXTHSS3YCWUA

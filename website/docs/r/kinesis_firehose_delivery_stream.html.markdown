@@ -329,7 +329,7 @@ resource "aws_kinesis_firehose_delivery_stream" "test_stream" {
 }
 ```
 
-### HTTP Endpoint (e.g. New Relic) Destination
+### HTTP Endpoint (e.g., New Relic) Destination
 
 ```terraform
 resource "aws_kinesis_firehose_delivery_stream" "test_stream" {
@@ -626,13 +626,13 @@ resource "aws_kinesis_firehose_delivery_stream" "example" {
 In addition to all arguments above, the following attributes are exported:
 
 * `arn` - The Amazon Resource Name (ARN) specifying the Stream
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://www.terraform.io/docs/providers/aws/index.html#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 [1]: https://aws.amazon.com/documentation/firehose/
 
 ## Import
 
-Kinesis Firehose Delivery streams can be imported using the stream ARN, e.g.
+Kinesis Firehose Delivery streams can be imported using the stream ARN, e.g.,
 
 ```
 $ terraform import aws_kinesis_firehose_delivery_stream.foo arn:aws:firehose:us-east-1:XXX:deliverystream/example

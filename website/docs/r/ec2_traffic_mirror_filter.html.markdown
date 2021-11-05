@@ -37,11 +37,11 @@ In addition to all arguments above, the following attributes are exported:
 
 * `arn` - The ARN of the traffic mirror filter.
 * `id` - The name of the filter.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://www.terraform.io/docs/providers/aws/index.html#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 
-Traffic mirror filter can be imported using the `id`, e.g.
+Traffic mirror filter can be imported using the `id`, e.g.,
 
 ```
 $ terraform import aws_ec2_traffic_mirror_filter.foo tmf-0fbb93ddf38198f64

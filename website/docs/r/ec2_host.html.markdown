@@ -13,8 +13,8 @@ Provides an EC2 Host resource. This allows Dedicated Hosts to be allocated, modi
 ## Example Usage
 
 ```terraform
-# Create a new host with instance type of c5.18xlarge with Auto Placement 
-# and Host Recovery enabled. 
+# Create a new host with instance type of c5.18xlarge with Auto Placement
+# and Host Recovery enabled.
 resource "aws_ec2_host" "test" {
   instance_type     = "c5.18xlarge"
   availability_zone = "us-west-2a"
@@ -41,11 +41,11 @@ In addition to all arguments above, the following attributes are exported:
 * `id` - The ID of the allocated Dedicated Host. This is used to launch an instance onto a specific host.
 * `arn` - The ARN of the Dedicated Host.
 * `owner_id` - The ID of the AWS account that owns the Dedicated Host.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://www.terraform.io/docs/providers/aws/index.html#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 
-Hosts can be imported using the host `id`, e.g.
+Hosts can be imported using the host `id`, e.g.,
 
 ```
 $ terraform import aws_ec2_host.example h-0385a99d0e4b20cbb

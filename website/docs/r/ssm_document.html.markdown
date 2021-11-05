@@ -122,7 +122,7 @@ The permissions mapping supports the following:
 
 ## Import
 
-SSM Documents can be imported using the name, e.g.
+SSM Documents can be imported using the name, e.g.,
 
 ```
 $ terraform import aws_ssm_document.example example
