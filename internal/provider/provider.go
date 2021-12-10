@@ -51,6 +51,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/service/datapipeline"
 	"github.com/hashicorp/terraform-provider-aws/internal/service/datasync"
 	"github.com/hashicorp/terraform-provider-aws/internal/service/dax"
+	"github.com/hashicorp/terraform-provider-aws/internal/service/detective"
 	"github.com/hashicorp/terraform-provider-aws/internal/service/devicefarm"
 	"github.com/hashicorp/terraform-provider-aws/internal/service/directconnect"
 	"github.com/hashicorp/terraform-provider-aws/internal/service/dlm"
@@ -914,9 +915,10 @@ func Provider() *schema.Provider {
 			"aws_codebuild_source_credential": codebuild.ResourceSourceCredential(),
 			"aws_codebuild_webhook":           codebuild.ResourceWebhook(),
 
-			"aws_codecommit_approval_rule_template": codecommit.ResourceApprovalRuleTemplate(),
-			"aws_codecommit_repository":             codecommit.ResourceRepository(),
-			"aws_codecommit_trigger":                codecommit.ResourceTrigger(),
+			"aws_codecommit_approval_rule_template":             codecommit.ResourceApprovalRuleTemplate(),
+			"aws_codecommit_approval_rule_template_association": codecommit.ResourceApprovalRuleTemplateAssociation(),
+			"aws_codecommit_repository":                         codecommit.ResourceRepository(),
+			"aws_codecommit_trigger":                            codecommit.ResourceTrigger(),
 
 			"aws_codedeploy_app":               codedeploy.ResourceApp(),
 			"aws_codedeploy_deployment_config": codedeploy.ResourceDeploymentConfig(),
@@ -973,6 +975,8 @@ func Provider() *schema.Provider {
 			"aws_dax_subnet_group":    dax.ResourceSubnetGroup(),
 
 			"aws_devicefarm_project": devicefarm.ResourceProject(),
+
+			"aws_detective_graph": detective.ResourceGraph(),
 
 			"aws_dx_bgp_peer":                                  directconnect.ResourceBGPPeer(),
 			"aws_dx_connection":                                directconnect.ResourceConnection(),
@@ -1049,6 +1053,7 @@ func Provider() *schema.Provider {
 			"aws_ec2_local_gateway_route_table_vpc_association":   ec2.ResourceLocalGatewayRouteTableVPCAssociation(),
 			"aws_ec2_managed_prefix_list":                         ec2.ResourceManagedPrefixList(),
 			"aws_ec2_managed_prefix_list_entry":                   ec2.ResourceManagedPrefixListEntry(),
+			"aws_ec2_subnet_cidr_reservation":                     ec2.ResourceSubnetCIDRReservation(),
 			"aws_ec2_tag":                                         ec2.ResourceTag(),
 			"aws_ec2_traffic_mirror_filter":                       ec2.ResourceTrafficMirrorFilter(),
 			"aws_ec2_traffic_mirror_filter_rule":                  ec2.ResourceTrafficMirrorFilterRule(),
@@ -1130,6 +1135,7 @@ func Provider() *schema.Provider {
 			"aws_ecs_service":                 ecs.ResourceService(),
 			"aws_ecs_tag":                     ecs.ResourceTag(),
 			"aws_ecs_task_definition":         ecs.ResourceTaskDefinition(),
+			"aws_ecs_task_set":                ecs.ResourceTaskSet(),
 
 			"aws_efs_access_point":       efs.ResourceAccessPoint(),
 			"aws_efs_backup_policy":      efs.ResourceBackupPolicy(),
@@ -1192,6 +1198,8 @@ func Provider() *schema.Provider {
 			"aws_emr_instance_group":         emr.ResourceInstanceGroup(),
 			"aws_emr_managed_scaling_policy": emr.ResourceManagedScalingPolicy(),
 			"aws_emr_security_configuration": emr.ResourceSecurityConfiguration(),
+			"aws_emr_studio":                 emr.ResourceStudio(),
+			"aws_emr_studio_session_mapping": emr.ResourceStudioSessionMapping(),
 
 			"aws_kinesis_firehose_delivery_stream": firehose.ResourceDeliveryStream(),
 
