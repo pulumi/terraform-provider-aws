@@ -56,7 +56,7 @@ The following arguments are supported:
 * `entry` - (Optional) Configuration block for prefix list entry. Detailed below. Different entries may have overlapping CIDR blocks, but a particular CIDR should not be duplicated.
 * `max_entries` - (Required) Maximum number of entries that this prefix list can contain.
 * `name` - (Required) Name of this resource. The name must not start with `com.amazonaws`.
-* `tags` - (Optional) Map of tags to assign to this resource. If configured with a provider [`default_tags` configuration block](https://www.terraform.io/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Map of tags to assign to this resource. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ### `entry`
 

@@ -58,7 +58,7 @@ The following arguments are supported:
 * `final_snapshot_identifier` - (Optional) The name of your final DB snapshot
     when this DB cluster is deleted. If omitted, no final snapshot will be
     made.
-* `global_cluster_identifier` - (Optional) The global cluster identifier specified on [`aws_docdb_global_cluster`](/docs/providers/aws/r/docdb_global_cluster.html).
+* `global_cluster_identifier` - (Optional) The global cluster identifier specified on `aws_docdb_global_cluster`.
 * `kms_key_id` - (Optional) The ARN for the KMS encryption key. When specifying `kms_key_id`, `storage_encrypted` needs to be set to true.
 * `master_password` - (Required unless a `snapshot_identifier` or unless a `global_cluster_identifier` is provided when the cluster is the "secondary" cluster of a global database) Password for the master DB user. Note that this may
     show up in logs, and it will be stored in the state file. Please refer to the DocDB Naming Constraints.

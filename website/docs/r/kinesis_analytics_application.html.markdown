@@ -157,7 +157,7 @@ See [CloudWatch Logging Options](#cloudwatch-logging-options) below for more det
 See [Reference Data Sources](#reference-data-sources) below for more details.
 * `start_application` - (Optional) Whether to start or stop the Kinesis Analytics Application. To start an application, an input with a defined `starting_position` must be configured.
 To modify an application's starting position, first stop the application by setting `start_application = false`, then update `starting_position` and set `start_application = true`.
-* `tags` - Key-value map of tags for the Kinesis Analytics Application. If configured with a provider [`default_tags` configuration block](https://www.terraform.io/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - Key-value map of tags for the Kinesis Analytics Application. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ### CloudWatch Logging Options
 

@@ -44,7 +44,7 @@ The following arguments are supported:
 * `server_certificate_arn` - (Required) The ARN of the ACM server certificate.
 * `split_tunnel` - (Optional) Indicates whether split-tunnel is enabled on VPN endpoint. Default value is `false`.
 * `self_service_portal` - (Optional) Specify whether to enable the self-service portal for the Client VPN endpoint. Values can be `enabled` or `disabled`. Default value is `disabled`.
-* `tags` - (Optional) A mapping of tags to assign to the resource. If configured with a provider [`default_tags` configuration block](https://www.terraform.io/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) A mapping of tags to assign to the resource. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 * `transport_protocol` - (Optional) The transport protocol to be used by the VPN session. Default value is `udp`.
 
 ### `authentication_options` Argument Reference

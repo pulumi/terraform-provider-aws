@@ -12,13 +12,15 @@ Provides an SNS topic resource
 
 ## Example Usage
 
+### Basic Example
+
 ```terraform
 resource "aws_sns_topic" "user_updates" {
   name = "user-updates-topic"
 }
 ```
 
-## Example with Delivery Policy
+### Example with Delivery Policy
 
 ```hcl
 resource "aws_sns_topic" "user_updates" {
@@ -45,7 +47,7 @@ EOF
 }
 ```
 
-## Example with Server-side encryption (SSE)
+### Example with Server-side encryption (SSE)
 
 ```terraform
 resource "aws_sns_topic" "user_updates" {
@@ -54,7 +56,7 @@ resource "aws_sns_topic" "user_updates" {
 }
 ```
 
-## Example with First-In-First-Out (FIFO)
+### Example with First-In-First-Out (FIFO)
 
 ```hcl
 resource "aws_sns_topic" "user_updates" {

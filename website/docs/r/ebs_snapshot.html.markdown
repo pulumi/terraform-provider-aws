@@ -37,7 +37,7 @@ The following arguments are supported:
 
 * `volume_id` - (Required) The Volume ID of which to make a snapshot.
 * `description` - (Optional) A description of what the snapshot is.
-* `tags` - (Optional) A map of tags to assign to the snapshot. If configured with a provider [`default_tags` configuration block](https://www.terraform.io/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) A map of tags to assign to the snapshot. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ### Timeouts
 

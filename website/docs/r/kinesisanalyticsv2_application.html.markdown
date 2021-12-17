@@ -263,7 +263,7 @@ The following arguments are supported:
 * `description` - (Optional) A summary description of the application.
 * `force_stop` - (Optional) Whether to force stop an unresponsive Flink-based application.
 * `start_application` - (Optional) Whether to start or stop the application.
-* `tags` - (Optional) A map of tags to assign to the application. If configured with a provider [`default_tags` configuration block](https://www.terraform.io/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) A map of tags to assign to the application. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 The `application_configuration` object supports the following:
 

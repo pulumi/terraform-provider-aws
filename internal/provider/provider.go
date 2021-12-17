@@ -400,8 +400,11 @@ func Provider() *schema.Provider {
 
 			"aws_cognito_user_pools": cognitoidp.DataSourceUserPools(),
 
-			"aws_connect_contact_flow": connect.DataSourceContactFlow(),
-			"aws_connect_instance":     connect.DataSourceInstance(),
+			"aws_connect_bot_association":             connect.DataSourceBotAssociation(),
+			"aws_connect_contact_flow":                connect.DataSourceContactFlow(),
+			"aws_connect_hours_of_operation":          connect.DataSourceHoursOfOperation(),
+			"aws_connect_instance":                    connect.DataSourceInstance(),
+			"aws_connect_lambda_function_association": connect.DataSourceLambdaFunctionAssociation(),
 
 			"aws_cur_report_definition": cur.DataSourceReportDefinition(),
 
@@ -955,8 +958,11 @@ func Provider() *schema.Provider {
 			"aws_config_organization_managed_rule":     configservice.ResourceOrganizationManagedRule(),
 			"aws_config_remediation_configuration":     configservice.ResourceRemediationConfiguration(),
 
-			"aws_connect_contact_flow": connect.ResourceContactFlow(),
-			"aws_connect_instance":     connect.ResourceInstance(),
+			"aws_connect_bot_association":             connect.ResourceBotAssociation(),
+			"aws_connect_contact_flow":                connect.ResourceContactFlow(),
+			"aws_connect_instance":                    connect.ResourceInstance(),
+			"aws_connect_hours_of_operation":          connect.ResourceHoursOfOperation(),
+			"aws_connect_lambda_function_association": connect.ResourceLambdaFunctionAssociation(),
 
 			"aws_cur_report_definition": cur.ResourceReportDefinition(),
 
@@ -1121,13 +1127,16 @@ func Provider() *schema.Provider {
 			"aws_vpn_gateway_attachment":                          ec2.ResourceVPNGatewayAttachment(),
 			"aws_vpn_gateway_route_propagation":                   ec2.ResourceVPNGatewayRoutePropagation(),
 
-			"aws_ecr_lifecycle_policy":          ecr.ResourceLifecyclePolicy(),
-			"aws_ecr_registry_policy":           ecr.ResourceRegistryPolicy(),
-			"aws_ecr_replication_configuration": ecr.ResourceReplicationConfiguration(),
-			"aws_ecr_repository":                ecr.ResourceRepository(),
-			"aws_ecr_repository_policy":         ecr.ResourceRepositoryPolicy(),
+			"aws_ecr_lifecycle_policy":                ecr.ResourceLifecyclePolicy(),
+			"aws_ecr_pull_through_cache_rule":         ecr.ResourcePullThroughCacheRule(),
+			"aws_ecr_registry_policy":                 ecr.ResourceRegistryPolicy(),
+			"aws_ecr_registry_scanning_configuration": ecr.ResourceRegistryScanningConfiguration(),
+			"aws_ecr_replication_configuration":       ecr.ResourceReplicationConfiguration(),
+			"aws_ecr_repository":                      ecr.ResourceRepository(),
+			"aws_ecr_repository_policy":               ecr.ResourceRepositoryPolicy(),
 
-			"aws_ecrpublic_repository": ecrpublic.ResourceRepository(),
+			"aws_ecrpublic_repository":        ecrpublic.ResourceRepository(),
+			"aws_ecrpublic_repository_policy": ecrpublic.ResourceRepositoryPolicy(),
 
 			"aws_ecs_account_setting_default": ecs.ResourceAccountSettingDefault(),
 			"aws_ecs_capacity_provider":       ecs.ResourceCapacityProvider(),

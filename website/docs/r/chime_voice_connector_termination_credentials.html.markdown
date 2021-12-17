@@ -10,7 +10,7 @@ description: |-
 
 Adds termination SIP credentials for the specified Amazon Chime Voice Connector.
 
-~> **Note:** Voice Connector Termination Credentials requires a [Voice Connector Termination](/docs/providers/aws/r/chime_voice_connector_termination.html) to be present. Use of `depends_on` (as shown below) is recommended to avoid race conditions.
+~> **Note:** Voice Connector Termination Credentials requires a Voice Connector Termination to be present. Use of `depends_on` (as shown below) is recommended to avoid race conditions.
 
 ## Example Usage
 

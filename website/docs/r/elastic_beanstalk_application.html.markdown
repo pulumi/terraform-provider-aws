@@ -36,7 +36,7 @@ The following arguments are supported:
 
 * `name` - (Required) The name of the application, must be unique within your account
 * `description` - (Optional) Short description of the application
-* `tags` - (Optional) Key-value map of tags for the Elastic Beanstalk Application. If configured with a provider [`default_tags` configuration block](https://www.terraform.io/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Key-value map of tags for the Elastic Beanstalk Application. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 Application version lifecycle (`appversion_lifecycle`) supports the following settings.  Only one of either `max_count` or `max_age_in_days` can be provided:
 

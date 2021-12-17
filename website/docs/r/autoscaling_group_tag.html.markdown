@@ -12,7 +12,7 @@ Manages an individual Autoscaling Group (ASG) tag. This resource should only be 
 
 ~> **NOTE:** This tagging resource should not be combined with the Terraform resource for managing the parent resource. For example, using `aws_autoscaling_group` and `aws_autoscaling_group_tag` to manage tags of the same ASG will cause a perpetual difference where the `aws_autoscaling_group` resource will try to remove the tag being added by the `aws_autoscaling_group_tag` resource.
 
-~> **NOTE:** This tagging resource does not use the [provider `ignore_tags` configuration](/docs/providers/aws/index.html#ignore_tags).
+~> **NOTE:** This tagging resource does not use the provider `ignore_tags` configuration.
 
 ## Example Usage
 

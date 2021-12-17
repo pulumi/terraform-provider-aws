@@ -283,7 +283,7 @@ EOF
 resource "aws_kinesis_firehose_delivery_stream" "test" {
   depends_on = [aws_iam_role_policy.firehose-elasticsearch]
 
-  name        = "terraform-kinesis-firehose-es"
+  name        = "kinesis-firehose-es"
   destination = "elasticsearch"
   s3_configuration {
     role_arn   = aws_iam_role.firehose.arn
@@ -333,7 +333,7 @@ resource "aws_kinesis_firehose_delivery_stream" "test_stream" {
 
 ```terraform
 resource "aws_kinesis_firehose_delivery_stream" "test_stream" {
-  name        = "terraform-kinesis-firehose-test-stream"
+  name        = "kinesis-firehose-test-stream"
   destination = "http_endpoint"
 
   s3_configuration {
@@ -376,7 +376,7 @@ The following arguments are supported:
 
 * `name` - (Required) A name to identify the stream. This is unique to the
 AWS account and region the Stream is created in.
-* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider [`default_tags` configuration block](https://www.terraform.io/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 * `kinesis_source_configuration` - (Optional) Allows the ability to specify the kinesis stream that is used as the source of the firehose delivery stream.
 * `server_side_encryption` - (Optional) Encrypt at rest options.
 Server-side encryption should not be enabled when a kinesis stream is configured as the source of the firehose delivery stream.

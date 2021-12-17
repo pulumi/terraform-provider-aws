@@ -203,7 +203,7 @@ resource "aws_s3_bucket_replication_configuration" "west_to_east" {
 
 ~> **NOTE:** To avoid conflicts always add the following lifecycle object to the `aws_s3_bucket` resource of the source bucket.
 
-This resource implements the same features that are provided by the `replication_configuration` object of the [`aws_s3_bucket` resource](/docs/providers/aws/r/s3_bucket.html). To avoid conflicts or unexpected apply results, a lifecycle configuration is needed on the `aws_s3_bucket` to ignore changes to the internal `replication_configuration` object.  Failure to add the `lifecycle` configuration to the `aws_s3_bucket` will result in conflicting state results.
+This resource implements the same features that are provided by the `replication_configuration` object of the `aws_s3_bucket` resource. To avoid conflicts or unexpected apply results, a lifecycle configuration is needed on the `aws_s3_bucket` to ignore changes to the internal `replication_configuration` object.  Failure to add the `lifecycle` configuration to the `aws_s3_bucket` will result in conflicting state results.
 
 ```
 lifecycle {
@@ -213,7 +213,7 @@ lifecycle {
 }
 ```
 
-The `aws_s3_bucket_replication_configuration` resource provides the following features that are not available in the [`aws_s3_bucket` resource](/docs/providers/aws/r/s3_bucket.html):
+The `aws_s3_bucket_replication_configuration` resource provides the following features that are not available in the `aws_s3_bucket` resource:
 
 * `replica_modifications` - Added to the `source_selection_criteria` configuration object [documented below](#source_selection_criteria)
 * `metrics` - Added to the `destination` configuration object [documented below](#metrics)
@@ -274,7 +274,7 @@ The `destination` configuration block supports the following arguments:
 * `encryption_configuration` - (Optional) A configuration block that provides information about encryption [documented below](#encryption_configuration). If `source_selection_criteria` is specified, you must specify this element.
 * `metrics` - (Optional) A configuration block that specifies replication metrics-related settings enabling replication metrics and events [documented below](#metrics).
 * `replication_time` - (Optional) A configuration block that specifies S3 Replication Time Control (S3 RTC), including whether S3 RTC is enabled and the time when all objects and operations on objects must be replicated [documented below](#replication_time). Replication Time Control must be used in conjunction with `metrics`.
-* `storage_class` - (Optional) The class of storage used to store the object. Can be `STANDARD`, `REDUCED_REDUNDANCY`, `STANDARD_IA`, `ONEZONE_IA`, `INTELLIGENT_TIERING`, `GLACIER`, or `DEEP_ARCHIVE`. By default, Amazon S3 uses the storage class of the source object to create the object replica.
+* `storage_class` - (Optional) The [storage class](https://docs.aws.amazon.com/AmazonS3/latest/API/API_Destination.html#AmazonS3-Type-Destination-StorageClass) used to store the object. By default, Amazon S3 uses the storage class of the source object to create the object replica.
 
 ### access_control_translation
 
@@ -397,7 +397,7 @@ source_selection_criteria {
 
 The `source_selection_criteria` configuration block supports the following arguments:
 
-~> **NOTE:** `sse_kms_encrypted_objects` configuration format differs here from the configuration in the [`aws_s3_bucket` resource](/docs/providers/aws/r/s3_bucket.html).
+~> **NOTE:** `sse_kms_encrypted_objects` configuration format differs here from the configuration in the `aws_s3_bucket` resource.
 
 * `replica_modifications` - (Optional) A configuration block that you can specify for selections for modifications on replicas. Amazon S3 doesn't replicate replica modifications by default. In the latest version of replication configuration (when `filter` is specified), you can specify this element and set the status to `Enabled` to replicate modifications on replicas.
 

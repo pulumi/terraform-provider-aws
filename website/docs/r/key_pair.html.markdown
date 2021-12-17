@@ -34,7 +34,7 @@ The following arguments are supported:
 * `key_name` - (Optional) The name for the key pair.
 * `key_name_prefix` - (Optional) Creates a unique name beginning with the specified prefix. Conflicts with `key_name`.
 * `public_key` - (Required) The public key material.
-* `tags` - (Optional) Key-value map of resource tags. If configured with a provider [`default_tags` configuration block](https://www.terraform.io/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Key-value map of resource tags. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ## Attributes Reference
 

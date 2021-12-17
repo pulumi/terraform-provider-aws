@@ -46,7 +46,7 @@ The following arguments are supported:
 * `database_name` – (Required) The name of the Timestream database.
 * `retention_properties` - (Optional) The retention duration for the memory store and magnetic store. See [Retention Properties](#retention-properties) below for more details. If not provided, `magnetic_store_retention_period_in_days` default to 73000 and `memory_store_retention_period_in_hours` defaults to 6.
 * `table_name` - (Required) The name of the Timestream table.
-* `tags` - (Optional) Map of tags to assign to this resource. If configured with a provider [`default_tags` configuration block](https://www.terraform.io/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Map of tags to assign to this resource. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ### Retention Properties
 

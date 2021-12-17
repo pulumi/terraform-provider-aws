@@ -23,7 +23,7 @@ resource "aws_ec2_transit_gateway_route_table" "example" {
 The following arguments are supported:
 
 * `transit_gateway_id` - (Required) Identifier of EC2 Transit Gateway.
-* `tags` - (Optional) Key-value tags for the EC2 Transit Gateway Route Table. If configured with a provider [`default_tags` configuration block](https://www.terraform.io/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Key-value tags for the EC2 Transit Gateway Route Table. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ## Attributes Reference
 

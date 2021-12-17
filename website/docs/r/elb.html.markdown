@@ -13,7 +13,7 @@ Load Balancer" after the release of
 `Application/Network Load Balancers`.
 
 ~> **NOTE on ELB Instances and ELB Attachments:** This provider currently
-provides both a standalone [ELB Attachment resource](elb_attachment.html)
+provides both a standalone ELB Attachment resource
 (describing an instance attached to an ELB), and an ELB resource with
 `instances` defined in-line. At this time you cannot use an ELB with in-line
 instances in conjunction with a ELB Attachment resources. Doing so will cause a
@@ -89,7 +89,7 @@ The following arguments are supported:
 * `connection_draining` - (Optional) Boolean to enable connection draining. Default: `false`
 * `connection_draining_timeout` - (Optional) The time in seconds to allow for connections to drain. Default: `300`
 * `desync_mitigation_mode` - (Optional) Determines how the load balancer handles requests that might pose a security risk to an application due to HTTP desync. Valid values are `monitor`, `defensive` (default), `strictest`.
-* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider [`default_tags` configuration block](https://www.terraform.io/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 Exactly one of `availability_zones` or `subnets` must be specified: this
 determines if the ELB exists in a VPC or in EC2-classic.
