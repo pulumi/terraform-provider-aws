@@ -20,6 +20,14 @@ import (
 )
 
 func init() {
+	resource.AddTestSweepers("aws_customer_gateway", &resource.Sweeper{
+		Name: "aws_customer_gateway",
+		F:    sweepCustomerGateways,
+		Dependencies: []string{
+			"aws_vpn_connection",
+		},
+	})
+
 	resource.AddTestSweepers("aws_ec2_capacity_reservation", &resource.Sweeper{
 		Name: "aws_ec2_capacity_reservation",
 		F:    sweepCapacityReservations,
@@ -49,6 +57,11 @@ func init() {
 			"aws_instance",
 		},
 		F: sweepEBSVolumes,
+	})
+
+	resource.AddTestSweepers("aws_ebs_snapshot", &resource.Sweeper{
+		Name: "aws_ebs_snapshot",
+		F:    sweepEBSnapshots,
 	})
 
 	resource.AddTestSweepers("aws_egress_only_internet_gateway", &resource.Sweeper{
@@ -190,6 +203,7 @@ func init() {
 			"aws_fsx_windows_file_system",
 			"aws_lambda_function",
 			"aws_lb",
+			"aws_memorydb_subnet_group",
 			"aws_mq_broker",
 			"aws_msk_cluster",
 			"aws_network_interface",
@@ -276,6 +290,7 @@ func init() {
 		F:    sweepVPNGateways,
 		Dependencies: []string{
 			"aws_dx_gateway_association",
+			"aws_vpn_connection",
 		},
 	})
 
@@ -548,6 +563,50 @@ func sweepEBSVolumes(region string) error {
 	}
 
 	return nil
+}
+
+func sweepEBSnapshots(region string) error {
+	client, err := sweep.SharedRegionalSweepClient(region)
+	if err != nil {
+		return fmt.Errorf("error getting client: %s", err)
+	}
+	conn := client.(*conns.AWSClient).EC2Conn
+	sweepResources := make([]*sweep.SweepResource, 0)
+	var errs *multierror.Error
+
+	input := &ec2.DescribeSnapshotsInput{
+		Filters: []*ec2.Filter{
+			{
+				Name:   aws.String("owner-id"),
+				Values: aws.StringSlice([]string{client.(*conns.AWSClient).AccountID}),
+			},
+		},
+	}
+
+	err = conn.DescribeSnapshotsPages(input, func(page *ec2.DescribeSnapshotsOutput, lastPage bool) bool {
+		for _, volume := range page.Snapshots {
+			id := aws.StringValue(volume.SnapshotId)
+
+			r := ResourceEBSSnapshot()
+			d := r.Data(nil)
+			d.SetId(id)
+
+			sweepResources = append(sweepResources, sweep.NewSweepResource(r, d, client))
+		}
+
+		return !lastPage
+	})
+
+	if err = sweep.SweepOrchestrator(sweepResources); err != nil {
+		errs = multierror.Append(errs, fmt.Errorf("error sweeping EC2 EBS Snapshots for %s: %w", region, err))
+	}
+
+	if sweep.SkipSweepError(errs.ErrorOrNil()) {
+		log.Printf("[WARN] Skipping EC2 EBS Snapshot sweep for %s: %s", region, errs)
+		return nil
+	}
+
+	return errs.ErrorOrNil()
 }
 
 func sweepEgressOnlyInternetGateways(region string) error {
@@ -1985,8 +2044,8 @@ func sweepVPNConnections(region string) error {
 	}
 	conn := client.(*conns.AWSClient).EC2Conn
 	input := &ec2.DescribeVpnConnectionsInput{}
+	sweepResources := make([]*sweep.SweepResource, 0)
 
-	// DescribeVpnConnections does not currently have any form of pagination
 	output, err := conn.DescribeVpnConnections(input)
 
 	if sweep.SkipSweepError(err) {
@@ -1995,34 +2054,25 @@ func sweepVPNConnections(region string) error {
 	}
 
 	if err != nil {
-		return fmt.Errorf("error retrieving EC2 VPN Connections: %s", err)
+		return fmt.Errorf("error listing EC2 VPN Connections (%s): %w", region, err)
 	}
 
-	for _, vpnConnection := range output.VpnConnections {
-		if aws.StringValue(vpnConnection.State) == ec2.VpnStateDeleted {
+	for _, v := range output.VpnConnections {
+		if aws.StringValue(v.State) == ec2.VpnStateDeleted {
 			continue
 		}
 
-		id := aws.StringValue(vpnConnection.VpnConnectionId)
-		input := &ec2.DeleteVpnConnectionInput{
-			VpnConnectionId: vpnConnection.VpnConnectionId,
-		}
+		r := ResourceVPNConnection()
+		d := r.Data(nil)
+		d.SetId(aws.StringValue(v.VpnConnectionId))
 
-		log.Printf("[INFO] Deleting EC2 VPN Connection: %s", id)
+		sweepResources = append(sweepResources, sweep.NewSweepResource(r, d, client))
+	}
 
-		_, err := conn.DeleteVpnConnection(input)
+	err = sweep.SweepOrchestrator(sweepResources)
 
-		if tfawserr.ErrMessageContains(err, "InvalidVpnConnectionID.NotFound", "") {
-			continue
-		}
-
-		if err != nil {
-			return fmt.Errorf("error deleting EC2 VPN Connection (%s): %s", id, err)
-		}
-
-		if err := WaitForVPNConnectionDeletion(conn, id); err != nil {
-			return fmt.Errorf("error waiting for VPN connection (%s) to delete: %s", id, err)
-		}
+	if err != nil {
+		return fmt.Errorf("error sweeping EC2 VPN Connections (%s): %w", region, err)
 	}
 
 	return nil
@@ -2034,59 +2084,88 @@ func sweepVPNGateways(region string) error {
 		return fmt.Errorf("error getting client: %s", err)
 	}
 	conn := client.(*conns.AWSClient).EC2Conn
-	var sweeperErrs *multierror.Error
+	input := &ec2.DescribeVpnGatewaysInput{}
+	sweepResources := make([]*sweep.SweepResource, 0)
 
-	req := &ec2.DescribeVpnGatewaysInput{}
-	resp, err := conn.DescribeVpnGateways(req)
-	if err != nil {
-		if sweep.SkipSweepError(err) {
-			log.Printf("[WARN] Skipping EC2 VPN Gateway sweep for %s: %s", region, err)
-			return nil
-		}
-		return fmt.Errorf("Error describing VPN Gateways: %s", err)
-	}
+	output, err := conn.DescribeVpnGateways(input)
 
-	if len(resp.VpnGateways) == 0 {
-		log.Print("[DEBUG] No VPN Gateways to sweep")
+	if sweep.SkipSweepError(err) {
+		log.Printf("[WARN] Skipping EC2 VPN Gateway sweep for %s: %s", region, err)
 		return nil
 	}
 
-	for _, vpng := range resp.VpnGateways {
-		if aws.StringValue(vpng.State) == ec2.VpnStateDeleted {
+	if err != nil {
+		return fmt.Errorf("error listing EC2 VPN Gateways (%s): %w", region, err)
+	}
+
+	for _, v := range output.VpnGateways {
+		if aws.StringValue(v.State) == ec2.VpnStateDeleted {
 			continue
-		}
-
-		for _, vpcAttachment := range vpng.VpcAttachments {
-			if aws.StringValue(vpcAttachment.State) == ec2.AttachmentStatusDetached {
-				continue
-			}
-
-			r := ResourceVPNGatewayAttachment()
-			d := r.Data(nil)
-			d.Set("vpc_id", vpcAttachment.VpcId)
-			d.Set("vpn_gateway_id", vpng.VpnGatewayId)
-			err := r.Delete(d, client)
-
-			if err != nil {
-				log.Printf("[ERROR] %s", err)
-				sweeperErrs = multierror.Append(sweeperErrs, err)
-				continue
-			}
 		}
 
 		r := ResourceVPNGateway()
 		d := r.Data(nil)
-		d.SetId(aws.StringValue(vpng.VpnGatewayId))
-		err := r.Delete(d, client)
+		d.SetId(aws.StringValue(v.VpnGatewayId))
 
-		if err != nil {
-			log.Printf("[ERROR] %s", err)
-			sweeperErrs = multierror.Append(sweeperErrs, err)
-			continue
+		for _, v := range v.VpcAttachments {
+			if aws.StringValue(v.State) != ec2.AttachmentStatusDetached {
+				d.Set("vpc_id", v.VpcId)
+
+				break
+			}
 		}
+
+		sweepResources = append(sweepResources, sweep.NewSweepResource(r, d, client))
 	}
 
-	return sweeperErrs.ErrorOrNil()
+	err = sweep.SweepOrchestrator(sweepResources)
+
+	if err != nil {
+		return fmt.Errorf("error sweeping EC2 VPN Gateways (%s): %w", region, err)
+	}
+
+	return nil
+}
+
+func sweepCustomerGateways(region string) error {
+	client, err := sweep.SharedRegionalSweepClient(region)
+	if err != nil {
+		return fmt.Errorf("error getting client: %s", err)
+	}
+	conn := client.(*conns.AWSClient).EC2Conn
+	input := &ec2.DescribeCustomerGatewaysInput{}
+	sweepResources := make([]*sweep.SweepResource, 0)
+
+	output, err := conn.DescribeCustomerGateways(input)
+
+	if sweep.SkipSweepError(err) {
+		log.Printf("[WARN] Skipping EC2 Customer Gateway sweep for %s: %s", region, err)
+		return nil
+	}
+
+	if err != nil {
+		return fmt.Errorf("error listing EC2 Customer Gateways (%s): %w", region, err)
+	}
+
+	for _, v := range output.CustomerGateways {
+		if aws.StringValue(v.State) == CustomerGatewayStateDeleted {
+			continue
+		}
+
+		r := ResourceCustomerGateway()
+		d := r.Data(nil)
+		d.SetId(aws.StringValue(v.CustomerGatewayId))
+
+		sweepResources = append(sweepResources, sweep.NewSweepResource(r, d, client))
+	}
+
+	err = sweep.SweepOrchestrator(sweepResources)
+
+	if err != nil {
+		return fmt.Errorf("error sweeping EC2 Customer Gateways (%s): %w", region, err)
+	}
+
+	return nil
 }
 
 func sweepIPAMPoolCIDRs(region string) error {

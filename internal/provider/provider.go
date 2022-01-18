@@ -402,6 +402,7 @@ func Provider() *schema.Provider {
 
 			"aws_codestarconnections_connection": codestarconnections.DataSourceConnection(),
 
+			"aws_cognito_user_pool_client":              cognitoidp.DataSourceUserPoolClient(),
 			"aws_cognito_user_pool_clients":             cognitoidp.DataSourceUserPoolClients(),
 			"aws_cognito_user_pool_signing_certificate": cognitoidp.DataSourceUserPoolSigningCertificate(),
 			"aws_cognito_user_pools":                    cognitoidp.DataSourceUserPools(),
@@ -952,8 +953,9 @@ func Provider() *schema.Provider {
 
 			"aws_codestarnotifications_notification_rule": codestarnotifications.ResourceNotificationRule(),
 
-			"aws_cognito_identity_pool":                  cognitoidentity.ResourcePool(),
-			"aws_cognito_identity_pool_roles_attachment": cognitoidentity.ResourcePoolRolesAttachment(),
+			"aws_cognito_identity_pool":                        cognitoidentity.ResourcePool(),
+			"aws_cognito_identity_pool_provider_principal_tag": cognitoidentity.ResourcePoolProviderPrincipalTag(),
+			"aws_cognito_identity_pool_roles_attachment":       cognitoidentity.ResourcePoolRolesAttachment(),
 
 			"aws_cognito_identity_provider":          cognitoidp.ResourceIdentityProvider(),
 			"aws_cognito_resource_server":            cognitoidp.ResourceResourceServer(),
@@ -977,9 +979,11 @@ func Provider() *schema.Provider {
 
 			"aws_connect_bot_association":             connect.ResourceBotAssociation(),
 			"aws_connect_contact_flow":                connect.ResourceContactFlow(),
+			"aws_connect_contact_flow_module":         connect.ResourceContactFlowModule(),
 			"aws_connect_instance":                    connect.ResourceInstance(),
 			"aws_connect_hours_of_operation":          connect.ResourceHoursOfOperation(),
 			"aws_connect_lambda_function_association": connect.ResourceLambdaFunctionAssociation(),
+			"aws_connect_quick_connect":               connect.ResourceQuickConnect(),
 
 			"aws_cur_report_definition": cur.ResourceReportDefinition(),
 
@@ -999,10 +1003,11 @@ func Provider() *schema.Provider {
 			"aws_dax_parameter_group": dax.ResourceParameterGroup(),
 			"aws_dax_subnet_group":    dax.ResourceSubnetGroup(),
 
-			"aws_devicefarm_device_pool":     devicefarm.ResourceDevicePool(),
-			"aws_devicefarm_network_profile": devicefarm.ResourceNetworkProfile(),
-			"aws_devicefarm_project":         devicefarm.ResourceProject(),
-			"aws_devicefarm_upload":          devicefarm.ResourceUpload(),
+			"aws_devicefarm_device_pool":      devicefarm.ResourceDevicePool(),
+			"aws_devicefarm_instance_profile": devicefarm.ResourceInstanceProfile(),
+			"aws_devicefarm_network_profile":  devicefarm.ResourceNetworkProfile(),
+			"aws_devicefarm_project":          devicefarm.ResourceProject(),
+			"aws_devicefarm_upload":           devicefarm.ResourceUpload(),
 
 			"aws_detective_graph": detective.ResourceGraph(),
 
@@ -1412,6 +1417,7 @@ func Provider() *schema.Provider {
 			"aws_memorydb_acl":             memorydb.ResourceACL(),
 			"aws_memorydb_cluster":         memorydb.ResourceCluster(),
 			"aws_memorydb_parameter_group": memorydb.ResourceParameterGroup(),
+			"aws_memorydb_snapshot":        memorydb.ResourceSnapshot(),
 			"aws_memorydb_subnet_group":    memorydb.ResourceSubnetGroup(),
 			"aws_memorydb_user":            memorydb.ResourceUser(),
 
@@ -1659,8 +1665,9 @@ func Provider() *schema.Provider {
 			"aws_sfn_activity":      sfn.ResourceActivity(),
 			"aws_sfn_state_machine": sfn.ResourceStateMachine(),
 
-			"aws_shield_protection":       shield.ResourceProtection(),
-			"aws_shield_protection_group": shield.ResourceProtectionGroup(),
+			"aws_shield_protection":                          shield.ResourceProtection(),
+			"aws_shield_protection_group":                    shield.ResourceProtectionGroup(),
+			"aws_shield_protection_health_check_association": shield.ResourceProtectionHealthCheckAssociation(),
 
 			"aws_signer_signing_job":                signer.ResourceSigningJob(),
 			"aws_signer_signing_profile":            signer.ResourceSigningProfile(),
