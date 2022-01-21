@@ -34,6 +34,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/service/cloudformation"
 	"github.com/hashicorp/terraform-provider-aws/internal/service/cloudfront"
 	"github.com/hashicorp/terraform-provider-aws/internal/service/cloudhsmv2"
+	"github.com/hashicorp/terraform-provider-aws/internal/service/cloudsearch"
 	"github.com/hashicorp/terraform-provider-aws/internal/service/cloudtrail"
 	"github.com/hashicorp/terraform-provider-aws/internal/service/cloudwatch"
 	"github.com/hashicorp/terraform-provider-aws/internal/service/cloudwatchlogs"
@@ -381,6 +382,7 @@ func Provider() *schema.Provider {
 			"aws_cloudfront_distribution":                   cloudfront.DataSourceDistribution(),
 			"aws_cloudfront_function":                       cloudfront.DataSourceFunction(),
 			"aws_cloudfront_log_delivery_canonical_user_id": cloudfront.DataSourceLogDeliveryCanonicalUserID(),
+			"aws_cloudfront_origin_access_identity":         cloudfront.DataSourceOriginAccessIdentity(),
 			"aws_cloudfront_origin_request_policy":          cloudfront.DataSourceOriginRequestPolicy(),
 			"aws_cloudfront_response_headers_policy":        cloudfront.DataSourceResponseHeadersPolicy(),
 
@@ -467,7 +469,7 @@ func Provider() *schema.Provider {
 			"aws_internet_gateway":                           ec2.DataSourceInternetGateway(),
 			"aws_key_pair":                                   ec2.DataSourceKeyPair(),
 			"aws_launch_template":                            ec2.DataSourceLaunchTemplate(),
-			"aws_nat_gateway":                                ec2.DataSourceNatGateway(),
+			"aws_nat_gateway":                                ec2.DataSourceNATGateway(),
 			"aws_network_acls":                               ec2.DataSourceNetworkACLs(),
 			"aws_network_interface":                          ec2.DataSourceNetworkInterface(),
 			"aws_network_interfaces":                         ec2.DataSourceNetworkInterfaces(),
@@ -484,6 +486,7 @@ func Provider() *schema.Provider {
 			"aws_vpc_endpoint_service":                       ec2.DataSourceVPCEndpointService(),
 			"aws_vpc_endpoint":                               ec2.DataSourceVPCEndpoint(),
 			"aws_vpc_ipam_pool":                              ec2.DataSourceVPCIpamPool(),
+			"aws_vpc_ipam_preview_next_cidr":                 ec2.DataSourceVPCIpamPreviewNextCidr(),
 			"aws_vpc_peering_connection":                     ec2.DataSourceVPCPeeringConnection(),
 			"aws_vpc_peering_connections":                    ec2.DataSourceVPCPeeringConnections(),
 			"aws_vpc":                                        ec2.DataSourceVPC(),
@@ -828,11 +831,14 @@ func Provider() *schema.Provider {
 			"aws_appstream_user":                    appstream.ResourceUser(),
 			"aws_appstream_user_stack_association":  appstream.ResourceUserStackAssociation(),
 
-			"aws_appsync_api_key":     appsync.ResourceAPIKey(),
-			"aws_appsync_datasource":  appsync.ResourceDataSource(),
-			"aws_appsync_function":    appsync.ResourceFunction(),
-			"aws_appsync_graphql_api": appsync.ResourceGraphQLAPI(),
-			"aws_appsync_resolver":    appsync.ResourceResolver(),
+			"aws_appsync_api_cache":                   appsync.ResourceAPICache(),
+			"aws_appsync_api_key":                     appsync.ResourceAPIKey(),
+			"aws_appsync_datasource":                  appsync.ResourceDataSource(),
+			"aws_appsync_domain_name":                 appsync.ResourceDomainName(),
+			"aws_appsync_domain_name_api_association": appsync.ResourceDomainNameApiAssociation(),
+			"aws_appsync_function":                    appsync.ResourceFunction(),
+			"aws_appsync_graphql_api":                 appsync.ResourceGraphQLAPI(),
+			"aws_appsync_resolver":                    appsync.ResourceResolver(),
 
 			"aws_athena_database":    athena.ResourceDatabase(),
 			"aws_athena_named_query": athena.ResourceNamedQuery(),
@@ -899,6 +905,9 @@ func Provider() *schema.Provider {
 
 			"aws_cloudhsm_v2_cluster": cloudhsmv2.ResourceCluster(),
 			"aws_cloudhsm_v2_hsm":     cloudhsmv2.ResourceHSM(),
+
+			"aws_cloudsearch_domain":                       cloudsearch.ResourceDomain(),
+			"aws_cloudsearch_domain_service_access_policy": cloudsearch.ResourceDomainServiceAccessPolicy(),
 
 			"aws_cloudtrail": cloudtrail.ResourceCloudTrail(),
 
@@ -1009,7 +1018,9 @@ func Provider() *schema.Provider {
 			"aws_devicefarm_project":          devicefarm.ResourceProject(),
 			"aws_devicefarm_upload":           devicefarm.ResourceUpload(),
 
-			"aws_detective_graph": detective.ResourceGraph(),
+			"aws_detective_graph":               detective.ResourceGraph(),
+			"aws_detective_invitation_accepter": detective.ResourceInvitationAccepter(),
+			"aws_detective_member":              detective.ResourceMember(),
 
 			"aws_dx_bgp_peer":                                  directconnect.ResourceBGPPeer(),
 			"aws_dx_connection":                                directconnect.ResourceConnection(),
@@ -1111,7 +1122,7 @@ func Provider() *schema.Provider {
 			"aws_key_pair":                                        ec2.ResourceKeyPair(),
 			"aws_launch_template":                                 ec2.ResourceLaunchTemplate(),
 			"aws_main_route_table_association":                    ec2.ResourceMainRouteTableAssociation(),
-			"aws_nat_gateway":                                     ec2.ResourceNatGateway(),
+			"aws_nat_gateway":                                     ec2.ResourceNATGateway(),
 			"aws_network_acl":                                     ec2.ResourceNetworkACL(),
 			"aws_network_acl_rule":                                ec2.ResourceNetworkACLRule(),
 			"aws_network_interface":                               ec2.ResourceNetworkInterface(),
@@ -1247,6 +1258,7 @@ func Provider() *schema.Provider {
 
 			"aws_fsx_backup":                        fsx.ResourceBackup(),
 			"aws_fsx_lustre_file_system":            fsx.ResourceLustreFileSystem(),
+			"aws_fsx_data_repository_association":   fsx.ResourceDataRepositoryAssociation(),
 			"aws_fsx_ontap_file_system":             fsx.ResourceOntapFileSystem(),
 			"aws_fsx_ontap_storage_virtual_machine": fsx.ResourceOntapStorageVirtualMachine(),
 			"aws_fsx_ontap_volume":                  fsx.ResourceOntapVolume(),
@@ -1376,6 +1388,7 @@ func Provider() *schema.Provider {
 			"aws_lambda_event_source_mapping":           lambda.ResourceEventSourceMapping(),
 			"aws_lambda_function":                       lambda.ResourceFunction(),
 			"aws_lambda_function_event_invoke_config":   lambda.ResourceFunctionEventInvokeConfig(),
+			"aws_lambda_invocation":                     lambda.ResourceInvocation(),
 			"aws_lambda_layer_version":                  lambda.ResourceLayerVersion(),
 			"aws_lambda_layer_version_permission":       lambda.ResourceLayerVersionPermission(),
 			"aws_lambda_permission":                     lambda.ResourcePermission(),
