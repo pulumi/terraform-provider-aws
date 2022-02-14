@@ -195,7 +195,7 @@ resource "aws_iam_role_policy_attachment" "lambda_logs" {
 ```terraform
 resource "aws_iam_role" "iam_for_lambda" {
   name = "iam_for_lambda"
-
+  
   assume_role_policy = <<EOF
 {
   "Version": "2012-10-17",
@@ -229,6 +229,9 @@ resource "aws_lambda_function" "test_lambda" {
   }
 }
 ```
+
+Once you have created your deployment package you can specify it either directly as a local file (using the `filename` argument) or indirectly via Amazon S3 (using the `s3_bucket`, `s3_key` and `s3_object_version` arguments). When providing the deployment package via S3 it may be useful to use the `aws_s3_object` resource to upload it.
+
 
 
 ## Argument Reference

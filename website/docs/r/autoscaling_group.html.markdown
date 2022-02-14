@@ -369,8 +369,8 @@ The following arguments are supported:
 * `termination_policies` (Optional) A list of policies to decide how the instances in the Auto Scaling Group should be terminated. The allowed values are `OldestInstance`, `NewestInstance`, `OldestLaunchConfiguration`, `ClosestToNextInstanceHour`, `OldestLaunchTemplate`, `AllocationStrategy`, `Default`.
 * `suspended_processes` - (Optional) A list of processes to suspend for the Auto Scaling Group. The allowed values are `Launch`, `Terminate`, `HealthCheck`, `ReplaceUnhealthy`, `AZRebalance`, `AlarmNotification`, `ScheduledActions`, `AddToLoadBalancer`.
 Note that if you suspend either the `Launch` or `Terminate` process types, it can prevent your Auto Scaling Group from functioning properly.
-* `tag` (Optional) Configuration block(s) containing resource tags. Conflicts with `tags_collection`. Documented below.
-* `tags` (Optional) Set of maps containing resource tags. Conflicts with `tag`. Documented below.
+* `tag` (Optional) Configuration block(s) containing resource tags. Conflicts with `tags`. See [Tag](#tag-and-tags) below for more details.
+* `tags` (Optional, **Deprecated** use `tag` instead) Set of maps containing resource tags. Conflicts with `tag`. See [Tags](#tag-and-tags) below for more details.
 * `placement_group` (Optional) The name of the placement group into which you'll launch your instances, if any.
 * `metrics_granularity` - (Optional) The granularity to associate with the metrics to collect. The only valid value is `1Minute`. Default is `1Minute`.
 * `enabled_metrics` - (Optional) A list of metrics to collect. The allowed values are defined by the [underlying AWS API](https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_EnableMetricsCollection.html).

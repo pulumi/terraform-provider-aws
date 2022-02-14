@@ -73,7 +73,7 @@ resource "aws_cloudtrail" "foobar" {
 
 ### Data Event Logging
 
-CloudTrail can log [Data Events](https://docs.aws.amazon.com/awscloudtrail/latest/userguide/logging-data-events-with-cloudtrail.html) for certain services such as S3 bucket objects and Lambda function invocations. Additional information about data event configuration can be found in the following links:
+CloudTrail can log [Data Events](https://docs.aws.amazon.com/awscloudtrail/latest/userguide/logging-data-events-with-cloudtrail.html) for certain services such as S3 objects and Lambda function invocations. Additional information about data event configuration can be found in the following links:
 
 * [CloudTrail API DataResource documentation](https://docs.aws.amazon.com/awscloudtrail/latest/APIReference/API_DataResource.html) (for basic event selector).
 * [CloudTrail API AdvancedFieldSelector documentation](https://docs.aws.amazon.com/awscloudtrail/latest/APIReference/API_AdvancedFieldSelector.html) (for advanced event selector).
@@ -103,7 +103,7 @@ resource "aws_cloudtrail" "example" {
 }
 ```
 
-#### Logging All S3 Bucket Object Events By Using Basic Event Selectors
+#### Logging All S3 Object Events By Using Basic Event Selectors
 
 ```terraform
 resource "aws_s3_bucket" "b" {
@@ -155,7 +155,7 @@ resource "aws_cloudtrail" "example" {
 }
 ```
 
-#### Logging All S3 Bucket Object Events Except For Two S3 Buckets By Using Advanced Event Selectors
+#### Logging All S3 Object Events Except For Two S3 Buckets By Using Advanced Event Selectors
 
 ```terraform
 data "aws_s3_bucket" "not-important-bucket-1" {
@@ -170,7 +170,7 @@ resource "aws_cloudtrail" "example" {
   # ... other configuration ...
 
   advanced_event_selector {
-    name = "Log all S3 buckets objects events except for two S3 buckets"
+    name = "Log all S3 objects events except for two S3 buckets"
 
     field_selector {
       field  = "eventCategory"
