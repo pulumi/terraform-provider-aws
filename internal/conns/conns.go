@@ -285,7 +285,6 @@ import (
 	awsbasev1 "github.com/hashicorp/aws-sdk-go-base/v2/awsv1shim/v2"
 	"github.com/hashicorp/aws-sdk-go-base/v2/awsv1shim/v2/tfawserr"
 	tftags "github.com/hashicorp/terraform-provider-aws/internal/tags"
-	"github.com/hashicorp/terraform-provider-aws/version"
 )
 
 const (
@@ -1214,11 +1213,7 @@ func (c *Config) Client() (interface{}, error) {
 		Token:                   c.Token,
 		UseDualStackEndpoint:    c.UseDualStackEndpoint,
 		UseFIPSEndpoint:         c.UseFIPSEndpoint,
-		UserAgentProducts: []*awsbase.UserAgentProduct{
-			{Name: "APN", Version: "1.0"},
-			{Name: "Pulumi", Version: "1.0"},
-			{Name: "Pulumi-Aws", Version: c.TerraformVersion, Extra: []string{"+https://www.pulumi.com"}},
-		}}
+	}
 
 	if c.AssumeRole != nil && c.AssumeRole.RoleARN != "" {
 		awsbaseConfig.AssumeRole = c.AssumeRole
@@ -1865,10 +1860,10 @@ func (c *Config) Client() (interface{}, error) {
 
 func StdUserAgentProducts(terraformVersion string) *awsbase.APNInfo {
 	return &awsbase.APNInfo{
-		PartnerName: "HashiCorp",
+		PartnerName: "Pulumi",
 		Products: []awsbase.UserAgentProduct{
-			{Name: "Terraform", Version: terraformVersion, Comment: "+https://www.terraform.io"},
-			{Name: "terraform-provider-aws", Version: version.ProviderVersion, Comment: "+https://registry.terraform.io/providers/hashicorp/aws"},
+			{Name: "Pulumi", Version: "1.0"},
+			{Name: "Pulumi-Aws", Version: terraformVersion, Comment: "+https://www.pulumi.com"},
 		},
 	}
 }
