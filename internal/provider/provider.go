@@ -2,6 +2,7 @@ package provider
 
 import (
 	"fmt"
+	"github.com/hashicorp/terraform-provider-aws/internal/service/s3legacy"
 	"log"
 	"os"
 	"regexp"
@@ -1644,6 +1645,7 @@ func Provider() *schema.Provider {
 			"aws_route53_resolver_rule_association":                route53resolver.ResourceRuleAssociation(),
 
 			"aws_s3_bucket":                                      s3.ResourceBucket(),
+			"aws_s3_bucket_legacy":                               s3legacy.ResourceBucketLegacy(),
 			"aws_s3_bucket_accelerate_configuration":             s3.ResourceBucketAccelerateConfiguration(),
 			"aws_s3_bucket_acl":                                  s3.ResourceBucketAcl(),
 			"aws_s3_bucket_analytics_configuration":              s3.ResourceBucketAnalyticsConfiguration(),

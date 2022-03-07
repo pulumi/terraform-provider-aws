@@ -6,6 +6,7 @@ require (
 	github.com/aws/aws-sdk-go v1.42.44
 	github.com/beevik/etree v1.1.0
 	github.com/hashicorp/aws-cloudformation-resource-schema-sdk-go v0.15.0
+	github.com/hashicorp/aws-sdk-go-base v1.0.0
 	github.com/hashicorp/aws-sdk-go-base/v2 v2.0.0-beta.5
 	github.com/hashicorp/aws-sdk-go-base/v2/awsv1shim/v2 v2.0.0-beta.6
 	github.com/hashicorp/awspolicyequivalence v1.5.0
