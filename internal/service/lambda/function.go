@@ -204,9 +204,9 @@ func ResourceFunction() *schema.Resource {
 				Required: true,
 			},
 			"runtime": {
-				Type:         schema.TypeString,
-				Optional:     true,
-				ValidateFunc: validation.StringInSlice(lambda.Runtime_Values(), false),
+				Type:     schema.TypeString,
+				Optional: true,
+				//ValidateFunc: validation.StringInSlice(lambda.Runtime_Values(), false),
 			},
 			"timeout": {
 				Type:     schema.TypeInt,
