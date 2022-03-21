@@ -4,7 +4,15 @@ package s3
 // https://docs.aws.amazon.com/sdk-for-go/api/service/s3/#pkg-constants
 
 const (
-	ErrCodeNoSuchConfiguration                  = "NoSuchConfiguration"
-	ErrCodeNoSuchPublicAccessBlockConfiguration = "NoSuchPublicAccessBlockConfiguration"
-	ErrCodeOperationAborted                     = "OperationAborted"
+	ErrCodeInvalidBucketState                        = "InvalidBucketState"
+	ErrCodeMethodNotAllowed                          = "MethodNotAllowed"
+	ErrCodeNoSuchConfiguration                       = "NoSuchConfiguration"
+	ErrCodeNoSuchCORSConfiguration                   = "NoSuchCORSConfiguration"
+	ErrCodeNoSuchLifecycleConfiguration              = "NoSuchLifecycleConfiguration"
+	ErrCodeNoSuchPublicAccessBlockConfiguration      = "NoSuchPublicAccessBlockConfiguration"
+	ErrCodeNoSuchWebsiteConfiguration                = "NoSuchWebsiteConfiguration"
+	ErrCodeObjectLockConfigurationNotFound           = "ObjectLockConfigurationNotFoundError"
+	ErrCodeOperationAborted                          = "OperationAborted"
+	ErrCodeReplicationConfigurationNotFound          = "ReplicationConfigurationNotFoundError"
+	ErrCodeServerSideEncryptionConfigurationNotFound = "ServerSideEncryptionConfigurationNotFoundError"
 )
