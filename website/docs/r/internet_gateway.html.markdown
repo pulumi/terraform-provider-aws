@@ -26,8 +26,8 @@ resource "aws_internet_gateway" "gw" {
 
 The following arguments are supported:
 
-* `vpc_id` - (Required) The VPC ID to create in.
-* `tags` - (Optional) A map of tags to assign to the resource. .If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+* `vpc_id` - (Optional) The VPC ID to create in.  See the aws_internet_gateway_attachment resource for an alternate way to attach an Internet Gateway to a VPC.
+* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 -> **Note:** It's recommended to denote that the AWS Instance or Elastic IP depends on the Internet Gateway. For example:
 
