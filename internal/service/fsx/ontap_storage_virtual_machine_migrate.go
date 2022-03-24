@@ -197,7 +197,7 @@ func ResourceOntapStorageVirtualMachineV0() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(8, 50),
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 			"uuid": {
 				Type:     schema.TypeString,
 				Computed: true,

@@ -113,7 +113,7 @@ func ResourceRuleGroup() *schema.Resource {
 				},
 			},
 			"tags":              tftags.TagsSchema(),
-			"tags_all":          tftags.TagsSchemaComputed(),
+			"tags_all":          tftags.TagsSchemaTrulyComputed(),
 			"visibility_config": visibilityConfigSchema(),
 		},
 

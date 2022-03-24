@@ -58,7 +58,7 @@ func ResourceACL() *schema.Resource {
 				ValidateFunc:  validateResourceNamePrefix(aclNameMaxLength - resource.UniqueIDSuffixLength),
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 			"user_names": {
 				Type:     schema.TypeSet,
 				Optional: true,

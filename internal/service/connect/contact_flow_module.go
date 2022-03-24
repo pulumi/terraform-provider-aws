@@ -77,7 +77,7 @@ func ResourceContactFlowModule() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(1, 127),
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 		},
 	}
 }

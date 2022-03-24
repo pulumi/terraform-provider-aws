@@ -50,7 +50,7 @@ func ResourceOpenzfsSnapshot() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(1, 203),
 			},
 			"tags":     tftags.TagsSchemaComputed(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 			"volume_id": {
 				Type:         schema.TypeString,
 				Required:     true,

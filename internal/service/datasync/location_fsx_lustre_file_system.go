@@ -71,7 +71,7 @@ func ResourceLocationFSxLustreFileSystem() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(1, 4096),
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 			"uri": {
 				Type:     schema.TypeString,
 				Computed: true,

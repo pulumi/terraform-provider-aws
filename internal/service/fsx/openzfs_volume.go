@@ -166,7 +166,7 @@ func ResourceOpenzfsVolume() *schema.Resource {
 				},
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 			"volume_type": {
 				Type:         schema.TypeString,
 				Default:      fsx.VolumeTypeOpenzfs,
