@@ -206,7 +206,8 @@ The following arguments are supported in the `kubernetes_network_config` configu
 In addition to all arguments above, the following attributes are exported:
 
 * `arn` - ARN of the cluster.
-* `certificate_authority` - Attribute block containing `certificate-authority-data` for your cluster. Detailed below.
+* `certificate_authorities` - Attribute block containing `certificate-authority-data` for your cluster. Detailed below.
+* `certificate_authority` - The first certificate authority. Base64 encoded certificate data required to communicate with your cluster.
 * `created_at` - Unix epoch timestamp in seconds for when the cluster was created.
 * `endpoint` - Endpoint for your Kubernetes API server.
 * `id` - Name of the cluster.

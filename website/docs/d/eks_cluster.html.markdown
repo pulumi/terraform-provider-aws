@@ -39,8 +39,9 @@ output "identity-oidc-issuer" {
 
 * `id` - The name of the cluster
 * `arn` - The Amazon Resource Name (ARN) of the cluster.
-* `certificate_authority` - Nested attribute containing `certificate-authority-data` for your cluster.
+* `certificate_authorities` - Nested attribute containing `certificate-authority-data` for your cluster.
     * `data` - The base64 encoded certificate data required to communicate with your cluster. Add this to the `certificate-authority-data` section of the `kubeconfig` file for your cluster.
+* `certificate_authority` - The first certificate authority. Base64 encoded certificate data required to communicate with your cluster.
 * `created_at` - The Unix epoch time stamp in seconds for when the cluster was created.
 * `enabled_cluster_log_types` - The enabled control plane logs.
 * `endpoint` - The endpoint for your Kubernetes API server.
