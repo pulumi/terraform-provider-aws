@@ -22,7 +22,7 @@ output "endpoint" {
 }
 
 output "kubeconfig-certificate-authority-data" {
-  value = data.aws_eks_cluster.example.certificate_authority[0].data
+  value = data.aws_eks_cluster.example.certificate_authority
 }
 
 # Only available on Kubernetes version 1.13 and 1.14 clusters created or upgraded on or after September 3, 2019.
