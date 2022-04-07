@@ -27,7 +27,7 @@ resource "aws_lb_target_group" "front_end" {
 
 resource "aws_lb_listener" "front_end" {
   load_balancer_arn = aws_lb.front_end.arn
-  port              = "443"
+  port              = 443
   protocol          = "HTTPS"
   ssl_policy        = "ELBSecurityPolicy-2016-08"
   certificate_arn   = "arn:aws:iam::187416307283:server-certificate/test_cert_rab3wuqwgja25ct3n4jdj2tzu4"
@@ -44,7 +44,7 @@ To a NLB:
 ```hcl
 resource "aws_lb_listener" "front_end" {
   load_balancer_arn = aws_lb.front_end.arn
-  port              = "443"
+  port              = 443
   protocol          = "TLS"
   certificate_arn   = "arn:aws:iam::187416307283:server-certificate/test_cert_rab3wuqwgja25ct3n4jdj2tzu4"
   alpn_policy       = "HTTP2Preferred"
@@ -65,7 +65,7 @@ resource "aws_lb" "front_end" {
 
 resource "aws_lb_listener" "front_end" {
   load_balancer_arn = aws_lb.front_end.arn
-  port              = "80"
+  port              = 80
   protocol          = "HTTP"
 
   default_action {
@@ -89,7 +89,7 @@ resource "aws_lb" "front_end" {
 
 resource "aws_lb_listener" "front_end" {
   load_balancer_arn = aws_lb.front_end.arn
-  port              = "80"
+  port              = 80
   protocol          = "HTTP"
 
   default_action {
@@ -129,7 +129,7 @@ resource "aws_cognito_user_pool_domain" "domain" {
 
 resource "aws_lb_listener" "front_end" {
   load_balancer_arn = aws_lb.front_end.arn
-  port              = "80"
+  port              = 80
   protocol          = "HTTP"
 
   default_action {
@@ -162,7 +162,7 @@ resource "aws_lb_target_group" "front_end" {
 
 resource "aws_lb_listener" "front_end" {
   load_balancer_arn = aws_lb.front_end.arn
-  port              = "80"
+  port              = 80
   protocol          = "HTTP"
 
   default_action {
