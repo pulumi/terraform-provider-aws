@@ -18,8 +18,7 @@ func DataSourceCluster() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
-			// FORK: Stack72: Renamed certificate_authority list to be certificate_authorities and map in the Pulumi provider
-			"certificate_authorities": {
+			"certificate_authority": {
 				Type:     schema.TypeList,
 				Computed: true,
 				Elem: &schema.Resource{
@@ -30,11 +29,6 @@ func DataSourceCluster() *schema.Resource {
 						},
 					},
 				},
-			},
-			// FORK: Stack72: Added a singular backward compatible value for certificate authorities
-			"certificate_authority": {
-				Type:     schema.TypeString,
-				Computed: true,
 			},
 			"created_at": {
 				Type:     schema.TypeString,
@@ -165,14 +159,9 @@ func dataSourceClusterRead(d *schema.ResourceData, meta interface{}) error {
 	d.SetId(name)
 	d.Set("arn", cluster.Arn)
 
-	// FORK: Stack72: Renamed certificate_authority list to be certificate_authorities and map in the Pulumi provider
-	if err := d.Set("certificate_authorities", flattenEksCertificate(cluster.CertificateAuthority)); err != nil {
+	if err := d.Set("certificate_authority", flattenEksCertificate(cluster.CertificateAuthority)); err != nil {
 		return fmt.Errorf("error setting certificate_authority: %w", err)
 	}
-
-	// FORK: Stack72: Adding a single certificate authority to ensure backwards compatibility
-	d.Set("certificate_authority", aws.StringValue(cluster.CertificateAuthority.Data))
-
 	d.Set("created_at", aws.TimeValue(cluster.CreatedAt).String())
 
 	if err := d.Set("enabled_cluster_log_types", flattenEksEnabledLogTypes(cluster.Logging)); err != nil {

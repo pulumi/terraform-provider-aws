@@ -22,7 +22,7 @@ output "endpoint" {
 }
 
 output "kubeconfig-certificate-authority-data" {
-  value = data.aws_eks_cluster.example.certificate_authority
+  value = data.aws_eks_cluster.example.certificate_authority[0].data
 }
 
 # Only available on Kubernetes version 1.13 and 1.14 clusters created or upgraded on or after September 3, 2019.
@@ -39,9 +39,8 @@ output "identity-oidc-issuer" {
 
 * `id` - The name of the cluster
 * `arn` - The Amazon Resource Name (ARN) of the cluster.
-* `certificate_authorities` - Nested attribute containing `certificate-authority-data` for your cluster.
+* `certificate_authority` - Nested attribute containing `certificate-authority-data` for your cluster.
     * `data` - The base64 encoded certificate data required to communicate with your cluster. Add this to the `certificate-authority-data` section of the `kubeconfig` file for your cluster.
-* `certificate_authority` - The first certificate authority. Base64 encoded certificate data required to communicate with your cluster.
 * `created_at` - The Unix epoch time stamp in seconds for when the cluster was created.
 * `enabled_cluster_log_types` - The enabled control plane logs.
 * `endpoint` - The endpoint for your Kubernetes API server.
