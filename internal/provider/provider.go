@@ -121,6 +121,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/service/neptune"
 	"github.com/hashicorp/terraform-provider-aws/internal/service/networkfirewall"
 	"github.com/hashicorp/terraform-provider-aws/internal/service/networkmanager"
+	"github.com/hashicorp/terraform-provider-aws/internal/service/opensearch"
 	"github.com/hashicorp/terraform-provider-aws/internal/service/opsworks"
 	"github.com/hashicorp/terraform-provider-aws/internal/service/organizations"
 	"github.com/hashicorp/terraform-provider-aws/internal/service/outposts"
@@ -598,12 +599,13 @@ func Provider() *schema.Provider {
 			"aws_efs_file_system":   efs.DataSourceFileSystem(),
 			"aws_efs_mount_target":  efs.DataSourceMountTarget(),
 
-			"aws_eks_addon":        eks.DataSourceAddon(),
-			"aws_eks_cluster":      eks.DataSourceCluster(),
-			"aws_eks_clusters":     eks.DataSourceClusters(),
-			"aws_eks_cluster_auth": eks.DataSourceClusterAuth(),
-			"aws_eks_node_group":   eks.DataSourceNodeGroup(),
-			"aws_eks_node_groups":  eks.DataSourceNodeGroups(),
+			"aws_eks_addon":         eks.DataSourceAddon(),
+			"aws_eks_addon_version": eks.DataSourceAddonVersion(),
+			"aws_eks_cluster":       eks.DataSourceCluster(),
+			"aws_eks_clusters":      eks.DataSourceClusters(),
+			"aws_eks_cluster_auth":  eks.DataSourceClusterAuth(),
+			"aws_eks_node_group":    eks.DataSourceNodeGroup(),
+			"aws_eks_node_groups":   eks.DataSourceNodeGroups(),
 
 			"aws_elasticache_cluster":           elasticache.DataSourceCluster(),
 			"aws_elasticache_replication_group": elasticache.DataSourceReplicationGroup(),
@@ -701,6 +703,7 @@ func Provider() *schema.Provider {
 
 			"aws_lambda_alias":               lambda.DataSourceAlias(),
 			"aws_lambda_code_signing_config": lambda.DataSourceCodeSigningConfig(),
+			"aws_lambda_function_url":        lambda.DataSourceFunctionURL(),
 			"aws_lambda_function":            lambda.DataSourceFunction(),
 			"aws_lambda_invocation":          lambda.DataSourceInvocation(),
 			"aws_lambda_layer_version":       lambda.DataSourceLayerVersion(),
@@ -719,8 +722,12 @@ func Provider() *schema.Provider {
 			"aws_regions":                 meta.DataSourceRegions(),
 			"aws_service":                 meta.DataSourceService(),
 
+			"aws_memorydb_acl":             memorydb.DataSourceACL(),
+			"aws_memorydb_cluster":         memorydb.DataSourceCluster(),
 			"aws_memorydb_parameter_group": memorydb.DataSourceParameterGroup(),
+			"aws_memorydb_snapshot":        memorydb.DataSourceSnapshot(),
 			"aws_memorydb_subnet_group":    memorydb.DataSourceSubnetGroup(),
+			"aws_memorydb_user":            memorydb.DataSourceUser(),
 
 			"aws_mq_broker": mq.DataSourceBroker(),
 
@@ -737,6 +744,8 @@ func Provider() *schema.Provider {
 			"aws_networkmanager_links":           networkmanager.DataSourceLinks(),
 			"aws_networkmanager_site":            networkmanager.DataSourceSite(),
 			"aws_networkmanager_sites":           networkmanager.DataSourceSites(),
+
+			"aws_opensearch_domain": opensearch.DataSourceDomain(),
 
 			"aws_organizations_delegated_administrators": organizations.DataSourceDelegatedAdministrators(),
 			"aws_organizations_delegated_services":       organizations.DataSourceDelegatedServices(),
@@ -822,11 +831,12 @@ func Provider() *schema.Provider {
 
 			"aws_sqs_queue": sqs.DataSourceQueue(),
 
-			"aws_ssm_document":           ssm.DataSourceDocument(),
-			"aws_ssm_instances":          ssm.DataSourceInstances(),
-			"aws_ssm_parameter":          ssm.DataSourceParameter(),
-			"aws_ssm_parameters_by_path": ssm.DataSourceParametersByPath(),
-			"aws_ssm_patch_baseline":     ssm.DataSourcePatchBaseline(),
+			"aws_ssm_document":            ssm.DataSourceDocument(),
+			"aws_ssm_instances":           ssm.DataSourceInstances(),
+			"aws_ssm_maintenance_windows": ssm.DataSourceMaintenanceWindows(),
+			"aws_ssm_parameter":           ssm.DataSourceParameter(),
+			"aws_ssm_parameters_by_path":  ssm.DataSourceParametersByPath(),
+			"aws_ssm_patch_baseline":      ssm.DataSourcePatchBaseline(),
 
 			"aws_ssoadmin_instances":      ssoadmin.DataSourceInstances(),
 			"aws_ssoadmin_permission_set": ssoadmin.DataSourcePermissionSet(),
@@ -1195,6 +1205,7 @@ func Provider() *schema.Provider {
 			"aws_directory_service_directory":             ds.ResourceDirectory(),
 			"aws_directory_service_log_subscription":      ds.ResourceLogSubscription(),
 
+			"aws_dynamodb_contributor_insights":          dynamodb.ResourceContributorInsights(),
 			"aws_dynamodb_global_table":                  dynamodb.ResourceGlobalTable(),
 			"aws_dynamodb_kinesis_streaming_destination": dynamodb.ResourceKinesisStreamingDestination(),
 			"aws_dynamodb_table":                         dynamodb.ResourceTable(),
@@ -1503,8 +1514,11 @@ func Provider() *schema.Provider {
 
 			"aws_iot_authorizer":                 iot.ResourceAuthorizer(),
 			"aws_iot_certificate":                iot.ResourceCertificate(),
+			"aws_iot_indexing_configuration":     iot.ResourceIndexingConfiguration(),
+			"aws_iot_logging_options":            iot.ResourceLoggingOptions(),
 			"aws_iot_policy":                     iot.ResourcePolicy(),
 			"aws_iot_policy_attachment":          iot.ResourcePolicyAttachment(),
+			"aws_iot_provisioning_template":      iot.ResourceProvisioningTemplate(),
 			"aws_iot_role_alias":                 iot.ResourceRoleAlias(),
 			"aws_iot_thing":                      iot.ResourceThing(),
 			"aws_iot_thing_group":                iot.ResourceThingGroup(),
@@ -1549,6 +1563,7 @@ func Provider() *schema.Provider {
 			"aws_lambda_event_source_mapping":           lambda.ResourceEventSourceMapping(),
 			"aws_lambda_function":                       lambda.ResourceFunction(),
 			"aws_lambda_function_event_invoke_config":   lambda.ResourceFunctionEventInvokeConfig(),
+			"aws_lambda_function_url":                   lambda.ResourceFunctionUrl(),
 			"aws_lambda_invocation":                     lambda.ResourceInvocation(),
 			"aws_lambda_layer_version":                  lambda.ResourceLayerVersion(),
 			"aws_lambda_layer_version_permission":       lambda.ResourceLayerVersionPermission(),
@@ -1625,6 +1640,10 @@ func Provider() *schema.Provider {
 			"aws_networkmanager_transit_gateway_connect_peer_association": networkmanager.ResourceTransitGatewayConnectPeerAssociation(),
 			"aws_networkmanager_transit_gateway_registration":             networkmanager.ResourceTransitGatewayRegistration(),
 
+			"aws_opensearch_domain":              opensearch.ResourceDomain(),
+			"aws_opensearch_domain_policy":       opensearch.ResourceDomainPolicy(),
+			"aws_opensearch_domain_saml_options": opensearch.ResourceDomainSAMLOptions(),
+
 			"aws_opsworks_application":       opsworks.ResourceApplication(),
 			"aws_opsworks_custom_layer":      opsworks.ResourceCustomLayer(),
 			"aws_opsworks_ecs_cluster_layer": opsworks.ResourceECSClusterLayer(),
@@ -1674,25 +1693,27 @@ func Provider() *schema.Provider {
 			"aws_ram_resource_share":          ram.ResourceResourceShare(),
 			"aws_ram_resource_share_accepter": ram.ResourceResourceShareAccepter(),
 
-			"aws_db_cluster_snapshot":           rds.ResourceClusterSnapshot(),
-			"aws_db_event_subscription":         rds.ResourceEventSubscription(),
-			"aws_db_instance":                   rds.ResourceInstance(),
-			"aws_db_instance_role_association":  rds.ResourceInstanceRoleAssociation(),
-			"aws_db_option_group":               rds.ResourceOptionGroup(),
-			"aws_db_parameter_group":            rds.ResourceParameterGroup(),
-			"aws_db_proxy":                      rds.ResourceProxy(),
-			"aws_db_proxy_default_target_group": rds.ResourceProxyDefaultTargetGroup(),
-			"aws_db_proxy_endpoint":             rds.ResourceProxyEndpoint(),
-			"aws_db_proxy_target":               rds.ResourceProxyTarget(),
-			"aws_db_security_group":             rds.ResourceSecurityGroup(),
-			"aws_db_snapshot":                   rds.ResourceSnapshot(),
-			"aws_db_subnet_group":               rds.ResourceSubnetGroup(),
-			"aws_rds_cluster":                   rds.ResourceCluster(),
-			"aws_rds_cluster_endpoint":          rds.ResourceClusterEndpoint(),
-			"aws_rds_cluster_instance":          rds.ResourceClusterInstance(),
-			"aws_rds_cluster_parameter_group":   rds.ResourceClusterParameterGroup(),
-			"aws_rds_cluster_role_association":  rds.ResourceClusterRoleAssociation(),
-			"aws_rds_global_cluster":            rds.ResourceGlobalCluster(),
+			"aws_db_cluster_snapshot":                       rds.ResourceClusterSnapshot(),
+			"aws_db_event_subscription":                     rds.ResourceEventSubscription(),
+			"aws_db_instance":                               rds.ResourceInstance(),
+			"aws_db_instance_automated_backups_replication": rds.ResourceInstanceAutomatedBackupsReplication(),
+			"aws_db_instance_role_association":              rds.ResourceInstanceRoleAssociation(),
+			"aws_db_option_group":                           rds.ResourceOptionGroup(),
+			"aws_db_parameter_group":                        rds.ResourceParameterGroup(),
+			"aws_db_proxy":                                  rds.ResourceProxy(),
+			"aws_db_proxy_default_target_group":             rds.ResourceProxyDefaultTargetGroup(),
+			"aws_db_proxy_endpoint":                         rds.ResourceProxyEndpoint(),
+			"aws_db_proxy_target":                           rds.ResourceProxyTarget(),
+			"aws_db_security_group":                         rds.ResourceSecurityGroup(),
+			"aws_db_snapshot":                               rds.ResourceSnapshot(),
+			"aws_db_subnet_group":                           rds.ResourceSubnetGroup(),
+			"aws_rds_cluster":                               rds.ResourceCluster(),
+			"aws_rds_cluster_activity_stream":               rds.ResourceClusterActivityStream(),
+			"aws_rds_cluster_endpoint":                      rds.ResourceClusterEndpoint(),
+			"aws_rds_cluster_instance":                      rds.ResourceClusterInstance(),
+			"aws_rds_cluster_parameter_group":               rds.ResourceClusterParameterGroup(),
+			"aws_rds_cluster_role_association":              rds.ResourceClusterRoleAssociation(),
+			"aws_rds_global_cluster":                        rds.ResourceGlobalCluster(),
 
 			"aws_redshift_cluster":                       redshift.ResourceCluster(),
 			"aws_redshift_event_subscription":            redshift.ResourceEventSubscription(),
