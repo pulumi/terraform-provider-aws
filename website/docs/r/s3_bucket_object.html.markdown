@@ -8,8 +8,6 @@ description: |-
 
 # Resource: aws_s3_bucket_object
 
-~> **NOTE:** The `aws_s3_bucket_object` resource is DEPRECATED and will be removed in a future version! Use `aws_s3_object` instead, where new features and fixes will be added. When replacing `aws_s3_bucket_object` with `aws_s3_object` in your configuration, on the next apply, Terraform will recreate the object. If you prefer to not have Terraform recreate the object, import the object using `aws_s3_object`.
-
 Provides an S3 object resource.
 
 ## Example Usage
