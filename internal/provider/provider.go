@@ -559,6 +559,7 @@ func Provider() *schema.Provider {
 			"aws_key_pair":                                   ec2.DataSourceKeyPair(),
 			"aws_launch_template":                            ec2.DataSourceLaunchTemplate(),
 			"aws_nat_gateway":                                ec2.DataSourceNATGateway(),
+			"aws_nat_gateways":                               ec2.DataSourceNATGateways(),
 			"aws_network_acls":                               ec2.DataSourceNetworkACLs(),
 			"aws_network_interface":                          ec2.DataSourceNetworkInterface(),
 			"aws_network_interfaces":                         ec2.DataSourceNetworkInterfaces(),
@@ -651,6 +652,7 @@ func Provider() *schema.Provider {
 			"aws_iam_policy_document":         iam.DataSourcePolicyDocument(),
 			"aws_iam_role":                    iam.DataSourceRole(),
 			"aws_iam_roles":                   iam.DataSourceRoles(),
+			"aws_iam_saml_provider":           iam.DataSourceSAMLProvider(),
 			"aws_iam_server_certificate":      iam.DataSourceServerCertificate(),
 			"aws_iam_session_context":         iam.DataSourceSessionContext(),
 			"aws_iam_user":                    iam.DataSourceUser(),
@@ -1144,6 +1146,7 @@ func Provider() *schema.Provider {
 			"aws_datasync_agent":                            datasync.ResourceAgent(),
 			"aws_datasync_location_efs":                     datasync.ResourceLocationEFS(),
 			"aws_datasync_location_fsx_lustre_file_system":  datasync.ResourceLocationFSxLustreFileSystem(),
+			"aws_datasync_location_fsx_openzfs_file_system": datasync.ResourceLocationFSxOpenZfsFileSystem(),
 			"aws_datasync_location_fsx_windows_file_system": datasync.ResourceLocationFSxWindowsFileSystem(),
 			"aws_datasync_location_hdfs":                    datasync.ResourceLocationHdfs(),
 			"aws_datasync_location_nfs":                     datasync.ResourceLocationNFS(),
@@ -1365,6 +1368,7 @@ func Provider() *schema.Provider {
 			"aws_elasticache_subnet_group":             elasticache.ResourceSubnetGroup(),
 			"aws_elasticache_user":                     elasticache.ResourceUser(),
 			"aws_elasticache_user_group":               elasticache.ResourceUserGroup(),
+			"aws_elasticache_user_group_association":   elasticache.ResourceUserGroupAssociation(),
 
 			"aws_elastic_beanstalk_application":            elasticbeanstalk.ResourceApplication(),
 			"aws_elastic_beanstalk_application_version":    elasticbeanstalk.ResourceApplicationVersion(),
@@ -1682,6 +1686,7 @@ func Provider() *schema.Provider {
 			"aws_pinpoint_sms_channel":               pinpoint.ResourceSMSChannel(),
 
 			"aws_qldb_ledger": qldb.ResourceLedger(),
+			"aws_qldb_stream": qldb.ResourceStream(),
 
 			"aws_quicksight_data_source":      quicksight.ResourceDataSource(),
 			"aws_quicksight_group":            quicksight.ResourceGroup(),

@@ -28,38 +28,42 @@ resource "aws_s3_bucket" "b" {
   bucket = "my_tf_test_bucket"
 }
 
-resource "aws_s3_bucket_policy" "b" {
-  bucket = aws_s3_bucket.b.id
+resource "aws_s3_bucket" "foo" {
+  bucket        = "tf-test-trail"
+  force_destroy = true
+}
 
+resource "aws_s3_bucket_policy" "foo" {
+  bucket = aws_s3_bucket.foo.id
   policy = <<POLICY
-  {
-      "Version": "2012-10-17",
-      "Statement": [
-          {
-              "Sid": "AWSCloudTrailAclCheck",
-              "Effect": "Allow",
-              "Principal": {
-                "Service": "cloudtrail.amazonaws.com"
-              },
-              "Action": "s3:GetBucketAcl",
-              "Resource": "arn:aws:s3:::${aws_s3_bucket.b.id}"
-          },
-          {
-              "Sid": "AWSCloudTrailWrite",
-              "Effect": "Allow",
-              "Principal": {
-                "Service": "cloudtrail.amazonaws.com"
-              },
-              "Action": "s3:PutObject",
-              "Resource": "arn:aws:s3:::${aws_s3_bucket.b.id}/prefix/AWSLogs/${data.aws_caller_identity.current.account_id}/*",
-              "Condition": {
-                  "StringEquals": {
-                      "s3:x-amz-acl": "bucket-owner-full-control"
-                  }
-              }
-          }
-      ]
-  }
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "AWSCloudTrailAclCheck",
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "cloudtrail.amazonaws.com"
+            },
+            "Action": "s3:GetBucketAcl",
+            "Resource": "${aws_s3_bucket.foo.arn}"
+        },
+        {
+            "Sid": "AWSCloudTrailWrite",
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "cloudtrail.amazonaws.com"
+            },
+            "Action": "s3:PutObject",
+            "Resource": "${aws_s3_bucket.foo.arn}/prefix/AWSLogs/${data.aws_caller_identity.current.account_id}/*",
+            "Condition": {
+                "StringEquals": {
+                    "s3:x-amz-acl": "bucket-owner-full-control"
+                }
+            }
+        }
+    ]
+}
 POLICY
 }
 
