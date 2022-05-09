@@ -83,6 +83,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/service/elb"
 	"github.com/hashicorp/terraform-provider-aws/internal/service/elbv2"
 	"github.com/hashicorp/terraform-provider-aws/internal/service/emr"
+	"github.com/hashicorp/terraform-provider-aws/internal/service/emrcontainers"
 	"github.com/hashicorp/terraform-provider-aws/internal/service/events"
 	"github.com/hashicorp/terraform-provider-aws/internal/service/firehose"
 	"github.com/hashicorp/terraform-provider-aws/internal/service/fms"
@@ -640,6 +641,8 @@ func Provider() *schema.Provider {
 
 			"aws_emr_release_labels": emr.DataSourceReleaseLabels(),
 
+			"aws_emrcontainers_virtual_cluster": emrcontainers.DataSourceVirtualCluster(),
+
 			"aws_kinesis_firehose_delivery_stream": firehose.DataSourceDeliveryStream(),
 
 			"aws_globalaccelerator_accelerator": globalaccelerator.DataSourceAccelerator(),
@@ -655,6 +658,7 @@ func Provider() *schema.Provider {
 			"aws_iam_account_alias":           iam.DataSourceAccountAlias(),
 			"aws_iam_group":                   iam.DataSourceGroup(),
 			"aws_iam_instance_profile":        iam.DataSourceInstanceProfile(),
+			"aws_iam_instance_profiles":       iam.DataSourceInstanceProfiles(),
 			"aws_iam_openid_connect_provider": iam.DataSourceOpenIDConnectProvider(),
 			"aws_iam_policy":                  iam.DataSourcePolicy(),
 			"aws_iam_policy_document":         iam.DataSourcePolicyDocument(),
@@ -819,6 +823,7 @@ func Provider() *schema.Provider {
 			"aws_secretsmanager_secret":          secretsmanager.DataSourceSecret(),
 			"aws_secretsmanager_secret_rotation": secretsmanager.DataSourceSecretRotation(),
 			"aws_secretsmanager_secret_version":  secretsmanager.DataSourceSecretVersion(),
+			"aws_secretsmanager_secrets":         secretsmanager.DataSourceSecrets(),
 
 			"aws_serverlessapplicationrepository_application": serverlessrepo.DataSourceApplication(),
 
@@ -1427,6 +1432,8 @@ func Provider() *schema.Provider {
 			"aws_emr_studio":                 emr.ResourceStudio(),
 			"aws_emr_studio_session_mapping": emr.ResourceStudioSessionMapping(),
 
+			"aws_emrcontainers_virtual_cluster": emrcontainers.ResourceVirtualCluster(),
+
 			"aws_kinesis_firehose_delivery_stream": firehose.ResourceDeliveryStream(),
 
 			"aws_fms_admin_account": fms.ResourceAdminAccount(),
@@ -1544,6 +1551,7 @@ func Provider() *schema.Provider {
 			"aws_iot_thing_principal_attachment": iot.ResourceThingPrincipalAttachment(),
 			"aws_iot_thing_type":                 iot.ResourceThingType(),
 			"aws_iot_topic_rule":                 iot.ResourceTopicRule(),
+			"aws_iot_topic_rule_destination":     iot.ResourceTopicRuleDestination(),
 
 			"aws_msk_cluster":                  kafka.ResourceCluster(),
 			"aws_msk_configuration":            kafka.ResourceConfiguration(),

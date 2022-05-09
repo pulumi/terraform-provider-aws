@@ -1074,7 +1074,7 @@ func resourceClusterRead(d *schema.ResourceData, meta interface{}) error {
 	d.Set("reader_endpoint", dbc.ReaderEndpoint)
 	d.Set("replication_source_identifier", dbc.ReplicationSourceIdentifier)
 
-	if err := d.Set("scaling_configuration", flattenRDSScalingConfigurationInfo(dbc.ScalingConfigurationInfo)); err != nil {
+	if err := d.Set("scaling_configuration", flattenScalingConfigurationInfo(dbc.ScalingConfigurationInfo)); err != nil {
 		return fmt.Errorf("error setting scaling_configuration: %s", err)
 	}
 
@@ -1460,7 +1460,7 @@ func resourceClusterStateRefreshFunc(conn *rds.RDS, dbClusterIdentifier string) 
 		var dbc *rds.DBCluster
 
 		for _, c := range resp.DBClusters {
-			if *c.DBClusterIdentifier == dbClusterIdentifier {
+			if aws.StringValue(c.DBClusterIdentifier) == dbClusterIdentifier {
 				dbc = c
 			}
 		}

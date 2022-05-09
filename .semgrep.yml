@@ -45,22 +45,6 @@ rules:
     paths:
       include:
         - internal/service
-      exclude:
-        - internal/service/ec2
-        - internal/service/elasticbeanstalk
-        - internal/service/elasticsearch
-        - internal/service/elb
-        - internal/service/emr
-        - internal/service/gamelift
-        - internal/service/iam
-        - internal/service/lambda
-        - internal/service/opsworks
-        - internal/service/rds
-        - internal/service/redshift
-        - internal/service/route53
-        - internal/service/s3
-        - internal/service/servicediscovery
-        - internal/service/ssm
     patterns:
       - pattern: '$LHS = *$RHS'
       - pattern-not: '*$LHS2 = *$RHS'
@@ -72,17 +56,6 @@ rules:
     paths:
       include:
         - internal/service
-      exclude:
-        - internal/service/**/*_test.go
-        - internal/service/dax
-        - internal/service/docdb
-        - internal/service/ec2
-        - internal/service/ecs
-        - internal/service/elasticache
-        - internal/service/elasticbeanstalk
-        - internal/service/elb
-        - internal/service/rds
-        - internal/service/redshift
     patterns:
       - pattern-either:
         - pattern: '$LHS == *$RHS'
@@ -299,7 +272,7 @@ rules:
         - internal/service
       exclude:
         - internal/service/**/*_data_source.go
-        - internal/service/[b-ce-g]*
+        - internal/service/[be-g]*
         - internal/service/d[a-df-z]*
         - internal/service/devicefarm
         - internal/service/i*

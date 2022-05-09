@@ -231,7 +231,7 @@ func resourceSpotInstanceRequestCreate(d *schema.ResourceData, meta interface{})
 			"Expected response with length 1, got: %s", resp)
 	}
 
-	sir := *resp.SpotInstanceRequests[0]
+	sir := resp.SpotInstanceRequests[0]
 	d.SetId(aws.StringValue(sir.SpotInstanceRequestId))
 
 	if d.Get("wait_for_fulfillment").(bool) {
@@ -349,7 +349,7 @@ func readInstance(d *schema.ResourceData, meta interface{}) error {
 	var ipv6Addresses []string
 	if len(instance.NetworkInterfaces) > 0 {
 		for _, ni := range instance.NetworkInterfaces {
-			if *ni.Attachment.DeviceIndex == 0 {
+			if aws.Int64Value(ni.Attachment.DeviceIndex) == 0 {
 				d.Set("subnet_id", ni.SubnetId)
 				d.Set("primary_network_interface_id", ni.NetworkInterfaceId)
 				d.Set("associate_public_ip_address", ni.Association != nil)
@@ -425,9 +425,7 @@ func resourceSpotInstanceRequestDelete(d *schema.ResourceData, meta interface{})
 
 // SpotInstanceStateRefreshFunc returns a resource.StateRefreshFunc that is used to watch
 // an EC2 spot instance request
-func SpotInstanceStateRefreshFunc(
-	conn *ec2.EC2, sir ec2.SpotInstanceRequest) resource.StateRefreshFunc {
-
+func SpotInstanceStateRefreshFunc(conn *ec2.EC2, sir *ec2.SpotInstanceRequest) resource.StateRefreshFunc {
 	return func() (interface{}, string, error) {
 		resp, err := conn.DescribeSpotInstanceRequests(&ec2.DescribeSpotInstanceRequestsInput{
 			SpotInstanceRequestIds: []*string{sir.SpotInstanceRequestId},

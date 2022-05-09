@@ -915,7 +915,7 @@ func resourceClusterCreate(d *schema.ResourceData, meta interface{}) error {
 	}
 	if v, ok := d.GetOk("step"); ok {
 		steps := v.([]interface{})
-		params.Steps = expandEmrStepConfigs(steps)
+		params.Steps = expandStepConfigs(steps)
 	}
 	if v, ok := d.GetOk("configurations"); ok {
 		confUrl := v.(string)
@@ -936,7 +936,7 @@ func resourceClusterCreate(d *schema.ResourceData, meta interface{}) error {
 	if v, ok := d.GetOk("kerberos_attributes"); ok {
 		kerberosAttributesList := v.([]interface{})
 		kerberosAttributesMap := kerberosAttributesList[0].(map[string]interface{})
-		params.KerberosAttributes = expandEmrKerberosAttributes(kerberosAttributesMap)
+		params.KerberosAttributes = expandKerberosAttributes(kerberosAttributesMap)
 	}
 	if v, ok := d.GetOk("auto_termination_policy"); ok && len(v.([]interface{})) > 0 {
 		params.AutoTerminationPolicy = expandAutoTerminationPolicy(v.([]interface{}))
@@ -1015,14 +1015,14 @@ func resourceClusterRead(d *schema.ResourceData, meta interface{}) error {
 	d.Set("cluster_state", cluster.Status.State)
 	d.Set("arn", cluster.ClusterArn)
 
-	instanceGroups, err := fetchAllEMRInstanceGroups(conn, d.Id())
+	instanceGroups, err := fetchAllInstanceGroups(conn, d.Id())
 
 	if err == nil { // find instance group
 
-		coreGroup := emrCoreInstanceGroup(instanceGroups)
+		coreGroup := coreInstanceGroup(instanceGroups)
 		masterGroup := findMasterGroup(instanceGroups)
 
-		flattenedCoreInstanceGroup, err := flattenEmrCoreInstanceGroup(coreGroup)
+		flattenedCoreInstanceGroup, err := flattenCoreInstanceGroup(coreGroup)
 
 		if err != nil {
 			return fmt.Errorf("error flattening core_instance_group: %w", err)
@@ -1032,7 +1032,7 @@ func resourceClusterRead(d *schema.ResourceData, meta interface{}) error {
 			return fmt.Errorf("error setting core_instance_group: %w", err)
 		}
 
-		if err := d.Set("master_instance_group", flattenEmrMasterInstanceGroup(masterGroup)); err != nil {
+		if err := d.Set("master_instance_group", flattenMasterInstanceGroup(masterGroup)); err != nil {
 			return fmt.Errorf("error setting master_instance_group: %w", err)
 		}
 	}
@@ -1103,7 +1103,7 @@ func resourceClusterRead(d *schema.ResourceData, meta interface{}) error {
 		return fmt.Errorf("error setting EMR Ec2 Attributes: %w", err)
 	}
 
-	if err := d.Set("kerberos_attributes", flattenEmrKerberosAttributes(d, cluster.KerberosAttributes)); err != nil {
+	if err := d.Set("kerberos_attributes", flattenKerberosAttributes(d, cluster.KerberosAttributes)); err != nil {
 		return fmt.Errorf("error setting kerberos_attributes: %w", err)
 	}
 
@@ -1140,7 +1140,7 @@ func resourceClusterRead(d *schema.ResourceData, meta interface{}) error {
 		return fmt.Errorf("error listing EMR Cluster (%s) steps: %w", d.Id(), err)
 	}
 
-	if err := d.Set("step", flattenEmrStepSummaries(stepSummaries)); err != nil {
+	if err := d.Set("step", flattenStepSummaries(stepSummaries)); err != nil {
 		return fmt.Errorf("error setting step: %w", err)
 	}
 
@@ -1259,7 +1259,7 @@ func resourceClusterUpdate(d *schema.ResourceData, meta interface{}) error {
 			// RemoveAutoScalingPolicy seems to have eventual consistency.
 			// Retry reading Instance Group configuration until the policy is removed.
 			err := resource.Retry(1*time.Minute, func() *resource.RetryError {
-				autoscalingPolicy, err := getEmrCoreInstanceGroupAutoscalingPolicy(conn, d.Id())
+				autoscalingPolicy, err := getCoreInstanceGroupAutoScalingPolicy(conn, d.Id())
 
 				if err != nil {
 					return resource.NonRetryableError(err)
@@ -1275,7 +1275,7 @@ func resourceClusterUpdate(d *schema.ResourceData, meta interface{}) error {
 			if tfresource.TimedOut(err) {
 				var autoscalingPolicy *emr.AutoScalingPolicyDescription
 
-				autoscalingPolicy, err = getEmrCoreInstanceGroupAutoscalingPolicy(conn, d.Id())
+				autoscalingPolicy, err = getCoreInstanceGroupAutoScalingPolicy(conn, d.Id())
 
 				if autoscalingPolicy != nil {
 					err = fmt.Errorf("EMR Cluster (%s) Instance Group (%s) Auto Scaling Policy still exists", d.Id(), instanceGroupID)
@@ -1474,7 +1474,7 @@ func flattenEc2Attributes(ia *emr.Ec2InstanceAttributes) []map[string]interface{
 	return result
 }
 
-func flattenEmrAutoScalingPolicyDescription(policy *emr.AutoScalingPolicyDescription) (string, error) {
+func flattenAutoScalingPolicyDescription(policy *emr.AutoScalingPolicyDescription) (string, error) {
 	if policy == nil {
 		return "", nil
 	}
@@ -1531,12 +1531,12 @@ func flattenEmrAutoScalingPolicyDescription(policy *emr.AutoScalingPolicyDescrip
 	return autoscalingPolicyString, nil
 }
 
-func flattenEmrCoreInstanceGroup(instanceGroup *emr.InstanceGroup) ([]interface{}, error) {
+func flattenCoreInstanceGroup(instanceGroup *emr.InstanceGroup) ([]interface{}, error) {
 	if instanceGroup == nil {
 		return []interface{}{}, nil
 	}
 
-	autoscalingPolicy, err := flattenEmrAutoScalingPolicyDescription(instanceGroup.AutoScalingPolicy)
+	autoscalingPolicy, err := flattenAutoScalingPolicyDescription(instanceGroup.AutoScalingPolicy)
 
 	if err != nil {
 		return nil, err
@@ -1555,7 +1555,7 @@ func flattenEmrCoreInstanceGroup(instanceGroup *emr.InstanceGroup) ([]interface{
 	return []interface{}{m}, nil
 }
 
-func flattenEmrMasterInstanceGroup(instanceGroup *emr.InstanceGroup) []interface{} {
+func flattenMasterInstanceGroup(instanceGroup *emr.InstanceGroup) []interface{} {
 	if instanceGroup == nil {
 		return []interface{}{}
 	}
@@ -1572,7 +1572,7 @@ func flattenEmrMasterInstanceGroup(instanceGroup *emr.InstanceGroup) []interface
 	return []interface{}{m}
 }
 
-func flattenEmrKerberosAttributes(d *schema.ResourceData, kerberosAttributes *emr.KerberosAttributes) []map[string]interface{} {
+func flattenKerberosAttributes(d *schema.ResourceData, kerberosAttributes *emr.KerberosAttributes) []map[string]interface{} {
 	l := make([]map[string]interface{}, 0)
 
 	if kerberosAttributes == nil || kerberosAttributes.Realm == nil {
@@ -1607,7 +1607,7 @@ func flattenEmrKerberosAttributes(d *schema.ResourceData, kerberosAttributes *em
 	return l
 }
 
-func flattenEmrHadoopStepConfig(config *emr.HadoopStepConfig) map[string]interface{} {
+func flattenHadoopStepConfig(config *emr.HadoopStepConfig) map[string]interface{} {
 	if config == nil {
 		return nil
 	}
@@ -1622,7 +1622,7 @@ func flattenEmrHadoopStepConfig(config *emr.HadoopStepConfig) map[string]interfa
 	return m
 }
 
-func flattenEmrStepSummaries(stepSummaries []*emr.StepSummary) []map[string]interface{} {
+func flattenStepSummaries(stepSummaries []*emr.StepSummary) []map[string]interface{} {
 	l := make([]map[string]interface{}, 0)
 
 	if len(stepSummaries) == 0 {
@@ -1630,20 +1630,20 @@ func flattenEmrStepSummaries(stepSummaries []*emr.StepSummary) []map[string]inte
 	}
 
 	for _, stepSummary := range stepSummaries {
-		l = append(l, flattenEmrStepSummary(stepSummary))
+		l = append(l, flattenStepSummary(stepSummary))
 	}
 
 	return l
 }
 
-func flattenEmrStepSummary(stepSummary *emr.StepSummary) map[string]interface{} {
+func flattenStepSummary(stepSummary *emr.StepSummary) map[string]interface{} {
 	if stepSummary == nil {
 		return nil
 	}
 
 	m := map[string]interface{}{
 		"action_on_failure": aws.StringValue(stepSummary.ActionOnFailure),
-		"hadoop_jar_step":   []map[string]interface{}{flattenEmrHadoopStepConfig(stepSummary.Config)},
+		"hadoop_jar_step":   []map[string]interface{}{flattenHadoopStepConfig(stepSummary.Config)},
 		"name":              aws.StringValue(stepSummary.Name),
 	}
 
@@ -1689,7 +1689,7 @@ func flattenBootstrapArguments(actions []*emr.Command) []map[string]interface{} 
 	return result
 }
 
-func emrCoreInstanceGroup(grps []*emr.InstanceGroup) *emr.InstanceGroup {
+func coreInstanceGroup(grps []*emr.InstanceGroup) *emr.InstanceGroup {
 	for _, grp := range grps {
 		if aws.StringValue(grp.InstanceGroupType) == emr.InstanceGroupTypeCore {
 			return grp
@@ -1720,7 +1720,7 @@ func expandBootstrapActions(bootstrapActions []interface{}) []*emr.BootstrapActi
 	return actionsOut
 }
 
-func expandEmrHadoopJarStepConfig(m map[string]interface{}) *emr.HadoopJarStepConfig {
+func expandHadoopJarStepConfig(m map[string]interface{}) *emr.HadoopJarStepConfig {
 	hadoopJarStepConfig := &emr.HadoopJarStepConfig{
 		Jar: aws.String(m["jar"].(string)),
 	}
@@ -1734,13 +1734,13 @@ func expandEmrHadoopJarStepConfig(m map[string]interface{}) *emr.HadoopJarStepCo
 	}
 
 	if v, ok := m["properties"]; ok {
-		hadoopJarStepConfig.Properties = expandEmrKeyValues(v.(map[string]interface{}))
+		hadoopJarStepConfig.Properties = expandKeyValues(v.(map[string]interface{}))
 	}
 
 	return hadoopJarStepConfig
 }
 
-func expandEmrKeyValues(m map[string]interface{}) []*emr.KeyValue {
+func expandKeyValues(m map[string]interface{}) []*emr.KeyValue {
 	keyValues := make([]*emr.KeyValue, 0)
 
 	for k, v := range m {
@@ -1754,7 +1754,7 @@ func expandEmrKeyValues(m map[string]interface{}) []*emr.KeyValue {
 	return keyValues
 }
 
-func expandEmrKerberosAttributes(m map[string]interface{}) *emr.KerberosAttributes {
+func expandKerberosAttributes(m map[string]interface{}) *emr.KerberosAttributes {
 	kerberosAttributes := &emr.KerberosAttributes{
 		KdcAdminPassword: aws.String(m["kdc_admin_password"].(string)),
 		Realm:            aws.String(m["realm"].(string)),
@@ -1771,25 +1771,25 @@ func expandEmrKerberosAttributes(m map[string]interface{}) *emr.KerberosAttribut
 	return kerberosAttributes
 }
 
-func expandEmrStepConfig(m map[string]interface{}) *emr.StepConfig {
+func expandStepConfig(m map[string]interface{}) *emr.StepConfig {
 	hadoopJarStepList := m["hadoop_jar_step"].([]interface{})
 	hadoopJarStepMap := hadoopJarStepList[0].(map[string]interface{})
 
 	stepConfig := &emr.StepConfig{
 		ActionOnFailure: aws.String(m["action_on_failure"].(string)),
-		HadoopJarStep:   expandEmrHadoopJarStepConfig(hadoopJarStepMap),
+		HadoopJarStep:   expandHadoopJarStepConfig(hadoopJarStepMap),
 		Name:            aws.String(m["name"].(string)),
 	}
 
 	return stepConfig
 }
 
-func expandEmrStepConfigs(l []interface{}) []*emr.StepConfig {
+func expandStepConfigs(l []interface{}) []*emr.StepConfig {
 	stepConfigs := []*emr.StepConfig{}
 
 	for _, raw := range l {
 		m := raw.(map[string]interface{})
-		stepConfigs = append(stepConfigs, expandEmrStepConfig(m))
+		stepConfigs = append(stepConfigs, expandStepConfig(m))
 	}
 
 	return stepConfigs
@@ -1910,14 +1910,14 @@ func resourceClusterEBSHashConfig(v interface{}) int {
 	return create.StringHashcode(buf.String())
 }
 
-func getEmrCoreInstanceGroupAutoscalingPolicy(conn *emr.EMR, clusterID string) (*emr.AutoScalingPolicyDescription, error) {
-	instanceGroups, err := fetchAllEMRInstanceGroups(conn, clusterID)
+func getCoreInstanceGroupAutoScalingPolicy(conn *emr.EMR, clusterID string) (*emr.AutoScalingPolicyDescription, error) {
+	instanceGroups, err := fetchAllInstanceGroups(conn, clusterID)
 
 	if err != nil {
 		return nil, err
 	}
 
-	coreGroup := emrCoreInstanceGroup(instanceGroups)
+	coreGroup := coreInstanceGroup(instanceGroups)
 
 	if coreGroup == nil {
 		return nil, fmt.Errorf("EMR Cluster (%s) Core Instance Group not found", clusterID)
@@ -1926,7 +1926,7 @@ func getEmrCoreInstanceGroupAutoscalingPolicy(conn *emr.EMR, clusterID string) (
 	return coreGroup.AutoScalingPolicy, nil
 }
 
-func fetchAllEMRInstanceGroups(conn *emr.EMR, clusterID string) ([]*emr.InstanceGroup, error) {
+func fetchAllInstanceGroups(conn *emr.EMR, clusterID string) ([]*emr.InstanceGroup, error) {
 	input := &emr.ListInstanceGroupsInput{
 		ClusterId: aws.String(clusterID),
 	}
