@@ -19,14 +19,15 @@ import (
 )
 
 func init() {
-	acctest.RegisterServiceErrorCheckFunc(elbv2.EndpointsID, testAccErrorCheckSkipELBv2)
+	acctest.RegisterServiceErrorCheckFunc(elbv2.EndpointsID, testAccErrorCheckSkip)
 
 }
 
-func testAccErrorCheckSkipELBv2(t *testing.T) resource.ErrorCheckFunc {
+func testAccErrorCheckSkip(t *testing.T) resource.ErrorCheckFunc {
 	return acctest.ErrorCheckSkipMessagesContaining(t,
+		"ValidationError: Action type 'authenticate-cognito' must be one",
+		"ValidationError: Protocol 'GENEVE' must be one of",
 		"ValidationError: Type must be one of: 'application, network'",
-		"ValidationError: Action type 'authenticate-cognito' must be one of 'redirect,fixed-response,forward,authenticate-oidc'",
 	)
 }
 
@@ -67,10 +68,10 @@ func TestAccELBV2LoadBalancer_ALB_basic(t *testing.T) {
 	resourceName := "aws_lb.lb_test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t) },
-		ErrorCheck:   acctest.ErrorCheck(t, elbv2.EndpointsID),
-		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckLoadBalancerDestroy,
+		PreCheck:          func() { acctest.PreCheck(t) },
+		ErrorCheck:        acctest.ErrorCheck(t, elbv2.EndpointsID),
+		ProviderFactories: acctest.ProviderFactories,
+		CheckDestroy:      testAccCheckLoadBalancerDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccLoadBalancerConfig_basic(rName),
@@ -105,10 +106,10 @@ func TestAccELBV2LoadBalancer_NLB_basic(t *testing.T) {
 	resourceName := "aws_lb.lb_test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t) },
-		ErrorCheck:   acctest.ErrorCheck(t, elbv2.EndpointsID),
-		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckLoadBalancerDestroy,
+		PreCheck:          func() { acctest.PreCheck(t) },
+		ErrorCheck:        acctest.ErrorCheck(t, elbv2.EndpointsID),
+		ProviderFactories: acctest.ProviderFactories,
+		CheckDestroy:      testAccCheckLoadBalancerDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccLoadBalancerConfig_networkLoadbalancer(rName, false),
@@ -138,7 +139,7 @@ func TestAccELBV2LoadBalancer_LoadBalancerType_gateway(t *testing.T) {
 	resourceName := "aws_lb.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:          func() { acctest.PreCheck(t); testAccPreCheckElbv2GatewayLoadBalancer(t) },
+		PreCheck:          func() { acctest.PreCheck(t); testAccPreCheckGatewayLoadBalancer(t) },
 		ErrorCheck:        acctest.ErrorCheck(t, elbv2.EndpointsID),
 		ProviderFactories: acctest.ProviderFactories,
 		CheckDestroy:      testAccCheckLoadBalancerDestroy,
@@ -206,7 +207,7 @@ func TestAccELBV2LoadBalancer_LoadBalancerTypeGateway_enableCrossZoneLoadBalanci
 	resourceName := "aws_lb.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:          func() { acctest.PreCheck(t); testAccPreCheckElbv2GatewayLoadBalancer(t) },
+		PreCheck:          func() { acctest.PreCheck(t); testAccPreCheckGatewayLoadBalancer(t) },
 		ErrorCheck:        acctest.ErrorCheck(t, elbv2.EndpointsID),
 		ProviderFactories: acctest.ProviderFactories,
 		CheckDestroy:      testAccCheckLoadBalancerDestroy,
@@ -250,10 +251,10 @@ func TestAccELBV2LoadBalancer_ALB_outpost(t *testing.T) {
 	resourceName := "aws_lb.lb_test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckOutpostsOutposts(t) },
-		ErrorCheck:   acctest.ErrorCheck(t, elbv2.EndpointsID),
-		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckLoadBalancerDestroy,
+		PreCheck:          func() { acctest.PreCheck(t); acctest.PreCheckOutpostsOutposts(t) },
+		ErrorCheck:        acctest.ErrorCheck(t, elbv2.EndpointsID),
+		ProviderFactories: acctest.ProviderFactories,
+		CheckDestroy:      testAccCheckLoadBalancerDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccLoadBalancerConfig_outpost(rName),
@@ -289,10 +290,10 @@ func TestAccELBV2LoadBalancer_networkLoadBalancerEIP(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t) },
-		ErrorCheck:   acctest.ErrorCheck(t, elbv2.EndpointsID),
-		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckLoadBalancerDestroy,
+		PreCheck:          func() { acctest.PreCheck(t) },
+		ErrorCheck:        acctest.ErrorCheck(t, elbv2.EndpointsID),
+		ProviderFactories: acctest.ProviderFactories,
+		CheckDestroy:      testAccCheckLoadBalancerDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccLoadBalancerConfig_networkLoadBalancerEIP(rName),
@@ -319,10 +320,10 @@ func TestAccELBV2LoadBalancer_NLB_privateIPv4Address(t *testing.T) {
 	resourceName := "aws_lb.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t) },
-		ErrorCheck:   acctest.ErrorCheck(t, elbv2.EndpointsID),
-		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckLoadBalancerDestroy,
+		PreCheck:          func() { acctest.PreCheck(t) },
+		ErrorCheck:        acctest.ErrorCheck(t, elbv2.EndpointsID),
+		ProviderFactories: acctest.ProviderFactories,
+		CheckDestroy:      testAccCheckLoadBalancerDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccLoadBalancerConfig_networkLoadBalancerPrivateIPV4Address(rName),
@@ -348,10 +349,10 @@ func TestAccELBV2LoadBalancer_backwardsCompatibility(t *testing.T) {
 	resourceName := "aws_alb.lb_test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t) },
-		ErrorCheck:   acctest.ErrorCheck(t, elbv2.EndpointsID),
-		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckLoadBalancerDestroy,
+		PreCheck:          func() { acctest.PreCheck(t) },
+		ErrorCheck:        acctest.ErrorCheck(t, elbv2.EndpointsID),
+		ProviderFactories: acctest.ProviderFactories,
+		CheckDestroy:      testAccCheckLoadBalancerDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccLoadBalancerBackwardsCompatibilityConfig(rName),
@@ -383,10 +384,10 @@ func TestAccELBV2LoadBalancer_generatedName(t *testing.T) {
 	resourceName := "aws_lb.lb_test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t) },
-		ErrorCheck:   acctest.ErrorCheck(t, elbv2.EndpointsID),
-		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckLoadBalancerDestroy,
+		PreCheck:          func() { acctest.PreCheck(t) },
+		ErrorCheck:        acctest.ErrorCheck(t, elbv2.EndpointsID),
+		ProviderFactories: acctest.ProviderFactories,
+		CheckDestroy:      testAccCheckLoadBalancerDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccLoadBalancerConfig_generatedName(rName),
@@ -405,10 +406,10 @@ func TestAccELBV2LoadBalancer_generatesNameForZeroValue(t *testing.T) {
 	resourceName := "aws_lb.lb_test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t) },
-		ErrorCheck:   acctest.ErrorCheck(t, elbv2.EndpointsID),
-		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckLoadBalancerDestroy,
+		PreCheck:          func() { acctest.PreCheck(t) },
+		ErrorCheck:        acctest.ErrorCheck(t, elbv2.EndpointsID),
+		ProviderFactories: acctest.ProviderFactories,
+		CheckDestroy:      testAccCheckLoadBalancerDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccLoadBalancerConfig_zeroValueName(rName),
@@ -427,10 +428,10 @@ func TestAccELBV2LoadBalancer_namePrefix(t *testing.T) {
 	resourceName := "aws_lb.lb_test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t) },
-		ErrorCheck:   acctest.ErrorCheck(t, elbv2.EndpointsID),
-		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckLoadBalancerDestroy,
+		PreCheck:          func() { acctest.PreCheck(t) },
+		ErrorCheck:        acctest.ErrorCheck(t, elbv2.EndpointsID),
+		ProviderFactories: acctest.ProviderFactories,
+		CheckDestroy:      testAccCheckLoadBalancerDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccLoadBalancerConfig_namePrefix(rName),
@@ -451,10 +452,10 @@ func TestAccELBV2LoadBalancer_tags(t *testing.T) {
 	resourceName := "aws_lb.lb_test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t) },
-		ErrorCheck:   acctest.ErrorCheck(t, elbv2.EndpointsID),
-		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckLoadBalancerDestroy,
+		PreCheck:          func() { acctest.PreCheck(t) },
+		ErrorCheck:        acctest.ErrorCheck(t, elbv2.EndpointsID),
+		ProviderFactories: acctest.ProviderFactories,
+		CheckDestroy:      testAccCheckLoadBalancerDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccLoadBalancerConfig_basic(rName),
@@ -495,10 +496,10 @@ func TestAccELBV2LoadBalancer_NetworkLoadBalancer_updateCrossZone(t *testing.T) 
 	}
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t) },
-		ErrorCheck:   acctest.ErrorCheck(t, elbv2.EndpointsID),
-		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckLoadBalancerDestroy,
+		PreCheck:          func() { acctest.PreCheck(t) },
+		ErrorCheck:        acctest.ErrorCheck(t, elbv2.EndpointsID),
+		ProviderFactories: acctest.ProviderFactories,
+		CheckDestroy:      testAccCheckLoadBalancerDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccLoadBalancerConfig_networkLoadbalancer(rName, true),
@@ -540,10 +541,10 @@ func TestAccELBV2LoadBalancer_ApplicationLoadBalancer_updateHTTP2(t *testing.T) 
 	}
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t) },
-		ErrorCheck:   acctest.ErrorCheck(t, elbv2.EndpointsID),
-		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckLoadBalancerDestroy,
+		PreCheck:          func() { acctest.PreCheck(t) },
+		ErrorCheck:        acctest.ErrorCheck(t, elbv2.EndpointsID),
+		ProviderFactories: acctest.ProviderFactories,
+		CheckDestroy:      testAccCheckLoadBalancerDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccLoadBalancerConfig_enableHTTP2(rName, false),
@@ -584,10 +585,10 @@ func TestAccELBV2LoadBalancer_ApplicationLoadBalancer_updateDropInvalidHeaderFie
 	}
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t) },
-		ErrorCheck:   acctest.ErrorCheck(t, elbv2.EndpointsID),
-		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckLoadBalancerDestroy,
+		PreCheck:          func() { acctest.PreCheck(t) },
+		ErrorCheck:        acctest.ErrorCheck(t, elbv2.EndpointsID),
+		ProviderFactories: acctest.ProviderFactories,
+		CheckDestroy:      testAccCheckLoadBalancerDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccLoadBalancerConfig_enableDropInvalidHeaderFields(rName, false),
@@ -629,10 +630,10 @@ func TestAccELBV2LoadBalancer_ApplicationLoadBalancer_updateDeletionProtection(t
 	}
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t) },
-		ErrorCheck:   acctest.ErrorCheck(t, elbv2.EndpointsID),
-		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckLoadBalancerDestroy,
+		PreCheck:          func() { acctest.PreCheck(t) },
+		ErrorCheck:        acctest.ErrorCheck(t, elbv2.EndpointsID),
+		ProviderFactories: acctest.ProviderFactories,
+		CheckDestroy:      testAccCheckLoadBalancerDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccLoadBalancerConfig_enableDeletionProtection(rName, false),
@@ -674,10 +675,10 @@ func TestAccELBV2LoadBalancer_ApplicationLoadBalancer_updateWafFailOpen(t *testi
 	}
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t) },
-		ErrorCheck:   acctest.ErrorCheck(t, elbv2.EndpointsID),
-		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckLoadBalancerDestroy,
+		PreCheck:          func() { acctest.PreCheck(t) },
+		ErrorCheck:        acctest.ErrorCheck(t, elbv2.EndpointsID),
+		ProviderFactories: acctest.ProviderFactories,
+		CheckDestroy:      testAccCheckLoadBalancerDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccLBConfig_enableWafFailOpen(rName, false),
@@ -726,10 +727,10 @@ func TestAccELBV2LoadBalancer_updatedSecurityGroups(t *testing.T) {
 	}
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t) },
-		ErrorCheck:   acctest.ErrorCheck(t, elbv2.EndpointsID),
-		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckLoadBalancerDestroy,
+		PreCheck:          func() { acctest.PreCheck(t) },
+		ErrorCheck:        acctest.ErrorCheck(t, elbv2.EndpointsID),
+		ProviderFactories: acctest.ProviderFactories,
+		CheckDestroy:      testAccCheckLoadBalancerDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccLoadBalancerConfig_basic(rName),
@@ -760,10 +761,10 @@ func TestAccELBV2LoadBalancer_updatedSubnets(t *testing.T) {
 	}
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t) },
-		ErrorCheck:   acctest.ErrorCheck(t, elbv2.EndpointsID),
-		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckLoadBalancerDestroy,
+		PreCheck:          func() { acctest.PreCheck(t) },
+		ErrorCheck:        acctest.ErrorCheck(t, elbv2.EndpointsID),
+		ProviderFactories: acctest.ProviderFactories,
+		CheckDestroy:      testAccCheckLoadBalancerDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccLoadBalancerConfig_basic(rName),
@@ -790,10 +791,10 @@ func TestAccELBV2LoadBalancer_updatedIPAddressType(t *testing.T) {
 	resourceName := "aws_lb.lb_test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t) },
-		ErrorCheck:   acctest.ErrorCheck(t, elbv2.EndpointsID),
-		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckLoadBalancerDestroy,
+		PreCheck:          func() { acctest.PreCheck(t) },
+		ErrorCheck:        acctest.ErrorCheck(t, elbv2.EndpointsID),
+		ProviderFactories: acctest.ProviderFactories,
+		CheckDestroy:      testAccCheckLoadBalancerDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccLoadBalancerWithIPAddressTypeConfig(rName),
@@ -822,10 +823,10 @@ func TestAccELBV2LoadBalancer_noSecurityGroup(t *testing.T) {
 	resourceName := "aws_lb.lb_test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t) },
-		ErrorCheck:   acctest.ErrorCheck(t, elbv2.EndpointsID),
-		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckLoadBalancerDestroy,
+		PreCheck:          func() { acctest.PreCheck(t) },
+		ErrorCheck:        acctest.ErrorCheck(t, elbv2.EndpointsID),
+		ProviderFactories: acctest.ProviderFactories,
+		CheckDestroy:      testAccCheckLoadBalancerDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccLoadBalancerConfig_nosg(rName),
@@ -858,10 +859,10 @@ func TestAccELBV2LoadBalancer_ALB_accessLogs(t *testing.T) {
 	}
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t) },
-		ErrorCheck:   acctest.ErrorCheck(t, elbv2.EndpointsID),
-		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckLoadBalancerDestroy,
+		PreCheck:          func() { acctest.PreCheck(t) },
+		ErrorCheck:        acctest.ErrorCheck(t, elbv2.EndpointsID),
+		ProviderFactories: acctest.ProviderFactories,
+		CheckDestroy:      testAccCheckLoadBalancerDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccLoadBalancerALBAccessLogsConfig(true, rName, ""),
@@ -949,10 +950,10 @@ func TestAccELBV2LoadBalancer_ALBAccessLogs_prefix(t *testing.T) {
 	}
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t) },
-		ErrorCheck:   acctest.ErrorCheck(t, elbv2.EndpointsID),
-		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckLoadBalancerDestroy,
+		PreCheck:          func() { acctest.PreCheck(t) },
+		ErrorCheck:        acctest.ErrorCheck(t, elbv2.EndpointsID),
+		ProviderFactories: acctest.ProviderFactories,
+		CheckDestroy:      testAccCheckLoadBalancerDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccLoadBalancerALBAccessLogsConfig(true, rName, "prefix1"),
@@ -1022,10 +1023,10 @@ func TestAccELBV2LoadBalancer_NLB_accessLogs(t *testing.T) {
 	}
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t) },
-		ErrorCheck:   acctest.ErrorCheck(t, elbv2.EndpointsID),
-		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckLoadBalancerDestroy,
+		PreCheck:          func() { acctest.PreCheck(t) },
+		ErrorCheck:        acctest.ErrorCheck(t, elbv2.EndpointsID),
+		ProviderFactories: acctest.ProviderFactories,
+		CheckDestroy:      testAccCheckLoadBalancerDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccLoadBalancerNLBAccessLogsConfig(true, rName, ""),
@@ -1113,10 +1114,10 @@ func TestAccELBV2LoadBalancer_NLBAccessLogs_prefix(t *testing.T) {
 	}
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t) },
-		ErrorCheck:   acctest.ErrorCheck(t, elbv2.EndpointsID),
-		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckLoadBalancerDestroy,
+		PreCheck:          func() { acctest.PreCheck(t) },
+		ErrorCheck:        acctest.ErrorCheck(t, elbv2.EndpointsID),
+		ProviderFactories: acctest.ProviderFactories,
+		CheckDestroy:      testAccCheckLoadBalancerDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccLoadBalancerNLBAccessLogsConfig(true, rName, "prefix1"),
@@ -1182,10 +1183,10 @@ func TestAccELBV2LoadBalancer_NetworkLoadBalancerSubnet_change(t *testing.T) {
 	resourceName := "aws_lb.lb_test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t) },
-		ErrorCheck:   acctest.ErrorCheck(t, elbv2.EndpointsID),
-		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckLoadBalancerDestroy,
+		PreCheck:          func() { acctest.PreCheck(t) },
+		ErrorCheck:        acctest.ErrorCheck(t, elbv2.EndpointsID),
+		ProviderFactories: acctest.ProviderFactories,
+		CheckDestroy:      testAccCheckLoadBalancerDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccLoadBalancerConfig_networkLoadbalancer_subnets(rName),
@@ -1212,10 +1213,10 @@ func TestAccELBV2LoadBalancer_updateDesyncMitigationMode(t *testing.T) {
 	}
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t) },
-		ErrorCheck:   acctest.ErrorCheck(t, elbv2.EndpointsID),
-		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckLoadBalancerDestroy,
+		PreCheck:          func() { acctest.PreCheck(t) },
+		ErrorCheck:        acctest.ErrorCheck(t, elbv2.EndpointsID),
+		ProviderFactories: acctest.ProviderFactories,
+		CheckDestroy:      testAccCheckLoadBalancerDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccLBConfig_desyncMitigationMode(rName, "strictest"),
@@ -1350,7 +1351,7 @@ func testAccCheckLoadBalancerDestroy(s *terraform.State) error {
 	return nil
 }
 
-func testAccPreCheckElbv2GatewayLoadBalancer(t *testing.T) {
+func testAccPreCheckGatewayLoadBalancer(t *testing.T) {
 	conn := acctest.Provider.Meta().(*conns.AWSClient).ELBV2Conn
 
 	input := &elbv2.DescribeAccountLimitsInput{}

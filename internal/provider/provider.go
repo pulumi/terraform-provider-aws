@@ -26,6 +26,8 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/service/apigatewayv2"
 	"github.com/hashicorp/terraform-provider-aws/internal/service/appautoscaling"
 	"github.com/hashicorp/terraform-provider-aws/internal/service/appconfig"
+	"github.com/hashicorp/terraform-provider-aws/internal/service/appflow"
+	"github.com/hashicorp/terraform-provider-aws/internal/service/appintegrations"
 	"github.com/hashicorp/terraform-provider-aws/internal/service/appmesh"
 	"github.com/hashicorp/terraform-provider-aws/internal/service/apprunner"
 	"github.com/hashicorp/terraform-provider-aws/internal/service/appstream"
@@ -112,6 +114,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/service/lexmodels"
 	"github.com/hashicorp/terraform-provider-aws/internal/service/licensemanager"
 	"github.com/hashicorp/terraform-provider-aws/internal/service/lightsail"
+	"github.com/hashicorp/terraform-provider-aws/internal/service/location"
 	"github.com/hashicorp/terraform-provider-aws/internal/service/logs"
 	"github.com/hashicorp/terraform-provider-aws/internal/service/macie"
 	"github.com/hashicorp/terraform-provider-aws/internal/service/macie2"
@@ -502,6 +505,9 @@ func Provider() *schema.Provider {
 			"aws_connect_prompt":                      connect.DataSourcePrompt(),
 			"aws_connect_queue":                       connect.DataSourceQueue(),
 			"aws_connect_quick_connect":               connect.DataSourceQuickConnect(),
+			"aws_connect_routing_profile":             connect.DataSourceRoutingProfile(),
+			"aws_connect_security_profile":            connect.DataSourceSecurityProfile(),
+			"aws_connect_user_hierarchy_structure":    connect.DataSourceUserHierarchyStructure(),
 
 			"aws_cur_report_definition": cur.DataSourceReportDefinition(),
 
@@ -726,6 +732,8 @@ func Provider() *schema.Provider {
 			"aws_lex_bot_alias": lexmodels.DataSourceBotAlias(),
 			"aws_lex_intent":    lexmodels.DataSourceIntent(),
 			"aws_lex_slot_type": lexmodels.DataSourceSlotType(),
+
+			"aws_location_map": location.DataSourceMap(),
 
 			"aws_arn":                     meta.DataSourceARN(),
 			"aws_billing_service_account": meta.DataSourceBillingServiceAccount(),
@@ -956,6 +964,11 @@ func Provider() *schema.Provider {
 			"aws_appautoscaling_scheduled_action": appautoscaling.ResourceScheduledAction(),
 			"aws_appautoscaling_target":           appautoscaling.ResourceTarget(),
 
+			"aws_appflow_connector_profile": appflow.ResourceConnectorProfile(),
+			"aws_appflow_flow":              appflow.ResourceFlow(),
+
+			"aws_appintegrations_event_integration": appintegrations.ResourceEventIntegration(),
+
 			"aws_appmesh_gateway_route":   appmesh.ResourceGatewayRoute(),
 			"aws_appmesh_mesh":            appmesh.ResourceMesh(),
 			"aws_appmesh_route":           appmesh.ResourceRoute(),
@@ -1151,6 +1164,7 @@ func Provider() *schema.Provider {
 			"aws_connect_quick_connect":               connect.ResourceQuickConnect(),
 			"aws_connect_routing_profile":             connect.ResourceRoutingProfile(),
 			"aws_connect_security_profile":            connect.ResourceSecurityProfile(),
+			"aws_connect_user_hierarchy_group":        connect.ResourceUserHierarchyGroup(),
 			"aws_connect_user_hierarchy_structure":    connect.ResourceUserHierarchyStructure(),
 
 			"aws_cur_report_definition": cur.ResourceReportDefinition(),
@@ -1610,6 +1624,8 @@ func Provider() *schema.Provider {
 			"aws_lightsail_key_pair":              lightsail.ResourceKeyPair(),
 			"aws_lightsail_static_ip":             lightsail.ResourceStaticIP(),
 			"aws_lightsail_static_ip_attachment":  lightsail.ResourceStaticIPAttachment(),
+
+			"aws_location_map": location.ResourceMap(),
 
 			"aws_macie_member_account_association": macie.ResourceMemberAccountAssociation(),
 			"aws_macie_s3_bucket_association":      macie.ResourceS3BucketAssociation(),

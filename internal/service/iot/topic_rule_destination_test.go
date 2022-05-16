@@ -21,10 +21,10 @@ func TestAccIoTTopicRuleDestination_basic(t *testing.T) {
 	resourceName := "aws_iot_topic_rule_destination.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t) },
-		ErrorCheck:   acctest.ErrorCheck(t, iot.EndpointsID),
-		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckTopicRuleDestinationDestroy,
+		PreCheck:          func() { acctest.PreCheck(t) },
+		ErrorCheck:        acctest.ErrorCheck(t, iot.EndpointsID),
+		ProviderFactories: acctest.ProviderFactories,
+		CheckDestroy:      testAccCheckTopicRuleDestinationDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccTopicRuleDestinationConfig(rName),
@@ -44,6 +44,10 @@ func TestAccIoTTopicRuleDestination_basic(t *testing.T) {
 				ImportState:       true,
 				ImportStateVerify: true,
 			},
+			// Delete everything but the IAM Role assumed by the IoT service.
+			{
+				Config: testAccTopicRuleRoleConfig(rName),
+			},
 		},
 	})
 }
@@ -53,10 +57,10 @@ func TestAccIoTTopicRuleDestination_disappears(t *testing.T) {
 	resourceName := "aws_iot_topic_rule_destination.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t) },
-		ErrorCheck:   acctest.ErrorCheck(t, iot.EndpointsID),
-		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckTopicRuleDestinationDestroy,
+		PreCheck:          func() { acctest.PreCheck(t) },
+		ErrorCheck:        acctest.ErrorCheck(t, iot.EndpointsID),
+		ProviderFactories: acctest.ProviderFactories,
+		CheckDestroy:      testAccCheckTopicRuleDestinationDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccTopicRuleDestinationConfig(rName),
@@ -75,10 +79,10 @@ func TestAccIoTTopicRuleDestination_enabled(t *testing.T) {
 	resourceName := "aws_iot_topic_rule_destination.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t) },
-		ErrorCheck:   acctest.ErrorCheck(t, iot.EndpointsID),
-		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckTopicRuleDestinationDestroy,
+		PreCheck:          func() { acctest.PreCheck(t) },
+		ErrorCheck:        acctest.ErrorCheck(t, iot.EndpointsID),
+		ProviderFactories: acctest.ProviderFactories,
+		CheckDestroy:      testAccCheckTopicRuleDestinationDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccTopicRuleDestinationEnabledConfig(rName, false),
@@ -105,6 +109,10 @@ func TestAccIoTTopicRuleDestination_enabled(t *testing.T) {
 					testAccCheckTopicRuleDestinationExists(resourceName),
 					resource.TestCheckResourceAttr(resourceName, "enabled", "false"),
 				),
+			},
+			// Delete everything but the IAM Role assumed by the IoT service.
+			{
+				Config: testAccTopicRuleRoleConfig(rName),
 			},
 		},
 	})
@@ -159,7 +167,7 @@ func testAccCheckTopicRuleDestinationExists(n string) resource.TestCheckFunc {
 
 func testAccTopicRuleDestinationBaseConfig(rName string) string {
 	return acctest.ConfigCompose(
-		acctest.ConfigVpcWithSubnets(2),
+		acctest.ConfigVpcWithSubnets(rName, 2),
 		testAccTopicRuleRoleConfig(rName),
 		fmt.Sprintf(`
 resource "aws_security_group" "test" {

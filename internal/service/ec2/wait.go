@@ -20,7 +20,7 @@ const (
 
 	// General timeout for EC2 resource creations to propagate.
 	// See https://docs.aws.amazon.com/AWSEC2/latest/APIReference/query-api-troubleshooting.html#eventual-consistency.
-	PropagationTimeout = 2 * time.Minute
+	propagationTimeout = 2 * time.Minute
 
 	RouteNotFoundChecks                        = 1000 // Should exceed any reasonable custom timeout value.
 	RouteTableNotFoundChecks                   = 1000 // Should exceed any reasonable custom timeout value.
@@ -419,7 +419,7 @@ func WaitInstanceIAMInstanceProfileUpdated(conn *ec2.EC2, instanceID string, exp
 	stateConf := &resource.StateChangeConf{
 		Target:     []string{expectedValue},
 		Refresh:    StatusInstanceIAMInstanceProfile(conn, instanceID),
-		Timeout:    PropagationTimeout,
+		Timeout:    propagationTimeout,
 		Delay:      10 * time.Second,
 		MinTimeout: 3 * time.Second,
 	}
@@ -563,7 +563,7 @@ func WaitInstanceCapacityReservationSpecificationUpdated(conn *ec2.EC2, instance
 	stateConf := &resource.StateChangeConf{
 		Target:     []string{strconv.FormatBool(true)},
 		Refresh:    StatusInstanceCapacityReservationSpecificationEquals(conn, instanceID, expectedValue),
-		Timeout:    PropagationTimeout,
+		Timeout:    propagationTimeout,
 		Delay:      10 * time.Second,
 		MinTimeout: 3 * time.Second,
 	}
@@ -1312,6 +1312,101 @@ func WaitTransitGatewayRouteTablePropagationStateDisabled(conn *ec2.EC2, transit
 	}
 
 	if output, ok := outputRaw.(*ec2.TransitGatewayRouteTablePropagation); ok {
+		return output, err
+	}
+
+	return nil, err
+}
+
+func WaitVolumeCreated(conn *ec2.EC2, id string, timeout time.Duration) (*ec2.Volume, error) {
+	stateConf := &resource.StateChangeConf{
+		Pending:    []string{ec2.VolumeStateCreating},
+		Target:     []string{ec2.VolumeStateAvailable},
+		Refresh:    StatusVolumeState(conn, id),
+		Timeout:    timeout,
+		Delay:      10 * time.Second,
+		MinTimeout: 3 * time.Second,
+	}
+
+	outputRaw, err := stateConf.WaitForState()
+
+	if output, ok := outputRaw.(*ec2.Volume); ok {
+		return output, err
+	}
+
+	return nil, err
+}
+
+func WaitVolumeDeleted(conn *ec2.EC2, id string, timeout time.Duration) (*ec2.Volume, error) {
+	stateConf := &resource.StateChangeConf{
+		Pending:    []string{ec2.VolumeStateDeleting},
+		Target:     []string{},
+		Refresh:    StatusVolumeState(conn, id),
+		Timeout:    timeout,
+		Delay:      10 * time.Second,
+		MinTimeout: 3 * time.Second,
+	}
+
+	outputRaw, err := stateConf.WaitForState()
+
+	if output, ok := outputRaw.(*ec2.Volume); ok {
+		return output, err
+	}
+
+	return nil, err
+}
+
+func WaitVolumeUpdated(conn *ec2.EC2, id string, timeout time.Duration) (*ec2.Volume, error) {
+	stateConf := &resource.StateChangeConf{
+		Pending:    []string{ec2.VolumeStateCreating, ec2.VolumeModificationStateModifying},
+		Target:     []string{ec2.VolumeStateAvailable, ec2.VolumeStateInUse},
+		Refresh:    StatusVolumeState(conn, id),
+		Timeout:    timeout,
+		Delay:      10 * time.Second,
+		MinTimeout: 3 * time.Second,
+	}
+
+	outputRaw, err := stateConf.WaitForState()
+
+	if output, ok := outputRaw.(*ec2.Volume); ok {
+		return output, err
+	}
+
+	return nil, err
+}
+
+func WaitVolumeAttachmentCreated(conn *ec2.EC2, volumeID, instanceID, deviceName string, timeout time.Duration) (*ec2.VolumeAttachment, error) {
+	stateConf := &resource.StateChangeConf{
+		Pending:    []string{ec2.VolumeAttachmentStateAttaching},
+		Target:     []string{ec2.VolumeAttachmentStateAttached},
+		Refresh:    StatusVolumeAttachmentState(conn, volumeID, instanceID, deviceName),
+		Timeout:    timeout,
+		Delay:      10 * time.Second,
+		MinTimeout: 3 * time.Second,
+	}
+
+	outputRaw, err := stateConf.WaitForState()
+
+	if output, ok := outputRaw.(*ec2.VolumeAttachment); ok {
+		return output, err
+	}
+
+	return nil, err
+}
+
+func WaitVolumeAttachmentDeleted(conn *ec2.EC2, volumeID, instanceID, deviceName string, timeout time.Duration) (*ec2.VolumeAttachment, error) {
+	stateConf := &resource.StateChangeConf{
+		Pending:    []string{ec2.VolumeAttachmentStateDetaching},
+		Target:     []string{},
+		Refresh:    StatusVolumeAttachmentState(conn, volumeID, instanceID, deviceName),
+		Timeout:    timeout,
+		Delay:      10 * time.Second,
+		MinTimeout: 3 * time.Second,
+	}
+
+	outputRaw, err := stateConf.WaitForState()
+
+	if output, ok := outputRaw.(*ec2.VolumeAttachment); ok {
 		return output, err
 	}
 
@@ -2174,7 +2269,7 @@ func WaitVPCEndpointRouteTableAssociationDeleted(conn *ec2.EC2, vpcEndpointID, r
 		Pending:                   []string{VPCEndpointRouteTableAssociationStatusReady},
 		Target:                    []string{},
 		Refresh:                   StatusVPCEndpointRouteTableAssociation(conn, vpcEndpointID, routeTableID),
-		Timeout:                   PropagationTimeout,
+		Timeout:                   propagationTimeout,
 		ContinuousTargetOccurence: 2,
 	}
 
@@ -2188,7 +2283,7 @@ func WaitVPCEndpointRouteTableAssociationReady(conn *ec2.EC2, vpcEndpointID, rou
 		Pending:                   []string{},
 		Target:                    []string{VPCEndpointRouteTableAssociationStatusReady},
 		Refresh:                   StatusVPCEndpointRouteTableAssociation(conn, vpcEndpointID, routeTableID),
-		Timeout:                   PropagationTimeout,
+		Timeout:                   propagationTimeout,
 		ContinuousTargetOccurence: 2,
 	}
 

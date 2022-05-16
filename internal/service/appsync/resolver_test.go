@@ -22,10 +22,10 @@ func testAccResolver_basic(t *testing.T) {
 	resourceName := "aws_appsync_resolver.test"
 
 	resource.Test(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(appsync.EndpointsID, t) },
-		ErrorCheck:   acctest.ErrorCheck(t, appsync.EndpointsID),
-		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckResolverDestroy,
+		PreCheck:          func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(appsync.EndpointsID, t) },
+		ErrorCheck:        acctest.ErrorCheck(t, appsync.EndpointsID),
+		ProviderFactories: acctest.ProviderFactories,
+		CheckDestroy:      testAccCheckResolverDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccResolverConfig_basic(rName),
@@ -53,10 +53,10 @@ func testAccResolver_syncConfig(t *testing.T) {
 	resourceName := "aws_appsync_resolver.test"
 
 	resource.Test(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(appsync.EndpointsID, t) },
-		ErrorCheck:   acctest.ErrorCheck(t, appsync.EndpointsID),
-		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckResolverDestroy,
+		PreCheck:          func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(appsync.EndpointsID, t) },
+		ErrorCheck:        acctest.ErrorCheck(t, appsync.EndpointsID),
+		ProviderFactories: acctest.ProviderFactories,
+		CheckDestroy:      testAccCheckResolverDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccResolverConfig_syncConfig(rName),
@@ -84,10 +84,10 @@ func testAccResolver_disappears(t *testing.T) {
 	resourceName := "aws_appsync_resolver.test"
 
 	resource.Test(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(appsync.EndpointsID, t) },
-		ErrorCheck:   acctest.ErrorCheck(t, appsync.EndpointsID),
-		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckResolverDestroy,
+		PreCheck:          func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(appsync.EndpointsID, t) },
+		ErrorCheck:        acctest.ErrorCheck(t, appsync.EndpointsID),
+		ProviderFactories: acctest.ProviderFactories,
+		CheckDestroy:      testAccCheckResolverDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccResolverConfig_basic(rName),
@@ -108,10 +108,10 @@ func testAccResolver_dataSource(t *testing.T) {
 	resourceName := "aws_appsync_resolver.test"
 
 	resource.Test(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(appsync.EndpointsID, t) },
-		ErrorCheck:   acctest.ErrorCheck(t, appsync.EndpointsID),
-		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckResolverDestroy,
+		PreCheck:          func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(appsync.EndpointsID, t) },
+		ErrorCheck:        acctest.ErrorCheck(t, appsync.EndpointsID),
+		ProviderFactories: acctest.ProviderFactories,
+		CheckDestroy:      testAccCheckResolverDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccResolverConfig_basic(rName),
@@ -142,10 +142,10 @@ func testAccResolver_DataSource_lambda(t *testing.T) {
 	resourceName := "aws_appsync_resolver.test"
 
 	resource.Test(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(appsync.EndpointsID, t) },
-		ErrorCheck:   acctest.ErrorCheck(t, appsync.EndpointsID),
-		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckResolverDestroy,
+		PreCheck:          func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(appsync.EndpointsID, t) },
+		ErrorCheck:        acctest.ErrorCheck(t, appsync.EndpointsID),
+		ProviderFactories: acctest.ProviderFactories,
+		CheckDestroy:      testAccCheckResolverDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccResolverConfig_dataSourceLambda(rName),
@@ -169,10 +169,10 @@ func testAccResolver_requestTemplate(t *testing.T) {
 	resourceName := "aws_appsync_resolver.test"
 
 	resource.Test(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(appsync.EndpointsID, t) },
-		ErrorCheck:   acctest.ErrorCheck(t, appsync.EndpointsID),
-		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckResolverDestroy,
+		PreCheck:          func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(appsync.EndpointsID, t) },
+		ErrorCheck:        acctest.ErrorCheck(t, appsync.EndpointsID),
+		ProviderFactories: acctest.ProviderFactories,
+		CheckDestroy:      testAccCheckResolverDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccResolverConfig_requestTemplate(rName, "/"),
@@ -203,10 +203,10 @@ func testAccResolver_responseTemplate(t *testing.T) {
 	resourceName := "aws_appsync_resolver.test"
 
 	resource.Test(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(appsync.EndpointsID, t) },
-		ErrorCheck:   acctest.ErrorCheck(t, appsync.EndpointsID),
-		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckResolverDestroy,
+		PreCheck:          func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(appsync.EndpointsID, t) },
+		ErrorCheck:        acctest.ErrorCheck(t, appsync.EndpointsID),
+		ProviderFactories: acctest.ProviderFactories,
+		CheckDestroy:      testAccCheckResolverDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccResolverConfig_responseTemplate(rName, 200),
@@ -237,10 +237,10 @@ func testAccResolver_multipleResolvers(t *testing.T) {
 	resourceName := "aws_appsync_resolver.test"
 
 	resource.Test(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(appsync.EndpointsID, t) },
-		ErrorCheck:   acctest.ErrorCheck(t, appsync.EndpointsID),
-		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckResolverDestroy,
+		PreCheck:          func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(appsync.EndpointsID, t) },
+		ErrorCheck:        acctest.ErrorCheck(t, appsync.EndpointsID),
+		ProviderFactories: acctest.ProviderFactories,
+		CheckDestroy:      testAccCheckResolverDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccResolverConfig_multipleResolvers(rName),
@@ -267,10 +267,10 @@ func testAccResolver_pipeline(t *testing.T) {
 	resourceName := "aws_appsync_resolver.test"
 
 	resource.Test(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(appsync.EndpointsID, t) },
-		ErrorCheck:   acctest.ErrorCheck(t, appsync.EndpointsID),
-		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckResolverDestroy,
+		PreCheck:          func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(appsync.EndpointsID, t) },
+		ErrorCheck:        acctest.ErrorCheck(t, appsync.EndpointsID),
+		ProviderFactories: acctest.ProviderFactories,
+		CheckDestroy:      testAccCheckResolverDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccResolverConfig_pipeline(rName),
@@ -295,10 +295,10 @@ func testAccResolver_caching(t *testing.T) {
 	resourceName := "aws_appsync_resolver.test"
 
 	resource.Test(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(appsync.EndpointsID, t) },
-		ErrorCheck:   acctest.ErrorCheck(t, appsync.EndpointsID),
-		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckResolverDestroy,
+		PreCheck:          func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(appsync.EndpointsID, t) },
+		ErrorCheck:        acctest.ErrorCheck(t, appsync.EndpointsID),
+		ProviderFactories: acctest.ProviderFactories,
+		CheckDestroy:      testAccCheckResolverDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccResolverConfig_caching(rName),
@@ -611,10 +611,11 @@ func testAccResolverConfig_multipleResolvers(rName string) string {
 `, i)
 		resolverResources = resolverResources + fmt.Sprintf(`
 resource "aws_appsync_resolver" "test%d" {
-  api_id           = "${aws_appsync_graphql_api.test.id}"
-  field            = "singlePost%d"
-  type             = "Query"
-  data_source      = "${aws_appsync_datasource.test.name}"
+  api_id      = aws_appsync_graphql_api.test.id
+  field       = "singlePost%d"
+  type        = "Query"
+  data_source = aws_appsync_datasource.test.name
+
   request_template = <<EOF
 {
     "version": "2018-05-29",
@@ -625,6 +626,7 @@ resource "aws_appsync_resolver" "test%d" {
     }
 }
 EOF
+
   response_template = <<EOF
 #if($ctx.result.statusCode == 200)
     $ctx.result.body

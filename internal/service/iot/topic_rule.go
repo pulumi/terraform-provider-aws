@@ -10,7 +10,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
 	"github.com/hashicorp/terraform-provider-aws/internal/conns"
 	"github.com/hashicorp/terraform-provider-aws/internal/flex"
-	tfiam "github.com/hashicorp/terraform-provider-aws/internal/service/iam"
 	tftags "github.com/hashicorp/terraform-provider-aws/internal/tags"
 	"github.com/hashicorp/terraform-provider-aws/internal/tfresource"
 	"github.com/hashicorp/terraform-provider-aws/internal/verify"
@@ -1169,11 +1168,11 @@ func resourceTopicRuleCreate(d *schema.ResourceData, meta interface{}) error {
 	input := &iot.CreateTopicRuleInput{
 		RuleName:         aws.String(ruleName),
 		Tags:             aws.String(tags.IgnoreAWS().UrlQueryString()),
-		TopicRulePayload: expandIotTopicRulePayload(d),
+		TopicRulePayload: expandTopicRulePayload(d),
 	}
 
 	log.Printf("[INFO] Creating IoT Topic Rule: %s", input)
-	_, err := tfresource.RetryWhenAWSErrMessageContains(tfiam.PropagationTimeout,
+	_, err := tfresource.RetryWhenAWSErrMessageContains(propagationTimeout,
 		func() (interface{}, error) {
 			return conn.CreateTopicRule(input)
 		},
@@ -1212,83 +1211,83 @@ func resourceTopicRuleRead(d *schema.ResourceData, meta interface{}) error {
 	d.Set("sql", output.Rule.Sql)
 	d.Set("sql_version", output.Rule.AwsIotSqlVersion)
 
-	if err := d.Set("cloudwatch_alarm", flattenIotCloudWatchAlarmActions(output.Rule.Actions)); err != nil {
+	if err := d.Set("cloudwatch_alarm", flattenCloudWatchAlarmActions(output.Rule.Actions)); err != nil {
 		return fmt.Errorf("setting cloudwatch_alarm: %w", err)
 	}
 
-	if err := d.Set("cloudwatch_logs", flattenIotCloudWatchLogsActions(output.Rule.Actions)); err != nil {
+	if err := d.Set("cloudwatch_logs", flattenCloudWatchLogsActions(output.Rule.Actions)); err != nil {
 		return fmt.Errorf("setting cloudwatch_logs: %w", err)
 	}
 
-	if err := d.Set("cloudwatch_metric", flattenIotCloudwatchMetricActions(output.Rule.Actions)); err != nil {
+	if err := d.Set("cloudwatch_metric", flattenCloudWatchMetricActions(output.Rule.Actions)); err != nil {
 		return fmt.Errorf("setting cloudwatch_metric: %w", err)
 	}
 
-	if err := d.Set("dynamodb", flattenIotDynamoDbActions(output.Rule.Actions)); err != nil {
+	if err := d.Set("dynamodb", flattenDynamoDBActions(output.Rule.Actions)); err != nil {
 		return fmt.Errorf("setting dynamodb: %w", err)
 	}
 
-	if err := d.Set("dynamodbv2", flattenIotDynamoDbv2Actions(output.Rule.Actions)); err != nil {
+	if err := d.Set("dynamodbv2", flattenDynamoDBv2Actions(output.Rule.Actions)); err != nil {
 		return fmt.Errorf("setting dynamodbv2: %w", err)
 	}
 
-	if err := d.Set("elasticsearch", flattenIotElasticsearchActions(output.Rule.Actions)); err != nil {
+	if err := d.Set("elasticsearch", flattenElasticSearchActions(output.Rule.Actions)); err != nil {
 		return fmt.Errorf("setting elasticsearch: %w", err)
 	}
 
-	if err := d.Set("firehose", flattenIotFirehoseActions(output.Rule.Actions)); err != nil {
+	if err := d.Set("firehose", flattenFirehoseActions(output.Rule.Actions)); err != nil {
 		return fmt.Errorf("setting firehose: %w", err)
 	}
 
-	if err := d.Set("http", flattenIotHttpActions(output.Rule.Actions)); err != nil {
+	if err := d.Set("http", flattenHTTPActions(output.Rule.Actions)); err != nil {
 		return fmt.Errorf("setting http: %w", err)
 	}
 
-	if err := d.Set("iot_analytics", flattenIotIotAnalyticsActions(output.Rule.Actions)); err != nil {
+	if err := d.Set("iot_analytics", flattenAnalyticsActions(output.Rule.Actions)); err != nil {
 		return fmt.Errorf("setting iot_analytics: %w", err)
 	}
 
-	if err := d.Set("iot_events", flattenIotIotEventsActions(output.Rule.Actions)); err != nil {
+	if err := d.Set("iot_events", flattenEventsActions(output.Rule.Actions)); err != nil {
 		return fmt.Errorf("setting iot_events: %w", err)
 	}
 
-	if err := d.Set("kafka", flattenIotKafkaActions(output.Rule.Actions)); err != nil {
+	if err := d.Set("kafka", flattenKafkaActions(output.Rule.Actions)); err != nil {
 		return fmt.Errorf("setting kafka: %w", err)
 	}
 
-	if err := d.Set("kinesis", flattenIotKinesisActions(output.Rule.Actions)); err != nil {
+	if err := d.Set("kinesis", flattenKinesisActions(output.Rule.Actions)); err != nil {
 		return fmt.Errorf("setting kinesis: %w", err)
 	}
 
-	if err := d.Set("lambda", flattenIotLambdaActions(output.Rule.Actions)); err != nil {
+	if err := d.Set("lambda", flattenLambdaActions(output.Rule.Actions)); err != nil {
 		return fmt.Errorf("setting lambda: %w", err)
 	}
 
-	if err := d.Set("republish", flattenIotRepublishActions(output.Rule.Actions)); err != nil {
+	if err := d.Set("republish", flattenRepublishActions(output.Rule.Actions)); err != nil {
 		return fmt.Errorf("setting republish: %w", err)
 	}
 
-	if err := d.Set("s3", flattenIotS3Actions(output.Rule.Actions)); err != nil {
+	if err := d.Set("s3", flattenS3Actions(output.Rule.Actions)); err != nil {
 		return fmt.Errorf("setting s3: %w", err)
 	}
 
-	if err := d.Set("sns", flattenIotSnsActions(output.Rule.Actions)); err != nil {
+	if err := d.Set("sns", flattenSNSActions(output.Rule.Actions)); err != nil {
 		return fmt.Errorf("setting sns: %w", err)
 	}
 
-	if err := d.Set("sqs", flattenIotSqsActions(output.Rule.Actions)); err != nil {
+	if err := d.Set("sqs", flattenSQSActions(output.Rule.Actions)); err != nil {
 		return fmt.Errorf("setting sqs: %w", err)
 	}
 
-	if err := d.Set("step_functions", flattenIotStepFunctionsActions(output.Rule.Actions)); err != nil {
+	if err := d.Set("step_functions", flattenStepFunctionsActions(output.Rule.Actions)); err != nil {
 		return fmt.Errorf("setting step_functions: %w", err)
 	}
 
-	if err := d.Set("timestream", flattenIotTimestreamActions(output.Rule.Actions)); err != nil {
+	if err := d.Set("timestream", flattenTimestreamActions(output.Rule.Actions)); err != nil {
 		return fmt.Errorf("setting timestream: %w", err)
 	}
 
-	if err := d.Set("error_action", flattenIotErrorAction(output.Rule.ErrorAction)); err != nil {
+	if err := d.Set("error_action", flattenErrorAction(output.Rule.ErrorAction)); err != nil {
 		return fmt.Errorf("setting error_action: %w", err)
 	}
 
@@ -1318,7 +1317,7 @@ func resourceTopicRuleUpdate(d *schema.ResourceData, meta interface{}) error {
 	if d.HasChangesExcept("tags", "tags_all") {
 		input := &iot.ReplaceTopicRuleInput{
 			RuleName:         aws.String(d.Get("name").(string)),
-			TopicRulePayload: expandIotTopicRulePayload(d),
+			TopicRulePayload: expandTopicRulePayload(d),
 		}
 
 		log.Printf("[INFO] Replacing IoT Topic Rule: %s", input)
@@ -1355,7 +1354,7 @@ func resourceTopicRuleDelete(d *schema.ResourceData, meta interface{}) error {
 	return nil
 }
 
-func expandIotPutItemInput(tfList []interface{}) *iot.PutItemInput {
+func expandPutItemInput(tfList []interface{}) *iot.PutItemInput {
 	if len(tfList) == 0 || tfList[0] == nil {
 		return nil
 	}
@@ -1370,7 +1369,7 @@ func expandIotPutItemInput(tfList []interface{}) *iot.PutItemInput {
 	return apiObject
 }
 
-func expandIotCloudwatchAlarmAction(tfList []interface{}) *iot.CloudwatchAlarmAction {
+func expandCloudWatchAlarmAction(tfList []interface{}) *iot.CloudwatchAlarmAction {
 	if len(tfList) == 0 || tfList[0] == nil {
 		return nil
 	}
@@ -1397,7 +1396,7 @@ func expandIotCloudwatchAlarmAction(tfList []interface{}) *iot.CloudwatchAlarmAc
 	return apiObject
 }
 
-func expandIotCloudwatchLogsAction(tfList []interface{}) *iot.CloudwatchLogsAction {
+func expandCloudWatchLogsAction(tfList []interface{}) *iot.CloudwatchLogsAction {
 	if len(tfList) == 0 || tfList[0] == nil {
 		return nil
 	}
@@ -1416,7 +1415,7 @@ func expandIotCloudwatchLogsAction(tfList []interface{}) *iot.CloudwatchLogsActi
 	return apiObject
 }
 
-func expandIotCloudwatchMetricAction(tfList []interface{}) *iot.CloudwatchMetricAction {
+func expandCloudWatchMetricAction(tfList []interface{}) *iot.CloudwatchMetricAction {
 	if len(tfList) == 0 || tfList[0] == nil {
 		return nil
 	}
@@ -1451,7 +1450,7 @@ func expandIotCloudwatchMetricAction(tfList []interface{}) *iot.CloudwatchMetric
 	return apiObject
 }
 
-func expandIotDynamoDBAction(tfList []interface{}) *iot.DynamoDBAction {
+func expandDynamoDBAction(tfList []interface{}) *iot.DynamoDBAction {
 	if len(tfList) == 0 || tfList[0] == nil {
 		return nil
 	}
@@ -1502,7 +1501,7 @@ func expandIotDynamoDBAction(tfList []interface{}) *iot.DynamoDBAction {
 	return apiObject
 }
 
-func expandIotDynamoDBv2Action(tfList []interface{}) *iot.DynamoDBv2Action {
+func expandDynamoDBv2Action(tfList []interface{}) *iot.DynamoDBv2Action {
 	if len(tfList) == 0 || tfList[0] == nil {
 		return nil
 	}
@@ -1511,7 +1510,7 @@ func expandIotDynamoDBv2Action(tfList []interface{}) *iot.DynamoDBv2Action {
 	tfMap := tfList[0].(map[string]interface{})
 
 	if v, ok := tfMap["put_item"].([]interface{}); ok {
-		apiObject.PutItem = expandIotPutItemInput(v)
+		apiObject.PutItem = expandPutItemInput(v)
 	}
 
 	if v, ok := tfMap["role_arn"].(string); ok && v != "" {
@@ -1521,7 +1520,7 @@ func expandIotDynamoDBv2Action(tfList []interface{}) *iot.DynamoDBv2Action {
 	return apiObject
 }
 
-func expandIotElasticsearchAction(tfList []interface{}) *iot.ElasticsearchAction {
+func expandElasticSearchAction(tfList []interface{}) *iot.ElasticsearchAction {
 	if len(tfList) == 0 || tfList[0] == nil {
 		return nil
 	}
@@ -1552,7 +1551,7 @@ func expandIotElasticsearchAction(tfList []interface{}) *iot.ElasticsearchAction
 	return apiObject
 }
 
-func expandIotFirehoseAction(tfList []interface{}) *iot.FirehoseAction {
+func expandFirehoseAction(tfList []interface{}) *iot.FirehoseAction {
 	if len(tfList) == 0 || tfList[0] == nil {
 		return nil
 	}
@@ -1575,7 +1574,7 @@ func expandIotFirehoseAction(tfList []interface{}) *iot.FirehoseAction {
 	return apiObject
 }
 
-func expandIotHttpAction(tfList []interface{}) *iot.HttpAction {
+func expandHTTPAction(tfList []interface{}) *iot.HttpAction {
 	if len(tfList) == 0 || tfList[0] == nil {
 		return nil
 	}
@@ -1611,7 +1610,7 @@ func expandIotHttpAction(tfList []interface{}) *iot.HttpAction {
 	return apiObject
 }
 
-func expandIotIotAnalyticsAction(tfList []interface{}) *iot.IotAnalyticsAction {
+func expandAnalyticsAction(tfList []interface{}) *iot.IotAnalyticsAction {
 	if len(tfList) == 0 || tfList[0] == nil {
 		return nil
 	}
@@ -1630,7 +1629,7 @@ func expandIotIotAnalyticsAction(tfList []interface{}) *iot.IotAnalyticsAction {
 	return apiObject
 }
 
-func expandIotIotEventsAction(tfList []interface{}) *iot.IotEventsAction {
+func expandEventsAction(tfList []interface{}) *iot.IotEventsAction {
 	if len(tfList) == 0 || tfList[0] == nil {
 		return nil
 	}
@@ -1653,7 +1652,7 @@ func expandIotIotEventsAction(tfList []interface{}) *iot.IotEventsAction {
 	return apiObject
 }
 
-func expandIotKafkaAction(tfList []interface{}) *iot.KafkaAction {
+func expandKafkaAction(tfList []interface{}) *iot.KafkaAction {
 	if len(tfList) == 0 || tfList[0] == nil {
 		return nil
 	}
@@ -1684,7 +1683,7 @@ func expandIotKafkaAction(tfList []interface{}) *iot.KafkaAction {
 	return apiObject
 }
 
-func expandIotKinesisAction(tfList []interface{}) *iot.KinesisAction {
+func expandKinesisAction(tfList []interface{}) *iot.KinesisAction {
 	if len(tfList) == 0 || tfList[0] == nil {
 		return nil
 	}
@@ -1707,7 +1706,7 @@ func expandIotKinesisAction(tfList []interface{}) *iot.KinesisAction {
 	return apiObject
 }
 
-func expandIotLambdaAction(tfList []interface{}) *iot.LambdaAction {
+func expandLambdaAction(tfList []interface{}) *iot.LambdaAction {
 	if len(tfList) == 0 || tfList[0] == nil {
 		return nil
 	}
@@ -1722,7 +1721,7 @@ func expandIotLambdaAction(tfList []interface{}) *iot.LambdaAction {
 	return apiObject
 }
 
-func expandIotRepublishAction(tfList []interface{}) *iot.RepublishAction {
+func expandRepublishAction(tfList []interface{}) *iot.RepublishAction {
 	if len(tfList) == 0 || tfList[0] == nil {
 		return nil
 	}
@@ -1745,7 +1744,7 @@ func expandIotRepublishAction(tfList []interface{}) *iot.RepublishAction {
 	return apiObject
 }
 
-func expandIotS3Action(tfList []interface{}) *iot.S3Action {
+func expandS3Action(tfList []interface{}) *iot.S3Action {
 	if len(tfList) == 0 || tfList[0] == nil {
 		return nil
 	}
@@ -1772,7 +1771,7 @@ func expandIotS3Action(tfList []interface{}) *iot.S3Action {
 	return apiObject
 }
 
-func expandIotSnsAction(tfList []interface{}) *iot.SnsAction {
+func expandSNSAction(tfList []interface{}) *iot.SnsAction {
 	if len(tfList) == 0 || tfList[0] == nil {
 		return nil
 	}
@@ -1795,7 +1794,7 @@ func expandIotSnsAction(tfList []interface{}) *iot.SnsAction {
 	return apiObject
 }
 
-func expandIotSqsAction(tfList []interface{}) *iot.SqsAction {
+func expandSQSAction(tfList []interface{}) *iot.SqsAction {
 	if len(tfList) == 0 || tfList[0] == nil {
 		return nil
 	}
@@ -1818,7 +1817,7 @@ func expandIotSqsAction(tfList []interface{}) *iot.SqsAction {
 	return apiObject
 }
 
-func expandIotStepFunctionsAction(tfList []interface{}) *iot.StepFunctionsAction {
+func expandStepFunctionsAction(tfList []interface{}) *iot.StepFunctionsAction {
 	if len(tfList) == 0 || tfList[0] == nil {
 		return nil
 	}
@@ -1841,7 +1840,7 @@ func expandIotStepFunctionsAction(tfList []interface{}) *iot.StepFunctionsAction
 	return apiObject
 }
 
-func expandIotTimestreamAction(tfList []interface{}) *iot.TimestreamAction {
+func expandTimestreamAction(tfList []interface{}) *iot.TimestreamAction {
 	if len(tfList) == 0 || tfList[0] == nil {
 		return nil
 	}
@@ -1854,7 +1853,7 @@ func expandIotTimestreamAction(tfList []interface{}) *iot.TimestreamAction {
 	}
 
 	if v, ok := tfMap["dimension"].(*schema.Set); ok {
-		apiObject.Dimensions = expandIotTimestreamDimensions(v)
+		apiObject.Dimensions = expandTimestreamDimensions(v)
 	}
 
 	if v, ok := tfMap["role_arn"].(string); ok && v != "" {
@@ -1866,13 +1865,13 @@ func expandIotTimestreamAction(tfList []interface{}) *iot.TimestreamAction {
 	}
 
 	if v, ok := tfMap["timestamp"].([]interface{}); ok {
-		apiObject.Timestamp = expandIotTimestreamTimestamp(v)
+		apiObject.Timestamp = expandTimestreamTimestamp(v)
 	}
 
 	return apiObject
 }
 
-func expandIotTimestreamDimensions(tfSet *schema.Set) []*iot.TimestreamDimension {
+func expandTimestreamDimensions(tfSet *schema.Set) []*iot.TimestreamDimension {
 	if tfSet == nil || tfSet.Len() == 0 {
 		return nil
 	}
@@ -1897,7 +1896,7 @@ func expandIotTimestreamDimensions(tfSet *schema.Set) []*iot.TimestreamDimension
 	return apiObjects
 }
 
-func expandIotTimestreamTimestamp(tfList []interface{}) *iot.TimestreamTimestamp {
+func expandTimestreamTimestamp(tfList []interface{}) *iot.TimestreamTimestamp {
 	if len(tfList) == 0 || tfList[0] == nil {
 		return nil
 	}
@@ -1916,12 +1915,12 @@ func expandIotTimestreamTimestamp(tfList []interface{}) *iot.TimestreamTimestamp
 	return apiObject
 }
 
-func expandIotTopicRulePayload(d *schema.ResourceData) *iot.TopicRulePayload {
+func expandTopicRulePayload(d *schema.ResourceData) *iot.TopicRulePayload {
 	var actions []*iot.Action
 
 	// Legacy root attribute handling
 	for _, tfMapRaw := range d.Get("cloudwatch_alarm").(*schema.Set).List() {
-		action := expandIotCloudwatchAlarmAction([]interface{}{tfMapRaw})
+		action := expandCloudWatchAlarmAction([]interface{}{tfMapRaw})
 
 		if action == nil {
 			continue
@@ -1932,7 +1931,7 @@ func expandIotTopicRulePayload(d *schema.ResourceData) *iot.TopicRulePayload {
 
 	// Legacy root attribute handling
 	for _, tfMapRaw := range d.Get("cloudwatch_logs").(*schema.Set).List() {
-		action := expandIotCloudwatchLogsAction([]interface{}{tfMapRaw})
+		action := expandCloudWatchLogsAction([]interface{}{tfMapRaw})
 
 		if action == nil {
 			continue
@@ -1943,7 +1942,7 @@ func expandIotTopicRulePayload(d *schema.ResourceData) *iot.TopicRulePayload {
 
 	// Legacy root attribute handling
 	for _, tfMapRaw := range d.Get("cloudwatch_metric").(*schema.Set).List() {
-		action := expandIotCloudwatchMetricAction([]interface{}{tfMapRaw})
+		action := expandCloudWatchMetricAction([]interface{}{tfMapRaw})
 
 		if action == nil {
 			continue
@@ -1954,7 +1953,7 @@ func expandIotTopicRulePayload(d *schema.ResourceData) *iot.TopicRulePayload {
 
 	// Legacy root attribute handling
 	for _, tfMapRaw := range d.Get("dynamodb").(*schema.Set).List() {
-		action := expandIotDynamoDBAction([]interface{}{tfMapRaw})
+		action := expandDynamoDBAction([]interface{}{tfMapRaw})
 
 		if action == nil {
 			continue
@@ -1965,7 +1964,7 @@ func expandIotTopicRulePayload(d *schema.ResourceData) *iot.TopicRulePayload {
 
 	// Legacy root attribute handling
 	for _, tfMapRaw := range d.Get("dynamodbv2").(*schema.Set).List() {
-		action := expandIotDynamoDBv2Action([]interface{}{tfMapRaw})
+		action := expandDynamoDBv2Action([]interface{}{tfMapRaw})
 
 		if action == nil {
 			continue
@@ -1976,7 +1975,7 @@ func expandIotTopicRulePayload(d *schema.ResourceData) *iot.TopicRulePayload {
 
 	// Legacy root attribute handling
 	for _, tfMapRaw := range d.Get("elasticsearch").(*schema.Set).List() {
-		action := expandIotElasticsearchAction([]interface{}{tfMapRaw})
+		action := expandElasticSearchAction([]interface{}{tfMapRaw})
 
 		if action == nil {
 			continue
@@ -1987,7 +1986,7 @@ func expandIotTopicRulePayload(d *schema.ResourceData) *iot.TopicRulePayload {
 
 	// Legacy root attribute handling
 	for _, tfMapRaw := range d.Get("firehose").(*schema.Set).List() {
-		action := expandIotFirehoseAction([]interface{}{tfMapRaw})
+		action := expandFirehoseAction([]interface{}{tfMapRaw})
 
 		if action == nil {
 			continue
@@ -1998,7 +1997,7 @@ func expandIotTopicRulePayload(d *schema.ResourceData) *iot.TopicRulePayload {
 
 	// Legacy root attribute handling
 	for _, tfMapRaw := range d.Get("http").(*schema.Set).List() {
-		action := expandIotHttpAction([]interface{}{tfMapRaw})
+		action := expandHTTPAction([]interface{}{tfMapRaw})
 
 		if action == nil {
 			continue
@@ -2009,7 +2008,7 @@ func expandIotTopicRulePayload(d *schema.ResourceData) *iot.TopicRulePayload {
 
 	// Legacy root attribute handling
 	for _, tfMapRaw := range d.Get("iot_analytics").(*schema.Set).List() {
-		action := expandIotIotAnalyticsAction([]interface{}{tfMapRaw})
+		action := expandAnalyticsAction([]interface{}{tfMapRaw})
 
 		if action == nil {
 			continue
@@ -2020,7 +2019,7 @@ func expandIotTopicRulePayload(d *schema.ResourceData) *iot.TopicRulePayload {
 
 	// Legacy root attribute handling
 	for _, tfMapRaw := range d.Get("iot_events").(*schema.Set).List() {
-		action := expandIotIotEventsAction([]interface{}{tfMapRaw})
+		action := expandEventsAction([]interface{}{tfMapRaw})
 
 		if action == nil {
 			continue
@@ -2031,7 +2030,7 @@ func expandIotTopicRulePayload(d *schema.ResourceData) *iot.TopicRulePayload {
 
 	// Legacy root attribute handling
 	for _, tfMapRaw := range d.Get("kafka").(*schema.Set).List() {
-		action := expandIotKafkaAction([]interface{}{tfMapRaw})
+		action := expandKafkaAction([]interface{}{tfMapRaw})
 
 		if action == nil {
 			continue
@@ -2042,7 +2041,7 @@ func expandIotTopicRulePayload(d *schema.ResourceData) *iot.TopicRulePayload {
 
 	// Legacy root attribute handling
 	for _, tfMapRaw := range d.Get("kinesis").(*schema.Set).List() {
-		action := expandIotKinesisAction([]interface{}{tfMapRaw})
+		action := expandKinesisAction([]interface{}{tfMapRaw})
 
 		if action == nil {
 			continue
@@ -2053,7 +2052,7 @@ func expandIotTopicRulePayload(d *schema.ResourceData) *iot.TopicRulePayload {
 
 	// Legacy root attribute handling
 	for _, tfMapRaw := range d.Get("lambda").(*schema.Set).List() {
-		action := expandIotLambdaAction([]interface{}{tfMapRaw})
+		action := expandLambdaAction([]interface{}{tfMapRaw})
 
 		if action == nil {
 			continue
@@ -2064,7 +2063,7 @@ func expandIotTopicRulePayload(d *schema.ResourceData) *iot.TopicRulePayload {
 
 	// Legacy root attribute handling
 	for _, tfMapRaw := range d.Get("republish").(*schema.Set).List() {
-		action := expandIotRepublishAction([]interface{}{tfMapRaw})
+		action := expandRepublishAction([]interface{}{tfMapRaw})
 
 		if action == nil {
 			continue
@@ -2075,7 +2074,7 @@ func expandIotTopicRulePayload(d *schema.ResourceData) *iot.TopicRulePayload {
 
 	// Legacy root attribute handling
 	for _, tfMapRaw := range d.Get("s3").(*schema.Set).List() {
-		action := expandIotS3Action([]interface{}{tfMapRaw})
+		action := expandS3Action([]interface{}{tfMapRaw})
 
 		if action == nil {
 			continue
@@ -2086,7 +2085,7 @@ func expandIotTopicRulePayload(d *schema.ResourceData) *iot.TopicRulePayload {
 
 	// Legacy root attribute handling
 	for _, tfMapRaw := range d.Get("sns").(*schema.Set).List() {
-		action := expandIotSnsAction([]interface{}{tfMapRaw})
+		action := expandSNSAction([]interface{}{tfMapRaw})
 
 		if action == nil {
 			continue
@@ -2097,7 +2096,7 @@ func expandIotTopicRulePayload(d *schema.ResourceData) *iot.TopicRulePayload {
 
 	// Legacy root attribute handling
 	for _, tfMapRaw := range d.Get("sqs").(*schema.Set).List() {
-		action := expandIotSqsAction([]interface{}{tfMapRaw})
+		action := expandSQSAction([]interface{}{tfMapRaw})
 
 		if action == nil {
 			continue
@@ -2108,7 +2107,7 @@ func expandIotTopicRulePayload(d *schema.ResourceData) *iot.TopicRulePayload {
 
 	// Legacy root attribute handling
 	for _, tfMapRaw := range d.Get("step_functions").(*schema.Set).List() {
-		action := expandIotStepFunctionsAction([]interface{}{tfMapRaw})
+		action := expandStepFunctionsAction([]interface{}{tfMapRaw})
 
 		if action == nil {
 			continue
@@ -2119,7 +2118,7 @@ func expandIotTopicRulePayload(d *schema.ResourceData) *iot.TopicRulePayload {
 
 	// Legacy root attribute handling
 	for _, tfMapRaw := range d.Get("timestream").(*schema.Set).List() {
-		action := expandIotTimestreamAction([]interface{}{tfMapRaw})
+		action := expandTimestreamAction([]interface{}{tfMapRaw})
 
 		if action == nil {
 			continue
@@ -2141,7 +2140,7 @@ func expandIotTopicRulePayload(d *schema.ResourceData) *iot.TopicRulePayload {
 			switch k {
 			case "cloudwatch_alarm":
 				for _, tfMapRaw := range v.([]interface{}) {
-					action := expandIotCloudwatchAlarmAction([]interface{}{tfMapRaw})
+					action := expandCloudWatchAlarmAction([]interface{}{tfMapRaw})
 					if action == nil {
 						continue
 					}
@@ -2151,7 +2150,7 @@ func expandIotTopicRulePayload(d *schema.ResourceData) *iot.TopicRulePayload {
 				}
 			case "cloudwatch_logs":
 				for _, tfMapRaw := range v.([]interface{}) {
-					action := expandIotCloudwatchLogsAction([]interface{}{tfMapRaw})
+					action := expandCloudWatchLogsAction([]interface{}{tfMapRaw})
 
 					if action == nil {
 						continue
@@ -2161,7 +2160,7 @@ func expandIotTopicRulePayload(d *schema.ResourceData) *iot.TopicRulePayload {
 				}
 			case "cloudwatch_metric":
 				for _, tfMapRaw := range v.([]interface{}) {
-					action := expandIotCloudwatchMetricAction([]interface{}{tfMapRaw})
+					action := expandCloudWatchMetricAction([]interface{}{tfMapRaw})
 
 					if action == nil {
 						continue
@@ -2171,7 +2170,7 @@ func expandIotTopicRulePayload(d *schema.ResourceData) *iot.TopicRulePayload {
 				}
 			case "dynamodb":
 				for _, tfMapRaw := range v.([]interface{}) {
-					action := expandIotDynamoDBAction([]interface{}{tfMapRaw})
+					action := expandDynamoDBAction([]interface{}{tfMapRaw})
 
 					if action == nil {
 						continue
@@ -2181,7 +2180,7 @@ func expandIotTopicRulePayload(d *schema.ResourceData) *iot.TopicRulePayload {
 				}
 			case "dynamodbv2":
 				for _, tfMapRaw := range v.([]interface{}) {
-					action := expandIotDynamoDBv2Action([]interface{}{tfMapRaw})
+					action := expandDynamoDBv2Action([]interface{}{tfMapRaw})
 
 					if action == nil {
 						continue
@@ -2191,7 +2190,7 @@ func expandIotTopicRulePayload(d *schema.ResourceData) *iot.TopicRulePayload {
 				}
 			case "elasticsearch":
 				for _, tfMapRaw := range v.([]interface{}) {
-					action := expandIotElasticsearchAction([]interface{}{tfMapRaw})
+					action := expandElasticSearchAction([]interface{}{tfMapRaw})
 
 					if action == nil {
 						continue
@@ -2201,7 +2200,7 @@ func expandIotTopicRulePayload(d *schema.ResourceData) *iot.TopicRulePayload {
 				}
 			case "firehose":
 				for _, tfMapRaw := range v.([]interface{}) {
-					action := expandIotFirehoseAction([]interface{}{tfMapRaw})
+					action := expandFirehoseAction([]interface{}{tfMapRaw})
 
 					if action == nil {
 						continue
@@ -2211,7 +2210,7 @@ func expandIotTopicRulePayload(d *schema.ResourceData) *iot.TopicRulePayload {
 				}
 			case "http":
 				for _, tfMapRaw := range v.([]interface{}) {
-					action := expandIotHttpAction([]interface{}{tfMapRaw})
+					action := expandHTTPAction([]interface{}{tfMapRaw})
 
 					if action == nil {
 						continue
@@ -2221,7 +2220,7 @@ func expandIotTopicRulePayload(d *schema.ResourceData) *iot.TopicRulePayload {
 				}
 			case "iot_analytics":
 				for _, tfMapRaw := range v.([]interface{}) {
-					action := expandIotIotAnalyticsAction([]interface{}{tfMapRaw})
+					action := expandAnalyticsAction([]interface{}{tfMapRaw})
 
 					if action == nil {
 						continue
@@ -2231,7 +2230,7 @@ func expandIotTopicRulePayload(d *schema.ResourceData) *iot.TopicRulePayload {
 				}
 			case "iot_events":
 				for _, tfMapRaw := range v.([]interface{}) {
-					action := expandIotIotEventsAction([]interface{}{tfMapRaw})
+					action := expandEventsAction([]interface{}{tfMapRaw})
 
 					if action == nil {
 						continue
@@ -2241,7 +2240,7 @@ func expandIotTopicRulePayload(d *schema.ResourceData) *iot.TopicRulePayload {
 				}
 			case "kafka":
 				for _, tfMapRaw := range v.([]interface{}) {
-					action := expandIotKafkaAction([]interface{}{tfMapRaw})
+					action := expandKafkaAction([]interface{}{tfMapRaw})
 
 					if action == nil {
 						continue
@@ -2251,7 +2250,7 @@ func expandIotTopicRulePayload(d *schema.ResourceData) *iot.TopicRulePayload {
 				}
 			case "kinesis":
 				for _, tfMapRaw := range v.([]interface{}) {
-					action := expandIotKinesisAction([]interface{}{tfMapRaw})
+					action := expandKinesisAction([]interface{}{tfMapRaw})
 
 					if action == nil {
 						continue
@@ -2261,7 +2260,7 @@ func expandIotTopicRulePayload(d *schema.ResourceData) *iot.TopicRulePayload {
 				}
 			case "lambda":
 				for _, tfMapRaw := range v.([]interface{}) {
-					action := expandIotLambdaAction([]interface{}{tfMapRaw})
+					action := expandLambdaAction([]interface{}{tfMapRaw})
 
 					if action == nil {
 						continue
@@ -2271,7 +2270,7 @@ func expandIotTopicRulePayload(d *schema.ResourceData) *iot.TopicRulePayload {
 				}
 			case "republish":
 				for _, tfMapRaw := range v.([]interface{}) {
-					action := expandIotRepublishAction([]interface{}{tfMapRaw})
+					action := expandRepublishAction([]interface{}{tfMapRaw})
 
 					if action == nil {
 						continue
@@ -2281,7 +2280,7 @@ func expandIotTopicRulePayload(d *schema.ResourceData) *iot.TopicRulePayload {
 				}
 			case "s3":
 				for _, tfMapRaw := range v.([]interface{}) {
-					action := expandIotS3Action([]interface{}{tfMapRaw})
+					action := expandS3Action([]interface{}{tfMapRaw})
 
 					if action == nil {
 						continue
@@ -2291,7 +2290,7 @@ func expandIotTopicRulePayload(d *schema.ResourceData) *iot.TopicRulePayload {
 				}
 			case "sns":
 				for _, tfMapRaw := range v.([]interface{}) {
-					action := expandIotSnsAction([]interface{}{tfMapRaw})
+					action := expandSNSAction([]interface{}{tfMapRaw})
 
 					if action == nil {
 						continue
@@ -2301,7 +2300,7 @@ func expandIotTopicRulePayload(d *schema.ResourceData) *iot.TopicRulePayload {
 				}
 			case "sqs":
 				for _, tfMapRaw := range v.([]interface{}) {
-					action := expandIotSqsAction([]interface{}{tfMapRaw})
+					action := expandSQSAction([]interface{}{tfMapRaw})
 
 					if action == nil {
 						continue
@@ -2311,7 +2310,7 @@ func expandIotTopicRulePayload(d *schema.ResourceData) *iot.TopicRulePayload {
 				}
 			case "step_functions":
 				for _, tfMapRaw := range v.([]interface{}) {
-					action := expandIotStepFunctionsAction([]interface{}{tfMapRaw})
+					action := expandStepFunctionsAction([]interface{}{tfMapRaw})
 
 					if action == nil {
 						continue
@@ -2321,7 +2320,7 @@ func expandIotTopicRulePayload(d *schema.ResourceData) *iot.TopicRulePayload {
 				}
 			case "timestream":
 				for _, tfMapRaw := range v.([]interface{}) {
-					action := expandIotTimestreamAction([]interface{}{tfMapRaw})
+					action := expandTimestreamAction([]interface{}{tfMapRaw})
 
 					if action == nil {
 						continue
@@ -2343,7 +2342,7 @@ func expandIotTopicRulePayload(d *schema.ResourceData) *iot.TopicRulePayload {
 	}
 }
 
-func flattenIotCloudwatchAlarmAction(apiObject *iot.CloudwatchAlarmAction) []interface{} {
+func flattenCloudWatchAlarmAction(apiObject *iot.CloudwatchAlarmAction) []interface{} {
 	if apiObject == nil {
 		return nil
 	}
@@ -2370,7 +2369,7 @@ func flattenIotCloudwatchAlarmAction(apiObject *iot.CloudwatchAlarmAction) []int
 }
 
 // Legacy root attribute handling
-func flattenIotCloudWatchAlarmActions(actions []*iot.Action) []interface{} {
+func flattenCloudWatchAlarmActions(actions []*iot.Action) []interface{} {
 	results := make([]interface{}, 0)
 
 	for _, action := range actions {
@@ -2379,14 +2378,14 @@ func flattenIotCloudWatchAlarmActions(actions []*iot.Action) []interface{} {
 		}
 
 		if v := action.CloudwatchAlarm; v != nil {
-			results = append(results, flattenIotCloudwatchAlarmAction(v)...)
+			results = append(results, flattenCloudWatchAlarmAction(v)...)
 		}
 	}
 
 	return results
 }
 
-func flattenIotCloudwatchLogsAction(apiObject *iot.CloudwatchLogsAction) []interface{} {
+func flattenCloudWatchLogsAction(apiObject *iot.CloudwatchLogsAction) []interface{} {
 	if apiObject == nil {
 		return nil
 	}
@@ -2405,7 +2404,7 @@ func flattenIotCloudwatchLogsAction(apiObject *iot.CloudwatchLogsAction) []inter
 }
 
 // Legacy root attribute handling
-func flattenIotCloudWatchLogsActions(actions []*iot.Action) []interface{} {
+func flattenCloudWatchLogsActions(actions []*iot.Action) []interface{} {
 	results := make([]interface{}, 0)
 
 	for _, action := range actions {
@@ -2414,7 +2413,7 @@ func flattenIotCloudWatchLogsActions(actions []*iot.Action) []interface{} {
 		}
 
 		if v := action.CloudwatchLogs; v != nil {
-			results = append(results, flattenIotCloudwatchLogsAction(v)...)
+			results = append(results, flattenCloudWatchLogsAction(v)...)
 		}
 	}
 
@@ -2422,7 +2421,7 @@ func flattenIotCloudWatchLogsActions(actions []*iot.Action) []interface{} {
 }
 
 // Legacy root attribute handling
-func flattenIotCloudwatchMetricActions(actions []*iot.Action) []interface{} {
+func flattenCloudWatchMetricActions(actions []*iot.Action) []interface{} {
 	results := make([]interface{}, 0)
 
 	for _, action := range actions {
@@ -2431,14 +2430,14 @@ func flattenIotCloudwatchMetricActions(actions []*iot.Action) []interface{} {
 		}
 
 		if v := action.CloudwatchMetric; v != nil {
-			results = append(results, flattenIotCloudwatchMetricAction(v)...)
+			results = append(results, flattenCloudWatchMetricAction(v)...)
 		}
 	}
 
 	return results
 }
 
-func flattenIotCloudwatchMetricAction(apiObject *iot.CloudwatchMetricAction) []interface{} {
+func flattenCloudWatchMetricAction(apiObject *iot.CloudwatchMetricAction) []interface{} {
 	if apiObject == nil {
 		return nil
 	}
@@ -2473,7 +2472,7 @@ func flattenIotCloudwatchMetricAction(apiObject *iot.CloudwatchMetricAction) []i
 }
 
 // Legacy root attribute handling
-func flattenIotDynamoDbActions(actions []*iot.Action) []interface{} {
+func flattenDynamoDBActions(actions []*iot.Action) []interface{} {
 	results := make([]interface{}, 0)
 
 	for _, action := range actions {
@@ -2482,14 +2481,14 @@ func flattenIotDynamoDbActions(actions []*iot.Action) []interface{} {
 		}
 
 		if v := action.DynamoDB; v != nil {
-			results = append(results, flattenIotDynamoDBAction(v)...)
+			results = append(results, flattenDynamoDBAction(v)...)
 		}
 	}
 
 	return results
 }
 
-func flattenIotDynamoDBAction(apiObject *iot.DynamoDBAction) []interface{} {
+func flattenDynamoDBAction(apiObject *iot.DynamoDBAction) []interface{} {
 	if apiObject == nil {
 		return nil
 	}
@@ -2540,7 +2539,7 @@ func flattenIotDynamoDBAction(apiObject *iot.DynamoDBAction) []interface{} {
 }
 
 // Legacy root attribute handling
-func flattenIotDynamoDbv2Actions(actions []*iot.Action) []interface{} {
+func flattenDynamoDBv2Actions(actions []*iot.Action) []interface{} {
 	results := make([]interface{}, 0)
 
 	for _, action := range actions {
@@ -2549,14 +2548,14 @@ func flattenIotDynamoDbv2Actions(actions []*iot.Action) []interface{} {
 		}
 
 		if v := action.DynamoDBv2; v != nil {
-			results = append(results, flattenIotDynamoDBv2Action(v)...)
+			results = append(results, flattenDynamoDBv2Action(v)...)
 		}
 	}
 
 	return results
 }
 
-func flattenIotDynamoDBv2Action(apiObject *iot.DynamoDBv2Action) []interface{} {
+func flattenDynamoDBv2Action(apiObject *iot.DynamoDBv2Action) []interface{} {
 	if apiObject == nil {
 		return nil
 	}
@@ -2564,7 +2563,7 @@ func flattenIotDynamoDBv2Action(apiObject *iot.DynamoDBv2Action) []interface{} {
 	tfMap := make(map[string]interface{})
 
 	if v := apiObject.PutItem; v != nil {
-		tfMap["put_item"] = flattenIotPutItemInput(v)
+		tfMap["put_item"] = flattenPutItemInput(v)
 	}
 
 	if v := apiObject.RoleArn; v != nil {
@@ -2575,7 +2574,7 @@ func flattenIotDynamoDBv2Action(apiObject *iot.DynamoDBv2Action) []interface{} {
 }
 
 // Legacy root attribute handling
-func flattenIotElasticsearchActions(actions []*iot.Action) []interface{} {
+func flattenElasticSearchActions(actions []*iot.Action) []interface{} {
 	results := make([]interface{}, 0)
 
 	for _, action := range actions {
@@ -2584,14 +2583,14 @@ func flattenIotElasticsearchActions(actions []*iot.Action) []interface{} {
 		}
 
 		if v := action.Elasticsearch; v != nil {
-			results = append(results, flattenIotElasticsearchAction(v)...)
+			results = append(results, flattenElasticSearchAction(v)...)
 		}
 	}
 
 	return results
 }
 
-func flattenIotElasticsearchAction(apiObject *iot.ElasticsearchAction) []interface{} {
+func flattenElasticSearchAction(apiObject *iot.ElasticsearchAction) []interface{} {
 	if apiObject == nil {
 		return nil
 	}
@@ -2622,7 +2621,7 @@ func flattenIotElasticsearchAction(apiObject *iot.ElasticsearchAction) []interfa
 }
 
 // Legacy root attribute handling
-func flattenIotFirehoseActions(actions []*iot.Action) []interface{} {
+func flattenFirehoseActions(actions []*iot.Action) []interface{} {
 	results := make([]interface{}, 0)
 
 	for _, action := range actions {
@@ -2631,14 +2630,14 @@ func flattenIotFirehoseActions(actions []*iot.Action) []interface{} {
 		}
 
 		if v := action.Firehose; v != nil {
-			results = append(results, flattenIotFirehoseAction(v)...)
+			results = append(results, flattenFirehoseAction(v)...)
 		}
 	}
 
 	return results
 }
 
-func flattenIotFirehoseAction(apiObject *iot.FirehoseAction) []interface{} {
+func flattenFirehoseAction(apiObject *iot.FirehoseAction) []interface{} {
 	if apiObject == nil {
 		return nil
 	}
@@ -2661,7 +2660,7 @@ func flattenIotFirehoseAction(apiObject *iot.FirehoseAction) []interface{} {
 }
 
 // Legacy root attribute handling
-func flattenIotHttpActions(actions []*iot.Action) []interface{} {
+func flattenHTTPActions(actions []*iot.Action) []interface{} {
 	results := make([]interface{}, 0)
 
 	for _, action := range actions {
@@ -2670,14 +2669,14 @@ func flattenIotHttpActions(actions []*iot.Action) []interface{} {
 		}
 
 		if v := action.Http; v != nil {
-			results = append(results, flattenIotHttpAction(v)...)
+			results = append(results, flattenHTTPAction(v)...)
 		}
 	}
 
 	return results
 }
 
-func flattenIotHttpAction(apiObject *iot.HttpAction) []interface{} {
+func flattenHTTPAction(apiObject *iot.HttpAction) []interface{} {
 	if apiObject == nil {
 		return nil
 	}
@@ -2709,7 +2708,7 @@ func flattenIotHttpAction(apiObject *iot.HttpAction) []interface{} {
 }
 
 // Legacy root attribute handling
-func flattenIotIotAnalyticsActions(actions []*iot.Action) []interface{} {
+func flattenAnalyticsActions(actions []*iot.Action) []interface{} {
 	results := make([]interface{}, 0)
 
 	for _, action := range actions {
@@ -2718,14 +2717,14 @@ func flattenIotIotAnalyticsActions(actions []*iot.Action) []interface{} {
 		}
 
 		if v := action.IotAnalytics; v != nil {
-			results = append(results, flattenIotIotAnalyticsAction(v)...)
+			results = append(results, flattenAnalyticsAction(v)...)
 		}
 	}
 
 	return results
 }
 
-func flattenIotIotAnalyticsAction(apiObject *iot.IotAnalyticsAction) []interface{} {
+func flattenAnalyticsAction(apiObject *iot.IotAnalyticsAction) []interface{} {
 	if apiObject == nil {
 		return nil
 	}
@@ -2744,7 +2743,7 @@ func flattenIotIotAnalyticsAction(apiObject *iot.IotAnalyticsAction) []interface
 }
 
 // Legacy root attribute handling
-func flattenIotIotEventsActions(actions []*iot.Action) []interface{} {
+func flattenEventsActions(actions []*iot.Action) []interface{} {
 	results := make([]interface{}, 0)
 
 	for _, action := range actions {
@@ -2753,14 +2752,14 @@ func flattenIotIotEventsActions(actions []*iot.Action) []interface{} {
 		}
 
 		if v := action.IotEvents; v != nil {
-			results = append(results, flattenIotIotEventsAction(v)...)
+			results = append(results, flattenEventsAction(v)...)
 		}
 	}
 
 	return results
 }
 
-func flattenIotIotEventsAction(apiObject *iot.IotEventsAction) []interface{} {
+func flattenEventsAction(apiObject *iot.IotEventsAction) []interface{} {
 	if apiObject == nil {
 		return nil
 	}
@@ -2783,7 +2782,7 @@ func flattenIotIotEventsAction(apiObject *iot.IotEventsAction) []interface{} {
 }
 
 // Legacy root attribute handling
-func flattenIotKafkaActions(actions []*iot.Action) []interface{} {
+func flattenKafkaActions(actions []*iot.Action) []interface{} {
 	results := make([]interface{}, 0)
 
 	for _, action := range actions {
@@ -2792,14 +2791,14 @@ func flattenIotKafkaActions(actions []*iot.Action) []interface{} {
 		}
 
 		if v := action.Kafka; v != nil {
-			results = append(results, flattenIotKafkaAction(v)...)
+			results = append(results, flattenKafkaAction(v)...)
 		}
 	}
 
 	return results
 }
 
-func flattenIotKafkaAction(apiObject *iot.KafkaAction) []interface{} {
+func flattenKafkaAction(apiObject *iot.KafkaAction) []interface{} {
 	if apiObject == nil {
 		return nil
 	}
@@ -2830,7 +2829,7 @@ func flattenIotKafkaAction(apiObject *iot.KafkaAction) []interface{} {
 }
 
 // Legacy root attribute handling
-func flattenIotKinesisActions(actions []*iot.Action) []interface{} {
+func flattenKinesisActions(actions []*iot.Action) []interface{} {
 	results := make([]interface{}, 0)
 
 	for _, action := range actions {
@@ -2839,14 +2838,14 @@ func flattenIotKinesisActions(actions []*iot.Action) []interface{} {
 		}
 
 		if v := action.Kinesis; v != nil {
-			results = append(results, flattenIotKinesisAction(v)...)
+			results = append(results, flattenKinesisAction(v)...)
 		}
 	}
 
 	return results
 }
 
-func flattenIotKinesisAction(apiObject *iot.KinesisAction) []interface{} {
+func flattenKinesisAction(apiObject *iot.KinesisAction) []interface{} {
 	if apiObject == nil {
 		return nil
 	}
@@ -2869,7 +2868,7 @@ func flattenIotKinesisAction(apiObject *iot.KinesisAction) []interface{} {
 }
 
 // Legacy root attribute handling
-func flattenIotLambdaActions(actions []*iot.Action) []interface{} {
+func flattenLambdaActions(actions []*iot.Action) []interface{} {
 	results := make([]interface{}, 0)
 
 	for _, action := range actions {
@@ -2878,14 +2877,14 @@ func flattenIotLambdaActions(actions []*iot.Action) []interface{} {
 		}
 
 		if v := action.Lambda; v != nil {
-			results = append(results, flattenIotLambdaAction(v)...)
+			results = append(results, flattenLambdaAction(v)...)
 		}
 	}
 
 	return results
 }
 
-func flattenIotLambdaAction(apiObject *iot.LambdaAction) []interface{} {
+func flattenLambdaAction(apiObject *iot.LambdaAction) []interface{} {
 	if apiObject == nil {
 		return nil
 	}
@@ -2899,7 +2898,7 @@ func flattenIotLambdaAction(apiObject *iot.LambdaAction) []interface{} {
 	return []interface{}{tfMap}
 }
 
-func flattenIotPutItemInput(apiObject *iot.PutItemInput) []interface{} {
+func flattenPutItemInput(apiObject *iot.PutItemInput) []interface{} {
 	if apiObject == nil {
 		return nil
 	}
@@ -2914,7 +2913,7 @@ func flattenIotPutItemInput(apiObject *iot.PutItemInput) []interface{} {
 }
 
 // Legacy root attribute handling
-func flattenIotRepublishActions(actions []*iot.Action) []interface{} {
+func flattenRepublishActions(actions []*iot.Action) []interface{} {
 	results := make([]interface{}, 0)
 
 	for _, action := range actions {
@@ -2923,14 +2922,14 @@ func flattenIotRepublishActions(actions []*iot.Action) []interface{} {
 		}
 
 		if v := action.Republish; v != nil {
-			results = append(results, flattenIotRepublishAction(v)...)
+			results = append(results, flattenRepublishAction(v)...)
 		}
 	}
 
 	return results
 }
 
-func flattenIotRepublishAction(apiObject *iot.RepublishAction) []interface{} {
+func flattenRepublishAction(apiObject *iot.RepublishAction) []interface{} {
 	if apiObject == nil {
 		return nil
 	}
@@ -2953,7 +2952,7 @@ func flattenIotRepublishAction(apiObject *iot.RepublishAction) []interface{} {
 }
 
 // Legacy root attribute handling
-func flattenIotS3Actions(actions []*iot.Action) []interface{} {
+func flattenS3Actions(actions []*iot.Action) []interface{} {
 	results := make([]interface{}, 0)
 
 	for _, action := range actions {
@@ -2962,14 +2961,14 @@ func flattenIotS3Actions(actions []*iot.Action) []interface{} {
 		}
 
 		if v := action.S3; v != nil {
-			results = append(results, flattenIotS3Action(v)...)
+			results = append(results, flattenS3Action(v)...)
 		}
 	}
 
 	return results
 }
 
-func flattenIotS3Action(apiObject *iot.S3Action) []interface{} {
+func flattenS3Action(apiObject *iot.S3Action) []interface{} {
 	if apiObject == nil {
 		return nil
 	}
@@ -2996,7 +2995,7 @@ func flattenIotS3Action(apiObject *iot.S3Action) []interface{} {
 }
 
 // Legacy root attribute handling
-func flattenIotSnsActions(actions []*iot.Action) []interface{} {
+func flattenSNSActions(actions []*iot.Action) []interface{} {
 	results := make([]interface{}, 0)
 
 	for _, action := range actions {
@@ -3005,14 +3004,14 @@ func flattenIotSnsActions(actions []*iot.Action) []interface{} {
 		}
 
 		if v := action.Sns; v != nil {
-			results = append(results, flattenIotSnsAction(v)...)
+			results = append(results, flattenSNSAction(v)...)
 		}
 	}
 
 	return results
 }
 
-func flattenIotSnsAction(apiObject *iot.SnsAction) []interface{} {
+func flattenSNSAction(apiObject *iot.SnsAction) []interface{} {
 	if apiObject == nil {
 		return nil
 	}
@@ -3035,7 +3034,7 @@ func flattenIotSnsAction(apiObject *iot.SnsAction) []interface{} {
 }
 
 // Legacy root attribute handling
-func flattenIotSqsActions(actions []*iot.Action) []interface{} {
+func flattenSQSActions(actions []*iot.Action) []interface{} {
 	results := make([]interface{}, 0)
 
 	for _, action := range actions {
@@ -3044,14 +3043,14 @@ func flattenIotSqsActions(actions []*iot.Action) []interface{} {
 		}
 
 		if v := action.Sqs; v != nil {
-			results = append(results, flattenIotSqsAction(v)...)
+			results = append(results, flattenSQSAction(v)...)
 		}
 	}
 
 	return results
 }
 
-func flattenIotSqsAction(apiObject *iot.SqsAction) []interface{} {
+func flattenSQSAction(apiObject *iot.SqsAction) []interface{} {
 	if apiObject == nil {
 		return nil
 	}
@@ -3074,7 +3073,7 @@ func flattenIotSqsAction(apiObject *iot.SqsAction) []interface{} {
 }
 
 // Legacy root attribute handling
-func flattenIotStepFunctionsActions(actions []*iot.Action) []interface{} {
+func flattenStepFunctionsActions(actions []*iot.Action) []interface{} {
 	results := make([]interface{}, 0)
 
 	for _, action := range actions {
@@ -3083,14 +3082,14 @@ func flattenIotStepFunctionsActions(actions []*iot.Action) []interface{} {
 		}
 
 		if v := action.StepFunctions; v != nil {
-			results = append(results, flattenIotStepFunctionsAction(v)...)
+			results = append(results, flattenStepFunctionsAction(v)...)
 		}
 	}
 
 	return results
 }
 
-func flattenIotStepFunctionsAction(apiObject *iot.StepFunctionsAction) []interface{} {
+func flattenStepFunctionsAction(apiObject *iot.StepFunctionsAction) []interface{} {
 	if apiObject == nil {
 		return nil
 	}
@@ -3113,7 +3112,7 @@ func flattenIotStepFunctionsAction(apiObject *iot.StepFunctionsAction) []interfa
 }
 
 // Legacy root attribute handling
-func flattenIotTimestreamActions(actions []*iot.Action) []interface{} {
+func flattenTimestreamActions(actions []*iot.Action) []interface{} {
 	results := make([]interface{}, 0)
 
 	for _, action := range actions {
@@ -3122,14 +3121,14 @@ func flattenIotTimestreamActions(actions []*iot.Action) []interface{} {
 		}
 
 		if v := action.Timestream; v != nil {
-			results = append(results, flattenIotTimestreamAction(v)...)
+			results = append(results, flattenTimestreamAction(v)...)
 		}
 	}
 
 	return results
 }
 
-func flattenIotTimestreamAction(apiObject *iot.TimestreamAction) []interface{} {
+func flattenTimestreamAction(apiObject *iot.TimestreamAction) []interface{} {
 	if apiObject == nil {
 		return nil
 	}
@@ -3141,7 +3140,7 @@ func flattenIotTimestreamAction(apiObject *iot.TimestreamAction) []interface{} {
 	}
 
 	if v := apiObject.Dimensions; v != nil {
-		tfMap["dimension"] = flattenIotTimestreamDimensions(v)
+		tfMap["dimension"] = flattenTimestreamDimensions(v)
 	}
 
 	if v := apiObject.RoleArn; v != nil {
@@ -3153,13 +3152,13 @@ func flattenIotTimestreamAction(apiObject *iot.TimestreamAction) []interface{} {
 	}
 
 	if v := apiObject.Timestamp; v != nil {
-		tfMap["timestamp"] = flattenIotTimestreamTimestamp(v)
+		tfMap["timestamp"] = flattenTimestreamTimestamp(v)
 	}
 
 	return []interface{}{tfMap}
 }
 
-func flattenIotTimestreamDimensions(apiObjects []*iot.TimestreamDimension) *schema.Set {
+func flattenTimestreamDimensions(apiObjects []*iot.TimestreamDimension) *schema.Set {
 	if apiObjects == nil {
 		return nil
 	}
@@ -3185,7 +3184,7 @@ func flattenIotTimestreamDimensions(apiObjects []*iot.TimestreamDimension) *sche
 	return tfSet
 }
 
-func flattenIotTimestreamTimestamp(apiObject *iot.TimestreamTimestamp) []interface{} {
+func flattenTimestreamTimestamp(apiObject *iot.TimestreamTimestamp) []interface{} {
 	if apiObject == nil {
 		return nil
 	}
@@ -3203,7 +3202,7 @@ func flattenIotTimestreamTimestamp(apiObject *iot.TimestreamTimestamp) []interfa
 	return []interface{}{tfMap}
 }
 
-func flattenIotErrorAction(errorAction *iot.Action) []map[string]interface{} {
+func flattenErrorAction(errorAction *iot.Action) []map[string]interface{} {
 	results := make([]map[string]interface{}, 0)
 
 	if errorAction == nil {
@@ -3211,79 +3210,79 @@ func flattenIotErrorAction(errorAction *iot.Action) []map[string]interface{} {
 	}
 	input := []*iot.Action{errorAction}
 	if errorAction.CloudwatchAlarm != nil {
-		results = append(results, map[string]interface{}{"cloudwatch_alarm": flattenIotCloudWatchAlarmActions(input)})
+		results = append(results, map[string]interface{}{"cloudwatch_alarm": flattenCloudWatchAlarmActions(input)})
 		return results
 	}
 	if errorAction.CloudwatchLogs != nil {
-		results = append(results, map[string]interface{}{"cloudwatch_logs": flattenIotCloudWatchLogsActions(input)})
+		results = append(results, map[string]interface{}{"cloudwatch_logs": flattenCloudWatchLogsActions(input)})
 		return results
 	}
 	if errorAction.CloudwatchMetric != nil {
-		results = append(results, map[string]interface{}{"cloudwatch_metric": flattenIotCloudwatchMetricActions(input)})
+		results = append(results, map[string]interface{}{"cloudwatch_metric": flattenCloudWatchMetricActions(input)})
 		return results
 	}
 	if errorAction.DynamoDB != nil {
-		results = append(results, map[string]interface{}{"dynamodb": flattenIotDynamoDbActions(input)})
+		results = append(results, map[string]interface{}{"dynamodb": flattenDynamoDBActions(input)})
 		return results
 	}
 	if errorAction.DynamoDBv2 != nil {
-		results = append(results, map[string]interface{}{"dynamodbv2": flattenIotDynamoDbv2Actions(input)})
+		results = append(results, map[string]interface{}{"dynamodbv2": flattenDynamoDBv2Actions(input)})
 		return results
 	}
 	if errorAction.Elasticsearch != nil {
-		results = append(results, map[string]interface{}{"elasticsearch": flattenIotElasticsearchActions(input)})
+		results = append(results, map[string]interface{}{"elasticsearch": flattenElasticSearchActions(input)})
 		return results
 	}
 	if errorAction.Firehose != nil {
-		results = append(results, map[string]interface{}{"firehose": flattenIotFirehoseActions(input)})
+		results = append(results, map[string]interface{}{"firehose": flattenFirehoseActions(input)})
 		return results
 	}
 	if errorAction.Http != nil {
-		results = append(results, map[string]interface{}{"http": flattenIotHttpActions(input)})
+		results = append(results, map[string]interface{}{"http": flattenHTTPActions(input)})
 		return results
 	}
 	if errorAction.IotAnalytics != nil {
-		results = append(results, map[string]interface{}{"iot_analytics": flattenIotIotAnalyticsActions(input)})
+		results = append(results, map[string]interface{}{"iot_analytics": flattenAnalyticsActions(input)})
 		return results
 	}
 	if errorAction.IotEvents != nil {
-		results = append(results, map[string]interface{}{"iot_events": flattenIotIotEventsActions(input)})
+		results = append(results, map[string]interface{}{"iot_events": flattenEventsActions(input)})
 		return results
 	}
 	if errorAction.Kafka != nil {
-		results = append(results, map[string]interface{}{"kafka": flattenIotKafkaActions(input)})
+		results = append(results, map[string]interface{}{"kafka": flattenKafkaActions(input)})
 		return results
 	}
 	if errorAction.Kinesis != nil {
-		results = append(results, map[string]interface{}{"kinesis": flattenIotKinesisActions(input)})
+		results = append(results, map[string]interface{}{"kinesis": flattenKinesisActions(input)})
 		return results
 	}
 	if errorAction.Lambda != nil {
-		results = append(results, map[string]interface{}{"lambda": flattenIotLambdaActions(input)})
+		results = append(results, map[string]interface{}{"lambda": flattenLambdaActions(input)})
 		return results
 	}
 	if errorAction.Republish != nil {
-		results = append(results, map[string]interface{}{"republish": flattenIotRepublishActions(input)})
+		results = append(results, map[string]interface{}{"republish": flattenRepublishActions(input)})
 		return results
 	}
 	if errorAction.S3 != nil {
-		results = append(results, map[string]interface{}{"s3": flattenIotS3Actions(input)})
+		results = append(results, map[string]interface{}{"s3": flattenS3Actions(input)})
 		return results
 	}
 	if errorAction.Sns != nil {
-		results = append(results, map[string]interface{}{"sns": flattenIotSnsActions(input)})
+		results = append(results, map[string]interface{}{"sns": flattenSNSActions(input)})
 		return results
 	}
 	if errorAction.Sqs != nil {
-		results = append(results, map[string]interface{}{"sqs": flattenIotSqsActions(input)})
+		results = append(results, map[string]interface{}{"sqs": flattenSQSActions(input)})
 		return results
 	}
 	if errorAction.StepFunctions != nil {
-		results = append(results, map[string]interface{}{"step_functions": flattenIotStepFunctionsActions(input)})
+		results = append(results, map[string]interface{}{"step_functions": flattenStepFunctionsActions(input)})
 		return results
 	}
 	if errorAction.Timestream != nil {
-		results = append(results, map[string]interface{}{"timestream": flattenIotTimestreamActions(input)})
+		results = append(results, map[string]interface{}{"timestream": flattenTimestreamActions(input)})
 		return results
 	}
 

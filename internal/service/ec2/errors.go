@@ -29,6 +29,7 @@ const (
 	ErrCodeInvalidClientVpnAuthorizationRuleNotFound      = "InvalidClientVpnEndpointAuthorizationRuleNotFound"
 	ErrCodeInvalidClientVpnEndpointIdNotFound             = "InvalidClientVpnEndpointId.NotFound"
 	ErrCodeInvalidClientVpnRouteNotFound                  = "InvalidClientVpnRouteNotFound"
+	ErrCodeInvalidConnectionNotification                  = "InvalidConnectionNotification"
 	ErrCodeInvalidCustomerGatewayIDNotFound               = "InvalidCustomerGatewayID.NotFound"
 	ErrCodeInvalidDhcpOptionIDNotFound                    = "InvalidDhcpOptionID.NotFound"
 	ErrCodeInvalidFlowLogIdNotFound                       = "InvalidFlowLogId.NotFound"
@@ -84,6 +85,7 @@ const (
 	ErrCodeInvalidVpnGatewayIDNotFound                    = "InvalidVpnGatewayID.NotFound"
 	ErrCodeNatGatewayNotFound                             = "NatGatewayNotFound"
 	ErrCodeUnsupportedOperation                           = "UnsupportedOperation"
+	ErrCodeVolumeInUse                                    = "VolumeInUse"
 )
 
 func CancelSpotFleetRequestError(apiObject *ec2.CancelSpotFleetRequestsErrorItem) error {

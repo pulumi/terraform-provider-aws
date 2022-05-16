@@ -14,7 +14,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-provider-aws/internal/conns"
 	"github.com/hashicorp/terraform-provider-aws/internal/flex"
-	tfiam "github.com/hashicorp/terraform-provider-aws/internal/service/iam"
 	"github.com/hashicorp/terraform-provider-aws/internal/tfresource"
 	"github.com/hashicorp/terraform-provider-aws/internal/verify"
 )
@@ -95,7 +94,7 @@ func resourceTopicRuleDestinationCreate(ctx context.Context, d *schema.ResourceD
 	}
 
 	log.Printf("[INFO] Creating IoT Topic Rule Destination: %s", input)
-	outputRaw, err := tfresource.RetryWhen(tfiam.PropagationTimeout,
+	outputRaw, err := tfresource.RetryWhen(propagationTimeout,
 		func() (interface{}, error) {
 			return conn.CreateTopicRuleDestinationWithContext(ctx, input)
 		},
@@ -321,7 +320,7 @@ func waitTopicRuleDestinationDeleted(ctx context.Context, conn *iot.IoT, arn str
 
 func waitTopicRuleDestinationDisabled(ctx context.Context, conn *iot.IoT, arn string, timeout time.Duration) (*iot.TopicRuleDestination, error) {
 	stateConf := &resource.StateChangeConf{
-		Pending: []string{iot.TopicRuleDestinationStatusEnabled},
+		Pending: []string{iot.TopicRuleDestinationStatusInProgress},
 		Target:  []string{iot.TopicRuleDestinationStatusDisabled},
 		Refresh: statusTopicRuleDestination(ctx, conn, arn),
 		Timeout: timeout,
@@ -340,7 +339,7 @@ func waitTopicRuleDestinationDisabled(ctx context.Context, conn *iot.IoT, arn st
 
 func waitTopicRuleDestinationEnabled(ctx context.Context, conn *iot.IoT, arn string, timeout time.Duration) (*iot.TopicRuleDestination, error) {
 	stateConf := &resource.StateChangeConf{
-		Pending: []string{iot.TopicRuleDestinationStatusDisabled},
+		Pending: []string{iot.TopicRuleDestinationStatusInProgress},
 		Target:  []string{iot.TopicRuleDestinationStatusEnabled},
 		Refresh: statusTopicRuleDestination(ctx, conn, arn),
 		Timeout: timeout,
