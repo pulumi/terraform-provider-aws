@@ -749,7 +749,7 @@ func resourceBucketLegacyUpdate(d *schema.ResourceData, meta interface{}) error 
 		o, n := d.GetChange("tags_all")
 
 		// Retry due to S3 eventual consistency
-		_, err := verify.RetryOnAWSCode(s3.ErrCodeNoSuchBucket, func() (interface{}, error) {
+		_, err := retryOnAWSCode(s3.ErrCodeNoSuchBucket, func() (interface{}, error) {
 			terr := BucketUpdateTags(conn, d.Id(), o, n)
 			return nil, terr
 		})
@@ -907,7 +907,7 @@ func resourceBucketLegacyRead(d *schema.ResourceData, meta interface{}) error {
 	// Read the policy
 	if _, ok := d.GetOk("policy"); ok {
 
-		pol, err := verify.RetryOnAWSCode(s3.ErrCodeNoSuchBucket, func() (interface{}, error) {
+		pol, err := retryOnAWSCode(s3.ErrCodeNoSuchBucket, func() (interface{}, error) {
 			return conn.GetBucketPolicy(&s3.GetBucketPolicyInput{
 				Bucket: aws.String(d.Id()),
 			})
@@ -946,7 +946,7 @@ func resourceBucketLegacyRead(d *schema.ResourceData, meta interface{}) error {
 			return fmt.Errorf("error resetting grant %s", err)
 		}
 	} else {
-		apResponse, err := verify.RetryOnAWSCode("NoSuchBucket", func() (interface{}, error) {
+		apResponse, err := retryOnAWSCode("NoSuchBucket", func() (interface{}, error) {
 			return conn.GetBucketAcl(&s3.GetBucketAclInput{
 				Bucket: aws.String(d.Id()),
 			})
@@ -962,7 +962,7 @@ func resourceBucketLegacyRead(d *schema.ResourceData, meta interface{}) error {
 	}
 
 	// Read the CORS
-	corsResponse, err := verify.RetryOnAWSCode(s3.ErrCodeNoSuchBucket, func() (interface{}, error) {
+	corsResponse, err := retryOnAWSCode(s3.ErrCodeNoSuchBucket, func() (interface{}, error) {
 		return conn.GetBucketCors(&s3.GetBucketCorsInput{
 			Bucket: aws.String(d.Id()),
 		})
@@ -994,7 +994,7 @@ func resourceBucketLegacyRead(d *schema.ResourceData, meta interface{}) error {
 	}
 
 	// Read the website configuration
-	wsResponse, err := verify.RetryOnAWSCode(s3.ErrCodeNoSuchBucket, func() (interface{}, error) {
+	wsResponse, err := retryOnAWSCode(s3.ErrCodeNoSuchBucket, func() (interface{}, error) {
 		return conn.GetBucketWebsite(&s3.GetBucketWebsiteInput{
 			Bucket: aws.String(d.Id()),
 		})
@@ -1061,7 +1061,7 @@ func resourceBucketLegacyRead(d *schema.ResourceData, meta interface{}) error {
 
 	// Read the versioning configuration
 
-	versioningResponse, err := verify.RetryOnAWSCode(s3.ErrCodeNoSuchBucket, func() (interface{}, error) {
+	versioningResponse, err := retryOnAWSCode(s3.ErrCodeNoSuchBucket, func() (interface{}, error) {
 		return conn.GetBucketVersioning(&s3.GetBucketVersioningInput{
 			Bucket: aws.String(d.Id()),
 		})
@@ -1079,7 +1079,7 @@ func resourceBucketLegacyRead(d *schema.ResourceData, meta interface{}) error {
 
 	// Read the acceleration status
 
-	accelerateResponse, err := verify.RetryOnAWSCode(s3.ErrCodeNoSuchBucket, func() (interface{}, error) {
+	accelerateResponse, err := retryOnAWSCode(s3.ErrCodeNoSuchBucket, func() (interface{}, error) {
 		return conn.GetBucketAccelerateConfiguration(&s3.GetBucketAccelerateConfigurationInput{
 			Bucket: aws.String(d.Id()),
 		})
@@ -1095,7 +1095,7 @@ func resourceBucketLegacyRead(d *schema.ResourceData, meta interface{}) error {
 
 	// Read the request payer configuration.
 
-	payerResponse, err := verify.RetryOnAWSCode(s3.ErrCodeNoSuchBucket, func() (interface{}, error) {
+	payerResponse, err := retryOnAWSCode(s3.ErrCodeNoSuchBucket, func() (interface{}, error) {
 		return conn.GetBucketRequestPayment(&s3.GetBucketRequestPaymentInput{
 			Bucket: aws.String(d.Id()),
 		})
