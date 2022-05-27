@@ -758,7 +758,7 @@ func resourceClusterCreate(d *schema.ResourceData, meta interface{}) error {
 			instanceGroup.Market = aws.String(emr.MarketTypeSpot)
 		}
 
-		expandEbsConfig(m, instanceGroup)
+		expandEBSConfig(m, instanceGroup)
 
 		instanceConfig.InstanceGroups = append(instanceConfig.InstanceGroups, instanceGroup)
 	}
@@ -789,7 +789,7 @@ func resourceClusterCreate(d *schema.ResourceData, meta interface{}) error {
 			instanceGroup.Market = aws.String(emr.MarketTypeSpot)
 		}
 
-		expandEbsConfig(m, instanceGroup)
+		expandEBSConfig(m, instanceGroup)
 
 		instanceConfig.InstanceGroups = append(instanceConfig.InstanceGroups, instanceGroup)
 	}
@@ -1098,7 +1098,7 @@ func resourceClusterRead(d *schema.ResourceData, meta interface{}) error {
 		}
 	}
 
-	if err := d.Set("ec2_attributes", flattenEc2Attributes(cluster.Ec2InstanceAttributes)); err != nil {
+	if err := d.Set("ec2_attributes", flattenEC2InstanceAttributes(cluster.Ec2InstanceAttributes)); err != nil {
 		return fmt.Errorf("error setting EMR Ec2 Attributes: %w", err)
 	}
 
@@ -1432,7 +1432,7 @@ func flattenApplications(apps []*emr.Application) []interface{} {
 	return appOut
 }
 
-func flattenEc2Attributes(ia *emr.Ec2InstanceAttributes) []map[string]interface{} {
+func flattenEC2InstanceAttributes(ia *emr.Ec2InstanceAttributes) []map[string]interface{} {
 	attrs := map[string]interface{}{}
 	result := make([]map[string]interface{}, 0)
 
@@ -1794,7 +1794,7 @@ func expandStepConfigs(l []interface{}) []*emr.StepConfig {
 	return stepConfigs
 }
 
-func expandEbsConfig(configAttributes map[string]interface{}, config *emr.InstanceGroupConfig) {
+func expandEBSConfig(configAttributes map[string]interface{}, config *emr.InstanceGroupConfig) {
 	if rawEbsConfigs, ok := configAttributes["ebs_config"]; ok {
 		ebsConfig := &emr.EbsConfiguration{}
 
@@ -2074,7 +2074,7 @@ func flattenSpotSpecification(spotSpecification *emr.SpotProvisioningSpecificati
 	return []interface{}{m}
 }
 
-func expandEbsConfiguration(ebsConfigurations []interface{}) *emr.EbsConfiguration {
+func expandEBSConfiguration(ebsConfigurations []interface{}) *emr.EbsConfiguration {
 	ebsConfig := &emr.EbsConfiguration{}
 	ebsConfigs := make([]*emr.EbsBlockDeviceConfig, 0)
 	for _, ebsConfiguration := range ebsConfigurations {
@@ -2124,7 +2124,7 @@ func expandInstanceTypeConfigs(instanceTypeConfigs []interface{}) []*emr.Instanc
 		}
 
 		if v, ok := configAttributes["ebs_config"].(*schema.Set); ok && v.Len() == 1 {
-			config.EbsConfiguration = expandEbsConfiguration(v.List())
+			config.EbsConfiguration = expandEBSConfiguration(v.List())
 		}
 
 		configsOut = append(configsOut, config)
