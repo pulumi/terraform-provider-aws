@@ -29,7 +29,8 @@ The following arguments are supported:
 
 * `name` - (Required) The name of the resource share.
 * `allow_external_principals` - (Optional) Indicates whether principals outside your organization can be associated with a resource share.
-* `tags` - (Optional) A map of tags to assign to the resource share. .If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+* `permission_arns` - (Optional) Specifies the Amazon Resource Names (ARNs) of the RAM permission to associate with the resource share. If you do not specify an ARN for the permission, RAM automatically attaches the default version of the permission for each resource type. You can associate only one permission with each resource type included in the resource share.
+* `tags` - (Optional) A map of tags to assign to the resource share. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ## Attributes Reference
 
