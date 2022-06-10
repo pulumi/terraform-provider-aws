@@ -86,6 +86,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/service/elbv2"
 	"github.com/hashicorp/terraform-provider-aws/internal/service/emr"
 	"github.com/hashicorp/terraform-provider-aws/internal/service/emrcontainers"
+	"github.com/hashicorp/terraform-provider-aws/internal/service/emrserverless"
 	"github.com/hashicorp/terraform-provider-aws/internal/service/events"
 	"github.com/hashicorp/terraform-provider-aws/internal/service/firehose"
 	"github.com/hashicorp/terraform-provider-aws/internal/service/fms"
@@ -1042,7 +1043,8 @@ func Provider() *schema.Provider {
 			"aws_budgets_budget":        budgets.ResourceBudget(),
 			"aws_budgets_budget_action": budgets.ResourceBudgetAction(),
 
-			"aws_ce_cost_category": ce.ResourceCostCategory(),
+			"aws_ce_anomaly_monitor": ce.ResourceAnomalyMonitor(),
+			"aws_ce_cost_category":   ce.ResourceCostCategory(),
 
 			"aws_chime_voice_connector":                         chime.ResourceVoiceConnector(),
 			"aws_chime_voice_connector_group":                   chime.ResourceVoiceConnectorGroup(),
@@ -1455,6 +1457,8 @@ func Provider() *schema.Provider {
 			"aws_emr_studio_session_mapping": emr.ResourceStudioSessionMapping(),
 
 			"aws_emrcontainers_virtual_cluster": emrcontainers.ResourceVirtualCluster(),
+
+			"aws_emrserverless_application": emrserverless.ResourceApplication(),
 
 			"aws_kinesis_firehose_delivery_stream": firehose.ResourceDeliveryStream(),
 
