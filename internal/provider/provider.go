@@ -104,6 +104,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/service/iot"
 	"github.com/hashicorp/terraform-provider-aws/internal/service/kafka"
 	"github.com/hashicorp/terraform-provider-aws/internal/service/kafkaconnect"
+	"github.com/hashicorp/terraform-provider-aws/internal/service/kendra"
 	"github.com/hashicorp/terraform-provider-aws/internal/service/keyspaces"
 	"github.com/hashicorp/terraform-provider-aws/internal/service/kinesis"
 	"github.com/hashicorp/terraform-provider-aws/internal/service/kinesisanalytics"
@@ -1003,7 +1004,7 @@ func Provider() *schema.Provider {
 			"aws_appsync_api_key":                     appsync.ResourceAPIKey(),
 			"aws_appsync_datasource":                  appsync.ResourceDataSource(),
 			"aws_appsync_domain_name":                 appsync.ResourceDomainName(),
-			"aws_appsync_domain_name_api_association": appsync.ResourceDomainNameApiAssociation(),
+			"aws_appsync_domain_name_api_association": appsync.ResourceDomainNameAPIAssociation(),
 			"aws_appsync_function":                    appsync.ResourceFunction(),
 			"aws_appsync_graphql_api":                 appsync.ResourceGraphQLAPI(),
 			"aws_appsync_resolver":                    appsync.ResourceResolver(),
@@ -1512,7 +1513,7 @@ func Provider() *schema.Provider {
 			"aws_grafana_license_association":          grafana.ResourceLicenseAssociation(),
 			"aws_grafana_role_association":             grafana.ResourceRoleAssociation(),
 			"aws_grafana_workspace":                    grafana.ResourceWorkspace(),
-			"aws_grafana_workspace_saml_configuration": grafana.ResourceWorkspaceSamlConfiguration(),
+			"aws_grafana_workspace_saml_configuration": grafana.ResourceWorkspaceSAMLConfiguration(),
 
 			"aws_guardduty_detector":                   guardduty.ResourceDetector(),
 			"aws_guardduty_filter":                     guardduty.ResourceFilter(),
@@ -1587,6 +1588,8 @@ func Provider() *schema.Provider {
 			"aws_mskconnect_custom_plugin":        kafkaconnect.ResourceCustomPlugin(),
 			"aws_mskconnect_worker_configuration": kafkaconnect.ResourceWorkerConfiguration(),
 
+			"aws_kendra_index": kendra.ResourceIndex(),
+
 			"aws_keyspaces_keyspace": keyspaces.ResourceKeyspace(),
 			"aws_keyspaces_table":    keyspaces.ResourceTable(),
 
@@ -1631,12 +1634,14 @@ func Provider() *schema.Provider {
 			"aws_licensemanager_association":           licensemanager.ResourceAssociation(),
 			"aws_licensemanager_license_configuration": licensemanager.ResourceLicenseConfiguration(),
 
-			"aws_lightsail_domain":                lightsail.ResourceDomain(),
-			"aws_lightsail_instance":              lightsail.ResourceInstance(),
-			"aws_lightsail_instance_public_ports": lightsail.ResourceInstancePublicPorts(),
-			"aws_lightsail_key_pair":              lightsail.ResourceKeyPair(),
-			"aws_lightsail_static_ip":             lightsail.ResourceStaticIP(),
-			"aws_lightsail_static_ip_attachment":  lightsail.ResourceStaticIPAttachment(),
+			"aws_lightsail_container_service":                    lightsail.ResourceContainerService(),
+			"aws_lightsail_container_service_deployment_version": lightsail.ResourceContainerServiceDeploymentVersion(),
+			"aws_lightsail_domain":                               lightsail.ResourceDomain(),
+			"aws_lightsail_instance":                             lightsail.ResourceInstance(),
+			"aws_lightsail_instance_public_ports":                lightsail.ResourceInstancePublicPorts(),
+			"aws_lightsail_key_pair":                             lightsail.ResourceKeyPair(),
+			"aws_lightsail_static_ip":                            lightsail.ResourceStaticIP(),
+			"aws_lightsail_static_ip_attachment":                 lightsail.ResourceStaticIPAttachment(),
 
 			"aws_location_map":         location.ResourceMap(),
 			"aws_location_place_index": location.ResourcePlaceIndex(),
