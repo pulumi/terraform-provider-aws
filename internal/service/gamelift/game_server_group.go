@@ -168,7 +168,7 @@ func ResourceGameServerGroup() *schema.Resource {
 				ValidateFunc: verify.ValidARN,
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 			"vpc_subnets": {
 				Type:     schema.TypeSet,
 				Optional: true,

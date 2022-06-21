@@ -101,7 +101,7 @@ func ResourceLink() *schema.Resource {
 				ForceNew: true,
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 			"type": {
 				Type:         schema.TypeString,
 				Optional:     true,

@@ -519,6 +519,12 @@ func ResourceCluster() *schema.Resource {
 					},
 				},
 			},
+			"step_concurrency_level": {
+				Type:         schema.TypeInt,
+				Optional:     true,
+				Default:      1,
+				ValidateFunc: validation.IntBetween(1, 256),
+			},
 			"tags":     tftags.TagsSchema(),
 			"tags_all": tftags.TagsSchemaTrulyComputed(),
 			"termination_protection": {

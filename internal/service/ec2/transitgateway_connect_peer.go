@@ -80,7 +80,7 @@ func ResourceTransitGatewayConnectPeer() *schema.Resource {
 				ValidateFunc: validation.IsIPAddress,
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 			"transit_gateway_address": {
 				Type:         schema.TypeString,
 				Optional:     true,

@@ -48,7 +48,7 @@ func ResourceGlobalNetwork() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 256),
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 		},
 	}
 }

@@ -67,7 +67,7 @@ func ResourceUsageLimit() *schema.Resource {
 				ValidateFunc: validation.StringInSlice(redshift.UsageLimitPeriod_Values(), false),
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 		},
 
 		CustomizeDiff: verify.SetTagsDiff,

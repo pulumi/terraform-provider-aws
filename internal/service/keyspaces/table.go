@@ -275,7 +275,7 @@ func ResourceTable() *schema.Resource {
 				),
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 			"ttl": {
 				Type:     schema.TypeList,
 				Optional: true,

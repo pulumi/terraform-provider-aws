@@ -92,7 +92,7 @@ func ResourceConnection() *schema.Resource {
 				Optional: true,
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 		},
 	}
 }

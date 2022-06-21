@@ -61,7 +61,7 @@ func ResourceMap() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(1, 100),
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 			"update_time": {
 				Type:     schema.TypeString,
 				Computed: true,

@@ -66,7 +66,7 @@ func ResourceEventIntegration() *schema.Resource {
 				ValidateFunc: validation.StringMatch(regexp.MustCompile(`^[a-zA-Z0-9\/\._\-]{1,255}$`), "should be not be more than 255 alphanumeric, forward slashes, dots, underscores, or hyphen characters"),
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 		},
 		CustomizeDiff: verify.SetTagsDiff,
 	}
