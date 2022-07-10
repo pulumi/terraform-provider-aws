@@ -28,7 +28,7 @@ The following arguments are optional:
 * `name` - (Optional, Forces new resource) Name of the ACL. If omitted, Terraform will assign a random, unique name. Conflicts with `name_prefix`.
 * `name_prefix` - (Optional, Forces new resource) Creates a unique name beginning with the specified prefix. Conflicts with `name`.
 * `user_names` - (Optional) Set of MemoryDB user names to be included in this ACL.
-* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ## Attributes Reference
 

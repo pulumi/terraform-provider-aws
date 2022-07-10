@@ -67,6 +67,7 @@ func TestAccAutoScalingGroup_basic(t *testing.T) {
 					resource.TestCheckResourceAttr(resourceName, "capacity_rebalance", "false"),
 					resource.TestCheckResourceAttr(resourceName, "context", ""),
 					resource.TestCheckResourceAttr(resourceName, "default_cooldown", "300"),
+					resource.TestCheckResourceAttr(resourceName, "default_instance_warmup", "0"),
 					resource.TestCheckResourceAttr(resourceName, "desired_capacity", "0"),
 					resource.TestCheckResourceAttr(resourceName, "enabled_metrics.#", "0"),
 					resource.TestCheckResourceAttr(resourceName, "force_delete", "false"),
@@ -123,6 +124,36 @@ func TestAccAutoScalingGroup_disappears(t *testing.T) {
 					acctest.CheckResourceDisappears(acctest.Provider, tfautoscaling.ResourceGroup(), resourceName),
 				),
 				ExpectNonEmptyPlan: true,
+			},
+		},
+	})
+}
+
+func TestAccAutoScalingGroup_defaultInstanceWarmup(t *testing.T) {
+	var group autoscaling.Group
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	resourceName := "aws_autoscaling_group.test"
+
+	resource.ParallelTest(t, resource.TestCase{
+		PreCheck:          func() { acctest.PreCheck(t) },
+		ErrorCheck:        acctest.ErrorCheck(t, autoscaling.EndpointsID),
+		ProviderFactories: acctest.ProviderFactories,
+		CheckDestroy:      testAccCheckGroupDestroy,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccGroupConfig_defaultInstanceWarmup(rName, 30),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckGroupExists(resourceName, &group),
+					resource.TestCheckResourceAttr(resourceName, "default_instance_warmup", "30"),
+				),
+			},
+			testAccGroupImportStep(resourceName),
+			{
+				Config: testAccGroupConfig_defaultInstanceWarmup(rName, 15),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckGroupExists(resourceName, &group),
+					resource.TestCheckResourceAttr(resourceName, "default_instance_warmup", "15"),
+				),
 			},
 		},
 	})
@@ -3278,6 +3309,19 @@ resource "aws_autoscaling_group" "test" {
 `, rName))
 }
 
+func testAccGroupConfig_defaultInstanceWarmup(rName string, defaultInstanceWarmup int) string {
+	return acctest.ConfigCompose(testAccGroupLaunchConfigurationBaseConfig(rName, "t2.micro"), fmt.Sprintf(`
+resource "aws_autoscaling_group" "test" {
+  availability_zones      = [data.aws_availability_zones.available.names[0]]
+  max_size                = 0
+  min_size                = 0
+  name                    = %[1]q
+  default_instance_warmup = %[2]d
+  launch_configuration    = aws_launch_configuration.test.name
+}
+`, rName, defaultInstanceWarmup))
+}
+
 func testAccGroupConfig_nameGenerated(rName string) string {
 	return acctest.ConfigCompose(testAccGroupLaunchConfigurationBaseConfig(rName, "t2.micro"), `
 resource "aws_autoscaling_group" "test" {
@@ -4729,19 +4773,12 @@ resource "aws_autoscaling_group" "test" {
 }
 
 func testAccGroupConfig_mixedInstancesPolicyLaunchTemplateOverrideInstanceTypeLaunchTemplateSpecification(rName string) string {
-	return acctest.ConfigCompose(testAccGroupLaunchTemplateBaseConfig(rName, "t3.micro"), fmt.Sprintf(`
-data "aws_ami" "amzn-ami-hvm-arm64-gp2" {
-  most_recent = true
-  owners      = ["amazon"]
-
-  filter {
-    name   = "name"
-    values = ["amzn2-ami-hvm-*-arm64-gp2"]
-  }
-}
-
+	return acctest.ConfigCompose(
+		testAccGroupLaunchTemplateBaseConfig(rName, "t3.micro"),
+		acctest.ConfigLatestAmazonLinux2HVMEBSARM64AMI(),
+		fmt.Sprintf(`
 resource "aws_launch_template" "test-arm" {
-  image_id      = data.aws_ami.amzn-ami-hvm-arm64-gp2.id
+  image_id      = data.aws_ami.amzn2-ami-minimal-hvm-ebs-arm64.id
   instance_type = "t4g.micro"
   name          = "%[1]s-arm"
 }

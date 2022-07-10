@@ -86,7 +86,7 @@ The following arguments are supported:
 * `enabled` - (Optional) True to enable the fleet provisioning template, otherwise false.
 * `pre_provisioning_hook` - (Optional) Creates a pre-provisioning hook template. Details below.
 * `provisioning_role_arn` - (Required) The role ARN for the role associated with the fleet provisioning template. This IoT role grants permission to provision a device.
-* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 * `template_body` - (Required) The JSON formatted contents of the fleet provisioning template.
 
 ### pre_provisioning_hook

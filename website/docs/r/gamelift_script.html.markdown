@@ -31,7 +31,7 @@ The following arguments are supported:
 * `name` - (Required) Name of the script
 * `storage_location` - (Optional) Information indicating where your game script files are stored. See below.
 * `version` - (Optional) Version that is associated with this script.
-* `tags` - (Optional) Key-value map of resource tags. If configured with a provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Key-value map of resource tags. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 * `zip_file` - (Optional) A data object containing your Realtime scripts and dependencies as a zip  file. The zip file can have one or multiple files. Maximum size of a zip file is 5 MB.
 
 ### Nested Fields

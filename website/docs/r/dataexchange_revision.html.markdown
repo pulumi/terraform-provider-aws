@@ -23,7 +23,7 @@ resource "aws_dataexchange_revision" "example" {
 
 * `data_set_id` - (Required) The dataset id.
 * `comment` - (Required) An optional comment about the revision.
-* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ## Attributes Reference
 

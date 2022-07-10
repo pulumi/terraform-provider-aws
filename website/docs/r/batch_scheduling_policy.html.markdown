@@ -43,7 +43,7 @@ The following arguments are supported:
 
 * `fairshare_policy` - (Optional) A fairshare policy block specifies the `compute_reservation`, `share_delay_seconds`, and `share_distribution` of the scheduling policy. The `fairshare_policy` block is documented below.
 * `name` - (Required) Specifies the name of the scheduling policy.
-* `tags` - (Optional) Key-value map of resource tags. If configured with a provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Key-value map of resource tags. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 A `fairshare_policy` block supports the following arguments:
 

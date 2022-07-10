@@ -47,7 +47,7 @@ The following arguments are supported:
 * `name_server` - (Optional) The list of nameservers for the domain.
 * `registrant_contact` - (Optional) Details about the domain registrant.
 * `registrant_privacy` - (Optional) Whether domain registrant contact information is concealed from WHOIS queries. Default: `true`.
-* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 * `tech_contact` - (Optional) Details about the domain technical contact.
 * `tech_privacy` - (Optional) Whether domain technical contact information is concealed from WHOIS queries. Default: `true`.
 * `transfer_lock` - (Optional) Whether the domain is locked for transfer. Default: `true`.

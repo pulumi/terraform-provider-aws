@@ -33,7 +33,7 @@ The following arguments are supported:
 * `hsm_partition_name` - (Required, Forces new resource) The name of the partition in the HSM where the Amazon Redshift clusters will store their database encryption keys.
 * `hsm_partition_password` - (Required, Forces new resource) The password required to access the HSM partition.
 * `hsm_server_public_certificate` - (Required, Forces new resource) The HSMs public certificate file. When using Cloud HSM, the file name is server.pem.
-* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ## Attributes Reference
 

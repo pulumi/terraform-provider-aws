@@ -78,7 +78,7 @@ The following arguments are supported:
 * `control` - (Required) One or more control blocks that make up the framework. Each control in the list has a name, input parameters, and scope. Detailed below.
 * `description` - (Optional) The description of the framework with a maximum of 1,024 characters
 * `name` - (Required) The unique name of the framework. The name must be between 1 and 256 characters, starting with a letter, and consisting of letters, numbers, and underscores.
-* `tags` - (Optional) Metadata that you can assign to help organize the frameworks you create. If configured with a provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Metadata that you can assign to help organize the frameworks you create. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ### Control Arguments
 For **control** the following attributes are supported:

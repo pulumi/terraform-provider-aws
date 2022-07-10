@@ -23,7 +23,7 @@ resource "aws_redshift_hsm_client_certificate" "example" {
 The following arguments are supported:
 
 * `hsm_client_certificate_identifier` - (Required, Forces new resource) The identifier of the HSM client certificate.
-* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ## Attributes Reference
 

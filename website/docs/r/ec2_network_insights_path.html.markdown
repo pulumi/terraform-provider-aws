@@ -33,7 +33,7 @@ The following arguments are optional:
 * `source_ip` - (Optional) IP address of the source resource.
 * `destination_ip` - (Optional) IP address of the destination resource.
 * `destination_port` - (Optional) Destination port to analyze access to.
-* `tags` - (Optional) Map of tags to assign to the resource. If configured with a provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Map of tags to assign to the resource. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ## Attributes Reference
 

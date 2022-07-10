@@ -36,7 +36,7 @@ The following arguments are supported:
 * `eventbridge_bus` - (Required) Specifies the EventBridge bus.
 * `event_filter` - (Required) A block that defines the configuration information for the event filter. The Event Filter block is documented below.
 * `name` - (Required) Specifies the name of the Event Integration.
-* `tags` - (Optional) Tags to apply to the Event Integration. If configured with a provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Tags to apply to the Event Integration. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 A `event_filter` block supports the following arguments:
 

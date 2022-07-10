@@ -29,7 +29,7 @@ The following arguments are supported:
 * `name` - (Optional, Forces new resource) Name of the snapshot. If omitted, Terraform will assign a random, unique name. Conflicts with `name_prefix`.
 * `name_prefix` - (Optional, Forces new resource) Creates a unique name beginning with the specified prefix. Conflicts with `name`.
 * `kms_key_arn` - (Optional, Forces new resource) ARN of the KMS key used to encrypt the snapshot at rest.
-* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ## Attributes Reference
 

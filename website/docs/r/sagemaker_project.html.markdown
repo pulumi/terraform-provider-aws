@@ -31,7 +31,7 @@ The following arguments are supported:
 * `project_name` - (Required) The name of the Project.
 * `project_description` - (Optional) A description for the project.
 * `service_catalog_provisioning_details` - (Required) The product ID and provisioning artifact ID to provision a service catalog. See [Service Catalog Provisioning Details](#service-catalog-provisioning-details) below.
-* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 
 ### Service Catalog Provisioning Details

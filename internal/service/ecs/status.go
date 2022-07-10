@@ -12,7 +12,6 @@ import (
 )
 
 const (
-	// AWS will likely add consts for these at some point
 	serviceStatusInactive = "INACTIVE"
 	serviceStatusActive   = "ACTIVE"
 	serviceStatusDraining = "DRAINING"
@@ -57,6 +56,20 @@ func statusCapacityProviderUpdate(conn *ecs.ECS, arn string) resource.StateRefre
 		}
 
 		return output, aws.StringValue(output.UpdateStatus), nil
+	}
+}
+
+func statusServiceNoTags(conn *ecs.ECS, id, cluster string) resource.StateRefreshFunc {
+	return func() (interface{}, string, error) {
+		service, err := FindServiceNoTagsByID(context.TODO(), conn, id, cluster)
+		if tfresource.NotFound(err) {
+			return nil, "", nil
+		}
+		if err != nil {
+			return nil, "", err
+		}
+
+		return service, aws.StringValue(service.Status), err
 	}
 }
 

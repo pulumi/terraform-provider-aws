@@ -160,7 +160,7 @@ The following arguments are optional:
 * `source_hash` - (Optional) Triggers updates like `etag` but useful to address `etag` encryption limitations. Set using `filemd5("path/to/source")` (Terraform 0.11.12 or later). (The value is only stored in state and not saved by AWS.)
 * `source` - (Optional, conflicts with `content` and `content_base64`) Path to a file that will be read and uploaded as raw bytes for the object content.
 * `storage_class` - (Optional) [Storage Class](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutObject.html#AmazonS3-PutObject-request-header-StorageClass) for the object. Defaults to "`STANDARD`".
-* `tags` - (Optional) Map of tags to assign to the object. If configured with a provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Map of tags to assign to the object. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 * `website_redirect` - (Optional) Target URL for [website redirect](http://docs.aws.amazon.com/AmazonS3/latest/dev/how-to-page-redirect.html).
 
 If no content is provided through `source`, `content` or `content_base64`, then the object will be empty.

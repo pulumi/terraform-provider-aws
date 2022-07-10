@@ -114,7 +114,7 @@ The following arguments are supported:
 * `filename` - (Optional) The path to the Contact Flow Module source within the local filesystem. Conflicts with `content`.
 * `instance_id` - (Required) Specifies the identifier of the hosting Amazon Connect Instance.
 * `name` - (Required) Specifies the name of the Contact Flow Module.
-* `tags` - (Optional) Tags to apply to the Contact Flow Module. If configured with a provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Tags to apply to the Contact Flow Module. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ## Attributes Reference
 

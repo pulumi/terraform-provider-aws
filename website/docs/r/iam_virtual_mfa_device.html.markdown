@@ -29,7 +29,7 @@ The following arguments are supported:
 
 * `virtual_mfa_device_name` - (Required) The name of the virtual MFA device. Use with path to uniquely identify a virtual MFA device.
 * `path` – (Optional) The path for the virtual MFA device.
-* `tags` - (Optional) Map of resource tags for the virtual mfa device. If configured with a provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Map of resource tags for the virtual mfa device. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ## Attributes Reference
 

@@ -41,7 +41,7 @@ The following arguments are supported:
 * `instance_id` - (Required) Specifies the identifier of the hosting Amazon Connect Instance.
 * `name` - (Required) Specifies the name of the Quick Connect.
 * `quick_connect_config` - (Required) A block that defines the configuration information for the Quick Connect: `quick_connect_type` and one of `phone_config`, `queue_config`, `user_config` . The Quick Connect Config block is documented below.
-* `tags` - (Optional) Tags to apply to the Quick Connect. If configured with a provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Tags to apply to the Quick Connect. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 A `quick_connect_config` block supports the following arguments:
 
