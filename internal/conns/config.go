@@ -143,6 +143,7 @@ func (c *Config) Client(ctx context.Context) (interface{}, diag.Diagnostics) {
 	if err != nil {
 		return nil, diag.Errorf("error creating AWS SDK v1 session: %s", err)
 	}
+	sess.Handlers.Build.PushBack(traceHandler())
 
 	accountID, partition, err := awsbase.GetAwsAccountIDAndPartition(ctx, cfg, &awsbaseConfig)
 	if err != nil {

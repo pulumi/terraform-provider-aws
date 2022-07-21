@@ -281,7 +281,7 @@ func resourceBucketObjectRead(d *schema.ResourceData, meta interface{}) error {
 
 	// Retry due to S3 eventual consistency
 	tagsRaw, err := tfresource.RetryWhenAWSErrCodeEquals(2*time.Minute, func() (interface{}, error) {
-		return ObjectListTags(conn, bucket, key)
+		return ObjectListTags(context.Background(), conn, bucket, key)
 	}, s3.ErrCodeNoSuchBucket)
 
 	if err != nil {
@@ -371,7 +371,7 @@ func resourceBucketObjectUpdate(d *schema.ResourceData, meta interface{}) error 
 	if d.HasChange("tags_all") {
 		o, n := d.GetChange("tags_all")
 
-		if err := ObjectUpdateTags(conn, bucket, key, o, n); err != nil {
+		if err := ObjectUpdateTags(context.Background(), conn, bucket, key, o, n); err != nil {
 			return fmt.Errorf("error updating tags: %s", err)
 		}
 	}

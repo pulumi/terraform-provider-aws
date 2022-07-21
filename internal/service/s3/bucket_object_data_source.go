@@ -6,6 +6,7 @@ package s3
 
 import (
 	"bytes"
+	"context"
 	"fmt"
 	"log"
 	"strings"
@@ -233,7 +234,7 @@ func dataSourceBucketObjectRead(d *schema.ResourceData, meta interface{}) error 
 		log.Printf("[INFO] Ignoring body of S3 object %s with Content-Type %q", uniqueId, contentType)
 	}
 
-	tags, err := ObjectListTags(conn, bucket, key)
+	tags, err := ObjectListTags(context.Background(), conn, bucket, key)
 
 	if err != nil {
 		return fmt.Errorf("error listing tags for S3 Bucket (%s) Object (%s): %w", bucket, key, err)

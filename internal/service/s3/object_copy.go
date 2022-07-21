@@ -2,6 +2,7 @@ package s3
 
 import (
 	"bytes"
+	"context"
 	"fmt"
 	"log"
 	"net/http"
@@ -369,7 +370,7 @@ func resourceObjectCopyRead(d *schema.ResourceData, meta interface{}) error {
 
 	// Retry due to S3 eventual consistency
 	tagsRaw, err := tfresource.RetryWhenAWSErrCodeEquals(2*time.Minute, func() (interface{}, error) {
-		return ObjectListTags(conn, bucket, key)
+		return ObjectListTags(context.Background(), conn, bucket, key)
 	}, s3.ErrCodeNoSuchBucket)
 
 	if err != nil {
