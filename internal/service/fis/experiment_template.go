@@ -225,7 +225,7 @@ func ResourceExperimentTemplate() *schema.Resource {
 				},
 			},
 			"tags":     tftags.TagsSchemaForceNew(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 		},
 	}
 }

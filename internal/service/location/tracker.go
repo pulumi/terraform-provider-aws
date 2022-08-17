@@ -47,7 +47,7 @@ func ResourceTracker() *schema.Resource {
 				ValidateFunc: validation.StringInSlice(locationservice.PositionFiltering_Values(), false),
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 			"tracker_arn": {
 				Type:     schema.TypeString,
 				Computed: true,
