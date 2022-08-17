@@ -70,15 +70,15 @@ In addition to all arguments above, the following attributes are exported:
 * `arn` - Amazon Resource Name (ARN) of the NFS File Share.
 * `fileshare_id` - ID of the NFS File Share.
 * `path` - File share path used by the NFS client to identify the mount point.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider .
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Timeouts
 
-`aws_storagegateway_nfs_file_share` provides the following [Timeouts](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts) configuration options:
+[Configuration options](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts):
 
-* `create` - (Default `10m`) How long to wait for file share creation.
-* `update` - (Default `10m`) How long to wait for file share updates.
-* `delete` - (Default `10m`) How long to wait for file share deletion.
+* `create` - (Default `10m`)
+* `update` - (Default `10m`)
+* `delete` - (Default `10m`)
 
 ## Import
 

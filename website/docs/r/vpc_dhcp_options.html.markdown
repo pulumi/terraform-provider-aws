@@ -62,7 +62,7 @@ In addition to all arguments above, the following attributes are exported:
 * `id` - The ID of the DHCP Options Set.
 * `arn` - The ARN of the DHCP Options Set.
 * `owner_id` - The ID of the AWS account that owns the DHCP options set.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider .
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 You can find more technical documentation about DHCP Options Set in the
 official [AWS User Guide](https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_DHCP_Options.html).

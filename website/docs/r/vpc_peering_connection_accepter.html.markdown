@@ -101,7 +101,7 @@ In addition to all arguments above, the following attributes are exported:
 (https://docs.aws.amazon.com/vpc/latest/peering/what-is-vpc-peering.html) options set for the accepter VPC.
 * `requester` - A configuration block that describes [VPC Peering Connection]
 (https://docs.aws.amazon.com/vpc/latest/peering/what-is-vpc-peering.html) options set for the requester VPC.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider .
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 #### Accepter and Requester Attributes Reference
 

@@ -43,7 +43,7 @@ In addition to all arguments above, the following attributes are exported:
 
 * `id` - The same as `name`
 * `arn` - The Arn of the queue
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider .
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

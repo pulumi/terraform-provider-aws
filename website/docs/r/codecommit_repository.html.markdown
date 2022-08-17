@@ -36,7 +36,7 @@ In addition to all arguments above, the following attributes are exported:
 * `arn` - The ARN of the repository
 * `clone_url_http` - The URL to use for cloning the repository over HTTPS.
 * `clone_url_ssh` - The URL to use for cloning the repository over SSH.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider .
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

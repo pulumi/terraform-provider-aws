@@ -140,7 +140,7 @@ The following arguments are supported:
 * `description` - (Optional) A description of the flow you want to create.
 * `kms_arn` - (Optional) The ARN (Amazon Resource Name) of the Key Management Service (KMS) key you provide for encryption. This is required if you do not want to use the Amazon AppFlow-managed KMS key. If you don't provide anything here, Amazon AppFlow uses the Amazon AppFlow-managed KMS key.
 * `tags` - (Optional) Key-value mapping of resource tags. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
-* `tags_all` - Map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block).
+* `tags_all` - Map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ### Destination Flow Config
 

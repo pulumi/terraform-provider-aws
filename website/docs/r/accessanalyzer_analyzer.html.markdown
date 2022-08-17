@@ -43,6 +43,7 @@ The following arguments are required:
 
 The following arguments are optional:
 
+<
 * `tags` - (Optional) Key-value map of resource tags. .If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 * `type` - (Optional) Type of Analyzer. Valid values are `ACCOUNT` or `ORGANIZATION`. Defaults to `ACCOUNT`.
 
@@ -52,7 +53,7 @@ In addition to all arguments above, the following attributes are exported:
 
 * `arn` - The Amazon Resource Name (ARN) of the Analyzer.
 * `id` - Analyzer name.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider .
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

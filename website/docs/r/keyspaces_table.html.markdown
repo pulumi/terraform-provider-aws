@@ -103,15 +103,15 @@ The `ttl` object takes the following arguments:
 In addition to all arguments above, the following attributes are exported:
 
 * `arn` - The ARN of the table.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
 
 ## Timeouts
 
-`aws_keyspaces_table` provides the following [Timeouts](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts) configuration options:
+[Configuration options](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts):
 
-- `create` - (Default `10 minutes`) Used for table creation
-- `update` - (Default `30 minutes`) Used for table modification
-- `delete` - (Default `10 minutes`) Used for table deletion
+- `create` - (Default `10m`)
+- `update` - (Default `30m`)
+- `delete` - (Default `10m`)
 
 ## Import
 

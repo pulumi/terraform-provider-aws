@@ -83,7 +83,7 @@ In addition to all arguments above, the following attributes are exported:
     * `cluster_certificates.0.aws_hardware_certificate` - The HSM hardware certificate issued (signed) by AWS CloudHSM.
     * `cluster_certificates.0.hsm_certificate` - The HSM certificate issued (signed) by the HSM hardware.
     * `cluster_certificates.0.manufacturer_hardware_certificate` - The HSM hardware certificate issued (signed) by the hardware manufacturer.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider .
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 [1]: https://docs.aws.amazon.com/cloudhsm/latest/userguide/introduction.html
 [2]: https://docs.aws.amazon.com/cloudhsm/latest/APIReference/Welcome.html

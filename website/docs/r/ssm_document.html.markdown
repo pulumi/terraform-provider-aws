@@ -104,7 +104,7 @@ In addition to all arguments above, the following attributes are exported:
 * `status` - "Creating", "Active" or "Deleting". The current status of the document.
 * `parameter` - The parameters that are available to this document.
 * `platform_types` - A list of OS platforms compatible with this SSM document, either "Windows" or "Linux".
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider .
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 [1]: http://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-ssm-docs.html#document-schemas-features
 [2]: https://docs.aws.amazon.com/systems-manager/latest/userguide/document-schemas-features.html

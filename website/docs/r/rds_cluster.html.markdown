@@ -315,7 +315,7 @@ load-balanced across replicas
 * `storage_encrypted` - Specifies whether the DB cluster is encrypted
 * `replication_source_identifier` - ARN of the source DB cluster or DB instance if this DB cluster is created as a Read Replica.
 * `hosted_zone_id` - The Route53 Hosted Zone ID of the endpoint
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider .
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 [1]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.Replication.html
 [2]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Aurora.html
@@ -324,12 +324,11 @@ load-balanced across replicas
 
 ## Timeouts
 
-`aws_rds_cluster` provides the following
-[Timeouts](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts) configuration options:
+[Configuration options](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts):
 
-- `create` - (Default `120 minutes`) Used for Cluster creation
-- `update` - (Default `120 minutes`) Used for Cluster modifications
-- `delete` - (Default `120 minutes`) Used for destroying cluster. This includes
+- `create` - (Default `120m`)
+- `update` - (Default `120m`)
+- `delete` - (Default `120m`)
 any cleanup task during the destroying process.
 
 ## Import

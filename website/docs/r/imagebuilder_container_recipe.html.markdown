@@ -127,7 +127,7 @@ In addition to all arguments above, the following attributes are exported:
 * `encrypted` - A flag that indicates if the target container is encrypted.
 * `owner` - Owner of the container recipe.
 * `platform` - Platform of the container recipe.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
 
 ## Import
 

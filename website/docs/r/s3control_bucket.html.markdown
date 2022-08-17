@@ -37,7 +37,7 @@ In addition to all arguments above, the following attributes are exported:
 * `creation_date` - UTC creation date in [RFC3339 format](https://tools.ietf.org/html/rfc3339#section-5.8).
 * `id` - Amazon Resource Name (ARN) of the bucket.
 * `public_access_block_enabled` - Boolean whether Public Access Block is enabled.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider .
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

@@ -70,7 +70,7 @@ In addition to all arguments above, the following attributes are exported:
 * `arn` - ARN of the prefix list.
 * `id` - ID of the prefix list.
 * `owner_id` - ID of the AWS account that owns this prefix list.
-* `tags_all` - Map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://www.terraform.io/docs/providers/aws/index.html#default_tags-configuration-block).
+* `tags_all` - Map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
 * `version` - Latest version of this prefix list.
 
 ## Import

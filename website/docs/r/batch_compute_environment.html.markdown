@@ -203,7 +203,7 @@ In addition to all arguments above, the following attributes are exported:
 * `ecs_cluster_arn` - The Amazon Resource Name (ARN) of the underlying Amazon ECS cluster used by the compute environment.
 * `status` - The current status of the compute environment (for example, CREATING or VALID).
 * `status_reason` - A short, human-readable string to provide additional details about the current status of the compute environment.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider .
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

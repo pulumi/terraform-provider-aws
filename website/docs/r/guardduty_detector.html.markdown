@@ -104,7 +104,7 @@ In addition to all arguments above, the following attributes are exported:
 * `account_id` - The AWS account ID of the GuardDuty detector
 * `arn` - Amazon Resource Name (ARN) of the GuardDuty detector
 * `id` - The ID of the GuardDuty detector
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider .
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

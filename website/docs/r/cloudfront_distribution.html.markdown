@@ -593,7 +593,7 @@ In addition to all arguments above, the following attributes are exported:
     distribution's information is fully propagated throughout the Amazon
     CloudFront system.
 
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider .
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 * `trusted_key_groups` - List of nested attributes for active trusted key groups, if the distribution is set up to serve private content with signed URLs
     * `enabled` - `true` if any of the key groups have public keys that CloudFront can use to verify the signatures of signed URLs and signed cookies

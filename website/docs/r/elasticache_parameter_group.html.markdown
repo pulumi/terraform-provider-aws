@@ -39,7 +39,7 @@ The following arguments are supported:
 * `family` - (Required) The family of the ElastiCache parameter group.
 * `description` - (Optional) The description of the ElastiCache parameter group. Defaults to "Managed by Pulumi".
 * `parameter` - (Optional) A list of ElastiCache parameters to apply.
-* `tags` - (Optional) Key-value mapping of resource tags. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Key-value mapping of resource tags. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level
 
 Parameter blocks support the following:
 

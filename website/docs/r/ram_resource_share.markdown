@@ -38,7 +38,7 @@ In addition to all arguments above, the following attributes are exported:
 
 * `arn` - The Amazon Resource Name (ARN) of the resource share.
 * `id` - The Amazon Resource Name (ARN) of the resource share.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider .
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

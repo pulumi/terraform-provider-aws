@@ -25,7 +25,7 @@ resource "aws_iot_thing_type" "foo" {
 * `properties` - (Optional), Configuration block that can contain the following properties of the thing type:
     * `description` - (Optional, Forces New Resource) The description of the thing type.
     * `searchable_attributes` - (Optional, Forces New Resource) A list of searchable thing attribute names.
-* `tags` - (Optional) Key-value mapping of resource tags. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Key-value mapping of resource tags. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level
 
 
 ## Attributes Reference

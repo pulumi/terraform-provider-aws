@@ -116,7 +116,7 @@ In addition to all arguments above, the following attributes are exported:
 * `expiration` - Date and time in [RFC3339 format](https://tools.ietf.org/html/rfc3339#section-5.8) on which the certificate is set to expire.
 * `id` - The unique Server Certificate name
 * `name` - The name of the Server Certificate
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider .
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 * `upload_date` - Date and time in [RFC3339 format](https://tools.ietf.org/html/rfc3339#section-5.8) when the server certificate was uploaded.
 
 ## Import

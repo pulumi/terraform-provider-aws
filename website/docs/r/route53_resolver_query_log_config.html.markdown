@@ -42,7 +42,7 @@ In addition to all arguments above, the following attributes are exported:
 * `share_status` - An indication of whether the query logging configuration is shared with other AWS accounts, or was shared with the current account by another AWS account.
 Sharing is configured through AWS Resource Access Manager (AWS RAM).
 Values are `NOT_SHARED`, `SHARED_BY_ME` or `SHARED_WITH_ME`
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider .
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

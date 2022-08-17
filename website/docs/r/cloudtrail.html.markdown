@@ -436,7 +436,7 @@ In addition to all arguments above, the following attributes are exported:
 * `arn` - ARN of the trail.
 * `home_region` - Region in which the trail was created.
 * `id` - Name of the trail.
-* `tags_all` - Map of tags assigned to the resource, including those inherited from the provider.
+* `tags_all` - Map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

@@ -82,7 +82,7 @@ In addition to all arguments above, the following attributes are exported:
 * `id` - The user profile Amazon Resource Name (ARN).
 * `arn` - The user profile Amazon Resource Name (ARN).
 * `home_efs_file_system_uid` - The ID of the user's profile in the Amazon Elastic File System (EFS) volume.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider .
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

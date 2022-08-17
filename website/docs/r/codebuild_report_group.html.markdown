@@ -91,7 +91,7 @@ In addition to all arguments above, the following attributes are exported:
 * `id` - The ARN of Report Group.
 * `arn` - The ARN of Report Group.
 * `created` - The date and time this Report Group was created.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider .
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

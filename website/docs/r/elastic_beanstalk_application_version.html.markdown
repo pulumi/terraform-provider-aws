@@ -67,4 +67,4 @@ The following arguments are optional:
 In addition to all arguments above, the following attributes are exported:
 
 * `arn` - ARN assigned by AWS for this Elastic Beanstalk Application.
-* `tags_all` - Map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://www.terraform.io/docs/providers/aws/index.html#default_tags-configuration-block).
+* `tags_all` - Map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).

@@ -133,14 +133,13 @@ If no security groups are specified, the VPC's [default security group](https://
 
 * `dns_record_ip_type` - (Optional) The DNS records created for the endpoint. Valid values are `ipv4`, `dualstack`, `service-defined`, and `ipv6`.
 
-### Timeouts
+## Timeouts
 
-`aws_vpc_endpoint` provides the following
-[Timeouts](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts) configuration options:
+[Configuration options](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts):
 
-- `create` - (Default `10 minutes`) Used for creating a VPC endpoint
-- `update` - (Default `10 minutes`) Used for VPC endpoint modifications
-- `delete` - (Default `10 minutes`) Used for destroying VPC endpoints
+- `create` - (Default `10m`)
+- `update` - (Default `10m`)
+- `delete` - (Default `10m`)
 
 ## Attributes Reference
 
@@ -155,7 +154,7 @@ In addition to all arguments above, the following attributes are exported:
 * `prefix_list_id` - The prefix list ID of the exposed AWS service. Applicable for endpoints of type `Gateway`.
 * `requester_managed` -  Whether or not the VPC Endpoint is being managed by its service - `true` or `false`.
 * `state` - The state of the VPC endpoint.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider .
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 DNS blocks (for `dns_entry`) support the following attributes:
 

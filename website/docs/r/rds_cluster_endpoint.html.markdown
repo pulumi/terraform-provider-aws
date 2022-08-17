@@ -96,7 +96,7 @@ In addition to all arguments above, the following attributes are exported:
 * `arn` - Amazon Resource Name (ARN) of cluster
 * `id` - The RDS Cluster Endpoint Identifier
 * `endpoint` - A custom endpoint for the Aurora cluster
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider .
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 
 ## Import

@@ -66,7 +66,7 @@ In addition to all arguments above, the following attributes are exported:
 * `arn` - Amazon Resource Name (ARN) of the Redshift event notification subscription
 * `id` - The name of the Redshift event notification subscription
 * `customer_aws_id` - The AWS customer account associated with the Redshift event notification subscription
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider .
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

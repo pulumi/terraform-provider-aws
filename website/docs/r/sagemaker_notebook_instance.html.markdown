@@ -83,7 +83,7 @@ In addition to all arguments above, the following attributes are exported:
 * `arn` - The Amazon Resource Name (ARN) assigned by AWS to this notebook instance.
 * `url` - The URL that you use to connect to the Jupyter notebook that is running in your notebook instance.
 * `network_interface_id` - The network interface ID that Amazon SageMaker created at the time of creating the instance. Only available when setting `subnet_id`.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider .
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

@@ -263,7 +263,7 @@ The following arguments are supported:
 * `description` - (Optional) A summary description of the application.
 * `force_stop` - (Optional) Whether to force stop an unresponsive Flink-based application.
 * `start_application` - (Optional) Whether to start or stop the application.
-* `tags` - (Optional) A map of tags to assign to the application. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) A map of tags to assign to the application. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level
 
 The `application_configuration` object supports the following:
 
@@ -485,12 +485,11 @@ In addition to all arguments above, the following attributes are exported:
 
 ## Timeouts
 
-`aws_kinesisanalyticsv2_application` provides the following
-[Timeouts](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts) configuration options:
+[Configuration options](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts):
 
-- `create` - (Default `10 minutes`) Used for Application creation
-- `update` - (Default `10 minutes`) Used for Application modifications and snapshotting
-- `delete` - (Default `10 minutes`) Used for Application deletion
+- `create` - (Default `10m`)
+- `update` - (Default `10m`)
+- `delete` - (Default `10m`)
 
 ## Import
 

@@ -38,7 +38,7 @@ Supported only for WebSocket APIs.
 * `description` - (Optional) The description for the stage. Must be less than or equal to 1024 characters in length.
 * `route_settings` - (Optional) Route settings for the stage.
 * `stage_variables` - (Optional) A map that defines the stage variables for the stage.
-* `tags` - (Optional) A map of tags to assign to the stage. .If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) A map of tags to assign to the stage. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 The `access_log_settings` object supports the following:
 

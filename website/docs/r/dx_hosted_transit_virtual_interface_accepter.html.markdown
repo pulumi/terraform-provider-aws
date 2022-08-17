@@ -78,15 +78,14 @@ In addition to all arguments above, the following attributes are exported:
 
 * `id` - The ID of the virtual interface.
 * `arn` - The ARN of the virtual interface.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider .
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Timeouts
 
-`aws_dx_hosted_transit_virtual_interface_accepter` provides the following
-[Timeouts](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts) configuration options:
+[Configuration options](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts):
 
-- `create` - (Default `10 minutes`) Used for creating virtual interface
-- `delete` - (Default `10 minutes`) Used for destroying virtual interface
+- `create` - (Default `10m`)
+- `delete` - (Default `10m`)
 
 ## Import
 

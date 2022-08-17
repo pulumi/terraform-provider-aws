@@ -34,7 +34,7 @@ In addition to all arguments above, the following attributes are exported:
 
 * `id` - The name of the Model Package Group.
 * `arn` - The Amazon Resource Name (ARN) assigned by AWS to this Model Package Group.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider .
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

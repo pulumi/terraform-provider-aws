@@ -87,14 +87,13 @@ In addition to all arguments above, the following attributes are exported:
 * `registrar_url` - Web address of the registrar.
 * `reseller` - Reseller of the domain.
 * `status_list` - List of [domain name status codes](https://www.icann.org/resources/pages/epp-status-codes-2014-06-16-en).
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
 * `updated_date` - The last updated date of the domain as found in the response to a WHOIS query.
 * `whois_server` - The fully qualified name of the WHOIS server that can answer the WHOIS query for the domain.
 
 ## Timeouts
 
-`aws_route53domains_registered_domain` provides the following
-[Timeouts](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts) configuration options:
+[Configuration options](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts):
 
-- `create` - (Default `30 minutes`) Used for Domain creation
-- `update` - (Default `30 minutes`) Used for Domain update
+- `create` - (Default `30m`)
+- `update` - (Default `30m`)

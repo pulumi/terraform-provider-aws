@@ -57,7 +57,7 @@ In addition to all arguments above, the following attributes are exported:
 * `name` - The application's name.
 * `github_account_name` - The name for a connection to a GitHub account.
 * `linked_to_github` - Whether the user has authenticated with GitHub for the specified application.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider .
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

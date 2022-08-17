@@ -66,16 +66,15 @@ In addition to all arguments above, the following attributes are exported:
 
 * `arn` - Amazon Resource Name of the snapshot.
 * `id` - Identifier of the snapshot, e.g., `fsvolsnap-12345678`
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
 
 ## Timeouts
 
-`aws_fsx_openzfs_snapshot` provides the following [Timeouts](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts)
-configuration options:
+[Configuration options](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts):
 
-* `create` - (Default `30m`) How long to wait for the backup to be created.
-* `delete` - (Default `30m`) How long to wait for the backup to be deleted.
-* `update` - (Default `30m`) How long to wait for the backup to be deleted.
+* `create` - (Default `30m`)
+* `delete` - (Default `30m`)
+* `update` - (Default `30m`)
 
 ## Import
 

@@ -156,7 +156,7 @@ In addition to all arguments above, the following attributes are exported:
 * `url` - The domain's URL.
 * `single_sign_on_managed_application_instance_id` - The SSO managed application instance ID.
 * `home_efs_file_system_id` - The ID of the Amazon Elastic File System (EFS) managed by this Domain.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider .
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

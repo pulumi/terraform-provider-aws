@@ -45,7 +45,7 @@ In addition to all arguments above, the following attributes are exported:
 
 * `id` - The unique identifier (ID) of the policy.
 * `arn` - Amazon Resource Name (ARN) of the policy.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider .
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

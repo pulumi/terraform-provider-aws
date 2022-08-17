@@ -66,7 +66,7 @@ In addition to all arguments above, the following attributes are exported:
 * `iam_role` - The IAM Role attached to the managed instance.
 * `registration_limit` - The maximum number of managed instances you want to be registered. The default value is 1 instance.
 * `registration_count` - The number of managed instances that are currently registered using this activation.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider .
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

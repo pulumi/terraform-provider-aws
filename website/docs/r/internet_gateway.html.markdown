@@ -50,7 +50,14 @@ In addition to all arguments above, the following attributes are exported:
 * `id` - The ID of the Internet Gateway.
 * `arn` - The ARN of the Internet Gateway.
 * `owner_id` - The ID of the AWS account that owns the internet gateway.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider .
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
+## Timeouts
+
+[Configuration options](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts):
+
+- `create` - (Default `20m`)
+- `update` - (Default `20m`)
+- `delete` - (Default `20m`)
 
 ## Import
 

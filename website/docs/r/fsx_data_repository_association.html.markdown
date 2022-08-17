@@ -78,16 +78,15 @@ In addition to all arguments above, the following attributes are exported:
 
 * `arn` - Amazon Resource Name of the file system.
 * `id` - Identifier of the data repository association, e.g., `dra-12345678`
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
 
 ## Timeouts
 
-`aws_fsx_data_repository_association` provides the following [Timeouts](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts)
-configuration options:
+[Configuration options](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts):
 
-* `create` - (Default `10m`) How long to wait for the file system to be created.
-* `update` - (Default `10m`) How long to wait for the file system to be updated.
-* `delete` - (Default `10m`) How long to wait for the file system to be deleted.
+* `create` - (Default `10m`)
+* `update` - (Default `10m`)
+* `delete` - (Default `10m`)
 
 ## Import
 

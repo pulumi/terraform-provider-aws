@@ -85,7 +85,7 @@ In addition to all arguments above, the following attributes are exported:
 * `mac_address` - MAC address of the network interface.
 * `owner_id` - AWS account ID of the owner of the network interface.
 * `private_dns_name` - Private DNS name of the network interface (IPv4).
-* `tags_all` - Map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block).
+* `tags_all` - Map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
 
 ## Import
 

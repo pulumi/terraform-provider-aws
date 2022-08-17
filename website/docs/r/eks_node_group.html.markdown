@@ -182,17 +182,16 @@ In addition to all arguments above, the following attributes are exported:
     * `autoscaling_groups` - List of objects containing information about AutoScaling Groups.
         * `name` - Name of the AutoScaling Group.
     * `remote_access_security_group_id` - Identifier of the remote access EC2 Security Group.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider.
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 * `status` - Status of the EKS Node Group.
 
 ## Timeouts
 
-`aws_eks_node_group` provides the following
-[Timeouts](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts) configuration options:
+[Configuration options](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts):
 
-* `create` - (Default `60 minutes`) How long to wait for the EKS Node Group to be created.
-* `update` - (Default `60 minutes`) How long to wait for the EKS Node Group to be updated. Note that the `update` timeout is used separately for both configuration and version update operations.
-* `delete` - (Default `60 minutes`) How long to wait for the EKS Node Group to be deleted.
+* `create` - (Default `60m`)
+* `update` - (Default `60m`)
+* `delete` - (Default `60m`)
 
 ## Import
 

@@ -41,7 +41,7 @@ The following arguments are supported:
 In addition to all arguments above, the following attributes are exported:
 
 * `arn` - Amazon Resource Name (ARN) of snapshot copy grant
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider .
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

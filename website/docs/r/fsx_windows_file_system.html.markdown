@@ -98,19 +98,18 @@ In addition to all arguments above, the following attributes are exported:
 * `id` - Identifier of the file system, e.g., `fs-12345678`
 * `network_interface_ids` - Set of Elastic Network Interface identifiers from which the file system is accessible.
 * `owner_id` - AWS account identifier that created the file system.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider .
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 * `vpc_id` - Identifier of the Virtual Private Cloud for the file system.
 * `preferred_file_server_ip` - The IP address of the primary, or preferred, file server.
 * `remote_administration_endpoint` - For `MULTI_AZ_1` deployment types, use this endpoint when performing administrative tasks on the file system using Amazon FSx Remote PowerShell. For `SINGLE_AZ_1` deployment types, this is the DNS name of the file system.
 
 ## Timeouts
 
-`aws_fsx_windows_file_system` provides the following [Timeouts](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts)
-configuration options:
+[Configuration options](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts):
 
-* `create` - (Default `45m`) How long to wait for the file system to be created.
-* `delete` - (Default `30m`) How long to wait for the file system to be deleted.
-* `update` - (Default `45m`) How long to wait for the file system to be updated.
+* `create` - (Default `45m`)
+* `delete` - (Default `30m`)
+* `update` - (Default `45m`)
 
 ## Import
 

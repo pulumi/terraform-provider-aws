@@ -82,7 +82,7 @@ The `custom_cookbooks_source` block supports the following arguments:
 In addition to all arguments above, the following attributes are exported:
 
 * `id` - The id of the stack.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider .
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

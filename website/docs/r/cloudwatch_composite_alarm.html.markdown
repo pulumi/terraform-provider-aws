@@ -46,7 +46,7 @@ In addition to all arguments above, the following attributes are exported:
 
 * `arn` - The ARN of the composite alarm.
 * `id` - The ID of the composite alarm resource, which is equivalent to its `alarm_name`.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider .
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

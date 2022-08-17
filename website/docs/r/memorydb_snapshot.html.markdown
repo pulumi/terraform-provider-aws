@@ -52,14 +52,14 @@ In addition to all arguments above, the following attributes are exported:
     * `topic_arn` - ARN of the SNS topic to which cluster notifications are sent.
     * `vpc_id` - The VPC in which the cluster exists.
 * `source` - Indicates whether the snapshot is from an automatic backup (`automated`) or was created manually (`manual`).
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
 
 ## Timeouts
 
-`aws_memorydb_snapshot` provides the following [timeout configuration options](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts):
+[Configuration options](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts):
 
-- `create` - (Default `120 minutes`) Used when taking the snapshot of a cluster.
-- `delete` - (Default `120 minutes`) Used when deleting a snapshot.
+- `create` - (Default `120m`)
+- `delete` - (Default `120m`)
 
 ## Import
 

@@ -77,7 +77,7 @@ The following arguments are supported:
 * `maintenance_track_name` - (Optional) The name of the maintenance track for the restored cluster. When you take a snapshot, the snapshot inherits the MaintenanceTrack value from the cluster. The snapshot might be on a different track than the cluster that was the source for the snapshot. For example, suppose that you take a snapshot of  a cluster that is on the current track and then change the cluster to be on the trailing track. In this case, the snapshot and the source cluster are on different tracks. Default value is `current`.
 * `manual_snapshot_retention_period` - (Optional)  The default number of days to retain a manual snapshot. If the value is -1, the snapshot is retained indefinitely. This setting doesn't change the retention period of existing snapshots. Valid values are between `-1` and `3653`. Default value is `-1`.
 * `snapshot_copy` - (Optional) Configuration of automatic copy of snapshots from one region to another. Documented below.
-* `tags` - (Optional) A map of tags to assign to the resource. .If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ### Timeouts
 
@@ -137,6 +137,14 @@ Cluster nodes (for `cluster_nodes`) support the following attributes:
 * `node_role` - Whether the node is a leader node or a compute node
 * `private_ip_address` - The private IP address of a node within a cluster
 * `public_ip_address` - The public IP address of a node within a cluster
+
+## Timeouts
+
+[Configuration options](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts):
+
+- `create` - (Default `75m`)
+- `update` - (Default `75m`)
+- `delete` - (Default `40m`)
 
 ## Import
 

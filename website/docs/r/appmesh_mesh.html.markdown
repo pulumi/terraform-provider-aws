@@ -61,7 +61,7 @@ In addition to all arguments above, the following attributes are exported:
 * `last_updated_date` - The last update date of the service mesh.
 * `mesh_owner` - The AWS account ID of the service mesh's owner.
 * `resource_owner` - The resource owner's AWS account ID.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider .
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

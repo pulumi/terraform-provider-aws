@@ -92,7 +92,7 @@ In addition to all arguments above, the following attributes are exported:
 * `id` - Name for this canary.
 * `source_location_arn` - ARN of the Lambda layer where Synthetics stores the canary script code.
 * `status` - Canary status.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider .
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 * `timeline` - Structure that contains information about when the canary was created, modified, and most recently run. see [Timeline](#timeline).
 
 ### vpc_config

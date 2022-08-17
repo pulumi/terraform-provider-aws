@@ -155,7 +155,7 @@ In addition to all arguments above, the following attributes are exported:
 
 * `arn` - ARN of the anomaly subscription.
 * `id` - Unique ID of the anomaly subscription. Same as `arn`.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
 
 ## Import
 

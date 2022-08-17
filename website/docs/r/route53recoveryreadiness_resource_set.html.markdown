@@ -33,7 +33,7 @@ The following arguments are supported:
 
 The following arguments are optional:
 
-* `tags` - (Optional) Key-value mapping of resource tags. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Key-value mapping of resource tags. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level
 
 ### resources
 
@@ -81,7 +81,6 @@ $ terraform import aws_route53recoveryreadiness_resource_set.my-cw-alarm-set
 
 ## Timeouts
 
-`aws_route53recoveryreadiness_resource_set` provides the following [Timeouts](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts)
-configuration options:
+[Configuration options](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts):
 
-- `delete` - (Default `5m`) Used when deleting the Resource Set
+- `delete` - (Default `5m`)

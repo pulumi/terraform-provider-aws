@@ -96,5 +96,5 @@ In addition to all arguments above, the following attributes are exported:
 * `last_modified` - Returns the date that the object was last modified, in [RFC3339 format](https://tools.ietf.org/html/rfc3339#section-5.8).
 * `request_charged` - If present, indicates that the requester was successfully charged for the request.
 * `source_version_id` - Version of the copied object in the source bucket.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider .
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 * `version_id` - Version ID of the newly created copy.

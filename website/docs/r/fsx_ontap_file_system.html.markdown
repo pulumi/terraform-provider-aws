@@ -41,7 +41,7 @@ The following arguments are supported:
 * `storage_type` - (Optional) - The filesystem storage type. defaults to `SSD`.
 * `fsx_admin_password` - (Optional) The ONTAP administrative password for the fsxadmin user that you can use to administer your file system using the ONTAP CLI and REST API.
 * `route_table_ids` - (Optional) Specifies the VPC route tables in which your file system's endpoints will be created. You should specify all VPC route tables associated with the subnets in which your clients are located. By default, Amazon FSx selects your VPC's default route table.
-* `tags` - (Optional) A map of tags to assign to the file system. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) A map of tags to assign to the file system. .If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 * `throughput_capacity` - (Required) Sets the throughput capacity (in MBps) for the file system that you're creating. Valid values are `128`, `256`, `512`, `1024`, and `2048`.
 
 ### Disk Iops Configuration
@@ -74,12 +74,11 @@ In addition to all arguments above, the following attributes are exported:
 
 ## Timeouts
 
-`aws_fsx_ontap_file_system` provides the following [Timeouts](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts)
-configuration options:
+[Configuration options](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts):
 
-* `create` - (Default `60m`) How long to wait for the file system to be created.
-* `update` - (Default `60m`) How long to wait for the file system to be updated.
-* `delete` - (Default `60m`) How long to wait for the file system to be deleted.
+* `create` - (Default `60m`)
+* `update` - (Default `60m`)
+* `delete` - (Default `60m`)
 
 ## Import
 

@@ -36,7 +36,7 @@ In addition to all arguments above, the following attributes are exported:
 * `repository_count` - The number of repositories in the domain.
 * `created_time` - A timestamp that represents the date and time the domain was created in [RFC3339 format](https://tools.ietf.org/html/rfc3339#section-5.8).
 * `asset_size_bytes` - The total size of all assets in the domain.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider .
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

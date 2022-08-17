@@ -47,7 +47,7 @@ In addition to all arguments above, the following attributes are exported:
 
 * `id` - A unique identifier of the stack.
 * `outputs` - A map of outputs from the stack.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider .
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

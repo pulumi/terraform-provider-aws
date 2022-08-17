@@ -99,4 +99,11 @@ should only be used for informational purposes, not for resource dependencies:
   used inside the Amazon EC2, and only available if you've enabled DNS hostnames
   for your VPC
 * `private_ip` - The private IP address assigned to the instance
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider .
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
+
+## Timeouts
+
+[Configuration options](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts):
+
+* `create` - (Default `10m`)
+* `delete` - (Default `20m`)

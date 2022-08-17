@@ -132,16 +132,15 @@ In addition to all arguments above, the following attributes are exported:
 * `replication_instance_arn` - The Amazon Resource Name (ARN) of the replication instance.
 * `replication_instance_private_ips` -  A list of the private IP addresses of the replication instance.
 * `replication_instance_public_ips` - A list of the public IP addresses of the replication instance.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider .
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Timeouts
 
-`aws_dms_replication_instance` provides the following
-[Timeouts](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts) configuration options:
+[Configuration options](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts):
 
-- `create` - (Default `30 minutes`) Used for Creating Instances
-- `update` - (Default `30 minutes`) Used for Database modifications
-- `delete` - (Default `30 minutes`) Used for destroying databases.
+- `create` - (Default `30m`)
+- `update` - (Default `30m`)
+- `delete` - (Default `30m`)
 
 ## Import
 

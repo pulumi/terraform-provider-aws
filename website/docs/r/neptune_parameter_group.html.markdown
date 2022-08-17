@@ -47,7 +47,7 @@ In addition to all arguments above, the following attributes are exported:
 
 * `id` - The Neptune parameter group name.
 * `arn` - The Neptune parameter group Amazon Resource Name (ARN).
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider .
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

@@ -80,16 +80,15 @@ In addition to all arguments above, the following attributes are exported:
 * `id` - The name of the Neptune event notification subscription.
 * `arn` - The Amazon Resource Name of the Neptune event notification subscription.
 * `customer_aws_id` - The AWS customer account associated with the Neptune event notification subscription.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider .
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Timeouts
 
-`aws_neptune_event_subscription` provides the following [Timeouts](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts)
-configuration options:
+[Configuration options](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts):
 
-- `create` - (Default `40m`) How long to wait for creating event subscription to become available.
-- `delete` - (Default `40m`) How long to wait for deleting event subscription to become fully deleted.
-- `update` - (Default `40m`) How long to wait for updating event subscription to complete updates.
+- `create` - (Default `40m`)
+- `delete` - (Default `40m`)
+- `update` - (Default `40m`)
 
 ## Import
 

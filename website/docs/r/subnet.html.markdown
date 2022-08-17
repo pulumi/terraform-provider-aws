@@ -78,15 +78,14 @@ In addition to all arguments above, the following attributes are exported:
 * `arn` - The ARN of the subnet.
 * `ipv6_cidr_block_association_id` - The association ID for the IPv6 CIDR block.
 * `owner_id` - The ID of the AWS account that owns the subnet.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider .
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Timeouts
 
-`aws_subnet` provides the following [Timeouts](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts)
-configuration options:
+[Configuration options](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts):
 
-- `create` - (Default `10m`) How long to wait for a subnet to be created.
-- `delete` - (Default `20m`) How long to retry on `DependencyViolation` errors during subnet deletion from lingering ENIs left by certain AWS services such as Elastic Load Balancing. NOTE: Lambda ENIs can take up to 45 minutes to delete, which is not affected by changing this customizable timeout unless it is increased above 45 minutes.
+- `create` - (Default `10m`)
+- `delete` - (Default `20m`)
 
 ## Import
 

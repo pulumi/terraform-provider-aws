@@ -38,7 +38,7 @@ In addition to all arguments above, the following attributes are exported:
     * `name` - Name of the account
 * `arn` - ARN of the organizational unit
 * `id` - Identifier of the organization unit
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider .
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

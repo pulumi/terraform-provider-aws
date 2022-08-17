@@ -59,7 +59,7 @@ The following arguments are supported:
 * `subnet_ids` - (Optional) A list of Subnet IDs to apply the ACL to
 * `ingress` - (Optional) Specifies an ingress rule. Parameters defined below.
 * `egress` - (Optional) Specifies an egress rule. Parameters defined below.
-* `tags` - (Optional) A mapping of tags to assign to the resource.
+* `tags` - (Optional) A mapping of tags to assign to the resource. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ### egress and ingress
 
@@ -88,7 +88,7 @@ In addition to all arguments above, the following attributes are exported:
 * `id` - The ID of the network ACL
 * `arn` - The ARN of the network ACL
 * `owner_id` - The ID of the AWS account that owns the network ACL.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider.
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

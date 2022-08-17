@@ -65,6 +65,13 @@ In addition to all arguments above, the following attributes are exported:
 * `data_encryption_key_id` - The data encryption key identifier for the snapshot.
 * `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
+## Timeouts
+
+[Configuration options](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts):
+
+- `create` - (Default `10m`)
+- `delete` - (Default `10m`)
+
 ## Import
 
 EBS Snapshot can be imported using the `id`, e.g.,

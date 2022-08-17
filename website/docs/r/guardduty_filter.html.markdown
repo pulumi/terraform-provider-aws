@@ -74,7 +74,7 @@ In addition to all arguments above, the following attributes are exported:
 
 * `arn` - The ARN of the GuardDuty filter.
 * `id` - A compound field, consisting of the ID of the GuardDuty detector and the name of the filter.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider .
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

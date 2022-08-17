@@ -89,7 +89,7 @@ In addition to all arguments above, the following attributes are exported:
 * `arn` - Amazon Resource Name (ARN) of the configuration.
 * `date_created` - Date when the configuration was created.
 * `date_updated` - Date when the configuration was updated.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider .
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

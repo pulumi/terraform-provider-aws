@@ -355,7 +355,7 @@ In addition to all arguments above, the following attributes are exported:
 * `id` - Application name and deployment group name.
 * `compute_platform` - The destination platform type for the deployment.
 * `deployment_group_id` - The ID of the CodeDeploy deployment group.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider .
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

@@ -250,7 +250,7 @@ The following arguments are optional:
 * `secondary_sources` - (Optional) Configuration block. Detailed below.
 * `secondary_source_version` - (Optional) Configuration block. Detailed below.
 * `source_version` - (Optional) Version of the build input to be built for this project. If not specified, the latest version is used.
-* `tags` - (Optional) Map of tags to assign to the resource. .If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Map of tags to assign to the resource. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 * `vpc_config` - (Optional) Configuration block. Detailed below.
 
 ### artifacts

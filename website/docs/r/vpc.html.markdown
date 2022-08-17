@@ -105,7 +105,7 @@ In addition to all arguments above, the following attributes are exported:
 * `ipv6_association_id` - The association ID for the IPv6 CIDR block.
 * `ipv6_cidr_block_network_border_group` - The Network Border Group Zone name
 * `owner_id` - The ID of the AWS account that owns the VPC.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider .
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/vpc-classiclink.html
 

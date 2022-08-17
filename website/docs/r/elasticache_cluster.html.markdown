@@ -145,7 +145,7 @@ In addition to all arguments above, the following attributes are exported:
 * `cache_nodes` - List of node objects including `id`, `address`, `port` and `availability_zone`.
 * `cluster_address` - (Memcached only) DNS name of the cache cluster without the port appended.
 * `configuration_endpoint` - (Memcached only) Configuration endpoint to allow host discovery.
-* `tags_all` - Map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://www.terraform.io/docs/providers/aws/index.html#default_tags-configuration-block).
+* `tags_all` - Map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
 
 ### Log Delivery Configuration
 

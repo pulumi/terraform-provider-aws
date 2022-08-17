@@ -67,7 +67,7 @@ In addition to all arguments above, the following attributes are exported:
 * `creation_time` - The date and time that a report plan is created, in Unix format and Coordinated Universal Time (UTC).
 * `deployment_status` - The deployment status of a report plan. The statuses are: `CREATE_IN_PROGRESS` | `UPDATE_IN_PROGRESS` | `DELETE_IN_PROGRESS` | `COMPLETED`.
 * `id` - The id of the backup report plan.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
 
 ## Import
 

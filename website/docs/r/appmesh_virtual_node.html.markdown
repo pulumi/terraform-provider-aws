@@ -441,7 +441,7 @@ In addition to all arguments above, the following attributes are exported:
 * `created_date` - The creation date of the virtual node.
 * `last_updated_date` - The last update date of the virtual node.
 * `resource_owner` - The resource owner's AWS account ID.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider .
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

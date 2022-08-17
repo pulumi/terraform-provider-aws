@@ -57,7 +57,7 @@ In addition to all arguments above, the following attributes are exported:
 * `description` - The Description of the ElastiCache Subnet Group.
 * `name` - The Name of the ElastiCache Subnet Group.
 * `subnet_ids` - The Subnet IDs of the ElastiCache Subnet Group.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider .
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 
 ## Import

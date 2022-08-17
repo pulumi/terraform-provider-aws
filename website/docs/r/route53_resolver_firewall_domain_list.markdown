@@ -32,7 +32,7 @@ In addition to all arguments above, the following attributes are exported:
 
 * `arn` - The ARN (Amazon Resource Name) of the domain list.
 * `id` - The ID of the domain list.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider .
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

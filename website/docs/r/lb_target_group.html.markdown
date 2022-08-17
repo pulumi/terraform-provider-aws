@@ -127,7 +127,7 @@ In addition to all arguments above, the following attributes are exported:
 * `arn` - ARN of the Target Group (matches `id`).
 * `id` - ARN of the Target Group (matches `arn`).
 * `name` - Name of the Target Group.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider .
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

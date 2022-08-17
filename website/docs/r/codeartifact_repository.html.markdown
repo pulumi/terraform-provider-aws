@@ -91,7 +91,7 @@ In addition to all arguments above, the following attributes are exported:
 * `id` - The ARN of the repository.
 * `arn` - The ARN of the repository.
 * `administrator_account` - The account number of the AWS account that manages the repository.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider .
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

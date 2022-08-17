@@ -44,7 +44,7 @@ In addition to all arguments above, the following attributes are exported:
 * `arn` - The Amazon Resource Name (ARN) of the Permission Set.
 * `id` - The Amazon Resource Names (ARNs) of the Permission Set and SSO Instance, separated by a comma (`,`).
 * `created_date` - The date the Permission Set was created in [RFC3339 format](https://tools.ietf.org/html/rfc3339#section-5.8).
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider .
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

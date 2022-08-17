@@ -108,7 +108,7 @@ In addition to all arguments above, the following attributes are exported:
 * `status` - Status of the EKS add-on.
 * `created_at` - Date and time in [RFC3339 format](https://tools.ietf.org/html/rfc3339#section-5.8) that the EKS add-on was created.
 * `modified_at` - Date and time in [RFC3339 format](https://tools.ietf.org/html/rfc3339#section-5.8) that the EKS add-on was updated.
-* `tags_all` - (Optional) Key-value map of resource tags, including those inherited from the provider .
+* `tags_all` - (Optional) Key-value map of resource tags, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

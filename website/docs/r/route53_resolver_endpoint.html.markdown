@@ -62,16 +62,15 @@ In addition to all arguments above, the following attributes are exported:
 * `id` - The ID of the Route 53 Resolver endpoint.
 * `arn` - The ARN of the Route 53 Resolver endpoint.
 * `host_vpc_id` - The ID of the VPC that you want to create the resolver endpoint in.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider .
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Timeouts
 
-`aws_route53_resolver_endpoint` provides the following
-[Timeouts](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts) configuration options:
+[Configuration options](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts):
 
-- `create` - (Default `10 minutes`) Used for creating Route 53 Resolver endpoint
-- `update` - (Default `10 minutes`) Used for updating Route 53 Resolver endpoint
-- `delete` - (Default `10 minutes`) Used for destroying Route 53 Resolver endpoint
+- `create` - (Default `10m`)
+- `update` - (Default `10m`)
+- `delete` - (Default `10m`)
 
 ## Import
 

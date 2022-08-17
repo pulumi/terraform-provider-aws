@@ -60,7 +60,7 @@ In addition to all arguments above, the following attributes are exported:
 
 * `arn` - Amazon Resource Name (ARN) of the GuardDuty ThreatIntelSet.
 * `id` - The ID of the GuardDuty ThreatIntelSet and the detector ID. Format: `<DetectorID>:<ThreatIntelSetID>`
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider .
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

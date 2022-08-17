@@ -32,7 +32,7 @@ In addition to all arguments above, the following attributes are exported:
 * `id` - The Amazon Resource Name (ARN) that identifies the created activity.
 * `name` - The name of the activity.
 * `creation_date` - The date the activity was created.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider .
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

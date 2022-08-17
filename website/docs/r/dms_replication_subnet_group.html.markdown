@@ -45,7 +45,7 @@ The following arguments are supported:
 
 In addition to all arguments above, the following attributes are exported:
 
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider .
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 * `vpc_id` - The ID of the VPC the subnet group is in.
 
 ## Import

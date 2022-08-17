@@ -65,17 +65,16 @@ In addition to all arguments above, the following attributes are exported:
 * `network_interface_ids` - Set of Elastic Network Interface identifiers from which the file system is accessible. As explained in the [documentation](https://docs.aws.amazon.com/fsx/latest/LustreGuide/mounting-on-premises.html), the first network interface returned is the primary network interface.
 * `mount_name` - The value to be used when mounting the filesystem.
 * `owner_id` - AWS account identifier that created the file system.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider .
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 * `vpc_id` - Identifier of the Virtual Private Cloud for the file system.
 
 ## Timeouts
 
-`aws_fsx_lustre_file_system` provides the following [Timeouts](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts)
-configuration options:
+[Configuration options](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts):
 
-* `create` - (Default `30m`) How long to wait for the file system to be created.
-* `update` - (Default `30m`) How long to wait for the file system to be updated.
-* `delete` - (Default `30m`) How long to wait for the file system to be deleted.
+* `create` - (Default `30m`)
+* `update` - (Default `30m`)
+* `delete` - (Default `30m`)
 
 ## Import
 

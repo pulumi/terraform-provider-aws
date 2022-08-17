@@ -81,7 +81,7 @@ In addition to all arguments above, the following attributes are exported:
 
 * `id` - The id of the backup plan.
 * `arn` - The ARN of the backup plan.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider .
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 * `version` - Unique, randomly generated, Unicode, UTF-8 encoded string that serves as the version ID of the backup plan.
 
 ## Import

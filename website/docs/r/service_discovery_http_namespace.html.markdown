@@ -24,7 +24,7 @@ The following arguments are supported:
 
 * `name` - (Required) The name of the http namespace.
 * `description` - (Optional) The description that you specify for the namespace when you create it.
-* `tags` - (Optional) A map of tags to assign to the namespace. .If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) A map of tags to assign to the namespace. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ## Attributes Reference
 

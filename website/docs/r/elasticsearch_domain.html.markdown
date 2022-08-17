@@ -340,17 +340,17 @@ In addition to all arguments above, the following attributes are exported:
 * `domain_name` - Name of the Elasticsearch domain.
 * `endpoint` - Domain-specific endpoint used to submit index, search, and data upload requests.
 * `kibana_endpoint` - Domain-specific endpoint for kibana without https scheme.
-* `tags_all` - Map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://www.terraform.io/docs/providers/aws/index.html#default_tags-configuration-block).
+* `tags_all` - Map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
 * `vpc_options.0.availability_zones` - If the domain was created inside a VPC, the names of the availability zones the configured `subnet_ids` were created inside.
 * `vpc_options.0.vpc_id` - If the domain was created inside a VPC, the ID of the VPC.
 
 ## Timeouts
 
-`aws_elasticsearch_domain` provides the following [Timeouts](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts) configuration options:
+[Configuration options](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts):
 
-* `create` - (Optional, Default: `60m`) How long to wait for creation.
-* `update` - (Optional, Default: `60m`) How long to wait for updates.
-* `delete` - (Optional, Default: `90m`) How long to wait for deletion.
+* `create` - (Default `60m`)
+* `update` - (Default `60m`)
+* `delete` - (Default `90m`)
 
 ## Import
 

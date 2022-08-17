@@ -427,7 +427,7 @@ func TestAccElastiCacheReplicationGroup_updateNodeSize(t *testing.T) {
 	})
 }
 
-//This is a test to prove that we panic we get in https://github.com/hashicorp/terraform/issues/9097
+// This is a test to prove that we panic we get in https://github.com/hashicorp/terraform/issues/9097
 func TestAccElastiCacheReplicationGroup_updateParameterGroup(t *testing.T) {
 	if testing.Short() {
 		t.Skip("skipping long-running test in short mode")
@@ -3734,7 +3734,7 @@ resource "aws_iam_role" "r" {
             "s3:PutObjectAcl",
           ]
           Effect   = "Allow"
-          Resource = ["${aws_s3_bucket.b.arn}", "${aws_s3_bucket.b.arn}/*"]
+          Resource = [aws_s3_bucket.b.arn, "${aws_s3_bucket.b.arn}/*"]
         },
       ]
     })

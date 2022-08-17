@@ -46,7 +46,7 @@ In addition to all arguments above, the following attributes are exported:
 * `arn` - The ARN for this account.
 * `govcloud_id` - ID for a GovCloud account created with the account.
 * `id` - The AWS account id
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider.
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

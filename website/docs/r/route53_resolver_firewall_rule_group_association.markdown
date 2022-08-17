@@ -42,7 +42,7 @@ In addition to all arguments above, the following attributes are exported:
 
 * `arn` - The ARN (Amazon Resource Name) of the firewall rule group association.
 * `id` - The identifier for the association.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider .
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

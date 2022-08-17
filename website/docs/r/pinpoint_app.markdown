@@ -64,7 +64,7 @@ In addition to all arguments above, the following attributes are exported:
 
 * `application_id` - The Application ID of the Pinpoint App.
 * `arn` - Amazon Resource Name (ARN) of the PinPoint Application
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider .
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

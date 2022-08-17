@@ -57,7 +57,7 @@ In addition to all arguments above, the following attributes are exported:
 * `network_interface_id` - The ENI ID of the network interface created by the NAT gateway.
 * `private_ip` - The private IP address of the NAT Gateway.
 * `public_ip` - The public IP address of the NAT Gateway.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider .
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 
