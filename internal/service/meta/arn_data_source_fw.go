@@ -15,7 +15,7 @@ import (
 var NewDataSourceARNType = newDataSourceARNType
 
 func init() {
-	registerDataSourceTypeFactory("aws_arn", newDataSourceARNType)
+	//registerDataSourceTypeFactory("aws_arn", newDataSourceARNType)
 }
 
 // newDataSourceARNType instantiates a new DataSourceType for the aws_arn data source.
