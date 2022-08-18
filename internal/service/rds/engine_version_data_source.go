@@ -120,6 +120,25 @@ func DataSourceEngineVersion() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+
+			"filter": {
+				Type:     schema.TypeSet,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": {
+							Type:     schema.TypeString,
+							Required: true,
+						},
+
+						"values": {
+							Type:     schema.TypeList,
+							Required: true,
+							Elem:     &schema.Schema{Type: schema.TypeString},
+						},
+					},
+				},
+			},
 		},
 	}
 }
@@ -130,6 +149,15 @@ func dataSourceEngineVersionRead(d *schema.ResourceData, meta interface{}) error
 	input := &rds.DescribeDBEngineVersionsInput{
 		ListSupportedCharacterSets: aws.Bool(true),
 		ListSupportedTimezones:     aws.Bool(true),
+	}
+
+	if v, ok := d.GetOk("filter"); ok {
+		filters := buildFilterSource(v.(*schema.Set))
+		input.Filters = filters
+	}
+
+	if len(input.Filters) == 0 {
+		input.Filters = nil
 	}
 
 	if v, ok := d.GetOk("engine"); ok {
@@ -249,4 +277,20 @@ func dataSourceEngineVersionRead(d *schema.ResourceData, meta interface{}) error
 	d.Set("version_description", found.DBEngineVersionDescription)
 
 	return nil
+}
+
+func buildFilterSource(set *schema.Set) []*rds.Filter {
+	var filters []*rds.Filter
+	for _, v := range set.List() {
+		m := v.(map[string]interface{})
+		var filterValues []*string
+		for _, e := range m["values"].([]interface{}) {
+			filterValues = append(filterValues, aws.String(e.(string)))
+		}
+		filters = append(filters, &rds.Filter{
+			Name:   aws.String(m["name"].(string)),
+			Values: filterValues,
+		})
+	}
+	return filters
 }
