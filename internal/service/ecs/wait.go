@@ -125,11 +125,7 @@ func waitServiceInactive(conn *ecs.ECS, id, cluster string) error {
 
 	_, err := stateConf.WaitForState()
 
-	if err != nil {
-		return err
-	}
-
-	return nil
+	return err
 }
 
 func waitServiceDescribeReady(conn *ecs.ECS, id, cluster string) (*ecs.DescribeServicesOutput, error) {
