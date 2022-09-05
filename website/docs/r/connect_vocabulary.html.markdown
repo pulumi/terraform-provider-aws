@@ -53,7 +53,7 @@ In addition to all arguments above, the following attributes are exported:
 separated by a colon (`:`).
 * `last_modified_time` - The timestamp when the custom vocabulary was last modified.
 * `state` - The current state of the custom vocabulary. Valid values are `CREATION_IN_PROGRESS`, `ACTIVE`, `CREATION_FAILED`, `DELETE_IN_PROGRESS`.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 * `vocabulary_id` - The identifier of the custom vocabulary.
 
 ## Import

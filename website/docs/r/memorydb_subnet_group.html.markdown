@@ -51,7 +51,7 @@ In addition to all arguments above, the following attributes are exported:
 * `id` - The name of the subnet group.
 * `arn` - The ARN of the subnet group.
 * `vpc_id` - The VPC in which the subnet group exists.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

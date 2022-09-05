@@ -95,7 +95,7 @@ In addition to all arguments above, the following attributes are exported:
 * `id` - The unique identifiers of the FAQ and index separated by a slash (`/`)
 * `status` - The status of the FAQ. It is ready to use when the status is ACTIVE.
 * `updated_at` - The date and time that the FAQ was last updated.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Timeouts
 

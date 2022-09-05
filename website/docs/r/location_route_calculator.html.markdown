@@ -38,7 +38,7 @@ In addition to all arguments above, the following attributes are exported:
 * `calculator_arn` - The Amazon Resource Name (ARN) for the Route calculator resource. Use the ARN when you specify a resource across AWS.
 * `create_time` - The timestamp for when the route calculator resource was created in ISO 8601 format.
 * `update_time` - The timestamp for when the route calculator resource was last update in ISO 8601.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Timeouts
 

@@ -52,7 +52,7 @@ In addition to all arguments above, the following attributes are exported:
     * `topic_arn` - ARN of the SNS topic to which cluster notifications are sent.
     * `vpc_id` - The VPC in which the cluster exists.
 * `source` - Indicates whether the snapshot is from an automatic backup (`automated`) or was created manually (`manual`).
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Timeouts
 

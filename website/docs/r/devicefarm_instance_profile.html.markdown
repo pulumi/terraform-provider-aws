@@ -35,7 +35,7 @@ resource "aws_devicefarm_instance_profile" "example" {
 In addition to all arguments above, the following attributes are exported:
 
 * `arn` - The Amazon Resource Name of this instance profile.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

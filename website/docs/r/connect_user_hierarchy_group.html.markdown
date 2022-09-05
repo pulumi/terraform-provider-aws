@@ -72,7 +72,7 @@ In addition to all arguments above, the following attributes are exported:
 * `id` - The identifier of the hosting Amazon Connect Instance and identifier of the hierarchy group
 separated by a colon (`:`).
 * `level_id` - The identifier of the level in the hierarchy group.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 A `hierarchy_path` block supports the following attributes:
 

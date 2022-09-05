@@ -55,7 +55,7 @@ In addition to all arguments above, the following attributes are exported:
 * `id` - The name of the DocDB event notification subscription
 * `arn` - The Amazon Resource Name of the DocDB event notification subscription
 * `customer_aws_id` - The AWS customer account associated with the DocDB event notification subscription
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Timeouts
 

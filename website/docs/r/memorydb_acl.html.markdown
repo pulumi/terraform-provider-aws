@@ -37,7 +37,7 @@ In addition to all arguments above, the following attributes are exported:
 * `id` - Same as `name`.
 * `arn` - The ARN of the ACL.
 * `minimum_engine_version` - The minimum engine version supported by the ACL.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

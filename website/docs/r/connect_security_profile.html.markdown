@@ -49,7 +49,7 @@ In addition to all arguments above, the following attributes are exported:
 * `organization_resource_id` - The organization resource identifier for the security profile.
 * `security_profile_id` - The identifier for the Security Profile.
 * `id` - The identifier of the hosting Amazon Connect Instance and identifier of the Security Profile separated by a colon (`:`).
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

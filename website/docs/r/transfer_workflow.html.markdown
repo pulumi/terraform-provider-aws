@@ -92,7 +92,7 @@ In addition to all arguments above, the following attributes are exported:
 
 * `arn` - The Workflow ARN.
 * `id` - The Workflow id.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

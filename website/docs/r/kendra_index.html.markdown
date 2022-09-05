@@ -659,7 +659,7 @@ In addition to all arguments above, the following attributes are exported:
 * `index_statistics` - A block that provides information about the number of FAQ questions and answers and the number of text documents indexed. [Detailed below](#index_statistics).
 * `status` - The current status of the index. When the value is `ACTIVE`, the index is ready for use. If the Status field value is `FAILED`, the `error_message` field contains a message that explains why.
 * `updated_at` - The Unix datetime that the index was last updated.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ### `index_statistics`
 

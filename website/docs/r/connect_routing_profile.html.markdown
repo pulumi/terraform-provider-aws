@@ -71,12 +71,12 @@ In addition to all arguments above, the following attributes are exported:
 * `id` - The identifier of the hosting Amazon Connect Instance and identifier of the Routing Profile separated by a colon (`:`).
 * `queue_configs` - In addition to the arguments used in the `queue_configs` argument block, there are additional attributes exported within the `queue_configs` block. These additional attributes are documented below.
 * `routing_profile_id` - The identifier for the Routing Profile.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 A `queue_configs` block supports the following attributes in addition to the arguments defined earlier:
 
-* `queue_arn` - Specifies the ARN for the queue.
-* `queue_name` - Specifies the name for the queue.
+* `queue_arn` - ARN for the queue.
+* `queue_name` - Name for the queue.
 
 ## Import
 

@@ -51,14 +51,14 @@ EOF
 
 The following arguments are supported:
 
-* `rest_api_id` - (Required) The ID of the REST API.
+* `rest_api_id` - (Required) ID of the REST API.
 * `policy` - (Required) JSON formatted policy document that controls access to the API Gateway.
 
 ## Attributes Reference
 
 In addition to all arguments above, the following attributes are exported:
 
-* `id` - The ID of the REST API
+* `id` - ID of the REST API
 
 ## Import
 
