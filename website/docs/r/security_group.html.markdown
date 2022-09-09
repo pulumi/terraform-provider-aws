@@ -124,6 +124,7 @@ The following arguments are supported:
 * `revoke_rules_on_delete` - (Optional) Instruct this provider to revoke all of the Security Groups attached ingress and egress rules before deleting the rule itself. This is normally not needed, however certain AWS services such as Elastic Map Reduce may automatically add required rules to security groups used with the service, and those rules may contain a cyclic dependency that prevent the security groups from being destroyed without removing the dependency first. Default `false`.
 * `tags` - (Optional) Map of tags to assign to the resource. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 * `vpc_id` - (Optional, Forces new resource) VPC ID.
+  Defaults to the region's default VPC.
 
 ### ingress
 
