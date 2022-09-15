@@ -95,7 +95,7 @@ func removeAddon(d *schema.ResourceData, conn *eks.EKS, addonName string, ctx co
 		return fmt.Errorf("error deleting EKS Add-On (%s): %w", addonName, err)
 	}
 
-	_, err = waitAddonDeleted(ctx, conn, d.Id(), addonName)
+	_, err = waitAddonDeleted(ctx, conn, d.Id(), addonName, addonDeletedTimeout)
 
 	if err != nil {
 		return fmt.Errorf("error waiting for EKS Add-On (%s) to delete: %w", addonName, err)
