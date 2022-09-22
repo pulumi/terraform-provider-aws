@@ -751,7 +751,7 @@ func New(_ context.Context) (*schema.Provider, error) {
 			"aws_location_tracker_association":  location.DataSourceTrackerAssociation(),
 			"aws_location_tracker_associations": location.DataSourceTrackerAssociations(),
 
-			"aws_arn":                     meta.DataSourceARN(), // Now implemented using Terraform Plugin Framework.
+			"aws_arn":                     meta.DataSourceARN(), // Upstream this is currently implemented using Terraform Plugin Framework. See also: https://github.com/pulumi/pulumi-terraform-bridge/issues/590
 			"aws_billing_service_account": meta.DataSourceBillingServiceAccount(),
 			"aws_default_tags":            meta.DataSourceDefaultTags(),
 			"aws_ip_ranges":               meta.DataSourceIPRanges(),
