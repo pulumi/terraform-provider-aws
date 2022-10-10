@@ -51,7 +51,7 @@ resource "aws_lambda_function" "test_lambda" {
   role          = aws_iam_role.iam_for_lambda.arn
   handler       = "index.test"
 
-  runtime = "nodejs12.x"
+  runtime = "nodejs16.x"
 
   environment {
     variables = {
@@ -369,17 +369,14 @@ In addition to all arguments above, the following attributes are exported:
 * `vpc_config.vpc_id` - ID of the VPC.
 
 [1]: https://docs.aws.amazon.com/lambda/latest/dg/welcome.html
-[2]: https://docs.aws.amazon.com/lambda/latest/dg/walkthrough-s3-events-adminuser-create-test-function-create-function.html
 [3]: https://docs.aws.amazon.com/lambda/latest/dg/walkthrough-custom-events-create-test-function.html
 [4]: https://docs.aws.amazon.com/lambda/latest/dg/intro-permission-model.html
 [5]: https://docs.aws.amazon.com/lambda/latest/dg/limits.html
 [6]: https://docs.aws.amazon.com/lambda/latest/dg/API_CreateFunction.html#SSS-CreateFunction-request-Runtime
 [7]: https://docs.aws.amazon.com/lambda/latest/dg/configuration-vpc.html
-[8]: https://docs.aws.amazon.com/lambda/latest/dg/deployment-package-v2.html
 [9]: https://docs.aws.amazon.com/lambda/latest/dg/concurrent-executions.html
 [10]: https://docs.aws.amazon.com/lambda/latest/dg/configuration-layers.html
 [12]: https://docs.aws.amazon.com/lambda/latest/dg/services-efs.html
-[13]: https://docs.aws.amazon.com/lambda/latest/dg/lambda-images.html
 
 ## Timeouts
 
