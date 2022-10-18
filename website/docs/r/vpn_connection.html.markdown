@@ -116,7 +116,6 @@ resource "aws_vpn_connection" "example" {
 }
 ```
 
-
 ## Argument Reference
 
 The following arguments are required:

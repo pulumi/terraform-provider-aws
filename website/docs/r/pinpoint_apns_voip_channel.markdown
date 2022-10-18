@@ -23,7 +23,6 @@ resource "aws_pinpoint_apns_voip_channel" "apns_voip" {
 resource "aws_pinpoint_app" "app" {}
 ```
 
-
 ## Argument Reference
 
 The following arguments are supported:

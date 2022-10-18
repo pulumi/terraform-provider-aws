@@ -96,7 +96,6 @@ resource "aws_s3_bucket_policy" "example" {
 [1]: http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Introduction.html
 [2]: http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/private-content-restricting-access-to-s3.html
 
-
 ## Import
 
 Cloudfront Origin Access Identities can be imported using the `id`, e.g.,

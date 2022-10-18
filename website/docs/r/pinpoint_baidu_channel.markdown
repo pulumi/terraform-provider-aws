@@ -10,7 +10,6 @@ description: |-
 
 Provides a Pinpoint Baidu Channel resource.
 
-
 ## Example Usage
 
 ```terraform
@@ -22,7 +21,6 @@ resource "aws_pinpoint_baidu_channel" "channel" {
   secret_key     = ""
 }
 ```
-
 
 ## Argument Reference
 

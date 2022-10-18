@@ -10,7 +10,6 @@ description: |-
 
 Provides a Pinpoint ADM (Amazon Device Messaging) Channel resource.
 
-
 ## Example Usage
 
 ```terraform
@@ -23,7 +22,6 @@ resource "aws_pinpoint_adm_channel" "channel" {
   enabled        = true
 }
 ```
-
 
 ## Argument Reference
 

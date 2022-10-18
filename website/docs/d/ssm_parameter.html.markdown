@@ -20,14 +20,12 @@ data "aws_ssm_parameter" "foo" {
 
 ~> **Note:** The data source is currently following the behavior of the [SSM API](https://docs.aws.amazon.com/sdk-for-go/api/service/ssm/#Parameter) to return a string value, regardless of parameter type.
 
-
 ## Argument Reference
 
 The following arguments are supported:
 
 * `name` - (Required) Name of the parameter.
 * `with_decryption` - (Optional) Whether to return decrypted `SecureString` value. Defaults to `true`.
-
 
 In addition to all arguments above, the following attributes are exported:
 
