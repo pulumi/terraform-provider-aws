@@ -636,6 +636,7 @@ func New(_ context.Context) (*schema.Provider, error) {
 
 			"aws_elasticache_cluster":           elasticache.DataSourceCluster(),
 			"aws_elasticache_replication_group": elasticache.DataSourceReplicationGroup(),
+			"aws_elasticache_subnet_group":      elasticache.DataSourceSubnetGroup(),
 			"aws_elasticache_user":              elasticache.DataSourceUser(),
 
 			"aws_elastic_beanstalk_application":    elasticbeanstalk.DataSourceApplication(),
@@ -664,8 +665,6 @@ func New(_ context.Context) (*schema.Provider, error) {
 			"aws_kinesis_firehose_delivery_stream": firehose.DataSourceDeliveryStream(),
 
 			"aws_fsx_openzfs_snapshot": fsx.DataSourceOpenzfsSnapshot(),
-
-			"aws_globalaccelerator_accelerator": globalaccelerator.DataSourceAccelerator(),
 
 			"aws_glue_connection":                       glue.DataSourceConnection(),
 			"aws_glue_data_catalog_encryption_settings": glue.DataSourceDataCatalogEncryptionSettings(),
@@ -828,6 +827,8 @@ func New(_ context.Context) (*schema.Provider, error) {
 			"aws_ses_domain_identity":         ses.DataSourceDomainIdentity(),
 			"aws_ses_email_identity":          ses.DataSourceEmailIdentity(),
 
+			"aws_sesv2_dedicated_ip_pool": sesv2.DataSourceDedicatedIPPool(),
+
 			"aws_db_cluster_snapshot":            rds.DataSourceClusterSnapshot(),
 			"aws_db_event_categories":            rds.DataSourceEventCategories(),
 			"aws_db_instance":                    rds.DataSourceInstance(),
@@ -910,8 +911,6 @@ func New(_ context.Context) (*schema.Provider, error) {
 			"aws_ssoadmin_permission_set": ssoadmin.DataSourcePermissionSet(),
 
 			"aws_storagegateway_local_disk": storagegateway.DataSourceLocalDisk(),
-
-			"aws_caller_identity": sts.DataSourceCallerIdentity(),
 
 			"aws_transfer_server": transfer.DataSourceServer(),
 
@@ -1718,13 +1717,17 @@ func New(_ context.Context) (*schema.Provider, error) {
 			"aws_licensemanager_association":           licensemanager.ResourceAssociation(),
 			"aws_licensemanager_license_configuration": licensemanager.ResourceLicenseConfiguration(),
 
+			"aws_lightsail_certificate":                          lightsail.ResourceCertificate(),
 			"aws_lightsail_container_service":                    lightsail.ResourceContainerService(),
 			"aws_lightsail_container_service_deployment_version": lightsail.ResourceContainerServiceDeploymentVersion(),
 			"aws_lightsail_database":                             lightsail.ResourceDatabase(),
 			"aws_lightsail_domain":                               lightsail.ResourceDomain(),
+			"aws_lightsail_domain_entry":                         lightsail.ResourceDomainEntry(),
 			"aws_lightsail_instance":                             lightsail.ResourceInstance(),
 			"aws_lightsail_instance_public_ports":                lightsail.ResourceInstancePublicPorts(),
 			"aws_lightsail_key_pair":                             lightsail.ResourceKeyPair(),
+			"aws_lightsail_lb":                                   lightsail.ResourceLoadBalancer(),
+			"aws_lightsail_lb_attachment":                        lightsail.ResourceLoadBalancerAttachment(),
 			"aws_lightsail_static_ip":                            lightsail.ResourceStaticIP(),
 			"aws_lightsail_static_ip_attachment":                 lightsail.ResourceStaticIPAttachment(),
 
@@ -2065,6 +2068,7 @@ func New(_ context.Context) (*schema.Provider, error) {
 			"aws_ses_template":                     ses.ResourceTemplate(),
 
 			"aws_sesv2_configuration_set": sesv2.ResourceConfigurationSet(),
+			"aws_sesv2_dedicated_ip_pool": sesv2.ResourceDedicatedIPPool(),
 
 			"aws_sfn_activity":      sfn.ResourceActivity(),
 			"aws_sfn_state_machine": sfn.ResourceStateMachine(),
@@ -2076,8 +2080,6 @@ func New(_ context.Context) (*schema.Provider, error) {
 			"aws_signer_signing_job":                signer.ResourceSigningJob(),
 			"aws_signer_signing_profile":            signer.ResourceSigningProfile(),
 			"aws_signer_signing_profile_permission": signer.ResourceSigningProfilePermission(),
-
-			"aws_simpledb_domain": simpledb.ResourceDomain(),
 
 			"aws_sns_platform_application": sns.ResourcePlatformApplication(),
 			"aws_sns_sms_preferences":      sns.ResourceSMSPreferences(),
@@ -2192,9 +2194,12 @@ func New(_ context.Context) (*schema.Provider, error) {
 	providerData := &conns.AWSClient{
 		// TODO: This should be generated.
 
-		// ServiceData is used before configuration to determine the provider's exported resources and data sources.
-		ServiceMap: map[string]intf.ServiceData{
-			"meta": meta.ServiceData,
+		// ServicePackageData is used before configuration to determine the provider's exported resources and data sources.
+		ServicePackages: []intf.ServicePackageData{
+			globalaccelerator.ServicePackageData,
+			meta.ServicePackageData,
+			simpledb.ServicePackageData,
+			sts.ServicePackageData,
 		},
 	}
 
@@ -2303,7 +2308,7 @@ func configure(ctx context.Context, provider *schema.Provider, d *schema.Resourc
 	}
 
 	// Configure each service.
-	for _, v := range providerData.ServiceMap {
+	for _, v := range providerData.ServicePackages {
 		if err := v.Configure(ctx, providerData); err != nil {
 			diags = append(diags, diag.FromErr(err)...)
 		}
