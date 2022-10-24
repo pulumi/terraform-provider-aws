@@ -2,6 +2,7 @@ package conns
 
 import (
 	"fmt"
+	"github.com/hashicorp/terraform-provider-aws/version"
 	"strings"
 
 	"github.com/aws/aws-sdk-go/aws"
@@ -30,7 +31,7 @@ func StdUserAgentProducts(terraformVersion string) *awsbase.APNInfo {
 		PartnerName: "Pulumi",
 		Products: []awsbase.UserAgentProduct{
 			{Name: "Pulumi", Version: "1.0"},
-			{Name: "Pulumi-Aws", Version: terraformVersion, Comment: "+https://www.pulumi.com"},
+			{Name: "Pulumi-Aws", Version: version.ProviderVersion, Comment: "+https://www.pulumi.com"},
 		},
 	}
 }
