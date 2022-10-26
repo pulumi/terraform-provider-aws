@@ -666,6 +666,8 @@ func New(_ context.Context) (*schema.Provider, error) {
 
 			"aws_fsx_openzfs_snapshot": fsx.DataSourceOpenzfsSnapshot(),
 
+			"aws_globalaccelerator_accelerator": globalaccelerator.DataSourceAccelerator(),
+
 			"aws_glue_connection":                       glue.DataSourceConnection(),
 			"aws_glue_data_catalog_encryption_settings": glue.DataSourceDataCatalogEncryptionSettings(),
 			"aws_glue_script":                           glue.DataSourceScript(),
@@ -911,6 +913,8 @@ func New(_ context.Context) (*schema.Provider, error) {
 			"aws_ssoadmin_permission_set": ssoadmin.DataSourcePermissionSet(),
 
 			"aws_storagegateway_local_disk": storagegateway.DataSourceLocalDisk(),
+
+			"aws_caller_identity": sts.DataSourceCallerIdentity(),
 
 			"aws_transfer_server": transfer.DataSourceServer(),
 
@@ -2080,6 +2084,8 @@ func New(_ context.Context) (*schema.Provider, error) {
 			"aws_signer_signing_job":                signer.ResourceSigningJob(),
 			"aws_signer_signing_profile":            signer.ResourceSigningProfile(),
 			"aws_signer_signing_profile_permission": signer.ResourceSigningProfilePermission(),
+
+			"aws_simpledb_domain": simpledb.ResourceDomain(),
 
 			"aws_sns_platform_application": sns.ResourcePlatformApplication(),
 			"aws_sns_sms_preferences":      sns.ResourceSMSPreferences(),
