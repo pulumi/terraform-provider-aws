@@ -2,9 +2,11 @@ package ecs
 
 import (
 	"context"
+	"log"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/ecs"
+	"github.com/hashicorp/aws-sdk-go-base/v2/awsv1shim/v2/tfawserr"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-provider-aws/internal/tfresource"
 )
@@ -13,9 +15,9 @@ const (
 	serviceStatusInactive = "INACTIVE"
 	serviceStatusActive   = "ACTIVE"
 	serviceStatusDraining = "DRAINING"
-	// Non-standard statuses for statusServiceWaitForStable()
-	serviceStatusPending = "tfPENDING"
-	serviceStatusStable  = "tfSTABLE"
+
+	serviceStatusError = "ERROR"
+	serviceStatusNone  = "NONE"
 
 	clusterStatusError = "ERROR"
 	clusterStatusNone  = "NONE"
@@ -71,28 +73,29 @@ func statusServiceNoTags(conn *ecs.ECS, id, cluster string) resource.StateRefres
 	}
 }
 
-func statusServiceWaitForStable(conn *ecs.ECS, id, cluster string) resource.StateRefreshFunc {
+func statusService(conn *ecs.ECS, id, cluster string) resource.StateRefreshFunc {
 	return func() (interface{}, string, error) {
-		serviceRaw, status, err := statusServiceNoTags(conn, id, cluster)()
+		input := &ecs.DescribeServicesInput{
+			Services: aws.StringSlice([]string{id}),
+			Cluster:  aws.String(cluster),
+		}
+
+		output, err := conn.DescribeServices(input)
+
+		if tfawserr.ErrCodeEquals(err, ecs.ErrCodeServiceNotFoundException) {
+			return nil, serviceStatusNone, nil
+		}
+
 		if err != nil {
-			return nil, "", err
+			return nil, serviceStatusError, err
 		}
 
-		if status != serviceStatusActive {
-			return serviceRaw, status, nil
+		if len(output.Services) == 0 {
+			return nil, serviceStatusNone, nil
 		}
 
-		service := serviceRaw.(*ecs.Service)
-
-		if d, dc, rc := len(service.Deployments),
-			aws.Int64Value(service.DesiredCount),
-			aws.Int64Value(service.RunningCount); d == 1 && dc == rc {
-			status = serviceStatusStable
-		} else {
-			status = serviceStatusPending
-		}
-
-		return service, status, nil
+		log.Printf("[DEBUG] ECS service (%s) is currently %q", id, *output.Services[0].Status)
+		return output, aws.StringValue(output.Services[0].Status), err
 	}
 }
 
