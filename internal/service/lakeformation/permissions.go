@@ -40,8 +40,8 @@ func ResourcePermissions() *schema.Resource {
 				ValidateFunc: verify.ValidAccountID,
 			},
 			"catalog_resource": {
-				Type:     schema.TypeBool,
-				Default:  false,
+				Type: schema.TypeBool,
+				//Default:  false,
 				ForceNew: true,
 				Optional: true,
 				ExactlyOneOf: []string{
