@@ -615,6 +615,7 @@ func New(ctx context.Context) (*schema.Provider, error) {
 			"aws_ecr_authorization_token": ecr.DataSourceAuthorizationToken(),
 			"aws_ecr_image":               ecr.DataSourceImage(),
 			"aws_ecr_repository":          ecr.DataSourceRepository(),
+			"aws_ecr_credentials":         ecr.DataSourceCredentials(),
 
 			"aws_ecrpublic_authorization_token": ecrpublic.DataSourceAuthorizationToken(),
 
