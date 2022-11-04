@@ -84,15 +84,17 @@ func ResourceParameter() *schema.Resource {
 			"tags":     tftags.TagsSchema(),
 			"tags_all": tftags.TagsSchemaComputed(),
 			"tier": {
-				Type:         schema.TypeString,
-				Optional:     true,
-				Computed:     true,
+				Type:     schema.TypeString,
+				Optional: true,
+				//Computed:     true,
+				Default:      ssm.ParameterTierStandard,
 				ValidateFunc: validation.StringInSlice(ssm.ParameterTier_Values(), false),
 				DiffSuppressFunc: func(k, old, new string, d *schema.ResourceData) bool {
-					if old != "" {
-						return new == ssm.ParameterTierIntelligentTiering
-					}
-					return false
+					return d.Get("tier").(string) == ssm.ParameterTierIntelligentTiering
+					//if old != "" {
+					//	return new == ssm.ParameterTierIntelligentTiering
+					//}
+					//return false
 				},
 			},
 			"type": {
@@ -329,11 +331,13 @@ func resourceParameterUpdate(d *schema.ResourceData, meta interface{}) error {
 			AllowedPattern: aws.String(d.Get("allowed_pattern").(string)),
 		}
 
+		// FORK: Stack72 to undo this Tier comment out below when associated bridge issue is solved
+
 		// Retrieve the value set in the config directly to counteract the DiffSuppressFunc above
-		tier := d.GetRawConfig().GetAttr("tier")
-		if tier.IsKnown() && !tier.IsNull() {
-			paramInput.Tier = aws.String(tier.AsString())
-		}
+		//tier := d.GetRawConfig().GetAttr("tier")
+		//if tier.IsKnown() && !tier.IsNull() {
+		//	paramInput.Tier = aws.String(tier.AsString())
+		//}
 
 		if d.HasChange("data_type") {
 			paramInput.DataType = aws.String(d.Get("data_type").(string))
