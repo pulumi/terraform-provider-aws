@@ -18,9 +18,7 @@ func (p *servicePackage) FrameworkDataSources(ctx context.Context) []func(contex
 }
 
 func (p *servicePackage) FrameworkResources(ctx context.Context) []func(context.Context) (resource.ResourceWithConfigure, error) {
-	return []func(context.Context) (resource.ResourceWithConfigure, error){
-		newResourceDomain,
-	}
+	return []func(context.Context) (resource.ResourceWithConfigure, error){}
 }
 
 func (p *servicePackage) SDKDataSources(ctx context.Context) map[string]func() *schema.Resource {

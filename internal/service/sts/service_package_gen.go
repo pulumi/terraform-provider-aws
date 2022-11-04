@@ -14,9 +14,7 @@ import (
 type servicePackage struct{}
 
 func (p *servicePackage) FrameworkDataSources(ctx context.Context) []func(context.Context) (datasource.DataSourceWithConfigure, error) {
-	return []func(context.Context) (datasource.DataSourceWithConfigure, error){
-		newDataSourceCallerIdentity,
-	}
+	return []func(context.Context) (datasource.DataSourceWithConfigure, error){}
 }
 
 func (p *servicePackage) FrameworkResources(ctx context.Context) []func(context.Context) (resource.ResourceWithConfigure, error) {
