@@ -45,7 +45,8 @@ func ResourceLaunchConfiguration() *schema.Resource {
 			"associate_public_ip_address": {
 				Type:     schema.TypeBool,
 				Optional: true,
-				Computed: true,
+				//Computed: true,
+				Default:  false,
 				ForceNew: true,
 			},
 			"ebs_block_device": {
@@ -341,16 +342,19 @@ func resourceLaunchConfigurationCreate(ctx context.Context, d *schema.ResourceDa
 
 	lcName := create.Name(d.Get("name").(string), d.Get("name_prefix").(string))
 	input := autoscaling.CreateLaunchConfigurationInput{
-		EbsOptimized:            aws.Bool(d.Get("ebs_optimized").(bool)),
-		ImageId:                 aws.String(d.Get("image_id").(string)),
-		InstanceType:            aws.String(d.Get("instance_type").(string)),
-		LaunchConfigurationName: aws.String(lcName),
+		EbsOptimized:             aws.Bool(d.Get("ebs_optimized").(bool)),
+		ImageId:                  aws.String(d.Get("image_id").(string)),
+		InstanceType:             aws.String(d.Get("instance_type").(string)),
+		LaunchConfigurationName:  aws.String(lcName),
+		AssociatePublicIpAddress: aws.Bool(d.Get("associate_public_ip_address").(bool)),
 	}
 
-	associatePublicIPAddress := d.GetRawConfig().GetAttr("associate_public_ip_address")
-	if associatePublicIPAddress.IsKnown() && !associatePublicIPAddress.IsNull() {
-		input.AssociatePublicIpAddress = aws.Bool(associatePublicIPAddress.True())
-	}
+	// FORK: Stack72 to remove this AssociatePublicIpAddress below when associated bridge issue is solved
+
+	//associatePublicIPAddress := d.GetRawConfig().GetAttr("associate_public_ip_address")
+	//if associatePublicIPAddress.IsKnown() && !associatePublicIPAddress.IsNull() {
+	//	input.AssociatePublicIpAddress = aws.Bool(associatePublicIPAddress.True())
+	//}
 
 	if v, ok := d.GetOk("iam_instance_profile"); ok {
 		input.IamInstanceProfile = aws.String(v.(string))
