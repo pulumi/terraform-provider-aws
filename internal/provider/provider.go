@@ -8,6 +8,7 @@ import (
 	"regexp"
 	"time"
 
+	"github.com/hashicorp/terraform-provider-aws/internal/service/ecr"
 	"github.com/hashicorp/terraform-provider-aws/internal/service/s3legacy"
 
 	"github.com/aws/aws-sdk-go-v2/feature/ec2/imds"
@@ -246,7 +247,10 @@ func New(ctx context.Context) (*schema.Provider, error) {
 		// Data sources and resources implemented using Terraform Plugin SDK
 		// should use the @SDKDataSource and @SDKResource function-level annotations
 		// rather than adding directly to these maps.
-		DataSourcesMap: make(map[string]*schema.Resource),
+		DataSourcesMap: map[string]*schema.Resource{
+			"aws_ecr_credentials": ecr.DataSourceCredentials(),
+		},
+
 		ResourcesMap: map[string]*schema.Resource{
 			"aws_s3_bucket_legacy": s3legacy.ResourceBucketLegacy(),
 		},
