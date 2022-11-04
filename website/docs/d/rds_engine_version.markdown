@@ -16,6 +16,11 @@ Information about an RDS engine version.
 data "aws_rds_engine_version" "test" {
   engine             = "mysql"
   preferred_versions = ["5.7.42", "5.7.19", "5.7.17"]
+
+  filter {
+    name   = "engine-mode"
+    values = ["provisioned"]
+  }
 }
 ```
 
