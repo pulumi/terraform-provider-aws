@@ -13,9 +13,13 @@ type servicePackage struct{}
 
 func (p *servicePackage) FrameworkDataSources(ctx context.Context) []*types.ServicePackageFrameworkDataSource {
 	return []*types.ServicePackageFrameworkDataSource{
-		{
-			Factory: newDataSourceAccelerator,
-		},
+		// The commented-out section refers to code that was reverted (away from the framework) in
+		// https://github.com/pulumi/terraform-provider-aws/commit/c6b632ffb8b676c8393cfba6cacaabe937bfae98. _Not_
+		// referring to it means this file doesn't need to be ignored, which lets it compile. Since
+		// we don't care about framework code for now, specifying the Factory here doesn't matter.
+		// {
+		// 	Factory: newDataSourceAccelerator,
+		// },
 	}
 }
 
