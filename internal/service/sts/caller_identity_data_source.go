@@ -1,89 +1,54 @@
 package sts
 
 import (
-	"context"
+	"fmt"
+	"log"
 
 	"github.com/aws/aws-sdk-go/aws"
-	"github.com/hashicorp/terraform-plugin-framework/datasource"
-	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/types"
-	"github.com/hashicorp/terraform-provider-aws/internal/flex"
-	"github.com/hashicorp/terraform-provider-aws/internal/framework"
+	"github.com/aws/aws-sdk-go/service/sts"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/hashicorp/terraform-provider-aws/internal/conns"
 )
 
-func init() {
-	_sp.registerFrameworkDataSourceFactory(newDataSourceCallerIdentity)
-}
+func DataSourceCallerIdentity() *schema.Resource {
+	return &schema.Resource{
+		Read: dataSourceCallerIdentityRead,
 
-// newDataSourceCallerIdentity instantiates a new DataSource for the aws_caller_identity data source.
-func newDataSourceCallerIdentity(context.Context) (datasource.DataSourceWithConfigure, error) {
-	return &dataSourceCallerIdentity{}, nil
-}
-
-type dataSourceCallerIdentity struct {
-	framework.DataSourceWithConfigure
-}
-
-// Metadata should return the full name of the data source, such as
-// examplecloud_thing.
-func (d *dataSourceCallerIdentity) Metadata(_ context.Context, request datasource.MetadataRequest, response *datasource.MetadataResponse) {
-	response.TypeName = "aws_caller_identity"
-}
-
-// Schema returns the schema for this data source.
-func (d *dataSourceCallerIdentity) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
-	resp.Schema = schema.Schema{
-		Attributes: map[string]schema.Attribute{
-			"account_id": schema.StringAttribute{
+		Schema: map[string]*schema.Schema{
+			"account_id": {
+				Type:     schema.TypeString,
 				Computed: true,
 			},
-			"arn": schema.StringAttribute{
+
+			"arn": {
+				Type:     schema.TypeString,
 				Computed: true,
 			},
-			"id": schema.StringAttribute{
-				Optional: true,
-				Computed: true,
-			},
-			"user_id": schema.StringAttribute{
+
+			"user_id": {
+				Type:     schema.TypeString,
 				Computed: true,
 			},
 		},
 	}
 }
 
-// Read is called when the provider must read data source values in order to update state.
-// Config values should be read from the ReadRequest and new state values set on the ReadResponse.
-func (d *dataSourceCallerIdentity) Read(ctx context.Context, request datasource.ReadRequest, response *datasource.ReadResponse) {
-	var data dataSourceCallerIdentityData
+func dataSourceCallerIdentityRead(d *schema.ResourceData, meta interface{}) error {
+	client := meta.(*conns.AWSClient).STSConn()
 
-	response.Diagnostics.Append(request.Config.Get(ctx, &data)...)
-
-	if response.Diagnostics.HasError() {
-		return
-	}
-
-	conn := d.Meta().STSConn()
-
-	output, err := FindCallerIdentity(ctx, conn)
+	log.Printf("[DEBUG] Reading Caller Identity")
+	res, err := client.GetCallerIdentity(&sts.GetCallerIdentityInput{})
 
 	if err != nil {
-		response.Diagnostics.AddError("reading STS Caller Identity", err.Error())
-
-		return
+		return fmt.Errorf("getting Caller Identity: %w", err)
 	}
 
-	accountID := aws.StringValue(output.Account)
-	data.AccountID = types.StringValue(accountID)
-	data.ARN = flex.StringToFrameworkLegacy(ctx, output.Arn)
-	data.ID = types.StringValue(accountID)
-	data.UserID = flex.StringToFrameworkLegacy(ctx, output.UserId)
+	log.Printf("[DEBUG] Received Caller Identity: %s", res)
 
-	response.Diagnostics.Append(response.State.Set(ctx, &data)...)
-}
+	d.SetId(aws.StringValue(res.Account))
+	d.Set("account_id", res.Account)
+	d.Set("arn", res.Arn)
+	d.Set("user_id", res.UserId)
 
-type dataSourceCallerIdentityData struct {
-	AccountID types.String `tfsdk:"account_id"`
-	ARN       types.String `tfsdk:"arn"`
-	ID        types.String `tfsdk:"id"`
-	UserID    types.String `tfsdk:"user_id"`
+	return nil
 }
