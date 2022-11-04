@@ -1,9 +1,8 @@
-package types
+package meta
 
 import (
 	"context"
 	"fmt"
-
 	"github.com/aws/aws-sdk-go-v2/aws/arn"
 	"github.com/hashicorp/terraform-plugin-go/tftypes"
 )
@@ -58,4 +57,15 @@ func (a ARN) IsNull() bool {
 // IsUnknown returns true if the Value is not yet known.
 func (a ARN) IsUnknown() bool {
 	return a.Unknown
+}
+
+// String returns a summary representation of either the underlying Value,
+// or UnknownValueString (`<unknown>`) when IsUnknown() returns true,
+// or NullValueString (`<null>`) when IsNull() return true.
+//
+// This is an intentionally lossy representation, that are best suited for
+// logging and error reporting, as they are not protected by
+// compatibility guarantees within the framework.
+func (a ARN) String() string {
+	return a.Value.String()
 }
