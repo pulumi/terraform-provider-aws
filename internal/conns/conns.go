@@ -9,7 +9,6 @@ import (
 	awsbase "github.com/hashicorp/aws-sdk-go-base/v2"
 	awsbasev1 "github.com/hashicorp/aws-sdk-go-base/v2/awsv1shim/v2"
 	"github.com/hashicorp/terraform-provider-aws/internal/types"
-	"github.com/hashicorp/terraform-provider-aws/version"
 )
 
 // ServicePackage is the minimal interface exported from each AWS service package.
@@ -66,10 +65,10 @@ func NewSessionForRegion(cfg *aws.Config, region, terraformVersion string) (*ses
 
 func StdUserAgentProducts(terraformVersion string) *awsbase.APNInfo {
 	return &awsbase.APNInfo{
-		PartnerName: "HashiCorp",
+		PartnerName: "Pulumi",
 		Products: []awsbase.UserAgentProduct{
-			{Name: "Terraform", Version: terraformVersion, Comment: "+https://www.terraform.io"},
-			{Name: "terraform-provider-aws", Version: version.ProviderVersion, Comment: "+https://registry.terraform.io/providers/hashicorp/aws"},
+			{Name: "Pulumi", Version: "1.0"},
+			{Name: "Pulumi-Aws", Version: terraformVersion, Comment: "+https://www.pulumi.com"},
 		},
 	}
 }
