@@ -60,7 +60,7 @@ func ResourceBucketObject() *schema.Resource {
 				ValidateFunc: validation.StringInSlice(s3.ObjectCannedACL_Values(), false),
 			},
 			"bucket": {
-				Deprecated:   "Use the aws_s3_object resource instead",
+				// FORK: Stack72 removed the deprecation warning as it was misleading for Pulumi users
 				Type:         schema.TypeString,
 				Required:     true,
 				ForceNew:     true,
@@ -117,7 +117,7 @@ func ResourceBucketObject() *schema.Resource {
 				Default:  false,
 			},
 			"key": {
-				Deprecated:   "Use the aws_s3_object resource instead",
+				// FORK: Stack72 removed the deprecation warning as it was misleading for Pulumi users
 				Type:         schema.TypeString,
 				Required:     true,
 				ForceNew:     true,
