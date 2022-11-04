@@ -558,11 +558,11 @@ func resourceServiceCreate(d *schema.ResourceData, meta interface{}) error {
 	cluster := d.Get("cluster").(string)
 
 	if d.Get("wait_for_steady_state").(bool) {
-		if _, err := waitServiceStable(conn, d.Id(), cluster, d.Timeout(schema.TimeoutCreate)); err != nil {
+		if err := waitServiceStable(conn, d.Id(), cluster); err != nil {
 			return fmt.Errorf("error waiting for ECS service (%s) to reach steady state after creation: %w", d.Id(), err)
 		}
 	} else {
-		if _, err := waitServiceActive(conn, d.Id(), cluster, d.Timeout(schema.TimeoutCreate)); err != nil {
+		if _, err := waitServiceDescribeReady(conn, d.Id(), cluster); err != nil {
 			return fmt.Errorf("error waiting for ECS service (%s) to become active after creation: %w", d.Id(), err)
 		}
 	}
@@ -1088,11 +1088,11 @@ func resourceServiceUpdate(d *schema.ResourceData, meta interface{}) error {
 
 		cluster := d.Get("cluster").(string)
 		if d.Get("wait_for_steady_state").(bool) {
-			if _, err := waitServiceStable(conn, d.Id(), cluster, d.Timeout(schema.TimeoutUpdate)); err != nil {
+			if err := waitServiceStable(conn, d.Id(), cluster); err != nil {
 				return fmt.Errorf("error waiting for ECS service (%s) to reach steady state after update: %w", d.Id(), err)
 			}
 		} else {
-			if _, err := waitServiceActive(conn, d.Id(), cluster, d.Timeout(schema.TimeoutUpdate)); err != nil {
+			if _, err := waitServiceDescribeReady(conn, d.Id(), cluster); err != nil {
 				return fmt.Errorf("error waiting for ECS service (%s) to become active after update: %w", d.Id(), err)
 			}
 		}
@@ -1176,7 +1176,7 @@ func resourceServiceDelete(d *schema.ResourceData, meta interface{}) error {
 		return fmt.Errorf("error deleting ECS Service (%s): %w", d.Id(), err)
 	}
 
-	if err := waitServiceInactive(conn, d.Id(), d.Get("cluster").(string), d.Timeout(schema.TimeoutDelete)); err != nil {
+	if err := waitServiceInactive(conn, d.Id(), d.Get("cluster").(string)); err != nil {
 		return fmt.Errorf("error waiting for ECS Service (%s) to be deleted: %w", d.Id(), err)
 	}
 
