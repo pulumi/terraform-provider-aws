@@ -39,3 +39,11 @@ func TagsSchemaForceNew() *schema.Schema {
 		Elem:     &schema.Schema{Type: schema.TypeString},
 	}
 }
+
+func TagsSchemaTrulyComputed() *schema.Schema {
+	return &schema.Schema{
+		Type:     schema.TypeMap,
+		Computed: true,
+		Elem:     &schema.Schema{Type: schema.TypeString},
+	}
+}
