@@ -12,6 +12,8 @@ import (
 
 	"github.com/YakDriver/regexache"
 	"github.com/aws/aws-sdk-go-v2/aws"
+	"github.com/hashicorp/terraform-provider-aws/internal/service/s3legacy"
+
 	"github.com/aws/aws-sdk-go-v2/feature/ec2/imds"
 	"github.com/aws/aws-sdk-go/aws/endpoints"
 	awsbase "github.com/hashicorp/aws-sdk-go-base/v2"
@@ -237,7 +239,9 @@ func New(ctx context.Context) (*schema.Provider, error) {
 		// should use the @SDKDataSource and @SDKResource function-level annotations
 		// rather than adding directly to these maps.
 		DataSourcesMap: make(map[string]*schema.Resource),
-		ResourcesMap:   make(map[string]*schema.Resource),
+		ResourcesMap: map[string]*schema.Resource{
+			"aws_s3_bucket_legacy": s3legacy.ResourceBucketLegacy(),
+		},
 	}
 
 	provider.ConfigureContextFunc = func(ctx context.Context, d *schema.ResourceData) (interface{}, diag.Diagnostics) {
