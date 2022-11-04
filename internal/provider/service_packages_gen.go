@@ -95,7 +95,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/service/fsx"
 	"github.com/hashicorp/terraform-provider-aws/internal/service/gamelift"
 	"github.com/hashicorp/terraform-provider-aws/internal/service/glacier"
-	"github.com/hashicorp/terraform-provider-aws/internal/service/globalaccelerator"
+
 	"github.com/hashicorp/terraform-provider-aws/internal/service/glue"
 	"github.com/hashicorp/terraform-provider-aws/internal/service/grafana"
 	"github.com/hashicorp/terraform-provider-aws/internal/service/greengrass"
@@ -135,7 +135,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/service/mediapackage"
 	"github.com/hashicorp/terraform-provider-aws/internal/service/mediastore"
 	"github.com/hashicorp/terraform-provider-aws/internal/service/memorydb"
-	"github.com/hashicorp/terraform-provider-aws/internal/service/meta"
+
 	"github.com/hashicorp/terraform-provider-aws/internal/service/mq"
 	"github.com/hashicorp/terraform-provider-aws/internal/service/mwaa"
 	"github.com/hashicorp/terraform-provider-aws/internal/service/neptune"
@@ -186,14 +186,14 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/service/sfn"
 	"github.com/hashicorp/terraform-provider-aws/internal/service/shield"
 	"github.com/hashicorp/terraform-provider-aws/internal/service/signer"
-	"github.com/hashicorp/terraform-provider-aws/internal/service/simpledb"
+
 	"github.com/hashicorp/terraform-provider-aws/internal/service/sns"
 	"github.com/hashicorp/terraform-provider-aws/internal/service/sqs"
 	"github.com/hashicorp/terraform-provider-aws/internal/service/ssm"
 	"github.com/hashicorp/terraform-provider-aws/internal/service/ssmincidents"
 	"github.com/hashicorp/terraform-provider-aws/internal/service/ssoadmin"
 	"github.com/hashicorp/terraform-provider-aws/internal/service/storagegateway"
-	"github.com/hashicorp/terraform-provider-aws/internal/service/sts"
+
 	"github.com/hashicorp/terraform-provider-aws/internal/service/swf"
 	"github.com/hashicorp/terraform-provider-aws/internal/service/synthetics"
 	"github.com/hashicorp/terraform-provider-aws/internal/service/timestreamwrite"
@@ -300,7 +300,7 @@ func servicePackages(context.Context) []conns.ServicePackage {
 		fsx.ServicePackage,
 		gamelift.ServicePackage,
 		glacier.ServicePackage,
-		globalaccelerator.ServicePackage,
+		// globalaccelerator.ServicePackage,
 		glue.ServicePackage,
 		grafana.ServicePackage,
 		greengrass.ServicePackage,
@@ -340,7 +340,7 @@ func servicePackages(context.Context) []conns.ServicePackage {
 		mediapackage.ServicePackage,
 		mediastore.ServicePackage,
 		memorydb.ServicePackage,
-		meta.ServicePackage,
+		// meta.ServicePackage,
 		mq.ServicePackage,
 		mwaa.ServicePackage,
 		neptune.ServicePackage,
@@ -391,14 +391,14 @@ func servicePackages(context.Context) []conns.ServicePackage {
 		sfn.ServicePackage,
 		shield.ServicePackage,
 		signer.ServicePackage,
-		simpledb.ServicePackage,
+		// simpledb.ServicePackage,
 		sns.ServicePackage,
 		sqs.ServicePackage,
 		ssm.ServicePackage,
 		ssmincidents.ServicePackage,
 		ssoadmin.ServicePackage,
 		storagegateway.ServicePackage,
-		sts.ServicePackage,
+		// sts.ServicePackage,
 		swf.ServicePackage,
 		synthetics.ServicePackage,
 		timestreamwrite.ServicePackage,
