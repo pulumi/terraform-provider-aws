@@ -2,9 +2,11 @@ package ecs
 
 import (
 	"context"
+	"log"
 	"time"
 
 	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/request"
 	"github.com/aws/aws-sdk-go/service/ecs"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 )
@@ -14,6 +16,7 @@ const (
 	capacityProviderUpdateTimeout = 10 * time.Minute
 
 	serviceCreateTimeout      = 2 * time.Minute
+	serviceInactiveTimeout    = 10 * time.Minute
 	serviceInactiveTimeoutMin = 1 * time.Second
 	serviceDescribeTimeout    = 2 * time.Minute
 	serviceUpdateTimeout      = 2 * time.Minute
@@ -26,6 +29,8 @@ const (
 
 	taskSetCreateTimeout = 10 * time.Minute
 	taskSetDeleteTimeout = 10 * time.Minute
+
+	serviceStableRetryCount = 3
 )
 
 func waitCapacityProviderDeleted(conn *ecs.ECS, arn string) (*ecs.CapacityProvider, error) {
@@ -62,8 +67,8 @@ func waitCapacityProviderUpdated(conn *ecs.ECS, arn string) (*ecs.CapacityProvid
 	return nil, err
 }
 
-// waitServiceStable waits for an ECS Service to reach the status "ACTIVE" and have all desired tasks running. Does not return tags.
-func waitServiceStable(conn *ecs.ECS, id, cluster string, timeout time.Duration) (*ecs.Service, error) { //nolint:unparam
+func waitServiceStable(conn *ecs.ECS, id, cluster string) error {
+	var err error
 	input := &ecs.DescribeServicesInput{
 		Services: aws.StringSlice([]string{id}),
 	}
@@ -72,37 +77,49 @@ func waitServiceStable(conn *ecs.ECS, id, cluster string, timeout time.Duration)
 		input.Cluster = aws.String(cluster)
 	}
 
-	stateConf := &resource.StateChangeConf{
-		Pending: []string{serviceStatusInactive, serviceStatusDraining, serviceStatusPending},
-		Target:  []string{serviceStatusStable},
-		Refresh: statusServiceWaitForStable(conn, id, cluster),
-		Timeout: timeout,
+	// Here we retry the following operation a set number of times as
+	// described in https://github.com/hashicorp/terraform-provider-aws/pull/23747.
+	// Previously, handling was attempted in the ECSConn.Handlers in conns/config.go, but did not work as expected.
+	// Reference: https://github.com/hashicorp/terraform-provider-aws/pull/24223.
+	// The waiter within the "WaitUntilServicesStable" request will poll until the service is either
+	// in a failure state ('MISSING', 'DRAINING', or 'INACTIVE') or reaches the successful stable state.
+	// Reference: https://github.com/aws/aws-sdk-go/blob/f377248cbb3037d1989004ba26f6d73f620461df/service/ecs/waiters.go#L79-L105
+	// Thus, since the waiter will return an error when one of the 'MISSING', 'DRAINING', 'INACTIVE' states is met,
+	// we make up to 3 repetitive calls, hoping the service reaches a stable state by the end.
+	ctx := aws.BackgroundContext()
+	for i := 1; i <= serviceStableRetryCount; i++ {
+		log.Printf("[DEBUG] WaitUntilServicesStable attempt %d/%d", i, serviceStableRetryCount)
+		err = conn.WaitUntilServicesStableWithContext(ctx, input, func(w *request.Waiter) {
+			w.MaxAttempts = 60
+			w.Delay = func(attempt int) time.Duration { return 15 * time.Second }
+		})
+		if err == nil {
+			return nil
+		}
+		log.Printf("[DEBUG] error received from WaitUntilServicesStable: %s", err)
 	}
 
-	outputRaw, err := stateConf.WaitForState()
-
-	if v, ok := outputRaw.(*ecs.Service); ok {
-		return v, err
-	}
-
-	return nil, err
+	return err
 }
 
-// waitServiceInactive waits for an ECS Service to reach the status "INACTIVE".
-func waitServiceInactive(conn *ecs.ECS, id, cluster string, timeout time.Duration) error {
+func waitServiceInactive(conn *ecs.ECS, id, cluster string) error {
 	input := &ecs.DescribeServicesInput{
 		Services: aws.StringSlice([]string{id}),
 	}
 
 	if cluster != "" {
 		input.Cluster = aws.String(cluster)
+	}
+
+	if err := conn.WaitUntilServicesInactive(input); err != nil {
+		return err
 	}
 
 	stateConf := &resource.StateChangeConf{
 		Pending:    []string{serviceStatusActive, serviceStatusDraining},
-		Target:     []string{serviceStatusInactive},
-		Refresh:    statusServiceNoTags(conn, id, cluster),
-		Timeout:    timeout,
+		Target:     []string{serviceStatusInactive, serviceStatusNone},
+		Refresh:    statusService(conn, id, cluster),
+		Timeout:    serviceInactiveTimeout,
 		MinTimeout: serviceInactiveTimeoutMin,
 	}
 
@@ -111,18 +128,17 @@ func waitServiceInactive(conn *ecs.ECS, id, cluster string, timeout time.Duratio
 	return err
 }
 
-// waitServiceActive waits for an ECS Service to reach the status "ACTIVE". Does not return tags.
-func waitServiceActive(conn *ecs.ECS, id, cluster string, timeout time.Duration) (*ecs.Service, error) { //nolint:unparam
+func waitServiceDescribeReady(conn *ecs.ECS, id, cluster string) (*ecs.DescribeServicesOutput, error) {
 	stateConf := &resource.StateChangeConf{
-		Pending: []string{serviceStatusInactive, serviceStatusDraining},
+		Pending: []string{serviceStatusInactive, serviceStatusDraining, serviceStatusNone},
 		Target:  []string{serviceStatusActive},
-		Refresh: statusServiceNoTags(conn, id, cluster),
-		Timeout: timeout,
+		Refresh: statusService(conn, id, cluster),
+		Timeout: serviceDescribeTimeout,
 	}
 
 	outputRaw, err := stateConf.WaitForState()
 
-	if v, ok := outputRaw.(*ecs.Service); ok {
+	if v, ok := outputRaw.(*ecs.DescribeServicesOutput); ok {
 		return v, err
 	}
 
