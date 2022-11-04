@@ -152,7 +152,10 @@ func ResourceCertificate() *schema.Resource {
 					},
 				},
 				DiffSuppressFunc: func(k, old, new string, d *schema.ResourceData) bool {
-					if _, ok := d.GetOk("private_key"); ok {
+					// getOk is not sufficient alone if the private key has changed - we need to check
+					// whether there is a change in addition, else we do not suppress the diff for imported
+					// certificates.
+					if _, ok := d.GetOk("private_key"); ok || d.HasChange("private_key") {
 						// ignore diffs for imported certs; they have a different logging preference
 						// default to requested certs which can't be changed by the ImportCertificate API
 						return true
