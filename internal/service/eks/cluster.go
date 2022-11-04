@@ -74,6 +74,13 @@ func ResourceCluster() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"default_addons_to_remove": {
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Schema{
+					Type: schema.TypeString,
+				},
+			},
 			"enabled_cluster_log_types": {
 				Type:     schema.TypeSet,
 				Optional: true,
