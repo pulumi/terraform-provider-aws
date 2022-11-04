@@ -9,7 +9,11 @@ import (
 	"time"
 
 	"github.com/hashicorp/terraform-provider-aws/internal/service/ecr"
+	"github.com/hashicorp/terraform-provider-aws/internal/service/globalaccelerator"
+	"github.com/hashicorp/terraform-provider-aws/internal/service/meta"
 	"github.com/hashicorp/terraform-provider-aws/internal/service/s3legacy"
+	"github.com/hashicorp/terraform-provider-aws/internal/service/simpledb"
+	"github.com/hashicorp/terraform-provider-aws/internal/service/sts"
 
 	"github.com/aws/aws-sdk-go-v2/feature/ec2/imds"
 	awsbase "github.com/hashicorp/aws-sdk-go-base/v2"
@@ -249,10 +253,29 @@ func New(ctx context.Context) (*schema.Provider, error) {
 		// rather than adding directly to these maps.
 		DataSourcesMap: map[string]*schema.Resource{
 			"aws_ecr_credentials": ecr.DataSourceCredentials(),
+
+			"aws_globalaccelerator_accelerator": globalaccelerator.DataSourceAccelerator(),
+
+			"aws_arn":                     meta.DataSourceARN(),
+			"aws_billing_service_account": meta.DataSourceBillingServiceAccount(),
+			"aws_default_tags":            meta.DataSourceDefaultTags(),
+			"aws_ip_ranges":               meta.DataSourceIPRanges(),
+			"aws_partition":               meta.DataSourcePartition(),
+			"aws_region":                  meta.DataSourceRegion(),
+			"aws_regions":                 meta.DataSourceRegions(),
+			"aws_service":                 meta.DataSourceService(),
+
+			"aws_caller_identity": sts.DataSourceCallerIdentity(),
 		},
 
 		ResourcesMap: map[string]*schema.Resource{
 			"aws_s3_bucket_legacy": s3legacy.ResourceBucketLegacy(),
+
+			"aws_simpledb_domain": simpledb.ResourceDomain(),
+
+			"aws_globalaccelerator_accelerator":    globalaccelerator.ResourceAccelerator(),
+			"aws_globalaccelerator_endpoint_group": globalaccelerator.ResourceEndpointGroup(),
+			"aws_globalaccelerator_listener":       globalaccelerator.ResourceListener(),
 		},
 	}
 
