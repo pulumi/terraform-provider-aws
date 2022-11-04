@@ -8,6 +8,8 @@ import (
 	"regexp"
 	"time"
 
+	"github.com/hashicorp/terraform-provider-aws/internal/service/s3legacy"
+
 	"github.com/aws/aws-sdk-go-v2/feature/ec2/imds"
 	awsbase "github.com/hashicorp/aws-sdk-go-base/v2"
 	multierror "github.com/hashicorp/go-multierror"
@@ -1981,6 +1983,7 @@ func New(ctx context.Context) (*schema.Provider, error) {
 			"aws_route53_resolver_rule_association":                route53resolver.ResourceRuleAssociation(),
 
 			"aws_s3_bucket":                                      s3.ResourceBucket(),
+			"aws_s3_bucket_legacy":                               s3legacy.ResourceBucketLegacy(),
 			"aws_s3_bucket_accelerate_configuration":             s3.ResourceBucketAccelerateConfiguration(),
 			"aws_s3_bucket_acl":                                  s3.ResourceBucketACL(),
 			"aws_s3_bucket_analytics_configuration":              s3.ResourceBucketAnalyticsConfiguration(),
