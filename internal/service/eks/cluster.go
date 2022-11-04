@@ -66,6 +66,13 @@ func ResourceCluster() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"default_addons_to_remove": {
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Schema{
+					Type: schema.TypeString,
+				},
+			},
 			"enabled_cluster_log_types": {
 				Type:     schema.TypeSet,
 				Optional: true,
@@ -348,6 +355,10 @@ func resourceClusterCreate(d *schema.ResourceData, meta interface{}) error {
 
 	if err != nil {
 		return fmt.Errorf("error waiting for EKS Cluster (%s) to create: %w", d.Id(), err)
+	}
+
+	if err = removeAddons(d, conn); err != nil {
+		return err
 	}
 
 	return resourceClusterRead(d, meta)
