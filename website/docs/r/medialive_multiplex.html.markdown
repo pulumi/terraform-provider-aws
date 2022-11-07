@@ -3,12 +3,12 @@ subcategory: "Elemental MediaLive"
 layout: "aws"
 page_title: "AWS: aws_medialive_multiplex"
 description: |-
-  Terraform resource for managing an AWS MediaLive Multiplex.
+  Resource for managing an AWS MediaLive Multiplex.
 ---
 
 # Resource: aws_medialive_multiplex
 
-Terraform resource for managing an AWS MediaLive Multiplex.
+Resource for managing an AWS MediaLive Multiplex.
 
 ## Example Usage
 
@@ -49,7 +49,7 @@ The following arguments are required:
 The following arguments are optional:
 
 * `start_multiplex` - (Optional) Whether to start the Multiplex. Defaults to `false`.
-* `tags` - (Optional) A map of tags to assign to the Multiplex. If configured with a provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) A map of tags to assign to the Multiplex. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ### Multiplex Settings
 
@@ -67,7 +67,7 @@ In addition to all arguments above, the following attributes are exported:
 
 ## Timeouts
 
-[Configuration options](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts):
+Configuration options:
 
 * `create` - (Default `30m`)
 * `update` - (Default `30m`)

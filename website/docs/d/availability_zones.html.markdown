@@ -101,6 +101,6 @@ Note that the indexes of Availability Zone names and IDs correspond.
 
 ## Timeouts
 
-[Configuration options](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts):
+Configuration options:
 
 - `read` - (Default `20m`)

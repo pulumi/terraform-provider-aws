@@ -9,7 +9,7 @@ description: |-
 # Resource: aws_autoscaling_notification
 
 Provides an AutoScaling Group with Notification support, via SNS Topics. Each of
-the `notifications` map to a [Notification Configuration][2] inside Amazon Web
+the `notifications` map to a Notification Configuration inside Amazon Web
 Services, and are applied to each AutoScaling Group you supply.
 
 ## Example Usage
@@ -40,13 +40,13 @@ resource "aws_sns_topic" "example" {
 }
 
 resource "aws_autoscaling_group" "bar" {
-  name = "foobar1-terraform-test"
+  name = "foobar1-test"
 
   # ...
 }
 
 resource "aws_autoscaling_group" "foo" {
-  name = "barfoo-terraform-test"
+  name = "barfoo-test"
 
   # ...
 }
@@ -58,7 +58,7 @@ The following arguments are supported:
 
 * `group_names` - (Required) List of AutoScaling Group Names
 * `notifications` - (Required) List of Notification Types that trigger
-notifications. Acceptable values are documented [in the AWS documentation here][1]
+notifications. Acceptable values are documented in the AWS documentation here
 * `topic_arn` - (Required) Topic ARN for notifications to be sent through
 
 ## Attributes Reference

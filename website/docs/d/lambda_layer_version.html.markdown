@@ -37,8 +37,8 @@ In addition to all arguments above, the following attributes are exported:
 
 * `description` - Description of the specific Lambda Layer version.
 * `license_info` - License info associated with the specific Lambda Layer version.
-* `compatible_runtimes` - List of [Runtimes][1] the specific Lambda Layer version is compatible with.
-* `compatible_architectures` - A list of [Architectures][2] the specific Lambda Layer version is compatible with.
+* `compatible_runtimes` - List of Runtimes the specific Lambda Layer version is compatible with.
+* `compatible_architectures` - A list of Architectures the specific Lambda Layer version is compatible with.
 * `arn` - ARN of the Lambda Layer with version.
 * `layer_arn` - ARN of the Lambda Layer without version.
 * `created_date` - Date this resource was created.

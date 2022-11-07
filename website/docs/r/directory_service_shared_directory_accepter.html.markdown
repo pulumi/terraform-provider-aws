@@ -49,7 +49,7 @@ In addition to all arguments above, the following attributes are exported:
 
 ## Timeouts
 
-`aws_directory_service_shared_directory_accepter` provides the following [Timeouts](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts) configuration options:
+`aws_directory_service_shared_directory_accepter` provides the following Timeouts configuration options:
 
 - `create` - (Default `60 minutes`) Used for directory creation
 - `delete` - (Default `60 minutes`) Used for directory deletion

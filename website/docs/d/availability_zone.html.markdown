@@ -104,6 +104,6 @@ For Local and Wavelength Zones this is a longer string, for example `wl1-sfo-wlz
 
 ## Timeouts
 
-[Configuration options](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts):
+Configuration options:
 
 - `read` - (Default `20m`)

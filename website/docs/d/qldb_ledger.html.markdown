@@ -24,5 +24,5 @@ data "aws_qldb_ledger" "example" {
 
 ## Attributes Reference
 
-See the [QLDB Ledger Resource](/docs/providers/aws/r/qldb_ledger.html) for details on the
+See the QLDB Ledger Resource for details on the
 returned attributes - they are identical.

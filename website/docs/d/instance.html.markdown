@@ -46,7 +46,7 @@ several valid keys, for a full reference, check out
 ~> **NOTE:** At least one of `filter`, `instance_tags`, or `instance_id` must be specified.
 
 ~> **NOTE:** If anything other than a single match is returned by the search,
-Terraform will fail. Ensure that your search is specific enough to return
+this call will fail. Ensure that your search is specific enough to return
 a single Instance ID only.
 
 ## Attributes Reference
@@ -108,7 +108,7 @@ interpolation.
     * `hostname_type` - Type of hostname for EC2 instances.
 * `private_ip` - Private IP address assigned to the Instance.
 * `public_dns` - Public DNS name assigned to the Instance. For EC2-VPC, this is only available if you've enabled DNS hostnames for your VPC.
-* `public_ip` - Public IP address assigned to the Instance, if applicable. **NOTE**: If you are using an [`aws_eip`](/docs/providers/aws/r/eip.html) with your instance, you should refer to the EIP's address directly and not use `public_ip`, as this field will change after the EIP is attached.
+* `public_ip` - Public IP address assigned to the Instance, if applicable. **NOTE**: If you are using an `aws_eip` with your instance, you should refer to the EIP's address directly and not use `public_ip`, as this field will change after the EIP is attached.
 * `root_block_device` - Root block device mappings of the Instance
     * `device_name` - Physical name of the device.
     * `delete_on_termination` - If the root block device will be deleted on termination.
@@ -125,12 +125,12 @@ interpolation.
 * `tags` - Map of tags assigned to the Instance.
 * `tenancy` - Tenancy of the instance: `dedicated`, `default`, `host`.
 * `user_data` - SHA-1 hash of User Data supplied to the Instance.
-* `user_data_base64` - Base64 encoded contents of User Data supplied to the Instance. Valid UTF-8 contents can be decoded with the [`base64decode` function](https://www.terraform.io/docs/configuration/functions/base64decode.html). This attribute is only exported if `get_user_data` is true.
+* `user_data_base64` - Base64 encoded contents of User Data supplied to the Instance. This attribute is only exported if `get_user_data` is true.
 * `vpc_security_group_ids` - Associated security groups in a non-default VPC.
 
 ## Timeouts
 
-[Configuration options](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts):
+Configuration options:
 
 - `read` - (Default `20m`)
 

@@ -11,9 +11,9 @@ description: |-
 Provides a Kinesis Analytics Application resource. Kinesis Analytics is a managed service that
 allows processing and analyzing streaming data using standard SQL.
 
-For more details, see the [Amazon Kinesis Analytics Documentation][1].
+For more details, see the Amazon Kinesis Analytics Documentation.
 
--> **Note:** To manage Amazon Kinesis Data Analytics for Apache Flink applications, use the [`aws_kinesisanalyticsv2_application`](/docs/providers/aws/r/kinesisanalyticsv2_application.html) resource.
+-> **Note:** To manage Amazon Kinesis Data Analytics for Apache Flink applications, use the `aws_kinesisanalyticsv2_application` resource.
 
 ## Example Usage
 
@@ -21,7 +21,7 @@ For more details, see the [Amazon Kinesis Analytics Documentation][1].
 
 ```terraform
 resource "aws_kinesis_stream" "test_stream" {
-  name        = "terraform-kinesis-test"
+  name        = "kinesis-test"
   shard_count = 1
 }
 
@@ -157,7 +157,7 @@ See [CloudWatch Logging Options](#cloudwatch-logging-options) below for more det
 See [Reference Data Sources](#reference-data-sources) below for more details.
 * `start_application` - (Optional) Whether to start or stop the Kinesis Analytics Application. To start an application, an input with a defined `starting_position` must be configured.
 To modify an application's starting position, first stop the application by setting `start_application = false`, then update `starting_position` and set `start_application = true`.
-* `tags` - Key-value map of tags for the Kinesis Analytics Application. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - Key-value map of tags for the Kinesis Analytics Application. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ### CloudWatch Logging Options
 
@@ -350,7 +350,7 @@ In addition to all arguments above, the following attributes are exported:
 * `last_update_timestamp` - The Timestamp when the application was last updated.
 * `status` - The Status of the application.
 * `version` - The Version of the application.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 [1]: https://docs.aws.amazon.com/kinesisanalytics/latest/dev/what-is.html
 

@@ -10,7 +10,7 @@ description: |-
 
 Provides details about a Kinesis Stream Consumer.
 
-For more details, see the [Amazon Kinesis Stream Consumer Documentation][1].
+For more details, see the Amazon Kinesis Stream Consumer Documentation.
 
 ## Example Usage
 

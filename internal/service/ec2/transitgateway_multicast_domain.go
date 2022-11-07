@@ -66,7 +66,7 @@ func ResourceTransitGatewayMulticastDomain() *schema.Resource {
 				ValidateFunc: validation.StringInSlice(ec2.StaticSourcesSupportValue_Values(), false),
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 			"transit_gateway_id": {
 				Type:     schema.TypeString,
 				ForceNew: true,

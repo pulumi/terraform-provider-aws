@@ -33,7 +33,7 @@ The following arguments are supported:
 
 The following arguments are optional:
 
-* `tags` - (Optional) Key-value mapping of resource tags. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Key-value mapping of resource tags. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level
 
 ### resources
 
@@ -69,7 +69,7 @@ In addition to all arguments above, the following attributes are exported:
 
 * `arn` - ARN of the resource set
 * `resources.#.component_id` - Unique identified for DNS Target Resources, use for readiness checks.
-* `tags_all` - Map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - Map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 
@@ -81,6 +81,6 @@ $ terraform import aws_route53recoveryreadiness_resource_set.my-cw-alarm-set
 
 ## Timeouts
 
-[Configuration options](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts):
+Configuration options:
 
 - `delete` - (Default `5m`)

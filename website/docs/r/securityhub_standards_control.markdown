@@ -11,8 +11,8 @@ description: |-
 Disable/enable Security Hub standards control in the current region.
 
 The `aws_securityhub_standards_control` behaves differently from normal resources, in that
-Terraform does not _create_ this resource, but instead "adopts" it
-into management. When you _delete_ this resource configuration, Terraform "abandons" resource as is and just removes it from the state.
+The provider does not _create_ this resource, but instead "adopts" it
+into management. When you _delete_ this resource configuration, the provider "abandons" resource as is and just removes it from the state.
 
 ## Example Usage
 

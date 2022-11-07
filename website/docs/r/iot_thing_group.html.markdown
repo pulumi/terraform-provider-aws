@@ -33,7 +33,7 @@ resource "aws_iot_thing_group" "example" {
   }
 
   tags = {
-    terraform = "true"
+    managed = "true"
   }
 }
 ```

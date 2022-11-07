@@ -8,7 +8,7 @@ description: |-
 
 # Data Source: aws_secretsmanager_secret_version
 
-Retrieve information about a Secrets Manager secret version, including its secret value. To retrieve secret metadata, see the [`aws_secretsmanager_secret` data source](/docs/providers/aws/d/secretsmanager_secret.html).
+Retrieve information about a Secrets Manager secret version, including its secret value. To retrieve secret metadata, see the `aws_secretsmanager_secret` data source.
 
 ## Example Usage
 
@@ -28,16 +28,6 @@ data "aws_secretsmanager_secret_version" "secret-version" {
 data "aws_secretsmanager_secret_version" "by-version-stage" {
   secret_id     = data.aws_secretsmanager_secret.example.id
   version_stage = "example"
-}
-```
-
-### Handling Key-Value Secret Strings in JSON
-
-Reading key-value pairs from JSON back into a native Terraform map can be accomplished in Terraform 0.12 and later with the [`jsondecode()` function](https://www.terraform.io/docs/configuration/functions/jsondecode.html):
-
-```terraform
-output "example" {
-  value = jsondecode(data.aws_secretsmanager_secret_version.example.secret_string)["key1"]
 }
 ```
 

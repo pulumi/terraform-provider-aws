@@ -16,7 +16,7 @@ and to obtain the CIDR blocks (IP address ranges) for the associated
 AWS service. The latter may be useful e.g., for adding network ACL
 rules.
 
-The [aws_ec2_managed_prefix_list](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ec2_managed_prefix_list) data source is normally more appropriate to use given it can return customer-managed prefix list info, as well as additional attributes.
+The aws_ec2_managed_prefix_list data source is normally more appropriate to use given it can return customer-managed prefix list info, as well as additional attributes.
 
 ## Example Usage
 
@@ -84,6 +84,6 @@ In addition to all arguments above, the following attributes are exported:
 
 ## Timeouts
 
-[Configuration options](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts):
+Configuration options:
 
 - `read` - (Default `20m`)

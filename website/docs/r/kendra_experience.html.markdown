@@ -3,12 +3,12 @@ subcategory: "Kendra"
 layout: "aws"
 page_title: "AWS: aws_kendra_experience"
 description: |-
-  Terraform resource for managing an AWS Kendra Experience.
+  Resource for managing an AWS Kendra Experience.
 ---
 
 # Resource: aws_kendra_experience
 
-Terraform resource for managing an AWS Kendra Experience.
+Resource for managing an AWS Kendra Experience.
 
 ## Example Usage
 
@@ -46,7 +46,7 @@ The following arguments are required:
 The following arguments are optional:
 
 * `description` - (Optional, Forces new resource if removed) A description for your Amazon Kendra experience.
-* `configuration` - (Optional) Configuration information for your Amazon Kendra experience. Terraform will only perform drift detection of its value when present in a configuration. [Detailed below](#configuration).
+* `configuration` - (Optional) Configuration information for your Amazon Kendra experience. The provider will only perform drift detection of its value when present in a configuration. [Detailed below](#configuration).
 
 ### `configuration`
 
@@ -54,7 +54,7 @@ The following arguments are optional:
 
 The `configuration` configuration block supports the following arguments:
 
-* `content_source_configuration` - (Optional, Required if `user_identity_configuration` not provided) The identifiers of your data sources and FAQs. Or, you can specify that you want to use documents indexed via the `BatchPutDocument API`. Terraform will only perform drift detection of its value when present in a configuration. [Detailed below](#content_source_configuration).
+* `content_source_configuration` - (Optional, Required if `user_identity_configuration` not provided) The identifiers of your data sources and FAQs. Or, you can specify that you want to use documents indexed via the `BatchPutDocument API`. The provider will only perform drift detection of its value when present in a configuration. [Detailed below](#content_source_configuration).
 * `user_identity_configuration` - (Optional, Required if `content_source_configuration` not provided) The AWS SSO field name that contains the identifiers of your users, such as their emails. [Detailed below](#user_identity_configuration).
 
 ### `content_source_configuration`
@@ -85,7 +85,7 @@ In addition to all arguments above, the following attributes are exported:
 
 ## Timeouts
 
-[Configuration options](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts):
+Configuration options:
 
 * `create` - (Default `30m`)
 * `update` - (Default `30m`)

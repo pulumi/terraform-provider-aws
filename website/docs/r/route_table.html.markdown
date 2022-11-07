@@ -10,8 +10,8 @@ description: |-
 
 Provides a resource to create a VPC routing table.
 
-~> **NOTE on Route Tables and Routes:** Terraform currently
-provides both a standalone [Route resource](route.html) and a Route Table resource with routes
+~> **NOTE on Route Tables and Routes:** This provider currently
+provides both a standalone Route resource and a Route Table resource with routes
 defined in-line. At this time you cannot use a Route Table with in-line routes
 in conjunction with any Route resources. Doing so will cause
 a conflict of rule settings and will overwrite rules.
@@ -70,20 +70,18 @@ resource "aws_route_table" "example" {
 The following arguments are supported:
 
 * `vpc_id` - (Required) The VPC ID.
-* `route` - (Optional) A list of route objects. Their keys are documented below. This argument is processed in [attribute-as-blocks mode](https://www.terraform.io/docs/configuration/attr-as-blocks.html).
+* `route` - (Optional) A list of route objects. Their keys are documented below.
 This means that omitting this argument is interpreted as ignoring any existing routes. To remove all managed routes an empty list should be specified. See the example above.
-* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 * `propagating_vgws` - (Optional) A list of virtual gateways for propagation.
 
 ### route Argument Reference
-
-This argument is processed in [attribute-as-blocks mode](https://www.terraform.io/docs/configuration/attr-as-blocks.html).
 
 One of the following destination arguments must be supplied:
 
 * `cidr_block` - (Required) The CIDR block of the route.
 * `ipv6_cidr_block` - (Optional) The Ipv6 CIDR block of the route.
-* `destination_prefix_list_id` - (Optional) The ID of a [managed prefix list](ec2_managed_prefix_list.html) destination of the route.
+* `destination_prefix_list_id` - (Optional) The ID of a managed prefix list destination of the route.
 
 One of the following target arguments must be supplied:
 
@@ -111,11 +109,11 @@ attribute once the route resource is created.
 * `id` - The ID of the routing table.
 * `arn` - The ARN of the route table.
 * `owner_id` - The ID of the AWS account that owns the route table.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Timeouts
 
-[Configuration options](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts):
+Configuration options:
 
 - `create` - (Default `5m`)
 - `update` - (Default `2m`)

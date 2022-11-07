@@ -10,9 +10,9 @@ description: |-
 
 Provides an AppFlow connector profile resource.
 
-For information about AppFlow flows, see the [Amazon AppFlow API Reference][1].
+For information about AppFlow flows, see the Amazon AppFlow API Reference.
 For specific information about creating an AppFlow connector profile, see the
-[CreateConnectorProfile][2] page in the Amazon AppFlow API Reference.
+CreateConnectorProfile page in the Amazon AppFlow API Reference.
 
 ## Example Usage
 

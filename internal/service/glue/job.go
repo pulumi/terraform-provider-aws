@@ -147,7 +147,7 @@ func ResourceJob() *schema.Resource {
 				ValidateFunc: verify.ValidARN,
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 			"timeout": {
 				Type:         schema.TypeInt,
 				Optional:     true,

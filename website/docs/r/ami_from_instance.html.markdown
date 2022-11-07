@@ -30,7 +30,7 @@ to produce a fresh snapshot.
 
 ```terraform
 resource "aws_ami_from_instance" "example" {
-  name               = "terraform-example"
+  name               = "example"
   source_instance_id = "i-xxxxxxxx"
 }
 ```
@@ -45,11 +45,11 @@ The following arguments are supported:
   the instance before snapshotting. This is risky since it may cause a snapshot of an
   inconsistent filesystem state, but can be used to avoid downtime if the user otherwise
   guarantees that no filesystem writes will be underway at the time of snapshot.
-* `tags` - (Optional) Map of tags to assign to the resource. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Map of tags to assign to the resource. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ## Timeouts
 
-[Configuration options](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts):
+Configuration options:
 
 * `create` - (Default `40m`)
 * `update` - (Default `40m`)
@@ -63,5 +63,5 @@ In addition to all arguments above, the following attributes are exported:
 * `id` - ID of the created AMI.
 
 This resource also exports a full set of attributes corresponding to the arguments of the
-[`aws_ami`](/docs/providers/aws/r/ami.html) resource, allowing the properties of the created AMI to be used elsewhere in the
+`aws_ami` resource, allowing the properties of the created AMI to be used elsewhere in the
 configuration.

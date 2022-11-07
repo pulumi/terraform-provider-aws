@@ -3,12 +3,12 @@ subcategory: "Transcribe"
 layout: "aws"
 page_title: "AWS: aws_transcribe_language_model"
 description: |-
-  Terraform resource for managing an AWS Transcribe LanguageModel.
+  Resource for managing an AWS Transcribe LanguageModel.
 ---
 
 # Resource: aws_transcribe_language_model
 
-Terraform resource for managing an AWS Transcribe LanguageModel.
+Resource for managing an AWS Transcribe LanguageModel.
 
 -> This resource can take a significant amount of time to provision. See Language Model [FAQ](https://aws.amazon.com/transcribe/faqs/) for more details.
 
@@ -97,7 +97,7 @@ The following arguments are required:
 
 The following arguments are optional:
 
-* `tags` - (Optional) A map of tags to assign to the LanguageModel. If configured with a provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) A map of tags to assign to the LanguageModel. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ## Attributes Reference
 
@@ -108,7 +108,7 @@ In addition to all arguments above, the following attributes are exported:
 
 ## Timeouts
 
-[Configuration options](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts):
+Configuration options:
 
 * `create` - (Default `600m`)
 

@@ -12,11 +12,11 @@ Provides an ElastiCache Replication Group resource.
 
 For working with a [Memcached cluster](https://docs.aws.amazon.com/AmazonElastiCache/latest/mem-ug/WhatIs.html) or a
 [single-node Redis instance (Cluster Mode Disabled)](https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/WhatIs.html),
-see the [`aws_elasticache_cluster` resource](/docs/providers/aws/r/elasticache_cluster.html).
+see the `aws_elasticache_cluster` resource.
 
 ~> **Note:** When you change an attribute, such as `engine_version`, by
 default the ElastiCache API applies it in the next maintenance window. Because
-of this, Terraform may report a difference in its planning phase because the
+of this, this provider may report a difference in its planning phase because the
 actual modification has not yet taken place. You can use the
 `apply_immediately` flag to instruct the service to apply the change
 immediately. Using `apply_immediately` can result in a brief downtime as
@@ -51,7 +51,7 @@ resource "aws_elasticache_replication_group" "example" {
 You have two options for adjusting the number of replicas:
 
 * Adjusting `num_cache_clusters` directly. This will attempt to automatically add or remove replicas, but provides no granular control (e.g., preferred availability zone, cache cluster ID) for the added or removed replicas. This also currently expects cache cluster IDs in the form of `replication_group_id-00#`.
-* Otherwise for fine grained control of the underlying cache clusters, they can be added or removed with the [`aws_elasticache_cluster` resource](/docs/providers/aws/r/elasticache_cluster.html) and its `replication_group_id` attribute. In this situation, you will need to utilize the [lifecycle configuration block](https://www.terraform.io/docs/configuration/meta-arguments/lifecycle.html) with `ignore_changes` to prevent perpetual differences during Terraform plan with the `num_cache_cluster` attribute.
+* Otherwise for fine grained control of the underlying cache clusters, they can be added or removed with the `aws_elasticache_cluster` resource and its `replication_group_id` attribute. In this situation, you will need to utilize [`ignoreChanges`](https://www.pulumi.com/docs/intro/concepts/programming-model/#ignorechanges) to prevent perpetual differences with the `number_cache_cluster` attribute.
 
 ```terraform
 resource "aws_elasticache_replication_group" "example" {
@@ -213,7 +213,7 @@ The following arguments are optional:
 * `snapshot_retention_limit` - (Optional, Redis only) Number of days for which ElastiCache will retain automatic cache cluster snapshots before deleting them. For example, if you set SnapshotRetentionLimit to 5, then a snapshot that was taken today will be retained for 5 days before being deleted. If the value of `snapshot_retention_limit` is set to zero (0), backups are turned off. Please note that setting a `snapshot_retention_limit` is not supported on cache.t1.micro cache nodes
 * `snapshot_window` - (Optional, Redis only) Daily time range (in UTC) during which ElastiCache will begin taking a daily snapshot of your cache cluster. The minimum snapshot window is a 60 minute period. Example: `05:00-09:00`
 * `subnet_group_name` - (Optional) Name of the cache subnet group to be used for the replication group.
-* `tags` - (Optional) Map of tags to assign to the resource. Adding tags to this resource will add or overwrite any existing tags on the clusters in the replication group and not to the group itself. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Map of tags to assign to the resource. Adding tags to this resource will add or overwrite any existing tags on the clusters in the replication group and not to the group itself. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 * `transit_encryption_enabled` - (Optional) Whether to enable encryption in transit.
 * `user_group_ids` - (Optional) User Group ID to associate with the replication group. Only a maximum of one (1) user group ID is valid. **NOTE:** This argument _is_ a set because the AWS specification allows for multiple IDs. However, in practice, AWS only allows a maximum size of one.
 
@@ -243,11 +243,11 @@ In addition to all arguments above, the following attributes are exported:
 * `member_clusters` - Identifiers of all the nodes that are part of this replication group.
 * `primary_endpoint_address` - (Redis only) Address of the endpoint for the primary node in the replication group, if the cluster mode is disabled.
 * `reader_endpoint_address` - (Redis only) Address of the endpoint for the reader node in the replication group, if the cluster mode is disabled.
-* `tags_all` - Map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - Map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Timeouts
 
-[Configuration options](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts):
+Configuration options:
 
 * `create` - (Default `60m`)
 * `delete` - (Default `40m`)

@@ -10,7 +10,7 @@ description: |-
 
 Provides information about a Lambda Code Signing Config. A code signing configuration defines a list of allowed signing profiles and defines the code-signing validation policy (action to be taken if deployment validation checks fail).
 
-For information about Lambda code signing configurations and how to use them, see [configuring code signing for Lambda functions][1]
+For information about Lambda code signing configurations and how to use them, see configuring code signing for Lambda functions
 
 ## Example Usage
 

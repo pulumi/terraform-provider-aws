@@ -19,8 +19,8 @@ Provides an RDS DB option group resource. Documentation of the available options
 
 ```terraform
 resource "aws_db_option_group" "example" {
-  name                     = "option-group-test-terraform"
-  option_group_description = "Terraform Option Group"
+  name                     = "option-group-test"
+  option_group_description = "Option Group"
   engine_name              = "sqlserver-ee"
   major_engine_version     = "11.00"
 
@@ -62,13 +62,13 @@ More information about this can be found [here](https://docs.aws.amazon.com/Amaz
 
 The following arguments are supported:
 
-* `name` - (Optional, Forces new resource) The name of the option group. If omitted, Terraform will assign a random, unique name. Must be lowercase, to match as it is stored in AWS.
+* `name` - (Optional, Forces new resource) The name of the option group. If omitted, this provider will assign a random, unique name. Must be lowercase, to match as it is stored in AWS.
 * `name_prefix` - (Optional, Forces new resource) Creates a unique name beginning with the specified prefix. Conflicts with `name`. Must be lowercase, to match as it is stored in AWS.
-* `option_group_description` - (Optional) The description of the option group. Defaults to "Managed by Terraform".
+* `option_group_description` - (Optional) The description of the option group. Defaults to "Managed by Pulumi".
 * `engine_name` - (Required) Specifies the name of the engine that this option group should be associated with.
 * `major_engine_version` - (Required) Specifies the major version of the engine that this option group should be associated with.
 * `option` - (Optional) A list of Options to apply.
-* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) A map of tags to assign to the resource. .If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 Option blocks support the following:
 
@@ -90,11 +90,11 @@ In addition to all arguments above, the following attributes are exported:
 
 * `id` - The db option group name.
 * `arn` - The ARN of the db option group.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Timeouts
 
-[Configuration options](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts):
+Configuration options:
 
 - `delete` - (Default `15m`)
 

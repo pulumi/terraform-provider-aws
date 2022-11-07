@@ -63,12 +63,12 @@ resource "aws_dx_hosted_public_virtual_interface_accepter" "accepter" {
 The following arguments are supported:
 
 * `virtual_interface_id` - (Required) The ID of the Direct Connect virtual interface to accept.
-* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) A map of tags to assign to the resource. .If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ### Removing `aws_dx_hosted_public_virtual_interface_accepter` from your configuration
 
 AWS allows a Direct Connect hosted public virtual interface to be deleted from either the allocator's or accepter's side.
-However, Terraform only allows the Direct Connect hosted public virtual interface to be deleted from the allocator's side
+However, this provider only allows the Direct Connect hosted public virtual interface to be deleted from the allocator's side
 by removing the corresponding `aws_dx_hosted_public_virtual_interface` resource from your configuration.
 Removing a `aws_dx_hosted_public_virtual_interface_accepter` resource from your configuration will remove it
 from your statefile and management, **but will not delete the Direct Connect virtual interface.**
@@ -79,11 +79,11 @@ In addition to all arguments above, the following attributes are exported:
 
 * `id` - The ID of the virtual interface.
 * `arn` - The ARN of the virtual interface.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Timeouts
 
-[Configuration options](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts):
+Configuration options:
 
 - `create` - (Default `10m`)
 - `delete` - (Default `10m`)

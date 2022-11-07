@@ -11,7 +11,7 @@ description: |-
 Provides a Lambda event source mapping. This allows Lambda functions to get events from Kinesis, DynamoDB, SQS, Amazon MQ and Managed Streaming for Apache Kafka (MSK).
 
 For information about Lambda and how to use it, see [What is AWS Lambda?][1].
-For information about event source mappings, see [CreateEventSourceMapping][2] in the API docs.
+For information about event source mappings, see CreateEventSourceMapping in the API docs.
 
 ## Example Usage
 

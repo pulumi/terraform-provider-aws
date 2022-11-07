@@ -10,11 +10,11 @@ description: |-
 
 Manages RDS Aurora Cluster Database Activity Streams.
 
-Database Activity Streams have some limits and requirements, refer to the [Monitoring Amazon Aurora using Database Activity Streams][1] documentation for detailed limitations and requirements.
+Database Activity Streams have some limits and requirements, refer to the Monitoring Amazon Aurora using Database Activity Streams documentation for detailed limitations and requirements.
 
-~> **Note:** This resource always calls the RDS [`StartActivityStream`][2] API with the `ApplyImmediately` parameter set to `true`. This is because the Terraform needs the activity stream to be started in order for it to get the associated attributes.
+~> **Note:** This resource always calls the RDS [`StartActivityStream`][2] API with the `ApplyImmediately` parameter set to `true`. This is because the provider needs the activity stream to be started in order for it to get the associated attributes.
 
-~> **Note:** This resource depends on having at least one `aws_rds_cluster_instance` created. To avoid race conditions when all resources are being created together, add an explicit resource reference using the [resource `depends_on` meta-argument](/docs/configuration/resources.html#depends_on-explicit-resource-dependencies).
+~> **Note:** This resource depends on having at least one `aws_rds_cluster_instance` created. To avoid race conditions when all resources are being created together, add an explicit resource reference using the resource `depends_on` meta-argument.
 
 ~> **Note:** This resource is available in all regions except the following: `cn-north-1`, `cn-northwest-1`, `us-gov-east-1`, `us-gov-west-1`
 
@@ -54,7 +54,7 @@ resource "aws_rds_cluster_activity_stream" "default" {
 ## Argument Reference
 
 For more detailed documentation about each argument, refer to
-the [AWS official documentation][3].
+the AWS official documentation.
 
 The following arguments are supported:
 

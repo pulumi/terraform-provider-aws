@@ -8,17 +8,17 @@ description: |-
 
 # Resource: aws_sns_topic_subscription
 
-Provides a resource for subscribing to SNS topics. Requires that an SNS topic exist for the subscription to attach to. This resource allows you to automatically place messages sent to SNS topics in SQS queues, send them as HTTP(S) POST requests to a given endpoint, send SMS messages, or notify devices / applications. The most likely use case for Terraform users will probably be SQS queues.
+Provides a resource for subscribing to SNS topics. Requires that an SNS topic exist for the subscription to attach to. This resource allows you to automatically place messages sent to SNS topics in SQS queues, send them as HTTP(S) POST requests to a given endpoint, send SMS messages, or notify devices / applications. The most likely use case for provider users will probably be SQS queues.
 
-~> **NOTE:** If the SNS topic and SQS queue are in different AWS regions, the `aws_sns_topic_subscription` must use an AWS provider that is in the same region as the SNS topic. If the `aws_sns_topic_subscription` uses a provider with a different region than the SNS topic, Terraform will fail to create the subscription.
+~> **NOTE:** If the SNS topic and SQS queue are in different AWS regions, the `aws_sns_topic_subscription` must use an AWS provider that is in the same region as the SNS topic. If the `aws_sns_topic_subscription` uses a provider with a different region than the SNS topic, this provider will fail to create the subscription.
 
-~> **NOTE:** Setup of cross-account subscriptions from SNS topics to SQS queues requires Terraform to have access to BOTH accounts.
+~> **NOTE:** Setup of cross-account subscriptions from SNS topics to SQS queues requires the provider to have access to BOTH accounts.
 
-~> **NOTE:** If an SNS topic and SQS queue are in different AWS accounts but the same region, the `aws_sns_topic_subscription` must use the AWS provider for the account with the SQS queue. If `aws_sns_topic_subscription` uses a Provider with a different account than the SQS queue, Terraform creates the subscription but does not keep state and tries to re-create the subscription at every `apply`.
+~> **NOTE:** If an SNS topic and SQS queue are in different AWS accounts but the same region, the `aws_sns_topic_subscription` must use the AWS provider for the account with the SQS queue. If `aws_sns_topic_subscription` uses a Provider with a different account than the SQS queue, this provider creates the subscription but does not keep state and tries to re-create the subscription at every `apply`.
 
 ~> **NOTE:** If an SNS topic and SQS queue are in different AWS accounts and different AWS regions, the subscription needs to be initiated from the account with the SQS queue but in the region of the SNS topic.
 
-~> **NOTE:** You cannot unsubscribe to a subscription that is pending confirmation. If you use `email`, `email-json`, or `http`/`https` (without auto-confirmation enabled), until the subscription is confirmed (e.g., outside of Terraform), AWS does not allow Terraform to delete / unsubscribe the subscription. If you `destroy` an unconfirmed subscription, Terraform will remove the subscription from its state but the subscription will still exist in AWS. However, if you delete an SNS topic, SNS [deletes all the subscriptions](https://docs.aws.amazon.com/sns/latest/dg/sns-delete-subscription-topic.html) associated with the topic. Also, you can import a subscription after confirmation and then have the capability to delete it.
+~> **NOTE:** You cannot unsubscribe to a subscription that is pending confirmation. If you use `email`, `email-json`, or `http`/`https` (without auto-confirmation enabled), until the subscription is confirmed (e.g., outside of this provider), AWS does not allow this provider to delete / unsubscribe the subscription. If you `destroy` an unconfirmed subscription, this provider will remove the subscription from its state but the subscription will still exist in AWS. However, if you delete an SNS topic, SNS [deletes all the subscriptions](https://docs.aws.amazon.com/sns/latest/dg/sns-delete-subscription-topic.html) associated with the topic. Also, you can import a subscription after confirmation and then have the capability to delete it.
 
 ## Example Usage
 
@@ -28,7 +28,7 @@ You can directly supply a topic and ARN by hand in the `topic_arn` property alon
 resource "aws_sns_topic_subscription" "user_updates_sqs_target" {
   topic_arn = "arn:aws:sns:us-west-2:432981146916:user-updates-topic"
   protocol  = "sqs"
-  endpoint  = "arn:aws:sqs:us-west-2:432981146916:terraform-queue-too"
+  endpoint  = "arn:aws:sqs:us-west-2:432981146916:queue-too"
 }
 ```
 
@@ -56,7 +56,7 @@ You can subscribe SNS topics to SQS queues in different Amazon accounts and regi
 variable "sns" {
   default = {
     account-id   = "111111111111"
-    role-name    = "service/service-hashicorp-terraform"
+    role-name    = "service/service"
     name         = "example-sns-topic"
     display_name = "example"
     region       = "us-west-1"
@@ -66,7 +66,7 @@ variable "sns" {
 variable "sqs" {
   default = {
     account-id = "222222222222"
-    role-name  = "service/service-hashicorp-terraform"
+    role-name  = "service/service"
     name       = "example-sqs-queue"
     region     = "us-east-1"
   }
@@ -252,11 +252,11 @@ Supported values for `protocol` include:
 `arn:aws:firehose:us-east-1:123456789012:deliverystream/ticketUploadStream`).
 * `lambda` - Delivers JSON-encoded messages. `endpoint` is the ARN of an AWS Lambda function.
 * `sms` - Delivers text messages via SMS. `endpoint` is the phone number of an SMS-enabled device.
-* `sqs` - Delivers JSON-encoded messages. `endpoint` is the ARN of an Amazon SQS queue (e.g., `arn:aws:sqs:us-west-2:123456789012:terraform-queue-too`).
+* `sqs` - Delivers JSON-encoded messages. `endpoint` is the ARN of an Amazon SQS queue (e.g., `arn:aws:sqs:us-west-2:123456789012:sample-queue-too`).
 
 Partially supported values for `protocol` include:
 
-~> **NOTE:** If an `aws_sns_topic_subscription` uses a partially-supported protocol and the subscription is not confirmed, either through automatic confirmation or means outside of Terraform (e.g., clicking on a "Confirm Subscription" link in an email), Terraform cannot delete / unsubscribe the subscription. Attempting to `destroy` an unconfirmed subscription will remove the `aws_sns_topic_subscription` from Terraform's state but **_will not_** remove the subscription from AWS. The `pending_confirmation` attribute provides confirmation status.
+~> **NOTE:** If an `aws_sns_topic_subscription` uses a partially-supported protocol and the subscription is not confirmed, either through automatic confirmation or means outside of this provider (e.g., clicking on a "Confirm Subscription" link in an email), this provider cannot delete / unsubscribe the subscription. Attempting to `destroy` an unconfirmed subscription will remove the `aws_sns_topic_subscription` from this provider's state but **_will not_** remove the subscription from AWS. The `pending_confirmation` attribute provides confirmation status.
 
 * `email` - Delivers messages via SMTP. `endpoint` is an email address.
 * `email-json` - Delivers JSON-encoded messages via SMTP. `endpoint` is an email address.

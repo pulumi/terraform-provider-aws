@@ -68,7 +68,7 @@ you cannot change this, therefore `ttl` has to be omitted in alias records.
 
 ```terraform
 resource "aws_elb" "main" {
-  name               = "foobar-terraform-elb"
+  name               = "foobar-elb"
   availability_zones = ["us-east-1c"]
 
   listener {
@@ -94,7 +94,7 @@ resource "aws_route53_record" "www" {
 
 ### NS and SOA Record Management
 
-When creating Route 53 zones, the `NS` and `SOA` records for the zone are automatically created. Enabling the `allow_overwrite` argument will allow managing these records in a single Terraform run without the requirement for `terraform import`.
+When creating Route 53 zones, the `NS` and `SOA` records for the zone are automatically created. Enabling the `allow_overwrite` argument will allow managing these records in a single deployment without the requirement for `import`.
 
 ```terraform
 resource "aws_route53_zone" "example" {
@@ -125,7 +125,7 @@ The following arguments are supported:
 * `name` - (Required) The name of the record.
 * `type` - (Required) The record type. Valid values are `A`, `AAAA`, `CAA`, `CNAME`, `DS`, `MX`, `NAPTR`, `NS`, `PTR`, `SOA`, `SPF`, `SRV` and `TXT`.
 * `ttl` - (Required for non-alias records) The TTL of the record.
-* `records` - (Required for non-alias records) A string list of records. To specify a single record value longer than 255 characters such as a TXT record for DKIM, add `\"\"` inside the Terraform configuration string (e.g., `"first255characters\"\"morecharacters"`).
+* `records` - (Required for non-alias records) A string list of records. To specify a single record value longer than 255 characters such as a TXT record for DKIM, add `\"\"` inside the provider configuration string (e.g., `"first255characters\"\"morecharacters"`).
 * `set_identifier` - (Optional) Unique identifier to differentiate records with routing policies from one another. Required if using `failover`, `geolocation`, `latency`, `multivalue_answer`, or `weighted` routing policies documented below.
 * `health_check_id` - (Optional) The health check the record should be associated with.
 * `alias` - (Optional) An alias block. Conflicts with `ttl` & `records`.
@@ -135,7 +135,7 @@ The following arguments are supported:
 * `latency_routing_policy` - (Optional) A block indicating a routing policy based on the latency between the requestor and an AWS region. Conflicts with any other routing policy. [Documented below](#latency-routing-policy).
 * `weighted_routing_policy` - (Optional) A block indicating a weighted routing policy. Conflicts with any other routing policy. [Documented below](#weighted-routing-policy).
 * `multivalue_answer_routing_policy` - (Optional) Set to `true` to indicate a multivalue answer routing policy. Conflicts with any other routing policy.
-* `allow_overwrite` - (Optional) Allow creation of this record in Terraform to overwrite an existing record, if any. This does not affect the ability to update the record in Terraform and does not prevent other resources within Terraform or manual Route 53 changes outside Terraform from overwriting this record. `false` by default. This configuration is not recommended for most environments.
+* `allow_overwrite` - (Optional) Allow creation of this record to overwrite an existing record, if any. This does not affect the ability to update the record using this provider and does not prevent other resources within this provider or manual Route 53 changes outside this provider from overwriting this record. `false` by default. This configuration is not recommended for most environments.
 
 Exactly one of `records` or `alias` must be specified: this determines whether it's an alias record.
 
@@ -144,7 +144,7 @@ Exactly one of `records` or `alias` must be specified: this determines whether i
 Alias records support the following:
 
 * `name` - (Required) DNS domain name for a CloudFront distribution, S3 bucket, ELB, or another resource record set in this hosted zone.
-* `zone_id` - (Required) Hosted zone ID for a CloudFront distribution, S3 bucket, ELB, or Route 53 hosted zone. See [`resource_elb.zone_id`](/docs/providers/aws/r/elb.html#zone_id) for example.
+* `zone_id` - (Required) Hosted zone ID for a CloudFront distribution, S3 bucket, ELB, or Route 53 hosted zone. See `resource_elb.zone_id` for example.
 * `evaluate_target_health` - (Required) Set to `true` if you want Route 53 to determine whether to respond to DNS queries using this resource record set by checking the health of the resource record set. Some resources have special requirements, see [related part of documentation](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/resource-record-sets-values.html#rrsets-values-alias-evaluate-target-health).
 
 ### Failover Routing Policy

@@ -14,7 +14,7 @@ databases.
 
 Changes to a DB instance can occur when you manually change a parameter, such as
 `allocated_storage`, and are reflected in the next maintenance window. Because
-of this, Terraform may report a difference in its planning phase because a
+of this, this provider may report a difference in its planning phase because a
 modification has not yet taken place. You can use the `apply_immediately` flag
 to instruct the service to apply the change immediately (see documentation
 below).
@@ -23,13 +23,7 @@ When upgrading the major version of an engine, `allow_major_version_upgrade`
 must be set to `true`.
 
 ~> **Note:** using `apply_immediately` can result in a brief downtime as the
-server reboots. See the AWS Docs on [RDS Maintenance][2] for more information.
-
-~> **Note:** All arguments including the username and password will be stored in
-the raw state as plain-text. [Read more about sensitive data in
-state](https://www.terraform.io/docs/state/sensitive-data.html).
-
-> **Hands-on:** Try the [Manage AWS RDS Instances](https://learn.hashicorp.com/tutorials/terraform/aws-rds?in=terraform/modules&utm_source=WEBSITE&utm_medium=WEB_IO&utm_offer=ARTICLE_PAGE&utm_content=DOCS) tutorial on HashiCorp Learn.
+server reboots. See the AWS Docs on RDS Maintenance for more information.
 
 ## RDS Instance Class Types
 Amazon RDS supports three types of instance classes: Standard, Memory Optimized,
@@ -56,7 +50,7 @@ resource "aws_db_instance" "default" {
 
 ### Storage Autoscaling
 
-To enable Storage Autoscaling with instances that support the feature, define the `max_allocated_storage` argument higher than the `allocated_storage` argument. Terraform will automatically hide differences with the `allocated_storage` argument value if autoscaling occurs.
+To enable Storage Autoscaling with instances that support the feature, define the `max_allocated_storage` argument higher than the `allocated_storage` argument. This provider will automatically hide differences with the `allocated_storage` argument value if autoscaling occurs.
 
 ```terraform
 resource "aws_db_instance" "example" {
@@ -87,7 +81,7 @@ will be applied automatically to the DB instance during the maintenance window.
 Defaults to true.
 * `availability_zone` - (Optional) The AZ for the RDS instance.
 * `backup_retention_period` - (Optional) The days to retain backups for. Must be
-between `0` and `35`. Must be greater than `0` if the database is used as a source for a Read Replica. [See Read Replica][1].
+between `0` and `35`. Must be greater than `0` if the database is used as a source for a Read Replica. See Read Replica.
 * `backup_window` - (Optional) The daily time range (in UTC) during which
 automated backups are created if they are enabled. Example: "09:46-10:16". Must
 not overlap with `maintenance_window`.
@@ -99,7 +93,7 @@ or [Server-Level Collation for Microsoft SQL Server](https://docs.aws.amazon.com
 * `copy_tags_to_snapshot` – (Optional, boolean) Copy all Instance `tags` to snapshots. Default is `false`.
 * `custom_iam_instance_profile` - (Optional) The instance profile associated with the underlying Amazon EC2 instance of an RDS Custom DB instance.
 * `db_name` - (Optional) The name of the database to create when the DB instance is created. If this parameter is not specified, no database is created in the DB instance. Note that this does not apply for Oracle or SQL Server engines. See the [AWS documentation](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/rds/create-db-instance.html) for more details on what applies for those engines. If you are providing an Oracle db name, it needs to be in all upper case. Cannot be specified for a replica.
-* `db_subnet_group_name` - (Optional) Name of [DB subnet group](/docs/providers/aws/r/db_subnet_group.html). DB instance will
+* `db_subnet_group_name` - (Optional) Name of DB subnet group. DB instance will
 be created in the VPC associated with the DB subnet group. If unspecified, will
 be created in the `default` VPC, or in EC2 Classic, if available. When working
 with read replicas, it should be specified only if the source database
@@ -113,7 +107,7 @@ for additional read replica contraints.
 * `enabled_cloudwatch_logs_exports` - (Optional) Set of log types to enable for exporting to CloudWatch logs. If omitted, no logs will be exported. Valid values (depending on `engine`). MySQL and MariaDB: `audit`, `error`, `general`, `slowquery`. PostgreSQL: `postgresql`, `upgrade`. MSSQL: `agent` , `error`. Oracle: `alert`, `audit`, `listener`, `trace`.
 * `engine` - (Required unless a `snapshot_identifier` or `replicate_source_db`
 is provided) The database engine to use.  For supported values, see the Engine parameter in [API action CreateDBInstance](https://docs.aws.amazon.com/AmazonRDS/latest/APIReference/API_CreateDBInstance.html). Cannot be specified for a replica.
-Note that for Amazon Aurora instances the engine must match the [DB cluster](/docs/providers/aws/r/rds_cluster.html)'s engine'.
+Note that for Amazon Aurora instances the engine must match the DB cluster's engine'.
 For information on the difference between the available Aurora MySQL engines
 see [Comparison between Aurora MySQL 1 and Aurora MySQL 2](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/AuroraMySQL.Updates.20180206.html)
 in the Amazon RDS User Guide.
@@ -121,14 +115,14 @@ in the Amazon RDS User Guide.
 is enabled, you can provide a prefix of the version such as `5.7` (for `5.7.10`).
 The actual engine version used is returned in the attribute `engine_version_actual`, see [Attributes Reference](#attributes-reference) below.
 For supported values, see the EngineVersion parameter in [API action CreateDBInstance](https://docs.aws.amazon.com/AmazonRDS/latest/APIReference/API_CreateDBInstance.html).
-Note that for Amazon Aurora instances the engine version must match the [DB cluster](/docs/providers/aws/r/rds_cluster.html)'s engine version'. Cannot be specified for a replica.
+Note that for Amazon Aurora instances the engine version must match the DB cluster's engine version'. Cannot be specified for a replica.
 * `final_snapshot_identifier` - (Optional) The name of your final DB snapshot
 when this DB instance is deleted. Must be provided if `skip_final_snapshot` is
 set to `false`. The value must begin with a letter, only contain alphanumeric characters and hyphens, and not end with a hyphen or contain two consecutive hyphens. Must not be provided when deleting a read replica.
 * `iam_database_authentication_enabled` - (Optional) Specifies whether mappings of AWS Identity and Access Management (IAM) accounts to database
 accounts is enabled.
 * `identifier` - (Optional, Forces new resource) The name of the RDS instance,
-if omitted, Terraform will assign a random, unique identifier. Required if `restore_to_point_in_time` is specified.
+if omitted, this provider will assign a random, unique identifier. Required if `restore_to_point_in_time` is specified.
 * `identifier_prefix` - (Optional, Forces new resource) Creates a unique
 identifier beginning with the specified prefix. Conflicts with `identifier`.
 * `instance_class` - (Required) The instance type of the RDS instance.
@@ -178,7 +172,7 @@ database, and to use this value as the source database. This correlates to the
 a single region) or ARN of the Amazon RDS Database to replicate (if replicating
 cross-region). Note that if you are
 creating a cross-region replica of an encrypted database you will also need to
-specify a `kms_key_id`. See [DB Instance Replication][1] and [Working with
+specify a `kms_key_id`. See DB Instance Replication and [Working with
 PostgreSQL and MySQL Read Replicas](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.html)
 for more information on using Replication.
 * `restore_to_point_in_time` - (Optional, Forces new resource) A configuration block for restoring a DB instance to an arbitrary point in time. Requires the `identifier` argument to be set with the name of the new DB instance to be created. See [Restore To Point In Time](#restore-to-point-in-time) below for details.
@@ -201,7 +195,7 @@ default is `false` if not specified.
 * `storage_type` - (Optional) One of "standard" (magnetic), "gp2" (general
 purpose SSD), or "io1" (provisioned IOPS SSD). The default is "io1" if `iops` is
 specified, "gp2" if not.
-* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 * `timezone` - (Optional) Time zone of the DB instance. `timezone` is currently
 only supported by Microsoft SQL Server. The `timezone` can only be set on
 creation. See [MSSQL User
@@ -214,14 +208,14 @@ associate.
 * `customer_owned_ip_enabled` - (Optional) Indicates whether to enable a customer-owned IP address (CoIP) for an RDS on Outposts DB instance. See [CoIP for RDS on Outposts](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/rds-on-outposts.html#rds-on-outposts.coip) for more information.
 
 ~> **NOTE:** Removing the `replicate_source_db` attribute from an existing RDS
-Replicate database managed by Terraform will promote the database to a fully
+Replicate database managed by the provider will promote the database to a fully
 standalone database.
 
 ### Restore To Point In Time
 
 -> **Note:** You can restore to any point in time before the source DB instance's `latest_restorable_time` or a point up to the number of days specified in the source DB instance's `backup_retention_period`.
 For more information, please refer to the [Developer Guide](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_PIT.html).
-This setting does not apply to `aurora-mysql` or `aurora-postgresql` DB engines. For Aurora, refer to the [`aws_rds_cluster` resource documentation](/docs/providers/aws/r/rds_cluster.html#restore_in_time).
+This setting does not apply to `aurora-mysql` or `aurora-postgresql` DB engines. For Aurora, refer to the `aws_rds_cluster` resource documentation.
 
 The `restore_to_point_in_time` block supports the following arguments:
 
@@ -290,7 +284,7 @@ in a Route 53 Alias record).
 * `resource_id` - The RDS Resource ID of this instance.
 * `status` - The RDS instance status.
 * `storage_encrypted` - Whether the DB instance is encrypted.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 * `username` - The master username for the database.
 
 On Oracle and Microsoft SQL instances the following is exported additionally:
@@ -299,7 +293,7 @@ On Oracle and Microsoft SQL instances the following is exported additionally:
 
 ## Timeouts
 
-[Configuration options](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts):
+Configuration options:
 
 - `create` - (Default `40m`)
 - `update` - (Default `80m`)

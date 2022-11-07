@@ -112,7 +112,7 @@ slot values into the response card. For more information, see
 
 ## Timeouts
 
-[Configuration options](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts):
+Configuration options:
 
 * `create` - (Default `5m`)
 * `update` - (Default `5m`)

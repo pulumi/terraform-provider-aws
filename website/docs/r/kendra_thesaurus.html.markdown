@@ -3,12 +3,12 @@ subcategory: "Kendra"
 layout: "aws"
 page_title: "AWS: aws_kendra_thesaurus"
 description: |-
-  Terraform resource for managing an AWS Kendra Thesaurus.
+  Resource for managing an AWS Kendra Thesaurus.
 ---
 
 # Resource: aws_kendra_thesaurus
 
-Terraform resource for managing an AWS Kendra Thesaurus.
+Resource for managing an AWS Kendra Thesaurus.
 
 ## Example Usage
 
@@ -46,7 +46,7 @@ The `source_s3_path` configuration block supports the following arguments:
 The following arguments are optional:
 
 * `description` - (Optional) The description for a thesaurus.
-* `tags` - (Optional) Key-value map of resource tags. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Key-value map of resource tags. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ## Attributes Reference
 
@@ -55,11 +55,11 @@ In addition to all arguments above, the following attributes are exported:
 * `arn` - ARN of the thesaurus.
 * `id` - The unique identifiers of the thesaurus and index separated by a slash (`/`).
 * `status` - The current status of the thesaurus.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Timeouts
 
-[Configuration options](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts):
+Configuration options:
 
 * `create` - (Default `30m`)
 * `update` - (Default `30m`)

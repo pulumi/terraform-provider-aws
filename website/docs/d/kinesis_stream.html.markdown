@@ -11,7 +11,7 @@ description: |-
 Use this data source to get information about a Kinesis Stream for use in other
 resources.
 
-For more details, see the [Amazon Kinesis Documentation][1].
+For more details, see the Amazon Kinesis Documentation.
 
 ## Example Usage
 
@@ -35,10 +35,10 @@ are exported:
 * `creation_timestamp` - Approximate UNIX timestamp that the stream was created.
 * `status` - Current status of the stream. The stream status is one of CREATING, DELETING, ACTIVE, or UPDATING.
 * `retention_period` - Length of time (in hours) data records are accessible after they are added to the stream.
-* `open_shards` - List of shard ids in the OPEN state. See [Shard State][2] for more.
-* `closed_shards` - List of shard ids in the CLOSED state. See [Shard State][2] for more.
-* `shard_level_metrics` - List of shard-level CloudWatch metrics which are enabled for the stream. See [Monitoring with CloudWatch][3] for more.
-* `stream_mode_details` - [Capacity mode][4] of the data stream. Detailed below.
+* `open_shards` - List of shard ids in the OPEN state. See Shard State for more.
+* `closed_shards` - List of shard ids in the CLOSED state. See Shard State for more.
+* `shard_level_metrics` - List of shard-level CloudWatch metrics which are enabled for the stream. See Monitoring with CloudWatch for more.
+* `stream_mode_details` - Capacity mode of the data stream. Detailed below.
 * `tags` - Map of tags to assigned to the stream.
 
 ### stream_mode_details Configuration Block

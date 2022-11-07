@@ -3,12 +3,12 @@ subcategory: "Inspector V2"
 layout: "aws"
 page_title: "AWS: aws_inspector2_organization_configuration"
 description: |-
-  Terraform resource for managing an AWS Inspector V2 Organization Configuration.
+  Resource for managing an AWS Inspector V2 Organization Configuration.
 ---
 
 # Resource: aws_inspector2_organization_configuration
 
-Terraform resource for managing an AWS Inspector V2 Organization Configuration.
+Resource for managing an AWS Inspector V2 Organization Configuration.
 
 ~> **NOTE:** In order for this resource to work, the account you use must be an Inspector V2 Delegated Admin Account.
 
@@ -46,7 +46,7 @@ In addition to all arguments above, the following attributes are exported:
 
 ## Timeouts
 
-[Configuration options](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts):
+Configuration options:
 
 * `create` - (Default `5m`)
 * `update` - (Default `5m`)

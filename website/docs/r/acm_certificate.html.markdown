@@ -22,16 +22,13 @@ For Amazon-issued certificates, this resource deals with requesting certificates
 This resource does not deal with validation of a certificate but can provide inputs
 for other resources implementing the validation.
 It does not wait for a certificate to be issued.
-Use a [`aws_acm_certificate_validation`](acm_certificate_validation.html) resource for this.
+Use a `aws_acm_certificate_validation` resource for this.
 
-Most commonly, this resource is used together with [`aws_route53_record`](route53_record.html) and
-[`aws_acm_certificate_validation`](acm_certificate_validation.html) to request a DNS validated certificate,
+Most commonly, this resource is used together with `aws_route53_record` and
+`aws_acm_certificate_validation` to request a DNS validated certificate,
 deploy the required validation records and wait for validation to complete.
 
-Domain validation through email is also supported but should be avoided as it requires a manual step outside of Terraform.
-
-It's recommended to specify `create_before_destroy = true` in a [lifecycle][1] block to replace a certificate
-which is currently in use (eg, by [`aws_lb_listener`](lb_listener.html)).
+Domain validation through email is also supported but should be avoided as it requires a manual step outside of this provider.
 
 ## Certificates Imported from Other Certificate Authority
 
@@ -42,7 +39,7 @@ New certificate materials can be supplied to an existing imported certificate to
 
 ## Private Certificates
 
-Private certificates are issued by an ACM Private Cerificate Authority, which can be created using the resource type [`aws_acmpca_certificate_authority`](acmpca_certificate_authority.html).
+Private certificates are issued by an ACM Private Cerificate Authority, which can be created using the resource type `aws_acmpca_certificate_authority`.
 
 Private certificates created using this resource are eligible for managed renewal if they have been exported or associated with another AWS service.
 See [managed renewal documentation](https://docs.aws.amazon.com/acm/latest/userguide/managed-renewal.html) for more information.
@@ -115,7 +112,7 @@ resource "aws_acm_certificate" "cert" {
 
 ### Referencing domain_validation_options With for_each Based Resources
 
-See the [`aws_acm_certificate_validation` resource](acm_certificate_validation.html) for a full example of performing DNS validation.
+See the `aws_acm_certificate_validation` resource for a full example of performing DNS validation.
 
 ```terraform
 resource "aws_route53_record" "example" {
@@ -142,8 +139,8 @@ The following arguments are supported:
 
 * Creating an Amazon issued certificate
     * `domain_name` - (Required) Domain name for which the certificate should be issued
-    * `subject_alternative_names` - (Optional) Set of domains that should be SANs in the issued certificate. To remove all elements of a previously configured list, set this value equal to an empty list (`[]`) or use the [`terraform taint` command](https://www.terraform.io/docs/commands/taint.html) to trigger recreation.
-    * `validation_method` - (Required) Which method to use for validation. `DNS` or `EMAIL` are valid, `NONE` can be used for certificates that were imported into ACM and then into Terraform.
+    * `subject_alternative_names` - (Optional) Set of domains that should be SANs in the issued certificate. To remove all elements of a previously configured list, set this value equal to an empty list (`[]`).
+    * `validation_method` - (Required) Which method to use for validation. `DNS` or `EMAIL` are valid, `NONE` can be used for certificates that were imported into ACM and then into the provider.
     * `options` - (Optional) Configuration block used to set certificate options. Detailed below.
     * `validation_option` - (Optional) Configuration block used to specify information about the initial validation of each domain name. Detailed below.
 * Importing an existing certificate
@@ -160,8 +157,7 @@ The following arguments are supported:
       or a string such as `2160h`.
 * `subject_alternative_names` - (Optional) Set of domains that should be SANs in the issued certificate.
   To remove all elements of a previously configured list, set this value equal to an empty list (`[]`)
-  or use the [`terraform taint` command](https://www.terraform.io/docs/commands/taint.html) to trigger recreation.
-* `tags` - (Optional) Map of tags to assign to the resource. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Map of tags to assign to the resource. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ## options Configuration Block
 
@@ -193,7 +189,7 @@ In addition to all arguments above, the following attributes are exported:
 * `renewal_summary` - Contains information about the status of ACM's [managed renewal](https://docs.aws.amazon.com/acm/latest/userguide/acm-renewal.html) for the certificate.
 * `status` - Status of the certificate.
 * `type` - Source of the certificate.
-* `tags_all` - Map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - Map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 * `validation_emails` - List of addresses that received a validation email. Only set if `EMAIL` validation was used.
 
 Domain validation objects export the following attributes:
@@ -208,7 +204,6 @@ Renewal summary objects export the following attributes:
 * `renewal_status` - The status of ACM's managed renewal of the certificate
 * `renewal_status_reason` - The reason that a renewal request was unsuccessful or is pending
 
-[1]: https://www.terraform.io/docs/configuration/meta-arguments/lifecycle.html
 
 ## Import
 

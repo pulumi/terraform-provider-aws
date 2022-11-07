@@ -3,12 +3,12 @@ subcategory: "Elemental MediaLive"
 layout: "aws"
 page_title: "AWS: aws_medialive_input_security_group"
 description: |-
-  Terraform resource for managing an AWS MediaLive InputSecurityGroup.
+  Resource for managing an AWS MediaLive InputSecurityGroup.
 ---
 
 # Resource: aws_medialive_input_security_group
 
-Terraform resource for managing an AWS MediaLive InputSecurityGroup.
+Resource for managing an AWS MediaLive InputSecurityGroup.
 
 ## Example Usage
 
@@ -34,7 +34,7 @@ The following arguments are required:
 
 The following arguments are optional:
 
-* `tags` - (Optional) A map of tags to assign to the InputSecurityGroup. If configured with a provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) A map of tags to assign to the InputSecurityGroup. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ### Whitelist Rules
 
@@ -50,7 +50,7 @@ In addition to all arguments above, the following attributes are exported:
 
 ## Timeouts
 
-[Configuration options](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts):
+Configuration options:
 
 * `create` - (Default `5m`)
 * `update` - (Default `5m`)

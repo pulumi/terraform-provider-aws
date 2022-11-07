@@ -8,7 +8,7 @@ description: |-
 
 # Resource: aws_db_cluster_snapshot
 
-Manages an RDS database cluster snapshot for Aurora clusters. For managing RDS database instance snapshots, see the [`aws_db_snapshot` resource](/docs/providers/aws/r/db_snapshot.html).
+Manages an RDS database cluster snapshot for Aurora clusters. For managing RDS database instance snapshots, see the `aws_db_snapshot` resource.
 
 ## Example Usage
 
@@ -25,7 +25,7 @@ The following arguments are supported:
 
 * `db_cluster_identifier` - (Required) The DB Cluster Identifier from which to take the snapshot.
 * `db_cluster_snapshot_identifier` - (Required) The Identifier for the snapshot.
-* `tags` - (Optional) A map of tags to assign to the DB cluster. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) A map of tags to assign to the DB cluster. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ## Attributes Reference
 
@@ -42,12 +42,12 @@ In addition to all arguments above, the following attributes are exported:
 * `source_db_cluster_snapshot_identifier` - DB Cluster Snapshot ARN that the DB Cluster Snapshot was copied from. It only has value in case of cross customer or cross region copy.
 * `storage_encrypted` - Whether the DB cluster snapshot is encrypted.
 * `status` - The status of this DB Cluster Snapshot.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 * `vpc_id` - The VPC ID associated with the DB cluster snapshot.
 
 ## Timeouts
 
-[Configuration options](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts):
+Configuration options:
 
 * `create` - (Default `20m`)
 

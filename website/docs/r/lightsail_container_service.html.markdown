@@ -116,7 +116,7 @@ The following arguments are supported:
 * `private_registry_access` - (Optional) An object to describe the configuration for the container service to access private container image repositories, such as Amazon Elastic Container Registry (Amazon ECR) private repositories. See [Private Registry Access](#private-registry-access) below for more details.
 * `tags` - (Optional) Map of container service tags. To tag at launch, specify the tags in the Launch Template. If
   configured with a provider
-  [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block)
+  `default_tags` configuration block
   present, tags with matching keys will overwrite those defined at the provider-level.
 
 ### Private Registry Access
@@ -148,13 +148,13 @@ In addition to all arguments above, the following attributes are exported:
 * `resource_type` - The Lightsail resource type of the container service (i.e., ContainerService).
 * `state` - The current state of the container service.
 * `tags_all` - A map of tags assigned to the resource, including those inherited from the provider
-  [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+  `default_tags` configuration block.
 * `url` - The publicly accessible URL of the container service. If no public endpoint is specified in the
   currentDeployment, this URL returns a 404 response.
 
 ## Timeouts
 
-[Configuration options](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts):
+Configuration options:
 
 * `create` - (Default `30m`)
 * `update` - (Default `30m`)

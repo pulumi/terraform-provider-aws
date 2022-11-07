@@ -253,7 +253,7 @@ included as an argument because the resource will add it automatically when upda
 
 ## Timeouts
 
-[Configuration options](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts):
+Configuration options:
 
 * `create` - (Default `1m`)
 * `update` - (Default `1m`)

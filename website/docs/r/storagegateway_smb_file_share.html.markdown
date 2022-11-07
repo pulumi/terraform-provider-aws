@@ -14,7 +14,7 @@ Manages an AWS Storage Gateway SMB File Share.
 
 ### Active Directory Authentication
 
-~> **NOTE:** The gateway must have already joined the Active Directory domain prior to SMB file share creationE.g., via "SMB Settings" in the AWS Storage Gateway console or `smb_active_directory_settings` in the [`aws_storagegateway_gateway` resource](/docs/providers/aws/r/storagegateway_gateway.html).
+~> **NOTE:** The gateway must have already joined the Active Directory domain prior to SMB file share creationE.g., via "SMB Settings" in the AWS Storage Gateway console or `smb_active_directory_settings` in the `aws_storagegateway_gateway` resource.
 
 ```terraform
 resource "aws_storagegateway_smb_file_share" "example" {
@@ -27,7 +27,7 @@ resource "aws_storagegateway_smb_file_share" "example" {
 
 ### Guest Authentication
 
-~> **NOTE:** The gateway must have already had the SMB guest password set prior to SMB file share creationE.g., via "SMB Settings" in the AWS Storage Gateway console or `smb_guest_password` in the [`aws_storagegateway_gateway` resource](/docs/providers/aws/r/storagegateway_gateway.html).
+~> **NOTE:** The gateway must have already had the SMB guest password set prior to SMB file share creationE.g., via "SMB Settings" in the AWS Storage Gateway console or `smb_guest_password` in the `aws_storagegateway_gateway` resource.
 
 ```terraform
 resource "aws_storagegateway_smb_file_share" "example" {
@@ -66,7 +66,7 @@ The following arguments are supported:
 * `valid_user_list` - (Optional) A list of users in the Active Directory that are allowed to access the file share. If you need to specify an Active directory group, add '@' before the name of the group. It will be set on Allowed group in AWS console. Only valid if `authentication` is set to `ActiveDirectory`.
 * `access_based_enumeration` - (Optional) The files and folders on this share will only be visible to users with read access. Default value is `false`.
 * `notification_policy` - (Optional) The notification policy of the file share. For more information see the [AWS Documentation](https://docs.aws.amazon.com/storagegateway/latest/APIReference/API_CreateNFSFileShare.html#StorageGateway-CreateNFSFileShare-request-NotificationPolicy). Default value is `{}`.
-* `tags` - (Optional) Key-value map of resource tags. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Key-value map of resource tags. .If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ### cache_attributes
 
@@ -82,11 +82,11 @@ In addition to all arguments above, the following attributes are exported:
 * `arn` - Amazon Resource Name (ARN) of the SMB File Share.
 * `fileshare_id` - ID of the SMB File Share.
 * `path` - File share path used by the NFS client to identify the mount point.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Timeouts
 
-[Configuration options](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts):
+Configuration options:
 
 * `create` - (Default `10m`)
 * `update` - (Default `10m`)

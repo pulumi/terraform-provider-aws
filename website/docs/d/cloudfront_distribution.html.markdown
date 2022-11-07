@@ -48,5 +48,5 @@ The following attributes are exported:
     `E2QWRUHAPOMQZL`.
 
 * `hosted_zone_id` - CloudFront Route 53 zone ID that can be used to
-     route an [Alias Resource Record Set][7] to. This attribute is simply an
+     route an Alias Resource Record Set to. This attribute is simply an
      alias for the zone ID `Z2FDTNDATAQYW2`.

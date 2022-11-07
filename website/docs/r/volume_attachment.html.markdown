@@ -11,7 +11,7 @@ description: |-
 Provides an AWS EBS Volume Attachment as a top level resource, to attach and
 detach volumes from AWS Instances.
 
-~> **NOTE on EBS block devices:** If you use `ebs_block_device` on an `aws_instance`, Terraform will assume management over the full set of non-root EBS block devices for the instance, and treats additional block devices as drift. For this reason, `ebs_block_device` cannot be mixed with external `aws_ebs_volume` + `aws_volume_attachment` resources for a given instance.
+~> **NOTE on EBS block devices:** If you use `ebs_block_device` on an `aws_instance`, this provider will assume management over the full set of non-root EBS block devices for the instance, and treats additional block devices as drift. For this reason, `ebs_block_device` cannot be mixed with external `aws_ebs_volume` + `aws_volume_attachment` resources for a given instance.
 
 ## Example Usage
 
@@ -43,16 +43,16 @@ resource "aws_ebs_volume" "example" {
 The following arguments are supported:
 
 * `device_name` - (Required) The device name to expose to the instance (for
-example, `/dev/sdh` or `xvdh`).  See [Device Naming on Linux Instances][1] and [Device Naming on Windows Instances][2] for more information.
+example, `/dev/sdh` or `xvdh`).  See Device Naming on Linux Instances and Device Naming on Windows Instances for more information.
 * `instance_id` - (Required) ID of the Instance to attach to
 * `volume_id` - (Required) ID of the Volume to be attached
 * `force_detach` - (Optional, Boolean) Set to `true` if you want to force the
 volume to detach. Useful if previous attempts failed, but use this option only
 as a last resort, as this can result in **data loss**. See
-[Detaching an Amazon EBS Volume from an Instance][3] for more information.
+Detaching an Amazon EBS Volume from an Instance for more information.
 * `skip_destroy` - (Optional, Boolean) Set this to true if you do not wish
 to detach the volume from the instance to which it is attached at destroy
-time, and instead just remove the attachment from Terraform state. This is
+time, and instead just remove the attachment from this provider state. This is
 useful when destroying an instance which has volumes created by some other
 means attached.
 * `stop_instance_before_detaching` - (Optional, Boolean) Set this to true to ensure that the target instance is stopped

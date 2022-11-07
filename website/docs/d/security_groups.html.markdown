@@ -8,7 +8,7 @@ description: |-
 
 # Data Source: aws_security_groups
 
-Use this data source to get IDs and VPC membership of Security Groups that are created outside of Terraform.
+Use this data source to get IDs and VPC membership of Security Groups that are created outside this provider.
 
 ## Example Usage
 
@@ -51,6 +51,6 @@ data "aws_security_groups" "test" {
 
 ## Timeouts
 
-[Configuration options](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts):
+Configuration options:
 
 - `read` - (Default `20m`)

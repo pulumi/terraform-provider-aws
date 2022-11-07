@@ -3,7 +3,7 @@ subcategory: "OpenSearch"
 layout: "aws"
 page_title: "AWS: aws_opensearch_domain_saml_options"
 description: |-
-  Terraform resource for managing SAML authentication options for an AWS OpenSearch Domain.
+  Resource for managing SAML authentication options for an AWS OpenSearch Domain.
 ---
 
 # Resource: aws_opensearch_domain_saml_options
@@ -77,7 +77,7 @@ In addition to all arguments above, the following attributes are exported:
 
 ## Timeouts
 
-[Configuration options](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts):
+Configuration options:
 
 * `update` - (Default `180m`)
 * `delete` - (Default `90m`)

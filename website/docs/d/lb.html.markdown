@@ -47,11 +47,11 @@ The following arguments are supported:
 
 ## Attributes Reference
 
-See the [LB Resource](/docs/providers/aws/r/lb.html) for details on the
+See the LB Resource for details on the
 returned attributes - they are identical.
 
 ## Timeouts
 
-[Configuration options](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts):
+Configuration options:
 
 - `read` - (Default `20m`)

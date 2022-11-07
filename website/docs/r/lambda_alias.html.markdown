@@ -11,7 +11,7 @@ description: |-
 Creates a Lambda function alias. Creates an alias that points to the specified Lambda function version.
 
 For information about Lambda and how to use it, see [What is AWS Lambda?][1]
-For information about function aliases, see [CreateAlias][2] and [AliasRoutingConfiguration][3] in the API docs.
+For information about function aliases, see CreateAlias and AliasRoutingConfiguration in the API docs.
 
 ## Example Usage
 
@@ -47,7 +47,7 @@ For **routing_config** the following attributes are supported:
 In addition to all arguments above, the following attributes are exported:
 
 * `arn` - The Amazon Resource Name (ARN) identifying your Lambda function alias.
-* `invoke_arn` - The ARN to be used for invoking Lambda Function from API Gateway - to be used in [`aws_api_gateway_integration`](/docs/providers/aws/r/api_gateway_integration.html)'s `uri`
+* `invoke_arn` - The ARN to be used for invoking Lambda Function from API Gateway - to be used in `aws_api_gateway_integration`'s `uri`
 
 [1]: http://docs.aws.amazon.com/lambda/latest/dg/welcome.html
 [2]: http://docs.aws.amazon.com/lambda/latest/dg/API_CreateAlias.html

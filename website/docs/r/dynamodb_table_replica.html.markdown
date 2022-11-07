@@ -10,9 +10,9 @@ description: |-
 
 Provides a DynamoDB table replica resource for [DynamoDB Global Tables V2 (version 2019.11.21)](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/globaltables.V2.html).
 
-~> **Note:** Use `lifecycle` [`ignore_changes`](https://www.terraform.io/docs/configuration/meta-arguments/lifecycle.html#ignore_changes) for `replica` in the associated [aws_dynamodb_table](/docs/providers/aws/r/dynamodb_table.html) configuration.
+~> **Note:** Use `lifecycle` `ignore_changes` for `replica` in the associated aws_dynamodb_table configuration.
 
-~> **Note:** Do not use the `replica` configuration block of [aws_dynamodb_table](/docs/providers/aws/r/dynamodb_table.html) together with this resource as the two configuration options are mutually exclusive.
+~> **Note:** Do not use the `replica` configuration block of aws_dynamodb_table together with this resource as the two configuration options are mutually exclusive.
 
 ## Example Usage
 
@@ -69,7 +69,7 @@ Optional arguments:
 * `kms_key_arn` - (Optional) ARN of the CMK that should be used for the AWS KMS encryption.
 * `point_in_time_recovery` - (Optional) Whether to enable Point In Time Recovery for the replica. Default is `false`.
 * `table_class_override` - (Optional, Forces new resource) Storage class of the table replica. Valid values are `STANDARD` and `STANDARD_INFREQUENT_ACCESS`. If not used, the table replica will use the same class as the global table.
-* `tags` - (Optional) Map of tags to populate on the created table. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Map of tags to populate on the created table. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ## Attributes Reference
 
@@ -77,11 +77,11 @@ In addition to all arguments above, the following attributes are exported:
 
 * `arn` - ARN of the table replica.
 * `id` - Name of the table and region of the main global table joined with a semicolon (_e.g._, `TableName:us-east-1`).
-* `tags_all` - Map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - Map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Timeouts
 
-[Configuration options](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts):
+Configuration options:
 
 * `create` - (Default `30m`)
 * `update` - (Default `30m`)

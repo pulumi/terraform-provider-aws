@@ -14,7 +14,7 @@ Provides an ElastiCache Global Replication Group resource, which manages replica
 
 ### Global replication group with one secondary replication group
 
-The global replication group depends on the primary group existing. Secondary replication groups depend on the global replication group. Terraform dependency management will handle this transparently using resource value references.
+The global replication group depends on the primary group existing. Secondary replication groups depend on the global replication group. the provider dependency management will handle this transparently using resource value references.
 
 ```terraform
 resource "aws_elasticache_global_replication_group" "example" {
@@ -50,8 +50,8 @@ The initial Redis version is determined by the version set on the primary replic
 However, once it is part of a Global Replication Group,
 the Global Replication Group manages the version of all member replication groups.
 
-The member replication groups must have [`lifecycle.ignore_changes[engine_version]`](https://www.terraform.io/language/meta-arguments/lifecycle) set,
-or Terraform will always return a diff.
+The member replication groups must have `lifecycle.ignore_changes[engine_version]` set,
+or the provider will always return a diff.
 
 In this example,
 the primary replication group will be created with Redis 6.0,
@@ -142,7 +142,7 @@ In addition to all arguments above, the following attributes are exported:
 
 ## Timeouts
 
-[Configuration options](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts):
+Configuration options:
 
 * `create` - (Default `60m`)
 * `update` - (Default `60m`)

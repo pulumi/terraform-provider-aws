@@ -10,7 +10,7 @@ description: |-
 
 Use this data source to get information about a Kinesis Firehose Delivery Stream for use in other resources.
 
-For more details, see the [Amazon Kinesis Firehose Documentation][1].
+For more details, see the Amazon Kinesis Firehose Documentation.
 
 ## Example Usage
 

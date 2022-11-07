@@ -10,7 +10,7 @@ description: |-
 
 Provides an IAM user.
 
-~> *NOTE:* If policies are attached to the user via the [`aws_iam_policy_attachment` resource](/docs/providers/aws/r/iam_policy_attachment.html) and you are modifying the user `name` or `path`, the `force_destroy` argument must be set to `true` and applied before attempting the operation otherwise you will encounter a `DeleteConflict` error. The [`aws_iam_user_policy_attachment` resource (recommended)](/docs/providers/aws/r/iam_user_policy_attachment.html) does not have this requirement.
+~> *NOTE:* If policies are attached to the user via the `aws_iam_policy_attachment` resource and you are modifying the user `name` or `path`, the `force_destroy` argument must be set to `true` and applied before attempting the operation otherwise you will encounter a `DeleteConflict` error. The `aws_iam_user_policy_attachment` resource (recommended) does not have this requirement.
 
 ## Example Usage
 
@@ -57,9 +57,9 @@ The following arguments are supported:
 * `path` - (Optional, default "/") Path in which to create the user.
 * `permissions_boundary` - (Optional) The ARN of the policy that is used to set the permissions boundary for the user.
 * `force_destroy` - (Optional, default false) When destroying this user, destroy even if it
-  has non-Terraform-managed IAM access keys, login profile or MFA devices. Without `force_destroy`
-  a user with non-Terraform-managed access keys and login profile will fail to be destroyed.
-* `tags` - Key-value map of tags for the IAM user. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+  has non-provider-managed IAM access keys, login profile or MFA devices. Without `force_destroy`
+  a user with non-provider-managed access keys and login profile will fail to be destroyed.
+* `tags` - Key-value mapping of tags for the IAM user. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ## Attributes Reference
 
@@ -67,8 +67,8 @@ In addition to all arguments above, the following attributes are exported:
 
 * `arn` - The ARN assigned by AWS for this user.
 * `name` - The user's name.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
-* `unique_id` - The [unique ID][1] assigned by AWS.
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
+* `unique_id` - The unique ID assigned by AWS.
 
   [1]: https://docs.aws.amazon.com/IAM/latest/UserGuide/Using_Identifiers.html#GUIDs
 

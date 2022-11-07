@@ -12,7 +12,7 @@ Provides a resource to manage a Kinesis Stream Consumer.
 
 -> **Note:** You can register up to 20 consumers per stream. A given consumer can only be registered with one stream at a time.
 
-For more details, see the [Amazon Kinesis Stream Consumer Documentation][1].
+For more details, see the Amazon Kinesis Stream Consumer Documentation.
 
 ## Example Usage
 

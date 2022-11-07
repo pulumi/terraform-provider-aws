@@ -10,7 +10,7 @@ description: |-
 
 Provides an CloudSearch domain resource.
 
-Terraform waits for the domain to become `Active` when applying a configuration.
+The provider waits for the domain to become `Active` when applying a configuration.
 
 ## Example Usage
 
@@ -96,7 +96,7 @@ In addition to all arguments above, the following attributes are exported:
 
 ## Timeouts
 
-[Configuration options](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts):
+Configuration options:
 
 * `create` - (Default `30m`)
 * `update` - (Default `30m`)

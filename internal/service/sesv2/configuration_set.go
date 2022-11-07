@@ -116,7 +116,7 @@ func ResourceConfigurationSet() *schema.Resource {
 				},
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 			"tracking_options": {
 				Type:     schema.TypeList,
 				Optional: true,

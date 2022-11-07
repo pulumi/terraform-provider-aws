@@ -3,12 +3,12 @@ subcategory: "Location"
 layout: "aws"
 page_title: "AWS: aws_location_geofence_collection"
 description: |-
-  Terraform resource for managing an AWS Location Geofence Collection.
+  Resource for managing an AWS Location Geofence Collection.
 ---
 
 # Resource: aws_location_geofence_collection
 
-Terraform resource for managing an AWS Location Geofence Collection.
+Resource for managing an AWS Location Geofence Collection.
 
 ## Example Usage
 
@@ -28,7 +28,7 @@ The following arguments are optional:
 
 * `description` - (Optional) The optional description for the geofence collection.
 * `kms_key_id` - (Optional) A key identifier for an AWS KMS customer managed key assigned to the Amazon Location resource.
-* `tags` - (Optional) Key-value tags for the geofence collection. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Key-value tags for the geofence collection. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ## Attributes Reference
 
@@ -40,7 +40,7 @@ In addition to all arguments above, the following attributes are exported:
 
 ## Timeouts
 
-[Configuration options](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts):
+Configuration options:
 
 * `create` - (Default `30m`)
 * `update` - (Default `30m`)

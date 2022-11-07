@@ -66,7 +66,7 @@ The following arguments are supported:
 
 ## Timeouts
 
-[Configuration options](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts):
+Configuration options:
 
 - `create` - (Default `60m`)
 - `delete` - (Default `10m`)
@@ -81,4 +81,4 @@ In addition to all arguments above, the following attributes are exported:
 * `owner_alias` - Value from an Amazon-maintained list (`amazon`, `aws-marketplace`, `microsoft`) of snapshot owners.
 * `volume_size` - The size of the drive in GiBs.
 * `data_encryption_key_id` - The data encryption key identifier for the snapshot.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
