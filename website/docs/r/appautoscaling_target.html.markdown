@@ -62,6 +62,18 @@ resource "aws_appautoscaling_target" "replicas" {
 }
 ```
 
+### MSK / Kafka Autoscaling
+
+```hcl
+resource "aws_appautoscaling_target" "msk_target" {
+  service_namespace  = "kafka"
+  scalable_dimension = "kafka:broker-storage:VolumeSize"
+  resource_id        = "${aws_msk_cluster.example.arn}"
+  min_capacity       = 1
+  max_capacity       = 8
+}
+```
+
 ## Argument Reference
 
 The following arguments are supported:
