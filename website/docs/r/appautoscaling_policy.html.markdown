@@ -116,6 +116,34 @@ resource "aws_appautoscaling_policy" "replicas" {
 }
 ```
 
+### MSK / Kafka Autoscaling
+
+```hcl
+resource "aws_appautoscaling_target" "msk_target" {
+  service_namespace  = "kafka"
+  scalable_dimension = "kafka:broker-storage:VolumeSize"
+  resource_id        = "${aws_msk_cluster.example.arn}"
+  min_capacity       = 1
+  max_capacity       = 8
+}
+
+resource "aws_appautoscaling_policy" "targets" {
+  name               = "storage-size-auto-scaling"
+  service_namespace  = aws_appautoscaling_target.msk_target.service_namespace
+  scalable_dimension = aws_appautoscaling_target.msk_target.scalable_dimension
+  resource_id        = aws_appautoscaling_target.msk_target.resource_id
+  policy_type        = "TargetTrackingScaling"
+
+  target_tracking_scaling_policy_configuration {
+    predefined_metric_specification {
+      predefined_metric_type = "KafkaBrokerStorageUtilization"
+    }
+
+    target_value = 55
+  }
+}
+```
+
 ## Argument Reference
 
 The following arguments are supported:
