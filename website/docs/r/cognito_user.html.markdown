@@ -32,7 +32,7 @@ resource "aws_cognito_user_pool" "example" {
   name = "mypool"
 
   schema {
-    name                     = "terraform"
+    name                     = "example"
     attribute_data_type      = "Boolean"
     mutable                  = false
     required                 = false
@@ -54,9 +54,9 @@ resource "aws_cognito_user" "example" {
   username     = "example"
 
   attributes = {
-    terraform      = true
+    example        = true
     foo            = "bar"
-    email          = "no-reply@hashicorp.com"
+    email          = "no-reply@domain.example"
     email_verified = true
   }
 }

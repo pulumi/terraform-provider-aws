@@ -3,12 +3,12 @@ subcategory: "Inspector V2"
 layout: "aws"
 page_title: "AWS: aws_inspector2_delegated_admin_account"
 description: |-
-  Terraform resource for managing an AWS Inspector V2 Delegated Admin Account.
+  Resource for managing an AWS Inspector V2 Delegated Admin Account.
 ---
 
 # Resource: aws_inspector2_delegated_admin_account
 
-Terraform resource for managing an AWS Inspector V2 Delegated Admin Account.
+Resource for managing an AWS Inspector V2 Delegated Admin Account.
 
 ## Example Usage
 
@@ -36,7 +36,7 @@ In addition to all arguments above, the following attributes are exported:
 
 ## Timeouts
 
-[Configuration options](https://developer.hashicorp.com/terraform/language/resources/syntax#operation-timeouts):
+Configuration options:
 
 * `create` - (Default `15m`)
 * `delete` - (Default `15m`)

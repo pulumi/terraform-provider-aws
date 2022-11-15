@@ -109,7 +109,7 @@ The following arguments are supported:
 * `api_id` - (Required) API identifier.
 * `integration_type` - (Required) Integration type of an integration.
 Valid values: `AWS` (supported only for WebSocket APIs), `AWS_PROXY`, `HTTP` (supported only for WebSocket APIs), `HTTP_PROXY`, `MOCK` (supported only for WebSocket APIs). For an HTTP API private integration, use `HTTP_PROXY`.
-* `connection_id` - (Optional) ID of the [VPC link](apigatewayv2_vpc_link.html) for a private integration. Supported only for HTTP APIs. Must be between 1 and 1024 characters in length.
+* `connection_id` - (Optional) ID of the VPC link for a private integration. Supported only for HTTP APIs. Must be between 1 and 1024 characters in length.
 * `connection_type` - (Optional) Type of the network connection to the integration endpoint. Valid values: `INTERNET`, `VPC_LINK`. Default is `INTERNET`.
 * `content_handling_strategy` - (Optional) How to handle response payload content type conversions. Valid values: `CONVERT_TO_BINARY`, `CONVERT_TO_TEXT`. Supported only for WebSocket APIs.
 * `credentials_arn` - (Optional) Credentials required for the integration, if any.
@@ -130,7 +130,7 @@ See the [Amazon API Gateway Developer Guide](https://docs.aws.amazon.com/apigate
 * `template_selection_expression` - (Optional) The [template selection expression](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-websocket-api-selection-expressions.html#apigateway-websocket-api-template-selection-expressions) for the integration.
 * `timeout_milliseconds` - (Optional) Custom timeout between 50 and 29,000 milliseconds for WebSocket APIs and between 50 and 30,000 milliseconds for HTTP APIs.
 The default timeout is 29 seconds for WebSocket APIs and 30 seconds for HTTP APIs.
-Terraform will only perform drift detection of its value when present in a configuration.
+this provider will only perform drift detection of its value when present in a configuration.
 * `tls_config` - (Optional) TLS configuration for a private integration. Supported only for HTTP APIs.
 
 The `response_parameters` object supports the following:

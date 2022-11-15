@@ -187,7 +187,7 @@ The following arguments are supported:
   log record. Valid Values: `60` seconds (1 minute) or `600` seconds (10
   minutes). Default: `600`. When `transit_gateway_id` or `transit_gateway_attachment_id` is specified, `max_aggregation_interval` _must_ be 60 seconds (1 minute).
 * `destination_options` - (Optional) Describes the destination options for a flow log. More details below.
-* `tags` - (Optional) Key-value map of resource tags. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Key-value map of resource tags. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ### destination_options
 
@@ -203,7 +203,7 @@ In addition to all arguments above, the following attributes are exported:
 
 * `id` - The Flow Log ID
 * `arn` - The ARN of the Flow Log.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

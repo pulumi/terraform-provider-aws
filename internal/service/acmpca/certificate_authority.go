@@ -294,7 +294,7 @@ func ResourceCertificateAuthority() *schema.Resource {
 				Deprecated: "The reported value of the \"status\" attribute is often inaccurate. Use the resource's \"enabled\" attribute to explicitly set status.",
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 			"type": {
 				Type:         schema.TypeString,
 				Optional:     true,

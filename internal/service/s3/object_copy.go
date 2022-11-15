@@ -279,7 +279,7 @@ func ResourceObjectCopy() *schema.Resource {
 				ValidateFunc: validation.StringInSlice(s3.TaggingDirective_Values(), false),
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 			"version_id": {
 				Type:     schema.TypeString,
 				Computed: true,

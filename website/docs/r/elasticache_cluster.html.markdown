@@ -14,10 +14,10 @@ Provides an ElastiCache Cluster resource, which manages either a
 [read replica in a Redis (Cluster Mode Enabled) replication group].
 
 For working with Redis (Cluster Mode Enabled) replication groups, see the
-[`aws_elasticache_replication_group` resource](/docs/providers/aws/r/elasticache_replication_group.html).
+`aws_elasticache_replication_group` resource.
 
 ~> **Note:** When you change an attribute, such as `num_cache_nodes`, by default
-it is applied in the next maintenance window. Because of this, Terraform may report
+it is applied in the next maintenance window. Because of this, this provider may report
 a difference in its planning phase because the actual modification has not yet taken
 place. You can use the `apply_immediately` flag to instruct the service to apply the
 change immediately. Using `apply_immediately` can result in a brief downtime as the server reboots.
@@ -134,7 +134,7 @@ The minimum maintenance window is a 60 minute period. Example: `sun:05:00-sun:09
 * `snapshot_retention_limit` - (Optional, Redis only) Number of days for which ElastiCache will retain automatic cache cluster snapshots before deleting them. For example, if you set SnapshotRetentionLimit to 5, then a snapshot that was taken today will be retained for 5 days before being deleted. If the value of SnapshotRetentionLimit is set to zero (0), backups are turned off. Please note that setting a `snapshot_retention_limit` is not supported on cache.t1.micro cache nodes
 * `snapshot_window` - (Optional, Redis only) Daily time range (in UTC) during which ElastiCache will begin taking a daily snapshot of your cache cluster. Example: 05:00-09:00
 * `subnet_group_name` – (Optional, VPC only) Name of the subnet group to be used for the cache cluster. Changing this value will re-create the resource.
-* `tags` - (Optional) Map of tags to assign to the resource. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Map of tags to assign to the resource. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ## Attributes Reference
 
@@ -145,7 +145,7 @@ In addition to all arguments above, the following attributes are exported:
 * `cache_nodes` - List of node objects including `id`, `address`, `port` and `availability_zone`.
 * `cluster_address` - (Memcached only) DNS name of the cache cluster without the port appended.
 * `configuration_endpoint` - (Memcached only) Configuration endpoint to allow host discovery.
-* `tags_all` - Map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - Map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ### Log Delivery Configuration
 

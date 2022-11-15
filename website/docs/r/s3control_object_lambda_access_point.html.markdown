@@ -9,7 +9,7 @@ description: |-
 # Resource: aws_s3control_object_lambda_access_point
 
 Provides a resource to manage an S3 Object Lambda Access Point.
-An Object Lambda access point is associated with exactly one [standard access point](s3_access_point.html) and thus one Amazon S3 bucket.
+An Object Lambda access point is associated with exactly one standard access point and thus one Amazon S3 bucket.
 
 ## Example Usage
 
@@ -46,7 +46,7 @@ resource "aws_s3control_object_lambda_access_point" "example" {
 
 The following arguments are supported:
 
-* `account_id` - (Optional) The AWS account ID for the owner of the bucket for which you want to create an Object Lambda Access Point. Defaults to automatically determined account ID of the Terraform AWS provider.
+* `account_id` - (Optional) The AWS account ID for the owner of the bucket for which you want to create an Object Lambda Access Point. Defaults to automatically determined account ID of the AWS provider.
 * `configuration` - (Required) A configuration block containing details about the Object Lambda Access Point. See [Configuration](#configuration) below for more details.
 * `name` - (Required) The name for this Object Lambda Access Point.
 

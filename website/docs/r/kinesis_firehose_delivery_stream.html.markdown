@@ -18,7 +18,7 @@ For more details, see the [Amazon Kinesis Firehose Documentation][1].
 
 ```terraform
 resource "aws_kinesis_firehose_delivery_stream" "extended_s3_stream" {
-  name        = "terraform-kinesis-firehose-extended-s3-test-stream"
+  name        = "kinesis-firehose-extended-s3-test-stream"
   destination = "extended_s3"
 
   extended_s3_configuration {
@@ -103,7 +103,7 @@ These examples use built-in Firehose functionality, rather than requiring a lamb
 
 ```terraform
 resource "aws_kinesis_firehose_delivery_stream" "extended_s3_stream" {
-  name        = "terraform-kinesis-firehose-extended-s3-test-stream"
+  name        = "kinesis-firehose-extended-s3-test-stream"
   destination = "extended_s3"
 
   extended_s3_configuration {
@@ -183,7 +183,7 @@ EOF
 }
 
 resource "aws_kinesis_firehose_delivery_stream" "test_stream" {
-  name        = "terraform-kinesis-firehose-test-stream"
+  name        = "kinesis-firehose-test-stream"
   destination = "s3"
 
   s3_configuration {
@@ -206,7 +206,7 @@ resource "aws_redshift_cluster" "test_cluster" {
 }
 
 resource "aws_kinesis_firehose_delivery_stream" "test_stream" {
-  name        = "terraform-kinesis-firehose-test-stream"
+  name        = "kinesis-firehose-test-stream"
   destination = "redshift"
 
   s3_configuration {
@@ -246,7 +246,7 @@ resource "aws_elasticsearch_domain" "test_cluster" {
 }
 
 resource "aws_kinesis_firehose_delivery_stream" "test_stream" {
-  name        = "terraform-kinesis-firehose-test-stream"
+  name        = "kinesis-firehose-test-stream"
   destination = "elasticsearch"
 
   s3_configuration {
@@ -343,7 +343,7 @@ EOF
 resource "aws_kinesis_firehose_delivery_stream" "test" {
   depends_on = [aws_iam_role_policy.firehose-elasticsearch]
 
-  name        = "terraform-kinesis-firehose-es"
+  name        = "kinesis-firehose-es"
   destination = "elasticsearch"
   s3_configuration {
     role_arn   = aws_iam_role.firehose.arn
@@ -368,7 +368,7 @@ resource "aws_kinesis_firehose_delivery_stream" "test" {
 
 ```terraform
 resource "aws_kinesis_firehose_delivery_stream" "test_stream" {
-  name        = "terraform-kinesis-firehose-test-stream"
+  name        = "kinesis-firehose-test-stream"
   destination = "splunk"
 
   s3_configuration {
@@ -393,7 +393,7 @@ resource "aws_kinesis_firehose_delivery_stream" "test_stream" {
 
 ```terraform
 resource "aws_kinesis_firehose_delivery_stream" "test_stream" {
-  name        = "terraform-kinesis-firehose-test-stream"
+  name        = "kinesis-firehose-test-stream"
   destination = "http_endpoint"
 
   s3_configuration {
@@ -436,7 +436,7 @@ The following arguments are supported:
 
 * `name` - (Required) A name to identify the stream. This is unique to the
 AWS account and region the Stream is created in.
-* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 * `kinesis_source_configuration` - (Optional) Allows the ability to specify the kinesis stream that is used as the source of the firehose delivery stream.
 * `server_side_encryption` - (Optional) Encrypt at rest options.
 Server-side encryption should not be enabled when a kinesis stream is configured as the source of the firehose delivery stream.
@@ -563,7 +563,7 @@ The `parameters` array objects support the following:
 * `parameter_name` - (Required) Parameter name. Valid Values: `LambdaArn`, `NumberOfRetries`, `MetadataExtractionQuery`, `JsonParsingEngine`, `RoleArn`, `BufferSizeInMBs`, `BufferIntervalInSeconds`, `SubRecordType`, `Delimiter`. Validation is done against [AWS SDK constants](https://docs.aws.amazon.com/sdk-for-go/api/service/firehose/#pkg-constants); so that values not explicitly listed may also work.
 * `parameter_value` - (Required) Parameter value. Must be between 1 and 512 length (inclusive). When providing a Lambda ARN, you should specify the resource version as well.
 
-~> **NOTE:** Parameters with default values, including `NumberOfRetries`(default: 3), `RoleArn`(default: firehose role ARN), `BufferSizeInMBs`(default: 3), and `BufferIntervalInSeconds`(default: 60), are not stored in terraform state. To prevent perpetual differences, it is therefore recommended to only include parameters with non-default values.
+~> **NOTE:** Parameters with default values, including `NumberOfRetries`(default: 3), `RoleArn`(default: firehose role ARN), `BufferSizeInMBs`(default: 3), and `BufferIntervalInSeconds`(default: 60), are not stored in state. To prevent perpetual differences, it is therefore recommended to only include parameters with non-default values.
 
 The `request_configuration` object supports the following:
 
@@ -696,7 +696,7 @@ resource "aws_kinesis_firehose_delivery_stream" "example" {
 In addition to all arguments above, the following attributes are exported:
 
 * `arn` - The Amazon Resource Name (ARN) specifying the Stream
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 [1]: https://aws.amazon.com/documentation/firehose/
 

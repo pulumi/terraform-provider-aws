@@ -69,7 +69,7 @@ func ResourceDeploymentStrategy() *schema.Resource {
 				ValidateFunc: validation.StringInSlice(appconfig.ReplicateTo_Values(), false),
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 		},
 		CustomizeDiff: verify.SetTagsDiff,
 	}

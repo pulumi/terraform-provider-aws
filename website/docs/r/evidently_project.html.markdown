@@ -71,7 +71,7 @@ The following arguments are supported:
 * `data_delivery` - (Optional) A block that contains information about where Evidently is to store evaluation events for longer term storage, if you choose to do so. If you choose not to store these events, Evidently deletes them after using them to produce metrics and other experiment results that you can view. See below.
 * `description` - (Optional) Specifies the description of the project.
 * `name` - (Required) A name for the project.
-* `tags` - (Optional) Tags to apply to the project. If configured with a provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Tags to apply to the project. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 The `data_delivery` block supports the following arguments:
 
@@ -91,7 +91,7 @@ The `s3_destination` block supports the following arguments:
 
 ## Timeouts
 
-[Configuration options](https://developer.hashicorp.com/terraform/language/resources/syntax#operation-timeouts):
+Configuration options:
 
 * `create` - (Default `2m`)
 * `delete` - (Default `2m`)
@@ -111,7 +111,7 @@ In addition to all arguments above, the following attributes are exported:
 * `last_updated_time` - The date and time that the project was most recently updated.
 * `launch_count` - The number of launches currently in the project. This includes all launches that have been created and not deleted, whether they are ongoing or not.
 * `status` - The current state of the project. Valid values are `AVAILABLE` and `UPDATING`.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

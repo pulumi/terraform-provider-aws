@@ -12,7 +12,7 @@ Grants permissions to the principal to access metadata in the Data Catalog and d
 
 !> **WARNING:** Lake Formation permissions are not in effect by default within AWS. Using this resource will not secure your data and will result in errors if you do not change the security settings for existing resources and the default security settings for new resources. See [Default Behavior and `IAMAllowedPrincipals`](#default-behavior-and-iamallowedprincipals) for additional details.
 
-~> **NOTE:** In general, the `principal` should _NOT_ be a Lake Formation administrator or the entity (e.g., IAM role) that is running Terraform. Administrators have implicit permissions. These should be managed by granting or not granting administrator rights using `aws_lakeformation_data_lake_settings`, _not_ with this resource.
+~> **NOTE:** In general, the `principal` should _NOT_ be a Lake Formation administrator or the entity (e.g., IAM role) that is running the deployment. Administrators have implicit permissions. These should be managed by granting or not granting administrator rights using `aws_lakeformation_data_lake_settings`, _not_ with this resource.
 
 ## Default Behavior and `IAMAllowedPrincipals`
 
@@ -20,10 +20,10 @@ Grants permissions to the principal to access metadata in the Data Catalog and d
 
 When using Lake Formation, choose ONE of the following options as they are mutually exclusive:
 
-1. Use this resource (`aws_lakeformation_permissions`), change the default security settings using [`aws_lakeformation_data_lake_settings`](/docs/providers/aws/r/lakeformation_data_lake_settings.html), and remove existing `IAMAllowedPrincipals` permissions
+1. Use this resource (`aws_lakeformation_permissions`), change the default security settings using `aws_lakeformation_data_lake_settings`, and remove existing `IAMAllowedPrincipals` permissions
 2. Use `IAMAllowedPrincipals` without `aws_lakeformation_permissions`
 
-This example shows removing the `IAMAllowedPrincipals` default security settings and making the caller a Lake Formation admin. Since `create_database_default_permissions` and `create_table_default_permissions` are not set in the [`aws_lakeformation_data_lake_settings`](/docs/providers/aws/r/lakeformation_data_lake_settings.html) resource, they are cleared.
+This example shows removing the `IAMAllowedPrincipals` default security settings and making the caller a Lake Formation admin. Since `create_database_default_permissions` and `create_table_default_permissions` are not set in the `aws_lakeformation_data_lake_settings` resource, they are cleared.
 
 ```terraform
 data "aws_caller_identity" "current" {}
@@ -154,7 +154,7 @@ The following arguments are required:
 * `permissions` – (Required) List of permissions granted to the principal. Valid values may include `ALL`, `ALTER`, `ASSOCIATE`, `CREATE_DATABASE`, `CREATE_TABLE`, `DATA_LOCATION_ACCESS`, `DELETE`, `DESCRIBE`, `DROP`, `INSERT`, and `SELECT`. For details on each permission, see [Lake Formation Permissions Reference](https://docs.aws.amazon.com/lake-formation/latest/dg/lf-permissions-reference.html).
 * `principal` – (Required) Principal to be granted the permissions on the resource. Supported principals include `IAM_ALLOWED_PRINCIPALS` (see [Default Behavior and `IAMAllowedPrincipals`](#default-behavior-and-iamallowedprincipals) above), IAM roles, users, groups, SAML groups and users, QuickSight groups, OUs, and organizations as well as AWS account IDs for cross-account permissions. For more information, see [Lake Formation Permissions Reference](https://docs.aws.amazon.com/lake-formation/latest/dg/lf-permissions-reference.html).
 
-~> **NOTE:** We highly recommend that the `principal` _NOT_ be a Lake Formation administrator (granted using `aws_lakeformation_data_lake_settings`). The entity (e.g., IAM role) running Terraform will most likely need to be a Lake Formation administrator. As such, the entity will have implicit permissions and does not need permissions granted through this resource.
+~> **NOTE:** We highly recommend that the `principal` _NOT_ be a Lake Formation administrator (granted using `aws_lakeformation_data_lake_settings`). The entity (e.g., IAM role) running the deployment will most likely need to be a Lake Formation administrator. As such, the entity will have implicit permissions and does not need permissions granted through this resource.
 
 One of the following is required:
 
@@ -237,12 +237,12 @@ The following arguments are required:
 * `column_names` - (Required, at least one of `column_names` or `wildcard`) Set of column names for the table.
 * `database_name` – (Required) Name of the database for the table with columns resource. Unique to the Data Catalog.
 * `name` – (Required) Name of the table resource.
-* `wildcard` - (Required, at least one of `column_names` or `wildcard`) Whether to use a column wildcard. If `excluded_column_names` is included, `wildcard` must be set to `true` to avoid Terraform reporting a difference.
+* `wildcard` - (Required, at least one of `column_names` or `wildcard`) Whether to use a column wildcard. If `excluded_column_names` is included, `wildcard` must be set to `true` to avoid the provider reporting a difference.
 
 The following arguments are optional:
 
 * `catalog_id` - (Optional) Identifier for the Data Catalog. By default, it is the account ID of the caller.
-* `excluded_column_names` - (Optional) Set of column names for the table to exclude. If `excluded_column_names` is included, `wildcard` must be set to `true` to avoid Terraform reporting a difference.
+* `excluded_column_names` - (Optional) Set of column names for the table to exclude. If `excluded_column_names` is included, `wildcard` must be set to `true` to avoid the provider reporting a difference.
 
 ## Attributes Reference
 

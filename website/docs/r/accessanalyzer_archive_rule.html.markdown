@@ -3,12 +3,12 @@ subcategory: "IAM Access Analyzer"
 layout: "aws"
 page_title: "AWS: aws_accessanalyzer_archive_rule"
 description: |-
-  Terraform resource for managing an AWS AccessAnalyzer Archive Rule.
+  Resource for managing an AWS AccessAnalyzer Archive Rule.
 ---
 
 # Resource: aws_accessanalyzer_archive_rule
 
-Terraform resource for managing an AWS AccessAnalyzer Archive Rule.
+Resource for managing an AWS AccessAnalyzer Archive Rule.
 
 ## Example Usage
 

@@ -63,6 +63,6 @@ For more information about filtering, see the [EC2 API documentation](https://do
 
 ## Timeouts
 
-[Configuration options](https://developer.hashicorp.com/terraform/language/resources/syntax#operation-timeouts):
+Configuration options:
 
 - `read` - (Default `20m`)

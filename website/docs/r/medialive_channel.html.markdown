@@ -3,12 +3,12 @@ subcategory: "Elemental MediaLive"
 layout: "aws"
 page_title: "AWS: aws_medialive_channel"
 description: |-
-  Terraform resource for managing an AWS MediaLive Channel.
+  Resource for managing an AWS MediaLive Channel.
 ---
 
 # Resource: aws_medialive_channel
 
-Terraform resource for managing an AWS MediaLive Channel.
+Resource for managing an AWS MediaLive Channel.
 
 ## Example Usage
 
@@ -107,7 +107,7 @@ The following arguments are optional:
 * `log_level` - (Optional) The log level to write to Cloudwatch logs.
 * `maintenance` - (Optional) Maintenance settings for this channel. See [Maintenance](#maintenance) for more details.
 * `role_arn` - (Optional) Concise argument description.
-* `tags` - (Optional) A map of tags to assign to the channel. If configured with a provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) A map of tags to assign to the channel. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 * `vpc` - (Optional) Settings for the VPC outputs.
 
 ### CDI Input Specification
@@ -324,7 +324,7 @@ In addition to all arguments above, the following attributes are exported:
 
 ## Timeouts
 
-[Configuration options](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts):
+Configuration options:
 
 * `create` - (Default `15m`)
 * `update` - (Default `15m`)
