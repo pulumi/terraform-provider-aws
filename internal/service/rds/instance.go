@@ -389,11 +389,10 @@ func ResourceInstance() *schema.Resource {
 				Computed: true,
 			},
 			"name": {
-				Type:       schema.TypeString,
-				Optional:   true,
-				Computed:   true,
-				Deprecated: "Use db_name instead",
-				ForceNew:   true,
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+				ForceNew: true,
 				ConflictsWith: []string{
 					"db_name",
 					"replicate_source_db",
