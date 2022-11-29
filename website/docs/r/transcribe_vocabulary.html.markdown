@@ -3,12 +3,12 @@ subcategory: "Transcribe"
 layout: "aws"
 page_title: "AWS: aws_transcribe_vocabulary"
 description: |-
-  Terraform resource for managing an AWS Transcribe Vocabulary.
+  Resource for managing an AWS Transcribe Vocabulary.
 ---
 
 # Resource: aws_transcribe_vocabulary
 
-Terraform resource for managing an AWS Transcribe Vocabulary.
+Resource for managing an AWS Transcribe Vocabulary.
 
 ## Example Usage
 
@@ -54,7 +54,7 @@ The following arguments are optional:
 
 * `phrases` - (Optional) - A list of terms to include in the vocabulary. Conflicts with `vocabulary_file_uri`
 * `vocabulary_file_uri` - (Optional) The Amazon S3 location (URI) of the text file that contains your custom vocabulary. Conflicts wth `phrases`.
-* `tags` - (Optional) A map of tags to assign to the Vocabulary. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) A map of tags to assign to the Vocabulary. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ## Attributes Reference
 
@@ -66,7 +66,7 @@ In addition to all arguments above, the following attributes are exported:
 
 ## Timeouts
 
-[Configuration options](https://developer.hashicorp.com/terraform/language/resources/syntax#operation-timeouts):
+Configuration options:
 
 * `create` - (Default `30m`)
 * `update` - (Default `30m`)

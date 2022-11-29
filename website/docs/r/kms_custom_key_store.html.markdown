@@ -3,12 +3,12 @@ subcategory: "KMS (Key Management)"
 layout: "aws"
 page_title: "AWS: aws_kms_custom_key_store"
 description: |-
-  Terraform resource for managing an AWS KMS (Key Management) Custom Key Store.
+  Resource for managing an AWS KMS (Key Management) Custom Key Store.
 ---
 
 # Resource: aws_kms_custom_key_store
 
-Terraform resource for managing an AWS KMS (Key Management) Custom Key Store.
+Resource for managing an AWS KMS (Key Management) Custom Key Store.
 
 ## Example Usage
 
@@ -41,7 +41,7 @@ In addition to all arguments above, the following attributes are exported:
 
 ## Timeouts
 
-[Configuration options](https://developer.hashicorp.com/terraform/language/resources/syntax#operation-timeouts):
+Configuration options:
 
 * `create` - (Default `15m`)
 * `update` - (Default `15m`)

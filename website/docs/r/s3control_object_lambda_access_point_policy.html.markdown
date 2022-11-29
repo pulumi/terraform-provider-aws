@@ -61,7 +61,7 @@ resource "aws_s3control_object_lambda_access_point_policy" "example" {
 
 The following arguments are supported:
 
-* `account_id` - (Optional) The AWS account ID for the account that owns the Object Lambda Access Point. Defaults to automatically determined account ID of the Terraform AWS provider.
+* `account_id` - (Optional) The AWS account ID for the account that owns the Object Lambda Access Point. Defaults to automatically determined account ID of the AWS provider.
 * `name` - (Required) The name of the Object Lambda Access Point.
 * `policy` - (Required) The Object Lambda Access Point resource policy document.
 

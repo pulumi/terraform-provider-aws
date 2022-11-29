@@ -101,7 +101,7 @@ The API Gateway Usage Plan argument layout is a structure composed of several su
 * `quota_settings` - (Optional) The [quota settings](#quota-settings-arguments) of the usage plan.
 * `throttle_settings` - (Optional) The [throttling limits](#throttling-settings-arguments) of the usage plan.
 * `product_code` - (Optional) AWS Marketplace product identifier to associate with the usage plan as a SaaS product on AWS Marketplace.
-* `tags` - (Optional) Key-value map of resource tags. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Key-value map of resource tags. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 #### Api Stages arguments
 
@@ -138,7 +138,7 @@ In addition to all arguments above, the following attributes are exported:
 * `throttle_settings` - Throttling limits of the usage plan.
 * `product_code` - AWS Marketplace product identifier to associate with the usage plan as a SaaS product on AWS Marketplace.
 * `arn` - ARN
-* `tags_all` - Map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - Map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

@@ -22,7 +22,7 @@ data "aws_iam_session_context" "example" {
 }
 ```
 
-### Find the Terraform Runner's Source Role
+### Find the Provider's Source Role
 
 Combined with `aws_caller_identity`, you can get the current user's source IAM role ARN (`issuer_arn`) if you're using an assumed role. If you're not using an assumed role, the caller's (e.g., an IAM user's) ARN will simply be passed through. In environments where both IAM users and individuals using assumed roles need to apply the same configurations, this data source enables seamless use.
 
@@ -38,7 +38,7 @@ data "aws_iam_session_context" "example" {
 
 * `arn` - (Required) ARN for an assumed role.
 
-~> If `arn` is a non-role ARN, Terraform gives no error and `issuer_arn` will be equal to the `arn` value. For STS assumed-role ARNs, Terraform gives an error if the identified IAM role does not exist.
+~> If `arn` is a non-role ARN, the provider gives no error and `issuer_arn` will be equal to the `arn` value. For STS assumed-role ARNs, the provider gives an error if the identified IAM role does not exist.
 
 ## Attributes Reference
 

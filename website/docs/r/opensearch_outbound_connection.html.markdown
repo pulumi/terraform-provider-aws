@@ -3,7 +3,7 @@ subcategory: "OpenSearch"
 layout: "aws"
 page_title: "AWS: aws_opensearch_outbound_connection"
 description: |-
-  Terraform resource for managing an AWS OpenSearch Outbound Connection.
+  Resource for managing an AWS OpenSearch Outbound Connection.
 ---
 
 # Resource: aws_opensearch_outbound_connection

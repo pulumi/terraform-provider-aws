@@ -36,7 +36,7 @@ func ResourceHostedPrivateVirtualInterfaceAccepter() *schema.Resource {
 				ConflictsWith: []string{"vpn_gateway_id"},
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 			"virtual_interface_id": {
 				Type:     schema.TypeString,
 				Required: true,

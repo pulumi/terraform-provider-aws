@@ -34,7 +34,7 @@ The following arguments are optional:
 
 * `filter_in_arns` - (Optional) A list of ARNs for resources the path must traverse.
 * `wait_for_completion` - (Optional) If enabled, the resource will wait for the Network Insights Analysis status to change to `succeeded` or `failed`. Setting this to `false` will skip the process. Default: `true`.
-* `tags` - (Optional) Map of tags to assign to the resource. If configured with a provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Map of tags to assign to the resource. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ## Attributes Reference
 
@@ -50,7 +50,7 @@ In addition to all arguments above, the following attributes are exported:
 * `start_date` - The date/time the analysis was started.
 * `status` - The status of the analysis. `succeeded` means the analysis was completed, not that a path was found, for that see `path_found`.
 * `status_message` - A message to provide more context when the `status` is `failed`.
-* `tags_all` - Map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block).
+* `tags_all` - Map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 * `warning_message` - The warning message.
 
 The `alternate_path_hints` object supports the following:

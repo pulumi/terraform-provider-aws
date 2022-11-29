@@ -146,7 +146,7 @@ func ResourceRole() *schema.Resource {
 				ValidateFunc: verify.ValidARN,
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 			"unique_id": {
 				Type:     schema.TypeString,
 				Computed: true,

@@ -40,7 +40,7 @@ The following arguments are supported:
 
 * `name` - (Required) Name to use for the service mesh. Must be between 1 and 255 characters in length.
 * `spec` - (Optional) Service mesh specification to apply.
-* `tags` - (Optional) Map of tags to assign to the resource. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Map of tags to assign to the resource. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 The `spec` object supports the following:
 
@@ -61,7 +61,7 @@ In addition to all arguments above, the following attributes are exported:
 * `last_updated_date` - Last update date of the service mesh.
 * `mesh_owner` - AWS account ID of the service mesh's owner.
 * `resource_owner` - Resource owner's AWS account ID.
-* `tags_all` - Map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - Map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

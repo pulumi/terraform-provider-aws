@@ -8,7 +8,7 @@ description: |-
 
 # Data Source: aws_route53_traffic_policy_document
 
-Generates an Route53 traffic policy document in JSON format for use with resources that expect policy documents such as [`aws_route53_traffic_policy`](/docs/providers/aws/r/route53_traffic_policy.html).
+Generates an Route53 traffic policy document in JSON format for use with resources that expect policy documents such as `aws_route53_traffic_policy`.
 
 ## Example Usage
 

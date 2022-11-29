@@ -63,7 +63,7 @@ func ResourceVocabulary() *schema.Resource {
 				Elem:         &schema.Schema{Type: schema.TypeString},
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 			"vocabulary_file_uri": {
 				Type:         schema.TypeString,
 				Optional:     true,
