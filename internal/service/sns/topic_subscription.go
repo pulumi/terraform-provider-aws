@@ -405,7 +405,9 @@ func normalizeTopicSubscriptionDeliveryPolicy(policy string) ([]byte, error) {
 
 func resourceTopicSubscriptionCustomizeDiff(_ context.Context, diff *schema.ResourceDiff, _ interface{}) error {
 	hasPolicy := diff.Get("filter_policy").(string) != ""
-	hasScope := !diff.GetRawConfig().GetAttr("filter_policy_scope").IsNull()
+
+	rawConfig := diff.GetRawConfig()
+	hasScope := rawConfig.Type().IsObjectType() && !rawConfig.GetAttr("filter_policy_scope").IsNull()
 
 	if hasPolicy && !hasScope {
 		// When the scope is removed from configuration, the API will
