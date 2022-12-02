@@ -3,7 +3,7 @@ subcategory: "SSO Identity Store"
 layout: "aws"
 page_title: "AWS: aws_identitystore_user"
 description: |-
-  Terraform resource for managing an AWS Identity Store User.
+  Resource for managing an AWS Identity Store User.
 ---
 
 # Resource: aws_identitystore_user

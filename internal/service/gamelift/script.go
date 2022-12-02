@@ -75,7 +75,7 @@ func ResourceScript() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(1, 1024),
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 			"zip_file": {
 				Type:         schema.TypeString,
 				Optional:     true,

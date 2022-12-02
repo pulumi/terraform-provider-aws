@@ -8,7 +8,7 @@ description: |-
 
 # Resource: aws_appconfig_environment
 
-Provides an AppConfig Environment resource for an [`aws_appconfig_application` resource](appconfig_application.html.markdown). One or more environments can be defined for an application.
+Provides an AppConfig Environment resource for an `aws_appconfig_application` resource. One or more environments can be defined for an application.
 
 ## Example Usage
 
@@ -46,7 +46,7 @@ The following arguments are supported:
 * `name` - (Required) Name for the environment. Must be between 1 and 64 characters in length.
 * `description` - (Optional) Description of the environment. Can be at most 1024 characters.
 * `monitor` - (Optional) Set of Amazon CloudWatch alarms to monitor during the deployment process. Maximum of 5. See [Monitor](#monitor) below for more details.
-* `tags` - (Optional) Map of tags to assign to the resource. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Map of tags to assign to the resource. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ### Monitor
 
@@ -64,7 +64,7 @@ In addition to all arguments above, the following attributes are exported:
 * `environment_id` - AppConfig environment ID.
 * `state` - State of the environment. Possible values are `READY_FOR_DEPLOYMENT`, `DEPLOYING`, `ROLLING_BACK`
   or `ROLLED_BACK`.
-* `tags_all` - Map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - Map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

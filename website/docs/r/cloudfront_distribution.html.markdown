@@ -242,7 +242,7 @@ of several sub-resources - these resources are laid out below.
 * `restrictions` (Required) - The [restriction
     configuration](#restrictions-arguments) for this distribution (maximum one).
 
-* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) A map of tags to assign to the resource. .If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 * `viewer_certificate` (Required) - The [SSL
     configuration](#viewer-certificate-arguments) for this distribution (maximum
@@ -257,7 +257,7 @@ of several sub-resources - these resources are laid out below.
     credentials configuring this argument must have `waf:GetWebACL` permissions assigned.
 
 * `retain_on_delete` (Optional) - Disables the distribution instead of
-    deleting it when destroying the resource through Terraform. If this is set,
+    deleting it when destroying the resource. If this is set,
     the distribution needs to be deleted manually afterwards. Default: `false`.
 
 * `wait_for_deployment` (Optional) - If enabled, the resource will wait for
@@ -310,7 +310,7 @@ of several sub-resources - these resources are laid out below.
 * `path_pattern` (Required) - The pattern (for example, `images/*.jpg`) that
     specifies which requests you want this cache behavior to apply to.
 
-* `realtime_log_config_arn` (Optional) - The ARN of the [real-time log configuration](cloudfront_realtime_log_config.html)
+* `realtime_log_config_arn` (Optional) - The ARN of the real-time log configuration
     that is attached to this cache behavior.
 
 * `response_headers_policy_id` (Optional) - The identifier for a response headers policy.
@@ -470,7 +470,7 @@ argument should not be specified.
     `value` parameters that specify header data that will be sent to the origin
     (multiples allowed).
 
-* `origin_access_control_id` (Optional) - The unique identifier of a [CloudFront origin access control][8] for this origin.
+* `origin_access_control_id` (Optional) - The unique identifier of a CloudFront origin access control for this origin.
 
 * `origin_id` (Required) - A unique identifier for the origin.
 
@@ -510,7 +510,7 @@ argument should not be specified.
 
 ##### S3 Origin Config Arguments
 
-* `origin_access_identity` (Required) - The [CloudFront origin access identity][5] to associate with the origin.
+* `origin_access_identity` (Required) - The CloudFront origin access identity to associate with the origin.
 
 #### Origin Group Arguments
 
@@ -591,7 +591,7 @@ In addition to all arguments above, the following attributes are exported:
     distribution's information is fully propagated throughout the Amazon
     CloudFront system.
 
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 * `trusted_key_groups` - List of nested attributes for active trusted key groups, if the distribution is set up to serve private content with signed URLs
     * `enabled` - `true` if any of the key groups have public keys that CloudFront can use to verify the signatures of signed URLs and signed cookies
@@ -622,12 +622,9 @@ In addition to all arguments above, the following attributes are exported:
 
 [1]: http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Introduction.html
 [2]: https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_CreateDistribution.html
-[3]: http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/private-content-restricting-access-to-s3.html
 [4]: http://www.iso.org/iso/country_codes/iso_3166_code_lists/country_names_and_code_elements.htm
-[5]: /docs/providers/aws/r/cloudfront_origin_access_identity.html
 [6]: https://aws.amazon.com/certificate-manager/
 [7]: http://docs.aws.amazon.com/Route53/latest/APIReference/CreateAliasRRSAPI.html
-[8]: /docs/providers/aws/r/cloudfront_origin_access_control.html
 
 ## Import
 

@@ -903,7 +903,7 @@ func ResourceLaunchTemplate() *schema.Resource {
 				},
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 			"update_default_version": {
 				Type:          schema.TypeBool,
 				Optional:      true,

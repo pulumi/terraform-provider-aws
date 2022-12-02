@@ -3,12 +3,12 @@ subcategory: "SESv2 (Simple Email V2)"
 layout: "aws"
 page_title: "AWS: aws_sesv2_email_identity"
 description: |-
-  Terraform resource for managing an AWS SESv2 (Simple Email V2) Email Identity.
+  Resource for managing an AWS SESv2 (Simple Email V2) Email Identity.
 ---
 
 # Resource: aws_sesv2_email_identity
 
-Terraform resource for managing an AWS SESv2 (Simple Email V2) Email Identity.
+Resource for managing an AWS SESv2 (Simple Email V2) Email Identity.
 
 ## Example Usage
 
@@ -87,7 +87,7 @@ In addition to all arguments above, the following attributes are exported:
     * `status` - Describes whether or not Amazon SES has successfully located the DKIM records in the DNS records for the domain. See the [AWS SES API v2 Reference](https://docs.aws.amazon.com/ses/latest/APIReference-V2/API_DkimAttributes.html#SES-Type-DkimAttributes-Status) for supported statuses.
     * `tokens` - If you used Easy DKIM to configure DKIM authentication for the domain, then this object contains a set of unique strings that you use to create a set of CNAME records that you add to the DNS configuration for your domain. When Amazon SES detects these records in the DNS configuration for your domain, the DKIM authentication process is complete. If you configured DKIM authentication for the domain by providing your own public-private key pair, then this object contains the selector for the public key.
 * `identity_type` - The email identity type. Valid values: `EMAIL_ADDRESS`, `DOMAIN`.
-* `tags` - (Optional) A map of tags to assign to the service. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) A map of tags to assign to the service. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 * `verified_for_sending_status` - Specifies whether or not the identity is verified.
 
 ## Import

@@ -3,12 +3,12 @@ subcategory: "Network Manager"
 layout: "aws"
 page_title: "AWS: aws_networkmanager_connect_attachment"
 description: |-
-  Terraform resource for managing an AWS NetworkManager ConnectAttachment.
+  Resource for managing an AWS NetworkManager ConnectAttachment.
 ---
 
 # Resource: aws_networkmanager_connect_attachment
 
-Terraform resource for managing an AWS NetworkManager ConnectAttachment.
+Resource for managing an AWS NetworkManager ConnectAttachment.
 
 ## Example Usage
 
@@ -74,7 +74,7 @@ The following arguments are required:
 
 The following arguments are optional:
 
-- `tags` - (Optional) Key-value tags for the attachment. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+- `tags` - (Optional) Key-value tags for the attachment. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ## Attributes Reference
 
@@ -91,7 +91,7 @@ In addition to all arguments above, the following attributes are exported:
 - `resource_arn` - The attachment resource ARN.
 - `segment_name` - The name of the segment attachment.
 - `state` - The state of the attachment.
-- `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+- `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

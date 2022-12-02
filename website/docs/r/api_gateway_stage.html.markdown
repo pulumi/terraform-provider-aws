@@ -8,11 +8,9 @@ description: |-
 
 # Resource: aws_api_gateway_stage
 
-Manages an API Gateway Stage. A stage is a named reference to a deployment, which can be done via the [`aws_api_gateway_deployment` resource](api_gateway_deployment.html). Stages can be optionally managed further with the [`aws_api_gateway_base_path_mapping` resource](api_gateway_base_path_mapping.html), [`aws_api_gateway_domain_name` resource](api_gateway_domain_name.html), and [`aws_api_method_settings` resource](api_gateway_method_settings.html). For more information, see the [API Gateway Developer Guide](https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-stages.html).
+Manages an API Gateway Stage. A stage is a named reference to a deployment, which can be done via the `aws_api_gateway_deployment` resource. Stages can be optionally managed further with the `aws_api_gateway_base_path_mapping` resource, `aws_api_gateway_domain_name` resource, and `aws_api_method_settings` resource. For more information, see the [API Gateway Developer Guide](https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-stages.html).
 
 ## Example Usage
-
-An end-to-end example of a REST API configured with OpenAPI can be found in the [`/examples/api-gateway-rest-api-openapi` directory within the GitHub repository](https://github.com/hashicorp/terraform-provider-aws/tree/main/examples/api-gateway-rest-api-openapi).
 
 ```terraform
 resource "aws_api_gateway_rest_api" "example" {
@@ -71,9 +69,10 @@ resource "aws_api_gateway_method_settings" "example" {
 
 ### Managing the API Logging CloudWatch Log Group
 
-API Gateway provides the ability to [enable CloudWatch API logging](https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-logging.html). To manage the CloudWatch Log Group when this feature is enabled, the [`aws_cloudwatch_log_group` resource](/docs/providers/aws/r/cloudwatch_log_group.html) can be used where the name matches the API Gateway naming convention. If the CloudWatch Log Group previously exists, the [`aws_cloudwatch_log_group` resource can be imported into Terraform](/docs/providers/aws/r/cloudwatch_log_group.html#import) as a one time operation and recreation of the environment can occur without import.
+API Gateway provides the ability to [enable CloudWatch API logging](https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-logging.html). To manage the CloudWatch Log Group when this feature is enabled, the `aws_cloudwatch_log_group` resource can be used where the name matches the API Gateway naming convention. If the CloudWatch Log Group previously exists, the `aws_cloudwatch_log_group` resource can be imported as a one time operation and recreation of the environment can occur without import.
 
--> The below configuration uses [`depends_on`](https://www.terraform.io/language/meta-arguments/depends_on) to prevent ordering issues with API Gateway automatically creating the log group first and a variable for naming consistency. Other ordering and naming methodologies may be more appropriate for your environment.
+-> The below configuration uses [`dependsOn`](https://www.pulumi.com/docs/intro/concepts/programming-model/#dependson) to prevent ordering issues with API Gateway automatically creating the log group first and a variable for naming consistency. Other ordering and naming methodologies may be more appropriate for your environment.
+
 
 ```terraform
 variable "stage_name" {
@@ -114,7 +113,7 @@ The following arguments are supported:
 * `description` - (Optional) Description of the stage.
 * `documentation_version` - (Optional) Version of the associated API documentation
 * `variables` - (Optional) Map that defines the stage variables
-* `tags` - (Optional) Map of tags to assign to the resource. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Map of tags to assign to the resource. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 * `xray_tracing_enabled` - (Optional) Whether active tracing with X-ray is enabled. Defaults to `false`.
 
 ### Access Log Settings
@@ -137,10 +136,10 @@ In addition to all arguments above, the following attributes are exported:
 * `id` - ID of the stage
 * `invoke_url` - URL to invoke the API pointing to the stage,
   e.g., `https://z4675bid1j.execute-api.eu-west-2.amazonaws.com/prod`
-* `execution_arn` - Execution ARN to be used in [`lambda_permission`](/docs/providers/aws/r/lambda_permission.html)'s `source_arn`
+* `execution_arn` - Execution ARN to be used in `lambda_permission`'s `source_arn`
   when allowing API Gateway to invoke a Lambda function,
   e.g., `arn:aws:execute-api:eu-west-2:123456789012:z4675bid1j/prod`
-* `tags_all` - Map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - Map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 * `web_acl_arn` - ARN of the WebAcl associated with the Stage.
 
 ## Import

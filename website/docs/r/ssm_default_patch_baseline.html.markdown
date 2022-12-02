@@ -3,12 +3,12 @@ subcategory: "SSM (Systems Manager)"
 layout: "aws"
 page_title: "AWS: aws_ssm_default_patch_baseline"
 description: |-
-  Terraform resource for managing an AWS Systems Manager Default Patch Baseline.
+  Resource for managing an AWS Systems Manager Default Patch Baseline.
 ---
 
 # Resource: aws_ssm_default_patch_baseline
 
-Terraform resource for registering an AWS Systems Manager Default Patch Baseline.
+Resource for registering an AWS Systems Manager Default Patch Baseline.
 
 ## Example Usage
 

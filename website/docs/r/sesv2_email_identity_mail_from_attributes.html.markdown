@@ -3,12 +3,12 @@ subcategory: "SESv2 (Simple Email V2)"
 layout: "aws"
 page_title: "AWS: aws_sesv2_email_identity_mail_from_attributes"
 description: |-
-  Terraform resource for managing an AWS SESv2 (Simple Email V2) Email Identity Mail From Attributes.
+  Resource for managing an AWS SESv2 (Simple Email V2) Email Identity Mail From Attributes.
 ---
 
 # Resource: aws_sesv2_email_identity_mail_from_attributes
 
-Terraform resource for managing an AWS SESv2 (Simple Email V2) Email Identity Mail From Attributes.
+Resource for managing an AWS SESv2 (Simple Email V2) Email Identity Mail From Attributes.
 
 ## Example Usage
 

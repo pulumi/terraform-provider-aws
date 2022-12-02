@@ -8,7 +8,7 @@ description: |-
 
 # Resource: aws_secretsmanager_secret
 
-Provides a resource to manage AWS Secrets Manager secret metadata. To manage secret rotation, see the [`aws_secretsmanager_secret_rotation` resource](/docs/providers/aws/r/secretsmanager_secret_rotation.html). To manage a secret value, see the [`aws_secretsmanager_secret_version` resource](/docs/providers/aws/r/secretsmanager_secret_version.html).
+Provides a resource to manage AWS Secrets Manager secret metadata. To manage secret rotation, see the `aws_secretsmanager_secret_rotation` resource. To manage a secret value, see the `aws_secretsmanager_secret_version` resource.
 
 ## Example Usage
 
@@ -47,13 +47,13 @@ The following arguments are supported:
 * `kms_key_id` - (Optional) ARN or Id of the AWS KMS key to be used to encrypt the secret values in the versions stored in this secret. If you don't specify this value, then Secrets Manager defaults to using the AWS account's default KMS key (the one named `aws/secretsmanager`). If the default KMS key with that name doesn't yet exist, then AWS Secrets Manager creates it for you automatically the first time.
 * `name_prefix` - (Optional) Creates a unique name beginning with the specified prefix. Conflicts with `name`.
 * `name` - (Optional) Friendly name of the new secret. The secret name can consist of uppercase letters, lowercase letters, digits, and any of the following characters: `/_+=.@-` Conflicts with `name_prefix`.
-* `policy` - (Optional) Valid JSON document representing a [resource policy](https://docs.aws.amazon.com/secretsmanager/latest/userguide/auth-and-access_resource-based-policies.html). For more information about building AWS IAM policy documents with Terraform, see the [AWS IAM Policy Document Guide](https://learn.hashicorp.com/terraform/aws/iam-policy). Removing `policy` from your configuration or setting `policy` to null or an empty string (i.e., `policy = ""`) _will not_ delete the policy since it could have been set by `aws_secretsmanager_secret_policy`. To delete the `policy`, set it to `"{}"` (an empty JSON document).
+* `policy` - (Optional) Valid JSON document representing a [resource policy](https://docs.aws.amazon.com/secretsmanager/latest/userguide/auth-and-access_resource-based-policies.html). Removing `policy` from your configuration or setting `policy` to null or an empty string (i.e., `policy = ""`) _will not_ delete the policy since it could have been set by `aws_secretsmanager_secret_policy`. To delete the `policy`, set it to `"{}"` (an empty JSON document).
 * `recovery_window_in_days` - (Optional) Number of days that AWS Secrets Manager waits before it can delete the secret. This value can be `0` to force deletion without recovery or range from `7` to `30` days. The default value is `30`.
 * `replica` - (Optional) Configuration block to support secret replication. See details below.
 * `force_overwrite_replica_secret` - (Optional) Accepts boolean value to specify whether to overwrite a secret with the same name in the destination Region.
 * `rotation_lambda_arn` - (Optional, **DEPRECATED**) ARN of the Lambda function that can rotate the secret. Use the `aws_secretsmanager_secret_rotation` resource to manage this configuration instead. As of version 2.67.0, removal of this configuration will no longer remove rotation due to supporting the new resource. Either import the new resource and remove the configuration or manually remove rotation.
 * `rotation_rules` - (Optional, **DEPRECATED**) Configuration block for the rotation configuration of this secret. Defined below. Use the `aws_secretsmanager_secret_rotation` resource to manage this configuration instead. As of version 2.67.0, removal of this configuration will no longer remove rotation due to supporting the new resource. Either import the new resource and remove the configuration or manually remove rotation.
-* `tags` - (Optional) Key-value map of user-defined tags that are attached to the secret. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Key-value map of user-defined tags that are attached to the secret. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ### replica
 
@@ -72,7 +72,7 @@ In addition to all arguments above, the following attributes are exported:
 * `arn` - ARN of the secret.
 * `rotation_enabled` - Whether automatic rotation is enabled for this secret.
 * `replica` - Attributes of a replica are described below.
-* `tags_all` - Map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - Map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ### replica
 

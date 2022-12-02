@@ -101,9 +101,9 @@ Modifying any of the `root_block_device` settings requires resource
 replacement.
 
 ~> **NOTE:** Currently, changes to `*_block_device` configuration of _existing_
-resources cannot be automatically detected by Terraform. After making updates
+resources cannot be automatically detected by this provider. After making updates
 to block device configuration, resource recreation can be manually triggered by
-using the [`taint` command](https://www.terraform.io/docs/commands/taint.html).
+using the [`up` command with the --replace argument](https://www.pulumi.com/docs/reference/cli/pulumi_up/).
 
 ## Attributes Reference
 
@@ -131,7 +131,7 @@ In addition to all arguments above, the following attributes are exported:
 
 ## Timeouts
 
-[Configuration options](https://developer.hashicorp.com/terraform/language/resources/syntax#operation-timeouts):
+Configuration options:
 
 - `create` - (Default `10m`)
 - `delete` - (Default `10m`)

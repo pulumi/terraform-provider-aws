@@ -87,7 +87,7 @@ func ResourceCustomDataIdentifier() *schema.Resource {
 				ValidateFunc: validation.IntBetween(1, 300),
 			},
 			"tags":     tftags.TagsSchemaForceNew(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 			"created_at": {
 				Type:     schema.TypeString,
 				Computed: true,
