@@ -9,10 +9,10 @@ description: |-
 # Data Source: aws_vpc_peering_connections
 
 Use this data source to get IDs of Amazon VPC peering connections
-To get more details on each connection, use the data resource [aws_vpc_peering_connection](/docs/providers/aws/d/vpc_peering_connection.html)
+To get more details on each connection, use the data resource aws_vpc_peering_connection
 
 Note: To use this data source in a count, the resources should exist before trying to access
-the data source, as noted in [issue 4149](https://github.com/hashicorp/terraform/issues/4149)
+the data source.
 
 ## Example Usage
 
@@ -59,6 +59,6 @@ All of the argument attributes except `filter` are also exported as result attri
 
 ## Timeouts
 
-[Configuration options](https://developer.hashicorp.com/terraform/language/resources/syntax#operation-timeouts):
+Configuration options:
 
 - `read` - (Default `20m`)

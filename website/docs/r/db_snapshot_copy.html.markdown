@@ -8,7 +8,7 @@ description: |-
 
 # Resource: aws_db_snapshot_copy
 
-Manages an RDS database instance snapshot copy. For managing RDS database cluster snapshots, see the [`aws_db_cluster_snapshot` resource](/docs/providers/aws/r/db_cluster_snapshot.html).
+Manages an RDS database instance snapshot copy. For managing RDS database cluster snapshots, see the `aws_db_cluster_snapshot` resource.
 
 ## Example Usage
 
@@ -50,7 +50,7 @@ The following arguments are supported:
 * `source_db_snapshot_identifier` - (Required) Snapshot identifier of the source snapshot.
 * `target_custom_availability_zone` - (Optional) The external custom Availability Zone.
 * `target_db_snapshot_identifier` - (Required) The Identifier for the snapshot.
-* `tags` - (Optional) Key-value map of resource tags. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Key-value map of resource tags. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ## Attributes Reference
 
@@ -70,12 +70,12 @@ In addition to all arguments above, the following attributes are exported:
 * `source_db_snapshot_identifier` - The DB snapshot Arn that the DB snapshot was copied from. It only has value in case of cross customer or cross region copy.
 * `source_region` - The region that the DB snapshot was created in or copied from.
 * `storage_type` - Specifies the storage type associated with DB snapshot.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 * `vpc_id` - Provides the VPC ID associated with the DB snapshot.
 
 ## Timeouts
 
-[Configuration options](https://developer.hashicorp.com/terraform/language/resources/syntax#operation-timeouts):
+Configuration options:
 
 - `create` - (Default `20m`)
 

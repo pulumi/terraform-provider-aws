@@ -10,7 +10,7 @@ description: |-
 
 Provides an Amplify App resource, a fullstack serverless app hosted on the [AWS Amplify Console](https://docs.aws.amazon.com/amplify/latest/userguide/welcome.html).
 
-~> **Note:** When you create/update an Amplify App from Terraform, you may end up with the error "BadRequestException: You should at least provide one valid token" because of authentication issues. See the section "Repository with Tokens" below.
+~> **Note:** When you create/update an Amplify App from the provider, you may end up with the error "BadRequestException: You should at least provide one valid token" because of authentication issues. See the section "Repository with Tokens" below.
 
 ## Example Usage
 
@@ -145,7 +145,7 @@ The following arguments are supported:
 * `oauth_token` - (Optional) OAuth token for a third-party source control system for an Amplify app. The OAuth token is used to create a webhook and a read-only deploy key. The OAuth token is not stored.
 * `platform` - (Optional) Platform or framework for an Amplify app. Valid values: `WEB`, `WEB_COMPUTE`. Default value: `WEB`.
 * `repository` - (Optional) Repository for an Amplify app.
-* `tags` - (Optional) Key-value mapping of resource tags. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Key-value mapping of resource tags. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 An `auto_branch_creation_config` block supports the following arguments:
 
@@ -175,7 +175,7 @@ In addition to all arguments above, the following attributes are exported:
 * `default_domain` - Default domain for the Amplify app.
 * `id` - Unique ID of the Amplify app.
 * `production_branch` - Describes the information about a production branch for an Amplify app. A `production_branch` block is documented below.
-* `tags_all` - Map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - Map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 A `production_branch` block supports the following attributes:
 

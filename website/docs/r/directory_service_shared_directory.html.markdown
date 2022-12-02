@@ -61,7 +61,7 @@ In addition to all arguments above, the following attributes are exported:
 
 ## Timeouts
 
-`aws_directory_service_shared_directory` provides the following [Timeouts](https://developer.hashicorp.com/terraform/language/resources/syntax#operation-timeouts) configuration options:
+`aws_directory_service_shared_directory` provides the following Timeouts configuration options:
 
 - `delete` - (Default `60 minutes`) Used for shared directory deletion
 

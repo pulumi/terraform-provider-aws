@@ -107,7 +107,7 @@ func ResourceTransitGateway() *schema.Resource {
 				Computed: true,
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 			"transit_gateway_cidr_blocks": {
 				Type:     schema.TypeSet,
 				Optional: true,

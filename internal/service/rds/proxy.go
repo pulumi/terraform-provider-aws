@@ -103,7 +103,7 @@ func ResourceProxy() *schema.Resource {
 				ValidateFunc: verify.ValidARN,
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 			"vpc_security_group_ids": {
 				Type:     schema.TypeSet,
 				Optional: true,

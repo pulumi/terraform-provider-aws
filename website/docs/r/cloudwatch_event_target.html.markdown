@@ -53,7 +53,7 @@ PATTERN
 }
 
 resource "aws_kinesis_stream" "test_stream" {
-  name        = "terraform-kinesis-test"
+  name        = "kinesis-test"
   shard_count = 1
 }
 ```
@@ -441,8 +441,8 @@ resource "aws_cloudwatch_event_target" "example" {
 
 -> **Note:** In order to be able to have your AWS Lambda function or
    SNS topic invoked by an EventBridge rule, you must set up the right permissions
-   using [`aws_lambda_permission`](/docs/providers/aws/r/lambda_permission.html)
-   or [`aws_sns_topic.policy`](/docs/providers/aws/r/sns_topic.html#policy).
+   using `aws_lambda_permission`
+   or `aws_sns_topic.policy`.
    More info [here](https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-use-resource-based.html).
 
 The following arguments are supported:
@@ -543,7 +543,7 @@ For more information, see [Task Networking](https://docs.aws.amazon.com/AmazonEC
     * You must use JSON dot notation, not bracket notation.
     * The keys can't start with "AWS".
 
-* `input_template` - (Required) Template to customize data sent to the target. Must be valid JSON. To send a string value, the string value must include double quotes. Values must be escaped for both JSON and Terraform, e.g., `"\"Your string goes here.\\nA new line.\""`
+* `input_template` - (Required) Template to customize data sent to the target. Must be valid JSON. To send a string value, the string value must include double quotes.
 
 ### retry_policy
 

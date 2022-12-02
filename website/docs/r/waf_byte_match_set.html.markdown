@@ -14,7 +14,7 @@ Provides a WAF Byte Match Set Resource
 
 ```terraform
 resource "aws_waf_byte_match_set" "byte_set" {
-  name = "tf_waf_byte_match_set"
+  name = "my_waf_byte_match_set"
 
   byte_match_tuples {
     text_transformation   = "NONE"

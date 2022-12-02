@@ -163,7 +163,7 @@ func ResourceImageBuilder() *schema.Resource {
 				},
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 		},
 		CustomizeDiff: verify.SetTagsDiff,
 	}

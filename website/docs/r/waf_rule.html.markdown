@@ -42,7 +42,7 @@ The following arguments are supported:
 * `metric_name` - (Required) The name or description for the Amazon CloudWatch metric of this rule. The name can contain only alphanumeric characters (A-Z, a-z, 0-9); the name can't contain whitespace.
 * `name` - (Required) The name or description of the rule.
 * `predicates` - (Optional) The objects to include in a rule (documented below).
-* `tags` - (Optional) Key-value map of resource tags. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Key-value map of resource tags. .If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ## Nested Blocks
 
@@ -53,7 +53,7 @@ See the [WAF Documentation](https://docs.aws.amazon.com/waf/latest/APIReference/
 #### Arguments
 
 * `negated` - (Required) Set this to `false` if you want to allow, block, or count requests
-  based on the settings in the specified [waf_byte_match_set](/docs/providers/aws/r/waf_byte_match_set.html), [waf_ipset](/docs/providers/aws/r/waf_ipset.html), [aws_waf_size_constraint_set](/docs/providers/aws/r/waf_size_constraint_set.html), [aws_waf_sql_injection_match_set](/docs/providers/aws/r/waf_sql_injection_match_set.html) or [aws_waf_xss_match_set](/docs/providers/aws/r/waf_xss_match_set.html).
+  based on the settings in the specified waf_byte_match_set, waf_ipset, aws_waf_size_constraint_set, aws_waf_sql_injection_match_set or aws_waf_xss_match_set.
   For example, if an IPSet includes the IP address `192.0.2.44`, AWS WAF will allow or block requests based on that IP address.
   If set to `true`, AWS WAF will allow, block, or count requests based on all IP addresses except `192.0.2.44`.
 * `data_id` - (Required) A unique identifier for a predicate in the rule, such as Byte Match Set ID or IPSet ID.
@@ -65,7 +65,7 @@ In addition to all arguments above, the following attributes are exported:
 
 * `id` - The ID of the WAF rule.
 * `arn` - The ARN of the WAF rule.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

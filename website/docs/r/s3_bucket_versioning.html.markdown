@@ -10,7 +10,7 @@ description: |-
 
 Provides a resource for controlling versioning on an S3 bucket.
 Deleting this resource will either suspend versioning on the associated S3 bucket or
-simply remove the resource from Terraform state if the associated S3 bucket is unversioned.
+simply remove the resource from state if the associated S3 bucket is unversioned.
 
 For more information, see [How S3 versioning works](https://docs.aws.amazon.com/AmazonS3/latest/userguide/manage-versioning-examples.html).
 
@@ -115,14 +115,14 @@ In addition to all arguments above, the following attributes are exported:
 
 S3 bucket versioning can be imported in one of two ways.
 
-If the owner (account ID) of the source bucket is the same account used to configure the Terraform AWS Provider,
+If the owner (account ID) of the source bucket is the same account used to configure the AWS Provider,
 the S3 bucket versioning resource should be imported using the `bucket` e.g.,
 
 ```
 $ terraform import aws_s3_bucket_versioning.example bucket-name
 ```
 
-If the owner (account ID) of the source bucket differs from the account used to configure the Terraform AWS Provider,
+If the owner (account ID) of the source bucket differs from the account used to configure the AWS Provider,
 the S3 bucket versioning resource should be imported using the `bucket` and `expected_bucket_owner` separated by a comma (`,`) e.g.,
 
 ```

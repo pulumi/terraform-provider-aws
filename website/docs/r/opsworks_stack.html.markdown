@@ -20,7 +20,7 @@ resource "aws_opsworks_stack" "main" {
   default_instance_profile_arn = aws_iam_instance_profile.opsworks.arn
 
   tags = {
-    Name = "foobar-terraform-stack"
+    Name = "foobar-stack"
   }
 
   custom_json = <<EOT
@@ -58,7 +58,7 @@ The following arguments are supported:
 * `hostname_theme` - (Optional) Keyword representing the naming scheme that will be used for instance hostnames within this stack.
 * `manage_berkshelf` - (Optional) Boolean value controlling whether Opsworks will run Berkshelf for this stack.
 * `tags` - (Optional) A map of tags to assign to the resource.
-  If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+  If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 * `use_custom_cookbooks` - (Optional) Boolean value controlling whether the custom cookbook settings are enabled.
 * `use_opsworks_security_groups` - (Optional) Boolean value controlling whether the standard OpsWorks security groups apply to created instances.
 * `vpc_id` - (Optional) ID of the VPC that this stack belongs to.
@@ -70,8 +70,8 @@ The `custom_cookbooks_source` block supports the following arguments:
 * `type` - (Required) The type of source to use. For example, "archive".
 * `url` - (Required) The URL where the cookbooks resource can be found.
 * `username` - (Optional) Username to use when authenticating to the source.
-* `password` - (Optional) Password to use when authenticating to the source. Terraform cannot perform drift detection of this configuration.
-* `ssh_key` - (Optional) SSH key to use when authenticating to the source. Terraform cannot perform drift detection of this configuration.
+* `password` - (Optional) Password to use when authenticating to the source. The provider cannot perform drift detection of this configuration.
+* `ssh_key` - (Optional) SSH key to use when authenticating to the source. This provider cannot perform drift detection of this configuration.
 * `revision` - (Optional) For sources that are version-aware, the revision to use.
 
 ## Attributes Reference
@@ -79,7 +79,7 @@ The `custom_cookbooks_source` block supports the following arguments:
 In addition to all arguments above, the following attributes are exported:
 
 * `id` - The id of the stack.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

@@ -10,7 +10,7 @@ description: |-
 
 Manages an Amazon API Gateway Version 2 API.
 
--> **Note:** Amazon API Gateway Version 2 resources are used for creating and deploying WebSocket and HTTP APIs. To create and deploy REST APIs, use Amazon API Gateway Version 1 [resources](/docs/providers/aws/r/api_gateway_rest_api.html).
+-> **Note:** Amazon API Gateway Version 2 resources are used for creating and deploying WebSocket and HTTP APIs. To create and deploy REST APIs, use Amazon API Gateway Version 1 resources.
 
 ## Example Usage
 
@@ -51,7 +51,7 @@ To require that clients use a custom domain name to invoke the API, disable the 
 * `route_key` - (Optional) Part of _quick create_. Specifies any [route key](https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-develop-routes.html). Applicable for HTTP APIs.
 * `route_selection_expression` - (Optional) The [route selection expression](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-websocket-api-selection-expressions.html#apigateway-websocket-api-route-selection-expressions) for the API.
 Defaults to `$request.method $request.path`.
-* `tags` - (Optional) Map of tags to assign to the API. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Map of tags to assign to the API. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 * `target` - (Optional) Part of _quick create_. Quick create produces an API with an integration, a default catch-all route, and a default stage which is configured to automatically deploy changes.
 For HTTP integrations, specify a fully qualified URL. For Lambda integrations, specify a function ARN.
 The type of the integration will be `HTTP_PROXY` or `AWS_PROXY`, respectively. Applicable for HTTP APIs.
@@ -64,7 +64,7 @@ __Note__: If the `body` argument is provided, the OpenAPI specification will be 
 * `aws_apigatewayv2_integration`
 * `aws_apigatewayv2_route`
 
-Further more, the `name`, `description`, `cors_configuration`, `tags` and `version` fields should be specified in the Terraform configuration and the values will override any values specified in the OpenAPI document.
+Further more, the `name`, `description`, `cors_configuration`, `tags` and `version` fields should be specified in the provider configuration and the values will override any values specified in the OpenAPI document.
 
 The `cors_configuration` object supports the following:
 
@@ -82,10 +82,10 @@ In addition to all arguments above, the following attributes are exported:
 * `id` - API identifier.
 * `api_endpoint` - URI of the API, of the form `https://{api-id}.execute-api.{region}.amazonaws.com` for HTTP APIs and `wss://{api-id}.execute-api.{region}.amazonaws.com` for WebSocket APIs.
 * `arn` - ARN of the API.
-* `execution_arn` - ARN prefix to be used in an [`aws_lambda_permission`](/docs/providers/aws/r/lambda_permission.html)'s `source_arn` attribute
-or in an [`aws_iam_policy`](/docs/providers/aws/r/iam_policy.html) to authorize access to the [`@connections` API](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-how-to-call-websocket-api-connections.html).
+* `execution_arn` - ARN prefix to be used in an `aws_lambda_permission`'s `source_arn` attribute
+or in an `aws_iam_policy` to authorize access to the [`@connections` API](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-how-to-call-websocket-api-connections.html).
 See the [Amazon API Gateway Developer Guide](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-websocket-control-access-iam.html) for details.
-* `tags_all` - Map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - Map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

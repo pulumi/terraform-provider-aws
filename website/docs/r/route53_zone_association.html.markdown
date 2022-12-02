@@ -8,11 +8,11 @@ description: |-
 
 # Resource: aws_route53_zone_association
 
-Manages a Route53 Hosted Zone VPC association. VPC associations can only be made on private zones. See the [`aws_route53_vpc_association_authorization` resource](route53_vpc_association_authorization.html) for setting up cross-account associations.
+Manages a Route53 Hosted Zone VPC association. VPC associations can only be made on private zones. See the `aws_route53_vpc_association_authorization` resource for setting up cross-account associations.
 
-~> **NOTE:** Unless explicit association ordering is required (e.g., a separate cross-account association authorization), usage of this resource is not recommended. Use the `vpc` configuration blocks available within the [`aws_route53_zone` resource](/docs/providers/aws/r/route53_zone.html) instead.
+~> **NOTE:** Unless explicit association ordering is required (e.g., a separate cross-account association authorization), usage of this resource is not recommended. Use the `vpc` configuration blocks available within the `aws_route53_zone` resource instead.
 
-~> **NOTE:** Terraform provides both this standalone Zone VPC Association resource and exclusive VPC associations defined in-line in the [`aws_route53_zone` resource](/docs/providers/aws/r/route53_zone.html) via `vpc` configuration blocks. At this time, you cannot use those in-line VPC associations in conjunction with this resource and the same zone ID otherwise it will cause a perpetual difference in plan output. You can optionally use the generic Terraform resource [lifecycle configuration block](https://www.terraform.io/docs/configuration/meta-arguments/lifecycle.html) with `ignore_changes` in the `aws_route53_zone` resource to manage additional associations via this resource.
+~> **NOTE:** This provider provides both this standalone Zone VPC Association resource and exclusive VPC associations defined in-line in the `aws_route53_zone` resource via `vpc` configuration blocks. At this time, you cannot use those in-line VPC associations in conjunction with this resource and the same zone ID otherwise it will cause a perpetual difference in plan output. You can optionally use [`ignoreChanges`](https://www.pulumi.com/docs/intro/concepts/programming-model/#ignorechanges) in the `aws_route53_zone` resource to manage additional associations via this resource.
 
 ## Example Usage
 
@@ -75,7 +75,7 @@ Route 53 Hosted Zone Associations can be imported via the Hosted Zone ID and VPC
 $ terraform import aws_route53_zone_association.example Z123456ABCDEFG:vpc-12345678
 ```
 
-If the VPC is in a different region than the Terraform AWS Provider region configuration, the VPC Region can be added to the endE.g.,
+If the VPC is in a different region than the provider region configuration, the VPC Region can be added to the end. e.g.
 
 ```
 $ terraform import aws_route53_zone_association.example Z123456ABCDEFG:vpc-12345678:us-east-2

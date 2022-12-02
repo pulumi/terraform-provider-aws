@@ -227,7 +227,7 @@ func ResourceFleet() *schema.Resource {
 				ExactlyOneOf: []string{"build_id", "script_id"},
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 		},
 
 		CustomizeDiff: verify.SetTagsDiff,

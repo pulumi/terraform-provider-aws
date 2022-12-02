@@ -63,7 +63,7 @@ The following arguments are supported:
 * `description` - (Optional, Forces new resource) Specifies the description of the segment.
 * `name` - (Required, Forces new resource) A name for the segment.
 * `pattern` - (Required, Forces new resource) The pattern to use for the segment. For more information about pattern syntax, see [Segment rule pattern syntax](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch-Evidently-segments.html#CloudWatch-Evidently-segments-syntax.html).
-* `tags` - (Optional) Tags to apply to the segment. If configured with a provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Tags to apply to the segment. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ## Attributes Reference
 
@@ -75,7 +75,7 @@ In addition to all arguments above, the following attributes are exported:
 * `id` - The ID has the same value as the ARN of the segment.
 * `last_updated_time` - The date and time that this segment was most recently updated.
 * `launch_count` - The number of launches that this segment is used in. This count includes all current launches, not just those that are currently running.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

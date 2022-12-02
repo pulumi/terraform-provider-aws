@@ -48,7 +48,7 @@ func ResourceSAMLProvider() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(1000, 10000000),
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 			"valid_until": {
 				Type:     schema.TypeString,
 				Computed: true,

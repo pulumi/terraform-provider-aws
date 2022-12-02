@@ -3,12 +3,12 @@ subcategory: "FSx"
 layout: "aws"
 page_title: "AWS: aws_fsx_file_cache"
 description: |-
-  Terraform resource for managing an AWS FSx File Cache.
+  Resource for managing an AWS FSx File Cache.
 ---
 
 # Resource: aws_fsx_file_cache
 
-Terraform resource for managing an AWS FSx File Cache.
+Resource for managing an AWS FSx File Cache.
 See the [Create File Cache](https://docs.aws.amazon.com/fsx/latest/APIReference/API_CreateFileCache.html) for more information.
 ## Example Usage
 
@@ -60,7 +60,7 @@ A list of up to 8 configurations for data repository associations (DRAs) to be c
 * `kms_key_id` - Specifies the ID of the AWS Key Management Service (AWS KMS) key to use for encrypting data on an Amazon File Cache. If a KmsKeyId isn't specified, the Amazon FSx-managed AWS KMS key for your account is used.
 * `lustre_configuration` - See the [`lustre_configuration`](#lustre-configuration-arguments) block. Required when `file_cache_type` is `LUSTRE`.
 * `security_group_ids` - A list of IDs specifying the security groups to apply to all network interfaces created for Amazon File Cache access.
-* `tags` - (Optional) A map of tags to assign to the file cache. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) A map of tags to assign to the file cache. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 #### Data Repository Association arguments
 
@@ -107,7 +107,7 @@ In addition to all arguments above, the following attributes are exported:
 
 ## Timeouts
 
-[Configuration options](https://developer.hashicorp.com/terraform/language/resources/syntax#operation-timeouts):
+Configuration options:
 
 * `create` - (Default `30m`)
 * `update` - (Default `30m`)
