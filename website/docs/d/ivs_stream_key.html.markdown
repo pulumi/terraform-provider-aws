@@ -3,12 +3,12 @@ subcategory: "IVS (Interactive Video)"
 layout: "aws"
 page_title: "AWS: aws_ivs_stream_key"
 description: |-
-  Terraform data source for managing an AWS IVS (Interactive Video) Stream Key.
+  Data source for managing an AWS IVS (Interactive Video) Stream Key.
 ---
 
 # Data Source: aws_ivs_stream_key
 
-Terraform data source for managing an AWS IVS (Interactive Video) Stream Key.
+Data source for managing an AWS IVS (Interactive Video) Stream Key.
 
 ## Example Usage
 

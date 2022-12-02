@@ -10,7 +10,7 @@ description: |-
 
 Creates a new Amazon Redshift security group. You use security groups to control access to non-VPC clusters.
 
-!> **WARNING:** With the retirement of EC2-Classic the `aws_redshift_security_group` resource has been deprecated and will be removed in a future version. Any existing resources can be removed from [Terraform state](https://www.terraform.io/language/state) using the [`terraform state rm`](https://www.terraform.io/cli/commands/state/rm#command-state-rm) command.
+!> **WARNING:** With the retirement of EC2-Classic the `aws_redshift_security_group` resource has been deprecated and will be removed in a future version. Any existing resources can be removed from state manually.
 
 ## Example Usage
 
@@ -29,7 +29,7 @@ resource "aws_redshift_security_group" "default" {
 The following arguments are supported:
 
 * `name` - (Required) The name of the Redshift security group.
-* `description` - (Optional) The description of the Redshift security group. Defaults to "Managed by Terraform".
+* `description` - (Optional) The description of the Redshift security group. Defaults to "Managed by Pulumi".
 * `ingress` - (Optional) A list of ingress rules.
 
 Ingress blocks support the following:

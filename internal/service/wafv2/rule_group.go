@@ -119,7 +119,7 @@ func ResourceRuleGroup() *schema.Resource {
 				ValidateFunc: validation.StringInSlice(wafv2.Scope_Values(), false),
 			},
 			"tags":              tftags.TagsSchema(),
-			"tags_all":          tftags.TagsSchemaComputed(),
+			"tags_all":          tftags.TagsSchemaTrulyComputed(),
 			"visibility_config": visibilityConfigSchema(),
 		},
 

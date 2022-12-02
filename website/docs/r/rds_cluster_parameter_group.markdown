@@ -37,12 +37,12 @@ resource "aws_rds_cluster_parameter_group" "default" {
 
 The following arguments are supported:
 
-* `name` - (Optional, Forces new resource) The name of the DB cluster parameter group. If omitted, Terraform will assign a random, unique name.
+* `name` - (Optional, Forces new resource) The name of the DB cluster parameter group. If omitted, this provider will assign a random, unique name.
 * `name_prefix` - (Optional, Forces new resource) Creates a unique name beginning with the specified prefix. Conflicts with `name`.
 * `family` - (Required) The family of the DB cluster parameter group.
-* `description` - (Optional) The description of the DB cluster parameter group. Defaults to "Managed by Terraform".
+* `description` - (Optional) The description of the DB cluster parameter group. Defaults to "Managed by Pulumi".
 * `parameter` - (Optional) A list of DB parameters to apply. Note that parameters may differ from a family to an other. Full list of all parameters can be discovered via [`aws rds describe-db-cluster-parameters`](https://docs.aws.amazon.com/cli/latest/reference/rds/describe-db-cluster-parameters.html) after initial creation of the group.
-* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) A map of tags to assign to the resource. .If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 Parameter blocks support the following:
 
@@ -58,7 +58,7 @@ In addition to all arguments above, the following attributes are exported:
 
 * `id` - The db cluster parameter group name.
 * `arn` - The ARN of the db cluster parameter group.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

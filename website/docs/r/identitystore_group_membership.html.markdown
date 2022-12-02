@@ -3,12 +3,12 @@ subcategory: "SSO Identity Store"
 layout: "aws"
 page_title: "AWS: aws_identitystore_group_membership"
 description: |-
-  Terraform resource for managing an AWS IdentityStore Group Membership.
+  Resource for managing an AWS IdentityStore Group Membership.
 ---
 
 # Resource: aws_identitystore_group_membership
 
-Terraform resource for managing an AWS IdentityStore Group Membership.
+Resource for managing an AWS IdentityStore Group Membership.
 
 ## Example Usage
 

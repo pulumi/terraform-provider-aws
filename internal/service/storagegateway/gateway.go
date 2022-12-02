@@ -247,7 +247,7 @@ func ResourceGateway() *schema.Resource {
 				ValidateFunc: validation.StringInSlice(storagegateway.SMBSecurityStrategy_Values(), false),
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 			"tape_drive_type": {
 				Type:         schema.TypeString,
 				Optional:     true,

@@ -55,7 +55,7 @@ func ResourceDomain() *schema.Resource {
 				ConflictsWith: []string{"name"},
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 			"workflow_execution_retention_period_in_days": {
 				Type:     schema.TypeString,
 				Required: true,

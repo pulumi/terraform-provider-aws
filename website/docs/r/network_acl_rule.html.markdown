@@ -10,8 +10,8 @@ description: |-
 
 Creates an entry (a rule) in a network ACL with the specified rule number.
 
-~> **NOTE on Network ACLs and Network ACL Rules:** Terraform currently
-provides both a standalone Network ACL Rule resource and a [Network ACL](network_acl.html) resource with rules
+~> **NOTE on Network ACLs and Network ACL Rules:** This provider currently
+provides both a standalone Network ACL Rule resource and a Network ACL resource with rules
 defined in-line. At this time you cannot use a Network ACL with in-line rules
 in conjunction with any Network ACL Rule resources. Doing so will cause
 a conflict of rule settings and will overwrite rules.
@@ -68,7 +68,7 @@ In addition to all arguments above, the following attributes are exported:
 ## Import
 
 Individual rules can be imported using `NETWORK_ACL_ID:RULE_NUMBER:PROTOCOL:EGRESS`, where `PROTOCOL` can be a decimal (e.g., 6) or string (e.g., tcp) value.
-If importing a rule previously provisioned by Terraform, the `PROTOCOL` must be the input value used at creation time.
+If importing a rule previously provisioned by the provider, the `PROTOCOL` must be the input value used at creation time.
 For more information on protocol numbers and keywords, see here: https://www.iana.org/assignments/protocol-numbers/protocol-numbers.xhtml
 
 For example, import a network ACL Rule with an argument like this:

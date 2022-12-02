@@ -3,12 +3,12 @@ subcategory: "Direct Connect"
 layout: "aws"
 page_title: "AWS: aws_dx_router_configuration"
 description: |-
-  Terraform data source for managing an AWS Direct Connect Router Configuration.
+  Data source for managing an AWS Direct Connect Router Configuration.
 ---
 
 # Data Source: aws_dx_router_configuration
 
-Terraform data source for retrieving Router Configuration instructions for a given AWS Direct Connect Virtual Interface and Router Type.
+Data source for retrieving Router Configuration instructions for a given AWS Direct Connect Virtual Interface and Router Type.
 
 ## Example Usage
 

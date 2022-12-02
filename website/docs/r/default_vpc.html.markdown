@@ -15,9 +15,9 @@ If you created your AWS account after 2013-12-04 you have a default VPC in each 
 
 **This is an advanced resource** and has special caveats to be aware of when using it. Please read this document in its entirety before using this resource.
 
-The `aws_default_vpc` resource behaves differently from normal resources in that if a default VPC exists, Terraform does not _create_ this resource, but instead "adopts" it into management.
-If no default VPC exists, Terraform creates a new default VPC, which leads to the implicit creation of [other resources](https://docs.aws.amazon.com/vpc/latest/userguide/default-vpc.html#default-vpc-components).
-By default, `terraform destroy` does not delete the default VPC but does remove the resource from Terraform state.
+The `aws_default_vpc` resource behaves differently from normal resources in that if a default VPC exists, this provider does not _create_ this resource, but instead "adopts" it into management.
+If no default VPC exists, the provider creates a new default VPC, which leads to the implicit creation of [other resources](https://docs.aws.amazon.com/vpc/latest/userguide/default-vpc.html#default-vpc-components).
+By default, `pulumi destroy` does not delete the default VPC but does remove the resource from the state.
 Set the `force_destroy` argument to `true` to delete the default VPC.
 
 ## Example Usage
@@ -34,7 +34,7 @@ resource "aws_default_vpc" "default" {
 
 ## Argument Reference
 
-The arguments of an `aws_default_vpc` differ slightly from those of [`aws_vpc`](vpc.html):
+The arguments of an `aws_default_vpc` differ slightly from those of `aws_vpc`:
 
 * The `cidr_block` and `instance_tenancy` arguments become computed attributes
 * The default value for `enable_dns_hostnames` is `true`

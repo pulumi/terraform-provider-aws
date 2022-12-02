@@ -86,7 +86,7 @@ func ResourcePhoneNumber() *schema.Resource {
 				ValidateFunc: validation.StringInSlice(connect.PhoneNumberType_Values(), false),
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 		},
 	}
 }
