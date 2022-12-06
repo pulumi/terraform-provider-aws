@@ -186,7 +186,7 @@ func resourceMatchmakingConfigurationCreate(d *schema.ResourceData, meta interfa
 	}
 
 	d.SetId(aws.StringValue(out.Configuration.ConfigurationArn))
-	return resourceMatchmakingConfigurationCreate(d, meta)
+	return resourceMatchmakingConfigurationRead(d, meta)
 }
 
 func resourceMatchmakingConfigurationRead(d *schema.ResourceData, meta interface{}) error {
@@ -314,7 +314,7 @@ func resourceMatchmakingConfigurationUpdate(d *schema.ResourceData, meta interfa
 	}
 	
 
-	return resourceMatchmakingConfigurationUpdate(d, meta)
+	return resourceMatchmakingConfigurationRead(d, meta)
 }
 
 func resourceMatchmakingConfigurationDelete(d *schema.ResourceData, meta interface{}) error {
