@@ -7,8 +7,8 @@ import (
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/gamelift"
-	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/aws-sdk-go-base/v2/awsv1shim/v2/tfawserr"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
 	"github.com/hashicorp/terraform-provider-aws/internal/conns"
 	tftags "github.com/hashicorp/terraform-provider-aws/internal/tags"
@@ -193,7 +193,7 @@ func resourceMatchmakingConfigurationRead(d *schema.ResourceData, meta interface
 	conn := meta.(*conns.AWSClient).GameLiftConn
 	defaultTagsConfig := meta.(*conns.AWSClient).DefaultTagsConfig
 	ignoreTagsConfig := meta.(*conns.AWSClient).IgnoreTagsConfig
-	
+
 	log.Printf("[INFO] Describing GameLift Matchmaking Configuration: %s", d.Id())
 	out, err := conn.DescribeMatchmakingConfigurations(&gamelift.DescribeMatchmakingConfigurationsInput{
 		Names: aws.StringSlice([]string{d.Id()}),
@@ -312,7 +312,6 @@ func resourceMatchmakingConfigurationUpdate(d *schema.ResourceData, meta interfa
 			return fmt.Errorf("error updating GameLift Matchmaking Configuration (%s) tags: %s", arn, err)
 		}
 	}
-	
 
 	return resourceMatchmakingConfigurationRead(d, meta)
 }
@@ -358,13 +357,13 @@ func flattenGameliftGameProperties(awsProperties []*gamelift.GameProperty) []int
 }
 
 func expandStringList(tfList []interface{}) []*string {
-    var result []*string
+	var result []*string
 
-    for _, rawVal := range tfList {
-        if v, ok := rawVal.(string); ok && v != "" {
-            result = append(result, &v)
-        }
-    }
+	for _, rawVal := range tfList {
+		if v, ok := rawVal.(string); ok && v != "" {
+			result = append(result, &v)
+		}
+	}
 
-    return result
+	return result
 }

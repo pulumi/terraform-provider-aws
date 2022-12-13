@@ -15,7 +15,6 @@ import (
 	//"github.com/hashicorp/terraform-provider-aws/internal/conns"
 )
 
-
 func TestAccGameLiftMatchmakingConfiguration_basic(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_gamelift_matchmaking_configuration.test"
@@ -47,18 +46,16 @@ func TestAccGameLiftMatchmakingConfiguration_basic(t *testing.T) {
 					resource.TestCheckResourceAttr(resourceName, "acceptance_required", "false"),
 					resource.TestCheckResourceAttr(resourceName, "request_timeout_seconds", "10"),
 					resource.TestCheckResourceAttr(resourceName, "backfill_mode", gamelift.BackfillModeManual),
-
 				),
 			},
 			{
-				ResourceName:            resourceName,
-				ImportState:             true,
-				ImportStateVerify:       true,
+				ResourceName:      resourceName,
+				ImportState:       true,
+				ImportStateVerify: true,
 			},
 		},
 	})
 }
-
 
 func testAccAWSGameliftMatchMakingConfigurationRuleSetBody() string {
 	maxPlayers := int64(1)
@@ -72,7 +69,6 @@ func testAccAWSGameliftMatchMakingConfigurationRuleSetBody() string {
 		}]
 	}`, maxPlayers)
 }
-
 
 func testAccGameServerMatchmakingConfiguration_basic(rName string, queueName string, ruleSetName string, additionalParameters string, requestTimeoutSeconds int) string {
 	backfillMode := gamelift.BackfillModeManual
