@@ -11,6 +11,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
 	"github.com/hashicorp/terraform-provider-aws/internal/conns"
+	"github.com/hashicorp/terraform-provider-aws/internal/flex"
 	tftags "github.com/hashicorp/terraform-provider-aws/internal/tags"
 )
 
@@ -21,7 +22,7 @@ func ResourceMatchMakingConfiguration() *schema.Resource {
 		Update: resourceMatchmakingConfigurationUpdate,
 		Delete: resourceMatchmakingConfigurationDelete,
 		Importer: &schema.ResourceImporter{
-			State: schema.ImportStatePassthrough,
+			StateContext: schema.ImportStatePassthroughContext,
 		},
 
 		Schema: map[string]*schema.Schema{
@@ -87,7 +88,7 @@ func ResourceMatchMakingConfiguration() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 4096),
 			},
 			"game_session_queue_arns": {
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Schema{
 					Type: schema.TypeString,
@@ -173,7 +174,7 @@ func resourceMatchmakingConfigurationCreate(d *schema.ResourceData, meta interfa
 		input.GameSessionData = aws.String(v.(string))
 	}
 	if v, ok := d.GetOk("game_session_queue_arns"); ok {
-		input.GameSessionQueueArns = expandStringList(v.(*schema.Set).List())
+		input.GameSessionQueueArns = flex.ExpandStringSet(v.(*schema.Set))
 	}
 	if v, ok := d.GetOk("notification_target"); ok {
 		input.NotificationTarget = aws.String(v.(string))
