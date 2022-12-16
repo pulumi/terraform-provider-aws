@@ -35,7 +35,7 @@ The following arguments are supported:
 * `schedule_frequency` -  (Optional) The recurrence pattern for running the job. To run the job only once, don't specify a value for this property and set the value for the `job_type` property to `ONE_TIME`. (documented below)
 * `custom_data_identifier_ids` -  (Optional) The custom data identifiers to use for data analysis and classification.
 * `sampling_percentage` -  (Optional) The sampling depth, as a percentage, to apply when processing objects. This value determines the percentage of eligible objects that the job analyzes. If this value is less than 100, Amazon Macie selects the objects to analyze at random, up to the specified percentage, and analyzes all the data in those objects.
-* `name` -  (Optional) A custom name for the job. The name can contain as many as 500 characters. If omitted, Terraform will assign a random, unique name. Conflicts with `name_prefix`.
+* `name` -  (Optional) A custom name for the job. The name can contain as many as 500 characters. If omitted, the provider will assign a random, unique name. Conflicts with `name_prefix`.
 * `name_prefix` -  (Optional) Creates a unique name beginning with the specified prefix. Conflicts with `name`.
 * `description` -  (Optional) A custom description of the job. The description can contain as many as 200 characters.
 * `initial_run` -  (Optional) Specifies whether to analyze all existing, eligible objects immediately after the job is created.

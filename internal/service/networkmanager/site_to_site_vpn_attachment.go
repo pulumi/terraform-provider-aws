@@ -83,7 +83,7 @@ func ResourceSiteToSiteVPNAttachment() *schema.Resource {
 				Computed: true,
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 			"vpn_connection_arn": {
 				Type:         schema.TypeString,
 				Required:     true,

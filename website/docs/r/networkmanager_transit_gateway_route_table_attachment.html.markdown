@@ -24,7 +24,7 @@ resource "aws_networkmanager_transit_gateway_route_table_attachment" "example" {
 The following arguments are supported:
 
 * `peering_id` - (Required) The ID of the peer for the attachment.
-* `tags` - (Optional) Key-value tags for the attachment. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Key-value tags for the attachment. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 * `transit_gateway_route_table_arn` - (Required) The ARN of the transit gateway route table for the attachment.
 
 ## Attributes Reference
@@ -42,7 +42,7 @@ In addition to all arguments above, the following attributes are exported:
 * `resource_arn` - The attachment resource ARN.
 * `segment_name` - The name of the segment attachment.
 * `state` - The state of the attachment.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

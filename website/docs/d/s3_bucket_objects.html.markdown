@@ -10,13 +10,13 @@ description: |-
 
 ~> **NOTE:** The `aws_s3_bucket_objects` data source is DEPRECATED and will be removed in a future version! Use `aws_s3_objects` instead, where new features and fixes will be added.
 
-~> **NOTE on `max_keys`:** Retrieving very large numbers of keys can adversely affect Terraform's performance.
+~> **NOTE on `max_keys`:** Retrieving very large numbers of keys can adversely affect this provider's performance.
 
 The objects data source returns keys (i.e., file names) and other metadata about objects in an S3 bucket.
 
 ## Example Usage
 
-The following example retrieves a list of all object keys in an S3 bucket and creates corresponding Terraform object data sources:
+The following example retrieves a list of all object keys in an S3 bucket and creates corresponding object data sources:
 
 ```terraform
 data "aws_s3_bucket_objects" "my_objects" {

@@ -51,6 +51,6 @@ More complex filters can be expressed using one or more `filter` sub-blocks, whi
 
 ## Timeouts
 
-[Configuration options](https://developer.hashicorp.com/terraform/language/resources/syntax#operation-timeouts):
+Configuration options:
 
 - `read` - (Default `20m`)

@@ -56,5 +56,3 @@ In addition to all arguments above, the following attributes are exported:
 * `tags` - Key-value tags for the firewall policy.
 * `update_token` - Token used for optimistic locking.
 
-[1]: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ram_resource_share
-[2]: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/networkfirewall_firewall_policy

@@ -12,9 +12,6 @@ Provides a MemoryDB User.
 
 More information about users and ACL-s can be found in the [MemoryDB User Guide](https://docs.aws.amazon.com/memorydb/latest/devguide/clusters.acls.html).
 
-~> **Note:** All arguments including the username and passwords will be stored in the raw state as plain-text.
-[Read more about sensitive data in state](https://www.terraform.io/docs/state/sensitive-data.html).
-
 ## Example Usage
 
 ```terraform
@@ -43,7 +40,7 @@ The following arguments are required:
 
 The following arguments are optional:
 
-* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ### authentication_mode Configuration Block
 
@@ -59,7 +56,7 @@ In addition to all arguments above, the following attributes are exported:
 * `minimum_engine_version` - The minimum engine version supported for the user.
 * `authentication_mode` configuration block
     * `password_count` - The number of passwords belonging to the user.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

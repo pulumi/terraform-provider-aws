@@ -3,7 +3,7 @@ subcategory: "OpenSearch"
 layout: "aws"
 page_title: "AWS: aws_opensearch_inbound_connection_accepter"
 description: |-
-  Terraform resource for managing an AWS OpenSearch Inbound Connection Accepter.
+  Resource for managing an AWS OpenSearch Inbound Connection Accepter.
 ---
 
 # Resource: aws_opensearch_inbound_connection_accepter

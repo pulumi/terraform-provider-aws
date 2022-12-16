@@ -93,7 +93,7 @@ The following arguments are supported:
 * `name` - (Required) The name or description of the web ACL.
 * `rules` - (Optional) Configuration blocks containing rules to associate with the web ACL and the settings for each rule. Detailed below.
 * `logging_configuration` - (Optional) Configuration block to enable WAF logging. Detailed below.
-* `tags` - (Optional) Key-value map of resource tags. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Key-value map of resource tags. .If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ### `default_action` Configuration Block
 
@@ -126,7 +126,7 @@ See [docs](http://docs.aws.amazon.com/waf/latest/APIReference/API_ActivatedRule.
     * `type` - (Required) valid values are: `NONE` or `COUNT`
 * `priority` - (Required) Specifies the order in which the rules in a WebACL are evaluated.
   Rules with a lower value are evaluated before rules with a higher value.
-* `rule_id` - (Required) ID of the associated WAF (Global) rule (e.g., [`aws_waf_rule`](/docs/providers/aws/r/waf_rule.html)). WAF (Regional) rules cannot be used.
+* `rule_id` - (Required) ID of the associated WAF (Global) rule (e.g., `aws_waf_rule`). WAF (Regional) rules cannot be used.
 * `type` - (Optional) The rule type, either `REGULAR`, as defined by [Rule](http://docs.aws.amazon.com/waf/latest/APIReference/API_Rule.html), `RATE_BASED`, as defined by [RateBasedRule](http://docs.aws.amazon.com/waf/latest/APIReference/API_RateBasedRule.html), or `GROUP`, as defined by [RuleGroup](https://docs.aws.amazon.com/waf/latest/APIReference/API_RuleGroup.html). The default is REGULAR. If you add a RATE_BASED rule, you need to set `type` as `RATE_BASED`. If you add a GROUP rule, you need to set `type` as `GROUP`.
 
 ## Attributes Reference
@@ -135,7 +135,7 @@ In addition to all arguments above, the following attributes are exported:
 
 * `id` - The ID of the WAF WebACL.
 * `arn` - The ARN of the WAF WebACL.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

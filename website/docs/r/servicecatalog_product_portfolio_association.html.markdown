@@ -39,7 +39,7 @@ In addition to all arguments above, the following attributes are exported:
 
 * `id` - Identifier of the association.
 
-[Configuration options](https://developer.hashicorp.com/terraform/language/resources/syntax#operation-timeouts):
+Configuration options:
 
 - `create` - (Default `3m`)
 - `read` - (Default `10m`)

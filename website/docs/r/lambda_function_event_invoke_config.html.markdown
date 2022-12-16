@@ -90,7 +90,7 @@ The following arguments are optional:
 
 ### destination_config Configuration Block
 
-~> **NOTE:** At least one of `on_failure` or `on_success` must be configured when using this configuration block, otherwise remove it completely to prevent perpetual differences in Terraform runs.
+~> **NOTE:** At least one of `on_failure` or `on_success` must be configured when using this configuration block, otherwise remove it completely to prevent perpetual differences in provider runs.
 
 The following arguments are optional:
 

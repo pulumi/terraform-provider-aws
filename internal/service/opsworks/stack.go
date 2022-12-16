@@ -169,7 +169,7 @@ func ResourceStack() *schema.Resource {
 				Computed: true,
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 			"use_custom_cookbooks": {
 				Type:     schema.TypeBool,
 				Optional: true,

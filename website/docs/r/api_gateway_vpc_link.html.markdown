@@ -11,7 +11,7 @@ description: |-
 Provides an API Gateway VPC Link.
 
 -> **Note:** Amazon API Gateway Version 1 VPC Links enable private integrations that connect REST APIs to private resources in a VPC.
-To enable private integration for HTTP APIs, use the Amazon API Gateway Version 2 VPC Link [resource](/docs/providers/aws/r/apigatewayv2_vpc_link.html).
+To enable private integration for HTTP APIs, use the Amazon API Gateway Version 2 VPC Link resource.
 
 ## Example Usage
 
@@ -40,14 +40,14 @@ The following arguments are supported:
 * `name` - (Required) Name used to label and identify the VPC link.
 * `description` - (Optional) Description of the VPC link.
 * `target_arns` - (Required, ForceNew) List of network load balancer arns in the VPC targeted by the VPC link. Currently AWS only supports 1 target.
-* `tags` - (Optional) Key-value map of resource tags. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Key-value map of resource tags. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ## Attributes Reference
 
 In addition to all arguments above, the following attributes are exported:
 
 * `id` - Identifier of the VpcLink.
-* `tags_all` - Map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - Map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

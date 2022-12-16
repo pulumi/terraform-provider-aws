@@ -45,7 +45,7 @@ func ResourceVPNGateway() *schema.Resource {
 				ForceNew: true,
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 			"vpc_id": {
 				Type:     schema.TypeString,
 				Optional: true,

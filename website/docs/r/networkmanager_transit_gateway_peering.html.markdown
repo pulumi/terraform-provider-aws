@@ -24,7 +24,7 @@ resource "aws_networkmanager_transit_gateway_peering" "example" {
 The following arguments are supported:
 
 * `core_network_id` - (Required) The ID of a core network.
-* `tags` - (Optional) Key-value tags for the peering. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Key-value tags for the peering. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 * `transit_gateway_arn` - (Required) The ARN of the transit gateway for the peering request.
 
 ## Attributes Reference
@@ -38,7 +38,7 @@ In addition to all arguments above, the following attributes are exported:
 * `owner_account_id` - The ID of the account owner.
 * `peering_type` - The type of peering. This will be `TRANSIT_GATEWAY`.
 * `resource_arn` - The resource ARN of the peer.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 * `transit_gateway_peering_attachment_id` - The ID of the transit gateway peering attachment.
 
 ## Import

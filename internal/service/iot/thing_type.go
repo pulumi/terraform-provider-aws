@@ -71,7 +71,7 @@ func ResourceThingType() *schema.Resource {
 				Default:  false,
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 			"arn": {
 				Type:     schema.TypeString,
 				Computed: true,

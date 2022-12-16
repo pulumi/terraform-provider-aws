@@ -10,7 +10,7 @@ description: |-
 
 Associate an existing ElastiCache user and an existing user group.
 
-~> **NOTE:** Terraform will detect changes in the `aws_elasticache_user_group` since `aws_elasticache_user_group_association` changes the user IDs associated with the user group. You can ignore these changes with the `lifecycle` `ignore_changes` meta argument as shown in the example.
+~> **NOTE:** The provider will detect changes in the `aws_elasticache_user_group` since `aws_elasticache_user_group_association` changes the user IDs associated with the user group. You can ignore these changes with the `ignore_changes` option as shown in the example.
 
 ## Example Usage
 

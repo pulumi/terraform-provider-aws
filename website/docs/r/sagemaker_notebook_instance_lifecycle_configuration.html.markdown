@@ -26,7 +26,7 @@ resource "aws_sagemaker_notebook_instance_lifecycle_configuration" "lc" {
 
 The following arguments are supported:
 
-* `name` - (Optional) The name of the lifecycle configuration (must be unique). If omitted, Terraform will assign a random, unique name.
+* `name` - (Optional) The name of the lifecycle configuration (must be unique). If omitted, this provider will assign a random, unique name.
 * `on_create` - (Optional) A shell script (base64-encoded) that runs only once when the SageMaker Notebook Instance is created.
 * `on_start` - (Optional) A shell script (base64-encoded) that runs every time the SageMaker Notebook Instance is started including the time it's created.
 

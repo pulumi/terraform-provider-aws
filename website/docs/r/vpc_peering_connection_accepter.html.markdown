@@ -77,12 +77,12 @@ The following arguments are supported:
 
 * `vpc_peering_connection_id` - (Required) The VPC Peering Connection ID to manage.
 * `auto_accept` - (Optional) Whether or not to accept the peering request. Defaults to `false`.
-* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) A map of tags to assign to the resource. .If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ### Removing `aws_vpc_peering_connection_accepter` from your configuration
 
 AWS allows a cross-account VPC Peering Connection to be deleted from either the requester's or accepter's side.
-However, Terraform only allows the VPC Peering Connection to be deleted from the requester's side
+However, this provider only allows the VPC Peering Connection to be deleted from the requester's side
 by removing the corresponding `aws_vpc_peering_connection` resource from your configuration.
 Removing a `aws_vpc_peering_connection_accepter` resource from your configuration will remove it
 from your statefile and management, **but will not destroy the VPC Peering Connection.**
@@ -101,7 +101,7 @@ In addition to all arguments above, the following attributes are exported:
 (https://docs.aws.amazon.com/vpc/latest/peering/what-is-vpc-peering.html) options set for the accepter VPC.
 * `requester` - A configuration block that describes [VPC Peering Connection]
 (https://docs.aws.amazon.com/vpc/latest/peering/what-is-vpc-peering.html) options set for the requester VPC.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 #### Accepter and Requester Attributes Reference
 
@@ -120,7 +120,7 @@ VPC Peering Connection Accepters can be imported by using the Peering Connection
 $ terraform import aws_vpc_peering_connection_accepter.example pcx-12345678
 ```
 
-Certain resource arguments, like `auto_accept`, do not have an EC2 API method for reading the information after peering connection creation. If the argument is set in the Terraform configuration on an imported resource, Terraform will always show a difference. To workaround this behavior, either omit the argument from the Terraform configuration or use [`ignore_changes`](https://www.terraform.io/docs/configuration/meta-arguments/lifecycle.html#ignore_changes) to hide the difference, e.g.,
+Certain resource arguments, like `auto_accept`, do not have an EC2 API method for reading the information after peering connection creation. If the argument is set in the provider configuration on an imported resource, this provder will always show a difference. To workaround this behavior, either omit the argument from the configuration or use [`ignoreChanges`](https://www.pulumi.com/docs/intro/concepts/programming-model/#ignorechanges) to hide the difference, e.g.
 
 ```terraform
 resource "aws_vpc_peering_connection_accepter" "example" {

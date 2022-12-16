@@ -10,57 +10,57 @@ description: |-
 
 Provides a S3 bucket resource.
 
--> This functionality is for managing S3 in an AWS Partition. To manage [S3 on Outposts](https://docs.aws.amazon.com/AmazonS3/latest/dev/S3onOutposts.html), see the [`aws_s3control_bucket`](/docs/providers/aws/r/s3control_bucket.html) resource.
+-> This functionality is for managing S3 in an AWS Partition. To manage [S3 on Outposts](https://docs.aws.amazon.com/AmazonS3/latest/dev/S3onOutposts.html), see the `aws_s3control_bucket` resource.
 
-~> **NOTE on S3 Bucket Accelerate Configuration:** S3 Bucket Accelerate can be configured in either the standalone resource [`aws_s3_bucket_accelerate_configuration`](s3_bucket_accelerate_configuration.html)
+~> **NOTE on S3 Bucket Accelerate Configuration:** S3 Bucket Accelerate can be configured in either the standalone resource `aws_s3_bucket_accelerate_configuration`
 or with the deprecated parameter `acceleration_status` in the resource `aws_s3_bucket`.
 Configuring with both will cause inconsistencies and may overwrite configuration.
 
-~> **NOTE on S3 Bucket canned ACL Configuration:** S3 Bucket canned ACL can be configured in either the standalone resource [`aws_s3_bucket_acl`](s3_bucket_acl.html.markdown)
+~> **NOTE on S3 Bucket canned ACL Configuration:** S3 Bucket canned ACL can be configured in either the standalone resource `aws_s3_bucket_acl`
 or with the deprecated parameter `acl` in the resource `aws_s3_bucket`.
 Configuring with both will cause inconsistencies and may overwrite configuration.
 
-~> **NOTE on S3 Bucket ACL Grants Configuration:** S3 Bucket grants can be configured in either the standalone resource [`aws_s3_bucket_acl`](s3_bucket_acl.html.markdown)
+~> **NOTE on S3 Bucket ACL Grants Configuration:** S3 Bucket grants can be configured in either the standalone resource `aws_s3_bucket_acl`
 or with the deprecated parameter `grant` in the resource `aws_s3_bucket`.
 Configuring with both will cause inconsistencies and may overwrite configuration.
 
-~> **NOTE on S3 Bucket CORS Configuration:** S3 Bucket CORS can be configured in either the standalone resource [`aws_s3_bucket_cors_configuration`](s3_bucket_cors_configuration.html.markdown)
+~> **NOTE on S3 Bucket CORS Configuration:** S3 Bucket CORS can be configured in either the standalone resource `aws_s3_bucket_cors_configuration`
 or with the deprecated parameter `cors_rule` in the resource `aws_s3_bucket`.
 Configuring with both will cause inconsistencies and may overwrite configuration.
 
-~> **NOTE on S3 Bucket Lifecycle Configuration:** S3 Bucket Lifecycle can be configured in either the standalone resource [`aws_s3_bucket_lifecycle_configuration`](s3_bucket_lifecycle_configuration.html)
+~> **NOTE on S3 Bucket Lifecycle Configuration:** S3 Bucket Lifecycle can be configured in either the standalone resource `aws_s3_bucket_lifecycle_configuration`
 or with the deprecated parameter `lifecycle_rule` in the resource `aws_s3_bucket`.
 Configuring with both will cause inconsistencies and may overwrite configuration.
 
-~> **NOTE on S3 Bucket Logging Configuration:** S3 Bucket logging can be configured in either the standalone resource [`aws_s3_bucket_logging`](s3_bucket_logging.html.markdown)
+~> **NOTE on S3 Bucket Logging Configuration:** S3 Bucket logging can be configured in either the standalone resource `aws_s3_bucket_logging`
 or with the deprecated parameter `logging` in the resource `aws_s3_bucket`.
 Configuring with both will cause inconsistencies and may overwrite configuration.
 
-~> **NOTE on S3 Bucket Object Lock Configuration:** S3 Bucket Object Lock can be configured in either the standalone resource [`aws_s3_bucket_object_lock_configuration`](s3_bucket_object_lock_configuration.html)
+~> **NOTE on S3 Bucket Object Lock Configuration:** S3 Bucket Object Lock can be configured in either the standalone resource `aws_s3_bucket_object_lock_configuration`
 or with the deprecated parameter `object_lock_configuration` in the resource `aws_s3_bucket`.
 Configuring with both will cause inconsistencies and may overwrite configuration.
 
-~> **NOTE on S3 Bucket Policy Configuration:** S3 Bucket Policy can be configured in either the standalone resource [`aws_s3_bucket_policy`](s3_bucket_policy.html)
+~> **NOTE on S3 Bucket Policy Configuration:** S3 Bucket Policy can be configured in either the standalone resource `aws_s3_bucket_policy`
 or with the deprecated parameter `policy` in the resource `aws_s3_bucket`.
 Configuring with both will cause inconsistencies and may overwrite configuration.
 
-~> **NOTE on S3 Bucket Replication Configuration:** S3 Bucket Replication can be configured in either the standalone resource [`aws_s3_bucket_replication_configuration`](s3_bucket_replication_configuration.html)
+~> **NOTE on S3 Bucket Replication Configuration:** S3 Bucket Replication can be configured in either the standalone resource `aws_s3_bucket_replication_configuration`
 or with the deprecated parameter `replication_configuration` in the resource `aws_s3_bucket`.
 Configuring with both will cause inconsistencies and may overwrite configuration.
 
-~> **NOTE on S3 Bucket Request Payment Configuration:** S3 Bucket Request Payment can be configured in either the standalone resource [`aws_s3_bucket_request_payment_configuration`](s3_bucket_request_payment_configuration.html)
+~> **NOTE on S3 Bucket Request Payment Configuration:** S3 Bucket Request Payment can be configured in either the standalone resource `aws_s3_bucket_request_payment_configuration`
 or with the deprecated parameter `request_payer` in the resource `aws_s3_bucket`.
 Configuring with both will cause inconsistencies and may overwrite configuration.
 
-~> **NOTE on S3 Bucket Server Side Encryption Configuration:** S3 Bucket Server Side Encryption can be configured in either the standalone resource [`aws_s3_bucket_server_side_encryption_configuration`](s3_bucket_server_side_encryption_configuration.html)
+~> **NOTE on S3 Bucket Server Side Encryption Configuration:** S3 Bucket Server Side Encryption can be configured in either the standalone resource `aws_s3_bucket_server_side_encryption_configuration`
 or with the deprecated parameter `server_side_encryption_configuration` in the resource `aws_s3_bucket`.
 Configuring with both will cause inconsistencies and may overwrite configuration.
 
-~> **NOTE on S3 Bucket Versioning Configuration:** S3 Bucket versioning can be configured in either the standalone resource [`aws_s3_bucket_versioning`](s3_bucket_versioning.html.markdown)
+~> **NOTE on S3 Bucket Versioning Configuration:** S3 Bucket versioning can be configured in either the standalone resource `aws_s3_bucket_versioning`
 or with the deprecated parameter `versioning` in the resource `aws_s3_bucket`.
 Configuring with both will cause inconsistencies and may overwrite configuration.
 
-~> **NOTE on S3 Bucket Website Configuration:** S3 Bucket Website can be configured in either the standalone resource [`aws_s3_bucket_website_configuration`](s3_bucket_website_configuration.html.markdown)
+~> **NOTE on S3 Bucket Website Configuration:** S3 Bucket Website can be configured in either the standalone resource `aws_s3_bucket_website_configuration`
 or with the deprecated parameter `website` in the resource `aws_s3_bucket`.
 Configuring with both will cause inconsistencies and may overwrite configuration.
 
@@ -86,12 +86,9 @@ resource "aws_s3_bucket_acl" "example" {
 
 ### Static Website Hosting
 
--> **NOTE:** The parameter `website` is deprecated.
-Use the resource [`aws_s3_bucket_website_configuration`](s3_bucket_website_configuration.html.markdown) instead.
-
 ```terraform
 resource "aws_s3_bucket" "b" {
-  bucket = "s3-website-test.hashicorp.com"
+  bucket = "s3-website-test.domain.example"
   acl    = "public-read"
   policy = file("policy.json")
 
@@ -115,18 +112,15 @@ EOF
 
 ### Using CORS
 
--> **NOTE:** The parameter `cors_rule` is deprecated.
-Use the resource [`aws_s3_bucket_cors_configuration`](s3_bucket_cors_configuration.html.markdown) instead.
-
 ```terraform
 resource "aws_s3_bucket" "b" {
-  bucket = "s3-website-test.hashicorp.com"
+  bucket = "s3-website-test.domain.example"
   acl    = "public-read"
 
   cors_rule {
     allowed_headers = ["*"]
     allowed_methods = ["PUT", "POST"]
-    allowed_origins = ["https://s3-website-test.hashicorp.com"]
+    allowed_origins = ["https://s3-website-test.domain.example"]
     expose_headers  = ["ETag"]
     max_age_seconds = 3000
   }
@@ -134,9 +128,6 @@ resource "aws_s3_bucket" "b" {
 ```
 
 ### Using versioning
-
--> **NOTE:** The parameter `versioning` is deprecated.
-Use the resource [`aws_s3_bucket_versioning`](s3_bucket_versioning.html.markdown) instead.
 
 ```terraform
 resource "aws_s3_bucket" "b" {
@@ -150,9 +141,6 @@ resource "aws_s3_bucket" "b" {
 ```
 
 ### Enable Logging
-
--> **NOTE:** The parameter `logging` is deprecated.
-Use the resource [`aws_s3_bucket_logging`](s3_bucket_logging.html.markdown) instead.
 
 ```terraform
 resource "aws_s3_bucket" "log_bucket" {
@@ -172,9 +160,6 @@ resource "aws_s3_bucket" "b" {
 ```
 
 ### Using object lifecycle
-
--> **NOTE:** The parameter `lifecycle_rule` is deprecated.
-Use the resource [`aws_s3_bucket_lifecycle_configuration`](s3_bucket_lifecycle_configuration.html) instead.
 
 ```terraform
 resource "aws_s3_bucket" "bucket" {
@@ -249,11 +234,6 @@ resource "aws_s3_bucket" "versioning_bucket" {
 
 ### Using object lock configuration
 
--> **NOTE:** The parameter `object_lock_configuration` is deprecated.
-To **enable** Object Lock on a **new** bucket, use the `object_lock_enabled` argument in **this** resource.
-To configure the default retention rule of the Object Lock configuration use the resource [`aws_s3_bucket_object_lock_configuration` resource](s3_bucket_object_lock_configuration.html.markdown) instead.
-To **enable** Object Lock on an **existing** bucket, please contact AWS Support and refer to the [Object lock configuration for an existing bucket](s3_bucket_object_lock_configuration.html.markdown#object-lock-configuration-for-an-existing-bucket) example for more details.
-
 ```terraform
 resource "aws_s3_bucket" "example" {
   bucket = "my-tf-example-bucket"
@@ -272,9 +252,6 @@ resource "aws_s3_bucket" "example" {
 ```
 
 ### Using replication configuration
-
--> **NOTE:** The parameter `replication_configuration` is deprecated.
-Use the resource [`aws_s3_bucket_replication_configuration`](s3_bucket_replication_configuration.html) instead.
 
 ```terraform
 provider "aws" {
@@ -401,9 +378,6 @@ resource "aws_s3_bucket" "source" {
 
 ### Enable Default Server Side Encryption
 
--> **NOTE:** The parameter `server_side_encryption_configuration` is deprecated.
-Use the resource [`aws_s3_bucket_server_side_encryption_configuration`](s3_bucket_server_side_encryption_configuration.html) instead.
-
 ```terraform
 resource "aws_kms_key" "mykey" {
   description             = "This key is used to encrypt bucket objects"
@@ -425,9 +399,6 @@ resource "aws_s3_bucket" "mybucket" {
 ```
 
 ### Using ACL policy grants
-
--> **NOTE:** The parameters `acl` and `grant` are deprecated.
-Use the resource [`aws_s3_bucket_acl`](s3_bucket_acl.html.markdown) instead.
 
 ```terraform
 data "aws_canonical_user_id" "current_user" {}
@@ -453,43 +424,42 @@ resource "aws_s3_bucket" "bucket" {
 
 The following arguments are supported:
 
-* `bucket` - (Optional, Forces new resource) The name of the bucket. If omitted, Terraform will assign a random, unique name. Must be lowercase and less than or equal to 63 characters in length. A full list of bucket naming rules [may be found here](https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucketnamingrules.html).
+* `bucket` - (Optional, Forces new resource) The name of the bucket. If omitted, this provider will assign a random, unique name. Must be lowercase and less than or equal to 63 characters in length. A full list of bucket naming rules [may be found here](https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucketnamingrules.html).
 * `bucket_prefix` - (Optional, Forces new resource) Creates a unique bucket name beginning with the specified prefix. Conflicts with `bucket`. Must be lowercase and less than or equal to 37 characters in length. A full list of bucket naming rules [may be found here](https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucketnamingrules.html).
-* `acceleration_status` - (Optional, **Deprecated**) Sets the accelerate configuration of an existing bucket. Can be `Enabled` or `Suspended`. Cannot be used in `cn-north-1` or `us-gov-west-1`. Terraform will only perform drift detection if a configuration value is provided.
-  Use the resource [`aws_s3_bucket_accelerate_configuration`](s3_bucket_accelerate_configuration.html) instead.
-* `acl` - (Optional, **Deprecated**) The [canned ACL](https://docs.aws.amazon.com/AmazonS3/latest/dev/acl-overview.html#canned-acl) to apply. Valid values are `private`, `public-read`, `public-read-write`, `aws-exec-read`, `authenticated-read`, and `log-delivery-write`. Defaults to `private`.  Conflicts with `grant`. Terraform will only perform drift detection if a configuration value is provided. Use the resource [`aws_s3_bucket_acl`](s3_bucket_acl.html.markdown) instead.
-* `grant` - (Optional, **Deprecated**) An [ACL policy grant](https://docs.aws.amazon.com/AmazonS3/latest/dev/acl-overview.html#sample-acl). See [Grant](#grant) below for details. Conflicts with `acl`. Terraform will only perform drift detection if a configuration value is provided. Use the resource [`aws_s3_bucket_acl`](s3_bucket_acl.html.markdown) instead.
-* `cors_rule` - (Optional, **Deprecated**) A rule of [Cross-Origin Resource Sharing](https://docs.aws.amazon.com/AmazonS3/latest/dev/cors.html). See [CORS rule](#cors-rule) below for details. Terraform will only perform drift detection if a configuration value is provided. Use the resource [`aws_s3_bucket_cors_configuration`](s3_bucket_cors_configuration.html.markdown) instead.
+* `acceleration_status` - (Optional, **Deprecated**) Sets the accelerate configuration of an existing bucket. Can be `Enabled` or `Suspended`. Cannot be used in `cn-north-1` or `us-gov-west-1`. This provider will only perform drift detection if a configuration value is provided.
+  Use the resource `aws_s3_bucket_accelerate_configuration` instead.
+* `acl` - (Optional, **Deprecated**) The [canned ACL](https://docs.aws.amazon.com/AmazonS3/latest/dev/acl-overview.html#canned-acl) to apply. Valid values are `private`, `public-read`, `public-read-write`, `aws-exec-read`, `authenticated-read`, and `log-delivery-write`. Defaults to `private`.  Conflicts with `grant`. The provider will only perform drift detection if a configuration value is provided. Use the resource `aws_s3_bucket_acl` instead.
+* `grant` - (Optional, **Deprecated**) An [ACL policy grant](https://docs.aws.amazon.com/AmazonS3/latest/dev/acl-overview.html#sample-acl). See [Grant](#grant) below for details. Conflicts with `acl`. The provider will only perform drift detection if a configuration value is provided. Use the resource `aws_s3_bucket_acl` instead.
+* `cors_rule` - (Optional, **Deprecated**) A rule of [Cross-Origin Resource Sharing](https://docs.aws.amazon.com/AmazonS3/latest/dev/cors.html). See [CORS rule](#cors-rule) below for details. This provider will only perform drift detection if a configuration value is provided. Use the resource `aws_s3_bucket_cors_configuration` instead.
 * `force_destroy` - (Optional, Default:`false`) A boolean that indicates all objects (including any [locked objects](https://docs.aws.amazon.com/AmazonS3/latest/dev/object-lock-overview.html)) should be deleted from the bucket *when the bucket is destroyed* so that the bucket can be destroyed without error. These objects are *not* recoverable. This only deletes objects when the bucket is destroyed, *not* when setting this parameter to `true`.
-* `lifecycle_rule` - (Optional, **Deprecated**) A configuration of [object lifecycle management](http://docs.aws.amazon.com/AmazonS3/latest/dev/object-lifecycle-mgmt.html). See [Lifecycle Rule](#lifecycle-rule) below for details. Terraform will only perform drift detection if a configuration value is provided.
-  Use the resource [`aws_s3_bucket_lifecycle_configuration`](s3_bucket_lifecycle_configuration.html) instead.
-* `logging` - (Optional, **Deprecated**) A configuration of [S3 bucket logging](https://docs.aws.amazon.com/AmazonS3/latest/UG/ManagingBucketLogging.html) parameters. See [Logging](#logging) below for details. Terraform will only perform drift detection if a configuration value is provided.
-  Use the resource [`aws_s3_bucket_logging`](s3_bucket_logging.html.markdown) instead.
+* `lifecycle_rule` - (Optional, **Deprecated**) A configuration of [object lifecycle management](http://docs.aws.amazon.com/AmazonS3/latest/dev/object-lifecycle-mgmt.html). See [Lifecycle Rule](#lifecycle-rule) below for details. The provider will only perform drift detection if a configuration value is provided.
+  Use the resource `aws_s3_bucket_lifecycle_configuration` instead.
+* `logging` - (Optional, **Deprecated**) A configuration of [S3 bucket logging](https://docs.aws.amazon.com/AmazonS3/latest/UG/ManagingBucketLogging.html) parameters. See [Logging](#logging) below for details. The provider will only perform drift detection if a configuration value is provided.
+  Use the resource `aws_s3_bucket_logging` instead.
 * `object_lock_enabled` - (Optional, Forces new resource) Indicates whether this bucket has an Object Lock configuration enabled. Valid values are `true` or `false`. This argument is not supported in all regions or partitions.
 * `object_lock_configuration` - (Optional, **Deprecated**) A configuration of [S3 object locking](https://docs.aws.amazon.com/AmazonS3/latest/dev/object-lock.html). See [Object Lock Configuration](#object-lock-configuration) below for details.
-  Terraform wil only perform drift detection if a configuration value is provided.
-  Use the `object_lock_enabled` parameter and the resource [`aws_s3_bucket_object_lock_configuration`](s3_bucket_object_lock_configuration.html.markdown) instead.
-* `policy` - (Optional, **Deprecated**) A valid [bucket policy](https://docs.aws.amazon.com/AmazonS3/latest/dev/example-bucket-policies.html) JSON document. Note that if the policy document is not specific enough (but still valid), Terraform may view the policy as constantly changing in a `terraform plan`. In this case, please make sure you use the verbose/specific version of the policy. For more information about building AWS IAM policy documents with Terraform, see the [AWS IAM Policy Document Guide](https://learn.hashicorp.com/terraform/aws/iam-policy).
-  Terraform will only perform drift detection if a configuration value is provided.
-  Use the resource [`aws_s3_bucket_policy`](s3_bucket_policy.html) instead.
-* `replication_configuration` - (Optional, **Deprecated**) A configuration of [replication configuration](http://docs.aws.amazon.com/AmazonS3/latest/dev/crr.html). See [Replication Configuration](#replication-configuration) below for details. Terraform will only perform drift detection if a configuration value is provided.
-  Use the resource [`aws_s3_bucket_replication_configuration`](s3_bucket_replication_configuration.html) instead.
+  the provider wil only perform drift detection if a configuration value is provided.
+  Use the `object_lock_enabled` parameter and the resource `aws_s3_bucket_object_lock_configuration` instead.
+* `policy` - (Optional, **Deprecated**) A valid [bucket policy](https://docs.aws.amazon.com/AmazonS3/latest/dev/example-bucket-policies.html) JSON document. Note that if the policy document is not specific enough (but still valid), the provider may view the policy as constantly changing in a preview. In this case, please make sure you use the verbose/specific version of the policy.
+  The provider will only perform drift detection if a configuration value is provided.
+  Use the resource `aws_s3_bucket_policy` instead.
+* `replication_configuration` - (Optional, **Deprecated**) A configuration of [replication configuration](http://docs.aws.amazon.com/AmazonS3/latest/dev/crr.html). See [Replication Configuration](#replication-configuration) below for details. The provider will only perform drift detection if a configuration value is provided.
+  Use the resource `aws_s3_bucket_replication_configuration` instead.
 * `request_payer` - (Optional, **Deprecated**) Specifies who should bear the cost of Amazon S3 data transfer.
   Can be either `BucketOwner` or `Requester`. By default, the owner of the S3 bucket would incur the costs of any data transfer.
   See [Requester Pays Buckets](http://docs.aws.amazon.com/AmazonS3/latest/dev/RequesterPaysBuckets.html) developer guide for more information.
-  Terraform will only perform drift detection if a configuration value is provided.
-  Use the resource [`aws_s3_bucket_request_payment_configuration`](s3_bucket_request_payment_configuration.html) instead.
+  The provider will only perform drift detection if a configuration value is provided.
+  Use the resource `aws_s3_bucket_request_payment_configuration` instead.
 * `server_side_encryption_configuration` - (Optional, **Deprecated**) A configuration of [server-side encryption configuration](http://docs.aws.amazon.com/AmazonS3/latest/dev/bucket-encryption.html). See [Server Side Encryption Configuration](#server-side-encryption-configuration) below for details.
-  Terraform will only perform drift detection if a configuration value is provided.
-  Use the resource [`aws_s3_bucket_server_side_encryption_configuration`](s3_bucket_server_side_encryption_configuration.html) instead.
-* `versioning` - (Optional, **Deprecated**) A configuration of the [S3 bucket versioning state](https://docs.aws.amazon.com/AmazonS3/latest/dev/Versioning.html). See [Versioning](#versioning) below for details. Terraform will only perform drift detection if a configuration value is provided. Use the resource [`aws_s3_bucket_versioning`](s3_bucket_versioning.html.markdown) instead.
-* `website` - (Optional, **Deprecated**) A configuration of the [S3 bucket website](https://docs.aws.amazon.com/AmazonS3/latest/userguide/WebsiteHosting.html). See [Website](#website) below for details. Terraform will only perform drift detection if a configuration value is provided.
-  Use the resource [`aws_s3_bucket_website_configuration`](s3_bucket_website_configuration.html.markdown) instead.
-* `tags` - (Optional) A map of tags to assign to the bucket. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+  The provider will only perform drift detection if a configuration value is provided.
+  Use the resource `aws_s3_bucket_server_side_encryption_configuration` instead.
+* `versioning` - (Optional, **Deprecated**) A configuration of the [S3 bucket versioning state](https://docs.aws.amazon.com/AmazonS3/latest/dev/Versioning.html). See [Versioning](#versioning) below for details. This provider will only perform drift detection if a configuration value is provided. Use the resource `aws_s3_bucket_versioning` instead.
+* `website` - (Optional, **Deprecated**) A configuration of the [S3 bucket website](https://docs.aws.amazon.com/AmazonS3/latest/userguide/WebsiteHosting.html). See [Website](#website) below for details. The provider will only perform drift detection if a configuration value is provided.
+  Use the resource `aws_s3_bucket_website_configuration` instead.
+* `tags` - (Optional) A map of tags to assign to the bucket. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ### CORS Rule
 
-~> **NOTE:** Currently, changes to the `cors_rule` configuration of _existing_ resources cannot be automatically detected by Terraform. To manage changes of CORS rules to an S3 bucket, use the `aws_s3_bucket_cors_configuration` resource instead. If you use `cors_rule` on an `aws_s3_bucket`, Terraform will assume management over the full set of CORS rules for the S3 bucket, treating additional CORS rules as drift. For this reason, `cors_rule` cannot be mixed with the external `aws_s3_bucket_cors_configuration` resource for a given S3 bucket.
 
 The `cors_rule` configuration block supports the following arguments:
 
@@ -501,7 +471,6 @@ The `cors_rule` configuration block supports the following arguments:
 
 ### Grant
 
-~> **NOTE:** Currently, changes to the `grant` configuration of _existing_ resources cannot be automatically detected by Terraform. To manage changes of ACL grants to an S3 bucket, use the `aws_s3_bucket_acl` resource instead. If you use `grant` on an `aws_s3_bucket`, Terraform will assume management over the full set of ACL grants for the S3 bucket, treating additional ACL grants as drift. For this reason, `grant` cannot be mixed with the external `aws_s3_bucket_acl` resource for a given S3 bucket.
 
 The `grant` configuration block supports the following arguments:
 
@@ -512,7 +481,6 @@ The `grant` configuration block supports the following arguments:
 
 ### Lifecycle Rule
 
-~> **NOTE:** Currently, changes to the `lifecycle_rule` configuration of _existing_ resources cannot be automatically detected by Terraform. To manage changes of Lifecycle rules to an S3 bucket, use the `aws_s3_bucket_lifecycle_configuration` resource instead. If you use `lifecycle_rule` on an `aws_s3_bucket`, Terraform will assume management over the full set of Lifecycle rules for the S3 bucket, treating additional Lifecycle rules as drift. For this reason, `lifecycle_rule` cannot be mixed with the external `aws_s3_bucket_lifecycle_configuration` resource for a given S3 bucket.
 
 ~> **NOTE:** At least one of `abort_incomplete_multipart_upload_days`, `expiration`, `transition`, `noncurrent_version_expiration`, `noncurrent_version_transition` must be specified.
 
@@ -559,7 +527,6 @@ The `noncurrent_version_transition` configuration supports the following argumen
 
 ### Logging
 
-~> **NOTE:** Currently, changes to the `logging` configuration of _existing_ resources cannot be automatically detected by Terraform. To manage changes of logging parameters to an S3 bucket, use the `aws_s3_bucket_logging` resource instead. If you use `logging` on an `aws_s3_bucket`, Terraform will assume management over the full set of logging parameters for the S3 bucket, treating additional logging parameters as drift. For this reason, `logging` cannot be mixed with the external `aws_s3_bucket_logging` resource for a given S3 bucket.
 
 The `logging` configuration block supports the following arguments:
 
@@ -572,11 +539,9 @@ The `logging` configuration block supports the following arguments:
 When you create a bucket with S3 Object Lock enabled, Amazon S3 automatically enables versioning for the bucket.
 Once you create a bucket with S3 Object Lock enabled, you can't disable Object Lock or suspend versioning for the bucket.
 
-~> **NOTE:** Currently, changes to the `object_lock_configuration` configuration of _existing_ resources cannot be automatically detected by Terraform. To manage changes of Object Lock settings to an S3 bucket, use the `aws_s3_bucket_object_lock_configuration` resource instead. If you use `object_lock_configuration` on an `aws_s3_bucket`, Terraform will assume management over the full set of Object Lock configuration parameters for the S3 bucket, treating additional Object Lock configuration parameters as drift. For this reason, `object_lock_configuration` cannot be mixed with the external `aws_s3_bucket_object_lock_configuration` resource for a given S3 bucket.
 
 The `object_lock_configuration` configuration block supports the following arguments:
 
-* `object_lock_enabled` - (Optional, **Deprecated**) Indicates whether this bucket has an Object Lock configuration enabled. Valid value is `Enabled`. Use the top-level argument `object_lock_enabled` instead.
 * `rule` - (Optional) The Object Lock rule in place for this bucket ([documented below](#rule)).
 
 #### Rule
@@ -597,7 +562,6 @@ The `default_retention` configuration block supports the following arguments:
 
 ### Replication Configuration
 
-~> **NOTE:** Currently, changes to the `replication_configuration` configuration of _existing_ resources cannot be automatically detected by Terraform. To manage replication configuration changes to an S3 bucket, use the `aws_s3_bucket_replication_configuration` resource instead. If you use `replication_configuration` on an `aws_s3_bucket`, Terraform will assume management over the full replication configuration for the S3 bucket, treating additional replication configuration rules as drift. For this reason, `replication_configuration` cannot be mixed with the external `aws_s3_bucket_replication_configuration` resource for a given S3 bucket.
 
 The `replication_configuration` configuration block supports the following arguments:
 
@@ -673,7 +637,6 @@ The `sse_kms_encrypted_objects` configuration block supports the following argum
 
 ### Server Side Encryption Configuration
 
-~> **NOTE:** Currently, changes to the `server_side_encryption_configuration` configuration of _existing_ resources cannot be automatically detected by Terraform. To manage changes in encryption of an S3 bucket, use the `aws_s3_bucket_server_side_encryption_configuration` resource instead. If you use `server_side_encryption_configuration` on an `aws_s3_bucket`, Terraform will assume management over the encryption configuration for the S3 bucket, treating additional encryption changes as drift. For this reason, `server_side_encryption_configuration` cannot be mixed with the external `aws_s3_bucket_server_side_encryption_configuration` resource for a given S3 bucket.
 
 The `server_side_encryption_configuration` configuration block supports the following argument:
 
@@ -691,7 +654,6 @@ The `apply_server_side_encryption_by_default` configuration block supports the f
 
 ### Versioning
 
-~> **NOTE:** Currently, changes to the `versioning` configuration of _existing_ resources cannot be automatically detected by Terraform. To manage changes of versioning state to an S3 bucket, use the `aws_s3_bucket_versioning` resource instead. If you use `versioning` on an `aws_s3_bucket`, Terraform will assume management over the versioning state of the S3 bucket, treating additional versioning state changes as drift. For this reason, `versioning` cannot be mixed with the external `aws_s3_bucket_versioning` resource for a given S3 bucket.
 
 The `versioning` configuration block supports the following arguments:
 
@@ -700,7 +662,6 @@ The `versioning` configuration block supports the following arguments:
 
 ### Website
 
-~> **NOTE:** Currently, changes to the `website` configuration of _existing_ resources cannot be automatically detected by Terraform. To manage changes to the website configuration of an S3 bucket, use the `aws_s3_bucket_website_configuration` resource instead. If you use `website` on an `aws_s3_bucket`, Terraform will assume management over the configuration of the website of the S3 bucket, treating additional website configuration changes as drift. For this reason, `website` cannot be mixed with the external `aws_s3_bucket_website_configuration` resource for a given S3 bucket.
 
 The `website` configuration block supports the following arguments:
 
@@ -720,13 +681,13 @@ In addition to all arguments above, the following attributes are exported:
 * `bucket_regional_domain_name` - The bucket region-specific domain name. The bucket domain name including the region name, please refer [here](https://docs.aws.amazon.com/general/latest/gr/rande.html#s3_region) for format. Note: The AWS CloudFront allows specifying S3 region-specific endpoint when creating S3 origin, it will prevent [redirect issues](https://forums.aws.amazon.com/thread.jspa?threadID=216814) from CloudFront to S3 Origin URL.
 * `hosted_zone_id` - The [Route 53 Hosted Zone ID](https://docs.aws.amazon.com/general/latest/gr/rande.html#s3_website_region_endpoints) for this bucket's region.
 * `region` - The AWS region this bucket resides in.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 * `website_endpoint` - The website endpoint, if the bucket is configured with a website. If not, this will be an empty string.
 * `website_domain` - The domain of the website endpoint, if the bucket is configured with a website. If not, this will be an empty string. This is used to create Route 53 alias records.
 
 ## Timeouts
 
-[Configuration options](https://developer.hashicorp.com/terraform/language/resources/syntax#operation-timeouts):
+Configuration options:
 
 - `create` - (Default `20m`)
 - `read` - (Default `20m`)

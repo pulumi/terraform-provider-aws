@@ -46,11 +46,11 @@ The following arguments are supported:
 
 ## Attributes Reference
 
-See the [LB Target Group Resource](/docs/providers/aws/r/lb_target_group.html) for details
+See the LB Target Group Resource for details
 on the returned attributes - they are identical.
 
 ## Timeouts
 
-[Configuration options](https://developer.hashicorp.com/terraform/language/resources/syntax#operation-timeouts):
+Configuration options:
 
 - `read` - (Default `20m`)

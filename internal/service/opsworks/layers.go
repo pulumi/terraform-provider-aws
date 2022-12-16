@@ -400,7 +400,7 @@ func (lt *opsworksLayerType) resourceSchema() *schema.Resource {
 			Required: true,
 		},
 		"tags":     tftags.TagsSchema(),
-		"tags_all": tftags.TagsSchemaComputed(),
+		"tags_all": tftags.TagsSchemaTrulyComputed(),
 		"use_ebs_optimized_instances": {
 			Type:     schema.TypeBool,
 			Optional: true,
