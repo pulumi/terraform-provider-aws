@@ -48,7 +48,7 @@ func TestAccGameLiftGameSessionQueue_basic(t *testing.T) {
 	}
 	uTimeoutInSeconds := int64(600)
 
-	resource.Test(t, resource.TestCase{
+	resource.ParallelTest(t, resource.TestCase{
 		PreCheck: func() {
 			acctest.PreCheck(t)
 			acctest.PreCheckPartitionHasService(gamelift.EndpointsID, t)

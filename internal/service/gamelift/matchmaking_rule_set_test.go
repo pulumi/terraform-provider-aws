@@ -7,7 +7,6 @@ import (
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/gamelift"
-	//"github.com/hashicorp/aws-sdk-go-base/v2/awsv1shim/v2/tfawserr"
 	sdkacctest "github.com/hashicorp/terraform-plugin-sdk/v2/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
@@ -15,17 +14,15 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/conns"
 )
 
-func TestAccAWSGameliftMatchmakingRuleSet_basic(t *testing.T) {
+func TestAccMatchmakingRuleSet_basic(t *testing.T) {
 
 	var conf gamelift.MatchmakingRuleSet
 
-	//rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
-	resourceName := "aws_gamelift_matchmaking_configuration.test"
 	ruleSetName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
-
+	resourceName := "aws_gamelift_matchmaking_rule_set.test"
 	maxPlayers := 5
 
-	resource.ParallelTest(t, resource.TestCase{
+	resource.Test(t, resource.TestCase{
 		PreCheck: func() {
 			acctest.PreCheck(t)
 			acctest.PreCheckPartitionHasService(gamelift.EndpointsID, t)
@@ -57,6 +54,7 @@ func TestAccAWSGameliftMatchmakingRuleSet_basic(t *testing.T) {
 func testAccCheckMatchmakingRuleSetExists(n string, res *gamelift.MatchmakingRuleSet) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[n]
+
 		if !ok {
 			return fmt.Errorf("not found: %s", n)
 		}
@@ -66,7 +64,6 @@ func testAccCheckMatchmakingRuleSetExists(n string, res *gamelift.MatchmakingRul
 		}
 
 		conn := acctest.Provider.Meta().(*conns.AWSClient).GameLiftConn
-
 
 		name := rs.Primary.Attributes["name"]
 		out, err := conn.DescribeMatchmakingRuleSets(&gamelift.DescribeMatchmakingRuleSetsInput{
@@ -108,4 +105,3 @@ RULE_SET_BODY
 }
 `, rName, testAccMatchmakingRuleSetBody(maxPlayers))
 }
-

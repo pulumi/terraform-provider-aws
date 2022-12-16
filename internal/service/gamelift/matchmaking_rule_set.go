@@ -8,11 +8,12 @@ import (
 	"github.com/aws/aws-sdk-go/service/gamelift"
 	"github.com/hashicorp/aws-sdk-go-base/v2/awsv1shim/v2/tfawserr"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/structure"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
 	"github.com/hashicorp/terraform-provider-aws/internal/conns"
 	tftags "github.com/hashicorp/terraform-provider-aws/internal/tags"
 	"github.com/hashicorp/terraform-provider-aws/internal/verify"
-	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/structure"
+	"github.com/ryboe/q"
 )
 
 func ResourceMatchmakingRuleSet() *schema.Resource {
@@ -22,7 +23,7 @@ func ResourceMatchmakingRuleSet() *schema.Resource {
 		Update: resourceMatchmakingRuleSetUpdate,
 		Delete: resourceMatchmakingRuleSetDelete,
 		Importer: &schema.ResourceImporter{
-			State: schema.ImportStatePassthrough,
+			StateContext: schema.ImportStatePassthroughContext,
 		},
 
 		Schema: map[string]*schema.Schema{
@@ -50,22 +51,23 @@ func ResourceMatchmakingRuleSet() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
-			"tags": tftags.TagsSchema(),
+			"tags":     tftags.TagsSchema(),
 			"tags_all": tftags.TagsSchemaTrulyComputed(),
 		},
 	}
 }
-
 
 func resourceMatchmakingRuleSetCreate(d *schema.ResourceData, meta interface{}) error {
 	conn := meta.(*conns.AWSClient).GameLiftConn
 	defaultTagsConfig := meta.(*conns.AWSClient).DefaultTagsConfig
 	tags := defaultTagsConfig.MergeTags(tftags.New(d.Get("tags").(map[string]interface{})))
 
+	q.Q(defaultTagsConfig, tags, Tags(tags.IgnoreAWS()), d.Get("tags"), d.Get("tags_all"))
+
 	input := gamelift.CreateMatchmakingRuleSetInput{
 		Name:        aws.String(d.Get("name").(string)),
 		RuleSetBody: aws.String(d.Get("rule_set_body").(string)),
-		Tags:                  Tags(tags.IgnoreAWS()),
+		Tags:        Tags(tags.IgnoreAWS()),
 	}
 	log.Printf("[INFO] Creating GameLift Matchmaking Rule Set: %s", input)
 	out, err := conn.CreateMatchmakingRuleSet(&input)
@@ -123,9 +125,12 @@ func resourceMatchmakingRuleSetRead(d *schema.ResourceData, meta interface{}) er
 		return fmt.Errorf("error setting tags: %w", err)
 	}
 
+	if err := d.Set("tags_all", tags.Map()); err != nil {
+		return fmt.Errorf("error setting tags_all: %w", err)
+	}
+
 	return nil
 }
-
 
 func resourceMatchmakingRuleSetUpdate(d *schema.ResourceData, meta interface{}) error {
 	conn := meta.(*conns.AWSClient).GameLiftConn
