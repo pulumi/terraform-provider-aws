@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"regexp"
 	"testing"
-	"time"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/gamelift"
@@ -13,7 +12,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 	"github.com/hashicorp/terraform-provider-aws/internal/conns"
-	//tfgamelift "github.com/hashicorp/terraform-provider-aws/internal/service/gamelift"
+	tfgamelift "github.com/hashicorp/terraform-provider-aws/internal/service/gamelift"
 )
 
 func TestAccMatchmakingRuleSet_basic(t *testing.T) {
@@ -75,14 +74,9 @@ func TestAccMatchmakingRuleSet_disappears(t *testing.T) {
 				Config: testAccMatchmakingRuleSetBasicConfig(ruleSetName, maxPlayers),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckMatchmakingRuleSetExists(resourceName, &conf),
-					//acctest.CheckResourceDisappears(acctest.Provider, tfgamelift.ResourceMatchmakingRuleSet(), resourceName),
+					acctest.CheckResourceDisappears(acctest.Provider, tfgamelift.ResourceMatchmakingRuleSet(), resourceName),
 				),
-				//ExpectNonEmptyPlan: true,
-			},
-			{
-				ResourceName:      resourceName,
-				ImportState:       true,
-				ImportStateVerify: true,
+				ExpectNonEmptyPlan: true,
 			},
 		},
 	})

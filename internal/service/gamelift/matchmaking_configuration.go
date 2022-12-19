@@ -63,6 +63,12 @@ func ResourceMatchMakingConfiguration() *schema.Resource {
 				Optional:     true,
 				ValidateFunc: validation.StringLenBetween(1, 1024),
 			},
+			"flex_match_mode": {
+				Type:         schema.TypeString,
+				Optional:     true,
+				Computed:     true,
+				ValidateFunc: validation.StringInSlice([]string{gamelift.FlexMatchModeStandalone, gamelift.FlexMatchModeWithQueue}, false),
+			},
 			"game_property": {
 				Type:     schema.TypeSet,
 				Optional: true,
@@ -166,6 +172,9 @@ func resourceMatchmakingConfigurationCreate(d *schema.ResourceData, meta interfa
 	if v, ok := d.GetOk("description"); ok {
 		input.Description = aws.String(v.(string))
 	}
+	if v, ok := d.GetOk("flex_match_mode"); ok {
+		input.FlexMatchMode = aws.String(v.(string))
+	}
 	if v, ok := d.GetOk("game_property"); ok {
 		set := v.(*schema.Set)
 		input.GameProperties = expandGameliftGameProperties(set.List())
@@ -200,7 +209,7 @@ func resourceMatchmakingConfigurationRead(d *schema.ResourceData, meta interface
 		Names: aws.StringSlice([]string{d.Id()}),
 	})
 	if err != nil {
-		if tfawserr.ErrCodeEquals(err, gamelift.ErrCodeNotFoundException) {
+		if tfawserr.ErrStatusCodeEquals(err, 400) || tfawserr.ErrCodeEquals(err, gamelift.ErrCodeNotFoundException) {
 			log.Printf("[WARN] GameLift Matchmaking Configuration (%s) not found, removing from state", d.Id())
 			d.SetId("")
 			return nil
@@ -229,6 +238,7 @@ func resourceMatchmakingConfigurationRead(d *schema.ResourceData, meta interface
 	d.Set("creation_time", configuration.CreationTime.Format("2006-01-02 15:04:05"))
 	d.Set("custom_event_data", configuration.CustomEventData)
 	d.Set("description", configuration.Description)
+	d.Set("flex_match_mode", configuration.FlexMatchMode)
 	d.Set("game_property", flattenGameliftGameProperties(configuration.GameProperties))
 	d.Set("game_session_data", configuration.GameSessionData)
 	d.Set("game_session_queue_arns", configuration.GameSessionQueueArns)
@@ -285,6 +295,11 @@ func resourceMatchmakingConfigurationUpdate(d *schema.ResourceData, meta interfa
 	if v, ok := d.GetOk("description"); ok {
 		input.Description = aws.String(v.(string))
 	}
+	if d.HasChange("flex_match_mode") {
+		if v, ok := d.GetOk("flex_match_mode"); ok {
+			input.FlexMatchMode = aws.String(v.(string))
+		}
+	}
 	if v, ok := d.GetOk("game_property"); ok {
 		set := v.(*schema.Set)
 		input.GameProperties = expandGameliftGameProperties(set.List())
@@ -323,7 +338,7 @@ func resourceMatchmakingConfigurationDelete(d *schema.ResourceData, meta interfa
 	_, err := conn.DeleteMatchmakingConfiguration(&gamelift.DeleteMatchmakingConfigurationInput{
 		Name: aws.String(d.Id()),
 	})
-	if tfawserr.ErrCodeEquals(err, gamelift.ErrCodeNotFoundException) {
+	if tfawserr.ErrStatusCodeEquals(err, 400) || tfawserr.ErrCodeEquals(err, gamelift.ErrCodeNotFoundException) {
 		return nil
 	}
 	if err != nil {
