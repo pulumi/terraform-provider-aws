@@ -13,7 +13,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/conns"
 	tftags "github.com/hashicorp/terraform-provider-aws/internal/tags"
 	"github.com/hashicorp/terraform-provider-aws/internal/verify"
-	"github.com/ryboe/q"
+	//"github.com/ryboe/q"
 )
 
 func ResourceMatchmakingRuleSet() *schema.Resource {
@@ -61,8 +61,6 @@ func resourceMatchmakingRuleSetCreate(d *schema.ResourceData, meta interface{}) 
 	conn := meta.(*conns.AWSClient).GameLiftConn
 	defaultTagsConfig := meta.(*conns.AWSClient).DefaultTagsConfig
 	tags := defaultTagsConfig.MergeTags(tftags.New(d.Get("tags").(map[string]interface{})))
-
-	q.Q(defaultTagsConfig, tags, Tags(tags.IgnoreAWS()), d.Get("tags"), d.Get("tags_all"))
 
 	input := gamelift.CreateMatchmakingRuleSetInput{
 		Name:        aws.String(d.Get("name").(string)),

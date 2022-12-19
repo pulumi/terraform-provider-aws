@@ -4,16 +4,16 @@ import (
 	"fmt"
 	"regexp"
 	"testing"
-	"time"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/gamelift"
-	"github.com/hashicorp/aws-sdk-go-base/v2/awsv1shim/v2/tfawserr"
+
 	sdkacctest "github.com/hashicorp/terraform-plugin-sdk/v2/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 	"github.com/hashicorp/terraform-provider-aws/internal/conns"
+	//tfgamelift "github.com/hashicorp/terraform-provider-aws/internal/service/gamelift"
 )
 
 func TestAccMatchmakingConfiguration_basic(t *testing.T) {
@@ -129,9 +129,9 @@ func TestAccMatchmakingConfiguration_disappears(t *testing.T) {
 				Config: testAccGameServerMatchmakingConfiguration_basic(rName, queueName, ruleSetName, additionalParameters, 10),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckMatchmakingConfigurationExists(resourceName, &conf),
-					//testAccCheckMatchmakingConfigurationDisappears(&conf), # FIXME: not sure why this is failing
+					//acctest.CheckResourceDisappears(acctest.Provider, tfgamelift.ResourceMatchMakingConfiguration(), resourceName),
 				),
-				//ExpectNonEmptyPlan: true,
+				ExpectNonEmptyPlan: true,
 			},
 		},
 	})
@@ -155,6 +155,7 @@ func testAccCheckMatchmakingConfigurationExists(n string, res *gamelift.Matchmak
 		out, err := conn.DescribeMatchmakingConfigurations(&gamelift.DescribeMatchmakingConfigurationsInput{
 			Names: aws.StringSlice([]string{name}),
 		})
+
 		if err != nil {
 			return err
 		}
@@ -162,35 +163,9 @@ func testAccCheckMatchmakingConfigurationExists(n string, res *gamelift.Matchmak
 		if len(configurations) == 0 {
 			return fmt.Errorf("GameLift Matchmaking Configuration %q not found", name)
 		}
-
 		*res = *configurations[0]
 
 		return nil
-	}
-}
-
-func testAccCheckMatchmakingConfigurationDisappears(res *gamelift.MatchmakingConfiguration) resource.TestCheckFunc {
-	return func(s *terraform.State) error {
-		conn := acctest.Provider.Meta().(*conns.AWSClient).GameLiftConn
-
-		input := &gamelift.DeleteMatchmakingConfigurationInput{Name: res.Name}
-
-		// Matchmaking configurations can take a while to delete
-		err := resource.Retry(60*time.Minute, func() *resource.RetryError {
-			_, err := conn.DeleteMatchmakingConfiguration(input)
-			if err != nil {
-				if tfawserr.ErrMessageContains(err, gamelift.ErrCodeNotFoundException, "") {
-					return nil
-				}
-				if tfawserr.ErrMessageContains(err, gamelift.ErrCodeInvalidRequestException, "is currently in use") {
-					return resource.RetryableError(err)
-				}
-				return resource.NonRetryableError(err)
-			}
-			return nil
-		})
-
-		return err
 	}
 }
 

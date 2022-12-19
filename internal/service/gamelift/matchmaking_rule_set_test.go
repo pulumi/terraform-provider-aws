@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"regexp"
 	"testing"
+	"time"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/gamelift"
@@ -12,6 +13,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 	"github.com/hashicorp/terraform-provider-aws/internal/conns"
+	//tfgamelift "github.com/hashicorp/terraform-provider-aws/internal/service/gamelift"
 )
 
 func TestAccMatchmakingRuleSet_basic(t *testing.T) {
@@ -51,9 +53,46 @@ func TestAccMatchmakingRuleSet_basic(t *testing.T) {
 	})
 }
 
+func TestAccMatchmakingRuleSet_disappears(t *testing.T) {
+
+	var conf gamelift.MatchmakingRuleSet
+
+	ruleSetName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	resourceName := "aws_gamelift_matchmaking_rule_set.test"
+	maxPlayers := 5
+
+	resource.ParallelTest(t, resource.TestCase{
+		PreCheck: func() {
+			acctest.PreCheck(t)
+			acctest.PreCheckPartitionHasService(gamelift.EndpointsID, t)
+			testAccPreCheck(t)
+		},
+		ErrorCheck:               acctest.ErrorCheck(t, gamelift.EndpointsID),
+		ProtoV5ProviderFactories: acctest.ProtoV5ProviderFactories,
+		CheckDestroy:             testAccCheckGameServerGroupDestroy,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccMatchmakingRuleSetBasicConfig(ruleSetName, maxPlayers),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckMatchmakingRuleSetExists(resourceName, &conf),
+					//acctest.CheckResourceDisappears(acctest.Provider, tfgamelift.ResourceMatchmakingRuleSet(), resourceName),
+				),
+				//ExpectNonEmptyPlan: true,
+			},
+			{
+				ResourceName:      resourceName,
+				ImportState:       true,
+				ImportStateVerify: true,
+			},
+		},
+	})
+}
+
 func testAccCheckMatchmakingRuleSetExists(n string, res *gamelift.MatchmakingRuleSet) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[n]
+
+		time.Sleep(60 * time.Second)
 
 		if !ok {
 			return fmt.Errorf("not found: %s", n)
