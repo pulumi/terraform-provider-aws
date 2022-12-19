@@ -13,7 +13,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 	"github.com/hashicorp/terraform-provider-aws/internal/conns"
-	//tfgamelift "github.com/hashicorp/terraform-provider-aws/internal/service/gamelift"
+	tfgamelift "github.com/hashicorp/terraform-provider-aws/internal/service/gamelift"
 )
 
 func TestAccMatchmakingConfiguration_basic(t *testing.T) {
@@ -129,7 +129,7 @@ func TestAccMatchmakingConfiguration_disappears(t *testing.T) {
 				Config: testAccGameServerMatchmakingConfiguration_basic(rName, queueName, ruleSetName, additionalParameters, 10),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckMatchmakingConfigurationExists(resourceName, &conf),
-					//acctest.CheckResourceDisappears(acctest.Provider, tfgamelift.ResourceMatchMakingConfiguration(), resourceName),
+					acctest.CheckResourceDisappears(acctest.Provider, tfgamelift.ResourceMatchMakingConfiguration(), resourceName),
 				),
 				ExpectNonEmptyPlan: true,
 			},

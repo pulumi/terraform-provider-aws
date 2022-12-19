@@ -13,7 +13,6 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/conns"
 	tftags "github.com/hashicorp/terraform-provider-aws/internal/tags"
 	"github.com/hashicorp/terraform-provider-aws/internal/verify"
-	//"github.com/ryboe/q"
 )
 
 func ResourceMatchmakingRuleSet() *schema.Resource {
@@ -73,7 +72,7 @@ func resourceMatchmakingRuleSetCreate(d *schema.ResourceData, meta interface{}) 
 		return fmt.Errorf("error creating GameLift Matchmaking Rule Set: %s", err)
 	}
 
-	d.SetId(aws.StringValue(out.RuleSet.RuleSetArn))
+	d.SetId(aws.StringValue(out.RuleSet.RuleSetName))
 
 	return resourceMatchmakingRuleSetRead(d, meta)
 }
@@ -81,14 +80,13 @@ func resourceMatchmakingRuleSetCreate(d *schema.ResourceData, meta interface{}) 
 func resourceMatchmakingRuleSetRead(d *schema.ResourceData, meta interface{}) error {
 	conn := meta.(*conns.AWSClient).GameLiftConn
 	defaultTagsConfig := meta.(*conns.AWSClient).DefaultTagsConfig
-	//ignoreTagsConfig := meta.(*conns.AWSClient).IgnoreTagsConfig
 
 	log.Printf("[INFO] Describing GameLift Matchmaking Rule Set: %s", d.Id())
 	out, err := conn.DescribeMatchmakingRuleSets(&gamelift.DescribeMatchmakingRuleSetsInput{
 		Names: aws.StringSlice([]string{d.Id()}),
 	})
 	if err != nil {
-		if tfawserr.ErrCodeEquals(err, gamelift.ErrCodeNotFoundException) {
+		if tfawserr.ErrStatusCodeEquals(err, 400) || tfawserr.ErrCodeEquals(err, gamelift.ErrCodeNotFoundException) {
 			log.Printf("[WARN] GameLift Matchmaking Rule Set (%s) not found, removing from state", d.Id())
 			d.SetId("")
 			return nil
@@ -151,7 +149,7 @@ func resourceMatchmakingRuleSetDelete(d *schema.ResourceData, meta interface{}) 
 	conn := meta.(*conns.AWSClient).GameLiftConn
 	log.Printf("[INFO] Deleting GameLift Matchmaking Rule Set: %s", d.Id())
 	_, err := conn.DeleteMatchmakingRuleSet(&gamelift.DeleteMatchmakingRuleSetInput{
-		Name: aws.String(d.Get("name").(string)),
+		Name: aws.String(d.Id()),
 	})
 	if tfawserr.ErrCodeEquals(err, gamelift.ErrCodeNotFoundException) {
 		return nil
