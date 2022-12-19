@@ -92,8 +92,6 @@ func testAccCheckMatchmakingRuleSetExists(n string, res *gamelift.MatchmakingRul
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[n]
 
-		time.Sleep(60 * time.Second)
-
 		if !ok {
 			return fmt.Errorf("not found: %s", n)
 		}
