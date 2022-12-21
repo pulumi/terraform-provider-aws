@@ -14,6 +14,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/aws"
 
 	"github.com/hashicorp/terraform-provider-aws/internal/service/ecr"
+	"github.com/hashicorp/terraform-provider-aws/internal/service/gamelift"
 	"github.com/hashicorp/terraform-provider-aws/internal/service/s3legacy"
 
 	"github.com/aws/aws-sdk-go-v2/feature/ec2/imds"
@@ -237,6 +238,9 @@ func New(ctx context.Context) (*schema.Provider, error) {
 
 		ResourcesMap: map[string]*schema.Resource{
 			"aws_s3_bucket_legacy": s3legacy.ResourceBucketLegacy(),
+
+			"aws_gamelift_matchmaking_configuration": gamelift.ResourceMatchMakingConfiguration(),
+			"aws_gamelift_matchmaking_rule_set":      gamelift.ResourceMatchmakingRuleSet(),
 		},
 	}
 
