@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/hashicorp/terraform-provider-aws/internal/service/ecr"
+	"github.com/hashicorp/terraform-provider-aws/internal/service/gamelift"
 	"github.com/hashicorp/terraform-provider-aws/internal/service/globalaccelerator"
 	"github.com/hashicorp/terraform-provider-aws/internal/service/meta"
 	"github.com/hashicorp/terraform-provider-aws/internal/service/s3legacy"
@@ -275,6 +276,9 @@ func New(ctx context.Context) (*schema.Provider, error) {
 
 			"aws_globalaccelerator_endpoint_group": globalaccelerator.ResourceEndpointGroup(),
 			"aws_globalaccelerator_listener":       globalaccelerator.ResourceListener(),
+
+			"aws_gamelift_matchmaking_configuration": gamelift.ResourceMatchMakingConfiguration(),
+			"aws_gamelift_matchmaking_rule_set":      gamelift.ResourceMatchmakingRuleSet(),
 		},
 	}
 
