@@ -10,7 +10,7 @@ description: |-
 
 Provides a resource to manage whether serial console access is enabled for your AWS account in the current AWS region.
 
-~> **NOTE:** Removing this Terraform resource disables serial console access.
+~> **NOTE:** Removing this resource disables serial console access.
 
 ## Example Usage
 

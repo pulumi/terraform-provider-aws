@@ -99,7 +99,7 @@ func ResourceKey() *schema.Resource {
 				ValidateFunc:     validation.StringIsJSON,
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 		},
 	}
 }

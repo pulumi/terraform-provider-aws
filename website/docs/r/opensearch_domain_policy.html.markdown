@@ -53,7 +53,7 @@ No additional attributes are exported.
 
 ## Timeouts
 
-[Configuration options](https://developer.hashicorp.com/terraform/language/resources/syntax#operation-timeouts):
+Configuration options:
 
 * `update` - (Default `180m`)
 * `delete` - (Default `90m`)

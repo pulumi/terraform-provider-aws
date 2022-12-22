@@ -54,7 +54,7 @@ resource "aws_backup_selection" "example" {
 ```terraform
 resource "aws_backup_selection" "example" {
   iam_role_arn = aws_iam_role.example.arn
-  name         = "tf_example_backup_selection"
+  name         = "my_example_backup_selection"
   plan_id      = aws_backup_plan.example.id
 
   selection_tag {
@@ -70,7 +70,7 @@ resource "aws_backup_selection" "example" {
 ```terraform
 resource "aws_backup_selection" "example" {
   iam_role_arn = aws_iam_role.example.arn
-  name         = "tf_example_backup_selection"
+  name         = "my_example_backup_selection"
   plan_id      = aws_backup_plan.example.id
   resources    = ["*"]
 
@@ -100,7 +100,7 @@ resource "aws_backup_selection" "example" {
 ```terraform
 resource "aws_backup_selection" "example" {
   iam_role_arn = aws_iam_role.example.arn
-  name         = "tf_example_backup_selection"
+  name         = "my_example_backup_selection"
   plan_id      = aws_backup_plan.example.id
 
   resources = [
@@ -116,7 +116,7 @@ resource "aws_backup_selection" "example" {
 ```terraform
 resource "aws_backup_selection" "example" {
   iam_role_arn = aws_iam_role.example.arn
-  name         = "tf_example_backup_selection"
+  name         = "my_example_backup_selection"
   plan_id      = aws_backup_plan.example.id
 
   not_resources = [

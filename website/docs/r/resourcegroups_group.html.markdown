@@ -42,7 +42,7 @@ The following arguments are supported:
 * `configuration` - (Optional) A configuration associates the resource group with an AWS service and specifies how the service can interact with the resources in the group. See below for details.
 * `description` - (Optional) A description of the resource group.
 * `resource_query` - (Required) A `resource_query` block. Resource queries are documented below.
-* `tags` - (Optional) Key-value map of resource tags. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Key-value map of resource tags. .If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 The `resource_query` block supports the following arguments:
 
@@ -64,7 +64,7 @@ The `parameters` block supports the following arguments:
 In addition to all arguments above, the following attributes are exported:
 
 * `arn` - The ARN assigned by AWS for this resource group.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

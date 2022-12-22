@@ -170,7 +170,7 @@ func ResourceDocument() *schema.Resource {
 				},
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 			"target_type": {
 				Type:     schema.TypeString,
 				Optional: true,

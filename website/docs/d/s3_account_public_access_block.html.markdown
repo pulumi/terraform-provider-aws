@@ -21,7 +21,7 @@ data "aws_s3_account_public_access_block" "example" {
 
 The following arguments are supported:
 
-* `account_id` - (Optional) AWS account ID to configure. Defaults to automatically determined account ID of the Terraform AWS provider.
+* `account_id` - (Optional) AWS account ID to configure. Defaults to automatically determined account ID of the AWS provider.
 
 ## Attributes Reference
 

@@ -3,7 +3,7 @@ subcategory: "Elasticsearch"
 layout: "aws"
 page_title: "AWS: aws_elasticsearch_domain_saml_options"
 description: |-
-  Terraform resource for managing SAML authentication options for an AWS Elasticsearch Domain.
+  Resource for managing SAML authentication options for an AWS Elasticsearch Domain.
 ---
 
 # Resource: aws_elasticsearch_domain_saml_options

@@ -3,12 +3,12 @@ subcategory: "Kendra"
 layout: "aws"
 page_title: "AWS: aws_kendra_data_source"
 description: |-
-  Terraform resource for managing an AWS Kendra Data Source.
+  Resource for managing an AWS Kendra Data Source.
 ---
 
 # Resource: aws_kendra_data_source
 
-Terraform resource for managing an AWS Kendra Data Source.
+Resource for managing an AWS Kendra Data Source.
 
 ## Example Usage
 
@@ -348,7 +348,7 @@ The following arguments are optional:
 * `description` - (Optional) A description for the Data Source connector.
 * `language_code` - (Optional) The code for a language. This allows you to support a language for all documents when creating the Data Source connector. English is supported by default. For more information on supported languages, including their codes, see [Adding documents in languages other than English](https://docs.aws.amazon.com/kendra/latest/dg/in-adding-languages.html).
 * `schedule` - (Optional) Sets the frequency for Amazon Kendra to check the documents in your Data Source repository and update the index. If you don't set a schedule Amazon Kendra will not periodically update the index. You can call the `StartDataSourceSyncJob` API to update the index.
-* `tags` - (Optional) Key-value map of resource tags. If configured with a provider [`default_tags` configuration block](https://www.terraform.io/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Key-value map of resource tags. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ### `configuration`
 
@@ -495,11 +495,11 @@ In addition to all arguments above, the following attributes are exported:
 * `id` - The unique identifiers of the Data Source and index separated by a slash (`/`).
 * `status` - The current status of the Data Source. When the status is `ACTIVE` the Data Source is ready to use. When the status is `FAILED`, the `error_message` field contains the reason that the Data Source failed.
 * `updated_at` - The Unix timestamp of when the Data Source was last updated.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Timeouts
 
-[Configuration options](https://developer.hashicorp.com/terraform/language/resources/syntax#operation-timeouts):
+Configuration options:
 
 * `create` - (Default `30m`)
 * `update` - (Default `30m`)

@@ -119,7 +119,7 @@ func ResourceFlowLog() *schema.Resource {
 				ExactlyOneOf: []string{"eni_id", "subnet_id", "vpc_id", "transit_gateway_id", "transit_gateway_attachment_id"},
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 			"traffic_type": {
 				Type:         schema.TypeString,
 				Optional:     true,

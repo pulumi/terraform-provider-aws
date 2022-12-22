@@ -11,13 +11,13 @@ description: |-
 Provides an network ACL resource. You might set up network ACLs with rules similar
 to your security groups in order to add an additional layer of security to your VPC.
 
-~> **NOTE on Network ACLs and Network ACL Rules:** Terraform currently
-provides both a standalone [Network ACL Rule](network_acl_rule.html) resource and a Network ACL resource with rules
+~> **NOTE on Network ACLs and Network ACL Rules:** This provider currently
+provides both a standalone Network ACL Rule resource and a Network ACL resource with rules
 defined in-line. At this time you cannot use a Network ACL with in-line rules
 in conjunction with any Network ACL Rule resources. Doing so will cause
 a conflict of rule settings and will overwrite rules.
 
-~> **NOTE on Network ACLs and Network ACL Associations:** Terraform provides both a standalone [network ACL association](network_acl_association.html)
+~> **NOTE on Network ACLs and Network ACL Associations:** the provider provides both a standalone network ACL association
 resource and a network ACL resource with a `subnet_ids` attribute. Do not use the same subnet ID in both a network ACL
 resource and a network ACL association resource. Doing so will cause a conflict of associations and will overwrite the association.
 
@@ -58,14 +58,12 @@ The following arguments are supported:
 * `vpc_id` - (Required) The ID of the associated VPC.
 * `subnet_ids` - (Optional) A list of Subnet IDs to apply the ACL to
 * `ingress` - (Optional) Specifies an ingress rule. Parameters defined below.
-  This argument is processed in [attribute-as-blocks mode](https://www.terraform.io/docs/configuration/attr-as-blocks.html).
 * `egress` - (Optional) Specifies an egress rule. Parameters defined below.
-  This argument is processed in [attribute-as-blocks mode](https://www.terraform.io/docs/configuration/attr-as-blocks.html).
-* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ### egress and ingress
 
-Both arguments are processed in [attribute-as-blocks mode](https://www.terraform.io/docs/configuration/attr-as-blocks.html).
+Both arguments are processed in attribute-as-blocks mode.
 
 Both `egress` and `ingress` support the following keys:
 
@@ -90,7 +88,7 @@ In addition to all arguments above, the following attributes are exported:
 * `id` - The ID of the network ACL
 * `arn` - The ARN of the network ACL
 * `owner_id` - The ID of the AWS account that owns the network ACL.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

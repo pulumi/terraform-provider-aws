@@ -3,12 +3,12 @@ subcategory: "SESv2 (Simple Email V2)"
 layout: "aws"
 page_title: "AWS: aws_sesv2_dedicated_ip_pool"
 description: |-
-  Terraform data source for managing an AWS SESv2 (Simple Email V2) Dedicated IP Pool.
+  Data source for managing an AWS SESv2 (Simple Email V2) Dedicated IP Pool.
 ---
 
 # Data Source: aws_sesv2_dedicated_ip_pool
 
-Terraform data source for managing an AWS SESv2 (Simple Email V2) Dedicated IP Pool.
+Data source for managing an AWS SESv2 (Simple Email V2) Dedicated IP Pool.
 
 ## Example Usage
 

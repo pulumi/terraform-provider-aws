@@ -92,7 +92,7 @@ func ResourceApp() *schema.Resource {
 				ExactlyOneOf: []string{"space_name", "user_profile_name"},
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 			"user_profile_name": {
 				Type:         schema.TypeString,
 				ForceNew:     true,

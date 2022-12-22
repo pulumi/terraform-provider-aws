@@ -58,7 +58,7 @@ The following arguments are supported:
 * `description` - (Optional) Information about the extension.
 * `action_point` - (Required) The action points defined in the extension. [Detailed below](#action_point).
 * `parameter` - (Optional) The parameters accepted by the extension. You specify parameter values when you associate the extension to an AppConfig resource by using the CreateExtensionAssociation API action. For Lambda extension actions, these parameters are included in the Lambda request object. [Detailed below](#parameter).
-* `tags` - (Optional) Map of tags to assign to the resource. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Map of tags to assign to the resource. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ### `action_point`
 

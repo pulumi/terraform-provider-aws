@@ -45,7 +45,7 @@ func ResourceTransitGatewayConnect() *schema.Resource {
 				ValidateFunc: validation.StringInSlice(ec2.ProtocolValue_Values(), false),
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 			"transit_gateway_default_route_table_association": {
 				Type:     schema.TypeBool,
 				Optional: true,

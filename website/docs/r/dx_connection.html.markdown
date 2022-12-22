@@ -59,8 +59,8 @@ The following arguments are supported:
 
 ~> **NOTE:** Changing the value of `request_macsec` will cause the resource to be destroyed and re-created.
 
-* `skip_destroy` - (Optional) Set to true if you do not wish the connection to be deleted at destroy time, and instead just removed from the Terraform state.
-* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `skip_destroy` - (Optional) Set to true if you do not wish the connection to be deleted at destroy time, and instead just removed from the state.
+* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ## Attributes Reference
 
@@ -74,7 +74,7 @@ In addition to all arguments above, the following attributes are exported:
 * `macsec_capable` - Boolean value indicating whether the connection supports MAC Security (MACsec).
 * `owner_account_id` - The ID of the AWS account that owns the connection.
 * `port_encryption_status` - The MAC Security (MACsec) port link status of the connection.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 * `vlan_id` - The VLAN ID.
 
 ## Import

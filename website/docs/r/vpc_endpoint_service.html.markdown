@@ -9,10 +9,10 @@ description: |-
 # Resource: aws_vpc_endpoint_service
 
 Provides a VPC Endpoint Service resource.
-Service consumers can create an _Interface_ [VPC Endpoint](vpc_endpoint.html) to connect to the service.
+Service consumers can create an _Interface_ VPC Endpoint to connect to the service.
 
-~> **NOTE on VPC Endpoint Services and VPC Endpoint Service Allowed Principals:** Terraform provides
-both a standalone [VPC Endpoint Service Allowed Principal](vpc_endpoint_service_allowed_principal.html) resource
+~> **NOTE on VPC Endpoint Services and VPC Endpoint Service Allowed Principals:** This provider provides
+both a standalone VPC Endpoint Service Allowed Principal resource
 and a VPC Endpoint Service resource with an `allowed_principals` attribute. Do not use the same principal ARN in both
 a VPC Endpoint Service resource and a VPC Endpoint Service Allowed Principal resource. Doing so will cause a conflict
 and will overwrite the association.
@@ -45,7 +45,7 @@ The following arguments are supported:
 * `allowed_principals` - (Optional) The ARNs of one or more principals allowed to discover the endpoint service.
 * `gateway_load_balancer_arns` - (Optional) Amazon Resource Names (ARNs) of one or more Gateway Load Balancers for the endpoint service.
 * `network_load_balancer_arns` - (Optional) Amazon Resource Names (ARNs) of one or more Network Load Balancers for the endpoint service.
-* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) A map of tags to assign to the resource. .If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 * `private_dns_name` - (Optional) The private DNS name for the service.
 * `supported_ip_address_types` - (Optional) The supported IP address types. The possible values are `ipv4` and `ipv6`.
 
@@ -66,7 +66,7 @@ In addition to all arguments above, the following attributes are exported:
     * `state` - Verification state of the VPC endpoint service. Consumers of the endpoint service can use the private name only when the state is `verified`.
     * `type` - Endpoint service verification type, for example `TXT`.
     * `value` - Value the service provider adds to the private DNS name domain record before verification.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

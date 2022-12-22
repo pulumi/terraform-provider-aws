@@ -3,12 +3,12 @@ subcategory: "Audit Manager"
 layout: "aws"
 page_title: "AWS: aws_auditmanager_control"
 description: |-
-  Terraform resource for managing an AWS Audit Manager Control.
+  Resource for managing an AWS Audit Manager Control.
 ---
 
 # Resource: aws_auditmanager_control
 
-Terraform resource for managing an AWS Audit Manager Control.
+Resource for managing an AWS Audit Manager Control.
 
 ## Example Usage
 
@@ -38,7 +38,7 @@ The following arguments are optional:
 * `action_plan_instructions` - (Optional) Recommended actions to carry out if the control isn't fulfilled.
 * `action_plan_title` - (Optional) Title of the action plan for remediating the control.
 * `description` - (Optional) Description of the control.
-* `tags` - (Optional) A map of tags to assign to the control. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) A map of tags to assign to the control. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 * `testing_information` - (Optional) Steps to follow to determine if the control is satisfied.
 
 ### control_mapping_sources

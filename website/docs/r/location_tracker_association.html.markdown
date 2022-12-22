@@ -3,12 +3,12 @@ subcategory: "Location"
 layout: "aws"
 page_title: "AWS: aws_location_tracker_association"
 description: |-
-  Terraform resource for managing an AWS Location Tracker Association.
+  Resource for managing an AWS Location Tracker Association.
 ---
 
 # Resource: aws_location_tracker_association
 
-Terraform resource for managing an AWS Location Tracker Association.
+Resource for managing an AWS Location Tracker Association.
 
 ## Example Usage
 
@@ -40,7 +40,7 @@ No additional attributes are exported.
 
 ## Timeouts
 
-`aws_location_tracker_association` provides the following [Timeouts](https://developer.hashicorp.com/terraform/language/resources/syntax#operation-timeouts) configuration options:
+`aws_location_tracker_association` provides the following Timeouts configuration options:
 
 * `create` - (Optional, Default: `30m`)
 * `delete` - (Optional, Default: `30m`)

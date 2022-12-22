@@ -18,8 +18,6 @@ resource "aws_iam_policy" "policy" {
   path        = "/"
   description = "My test policy"
 
-  # Terraform's "jsonencode" function converts a
-  # Terraform expression result to valid JSON syntax.
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -40,12 +38,12 @@ resource "aws_iam_policy" "policy" {
 The following arguments are supported:
 
 * `description` - (Optional, Forces new resource) Description of the IAM policy.
-* `name` - (Optional, Forces new resource) The name of the policy. If omitted, Terraform will assign a random, unique name.
+* `name` - (Optional, Forces new resource) The name of the policy. If omitted, this provider will assign a random, unique name.
 * `name_prefix` - (Optional, Forces new resource) Creates a unique name beginning with the specified prefix. Conflicts with `name`.
 * `path` - (Optional, default "/") Path in which to create the policy.
   See [IAM Identifiers](https://docs.aws.amazon.com/IAM/latest/UserGuide/Using_Identifiers.html) for more information.
-* `policy` - (Required) The policy document. This is a JSON formatted string. For more information about building AWS IAM policy documents with Terraform, see the [AWS IAM Policy Document Guide](https://learn.hashicorp.com/terraform/aws/iam-policy)
-* `tags` - (Optional) Map of resource tags for the IAM Policy. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `policy` - (Required) The policy document. This is a JSON formatted string.
+* `tags` - (Optional) Map of resource tags for the IAM Policy. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ## Attributes Reference
 
@@ -58,7 +56,7 @@ In addition to all arguments above, the following attributes are exported:
 * `path` - The path of the policy in IAM.
 * `policy` - The policy document.
 * `policy_id` - The policy's ID.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 
