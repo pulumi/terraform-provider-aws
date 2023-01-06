@@ -381,6 +381,10 @@ func resourceClusterCreate(ctx context.Context, d *schema.ResourceData, meta int
 		return diag.Errorf("waiting for EKS Cluster (%s) create: %s", d.Id(), err)
 	}
 
+	if err = removeAddons(d, conn); err != nil {
+		return diag.Errorf("removing addons (%s): %s", d.Id(), err)
+	}
+
 	return resourceClusterRead(ctx, d, meta)
 }
 
