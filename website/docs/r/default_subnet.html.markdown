@@ -12,9 +12,9 @@ Provides a resource to manage a [default subnet](http://docs.aws.amazon.com/Amaz
 
 **This is an advanced resource** and has special caveats to be aware of when using it. Please read this document in its entirety before using this resource.
 
-The `aws_default_subnet` resource behaves differently from normal resources in that if a default subnet exists in the specified Availability Zone, Terraform does not _create_ this resource, but instead "adopts" it into management.
-If no default subnet exists, Terraform creates a new default subnet.
-By default, `terraform destroy` does not delete the default subnet but does remove the resource from Terraform state.
+The `aws_default_subnet` resource behaves differently from normal resources in that if a default subnet exists in the specified Availability Zone, this provider does not _create_ this resource, but instead "adopts" it into management.
+If no default subnet exists, this provider creates a new default subnet.
+By default, `pulumi destroy` does not delete the default subnet but does remove the resource from the state.
 Set the `force_destroy` argument to `true` to delete the default subnet.
 
 ## Example Usage
@@ -31,7 +31,7 @@ resource "aws_default_subnet" "default_az1" {
 
 ## Argument Reference
 
-The arguments of an `aws_default_subnet` differ slightly from those of [`aws_subnet`](subnet.html):
+The arguments of an `aws_default_subnet` differ slightly from those of `aws_subnet`:
 
 * `availability_zone` is required
 * The `availability_zone_id`, `cidr_block` and `vpc_id` arguments become computed attributes

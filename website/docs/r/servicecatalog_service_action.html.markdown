@@ -55,7 +55,7 @@ In addition to all arguments above, the following attributes are exported:
 
 ## Timeouts
 
-[Configuration options](https://developer.hashicorp.com/terraform/language/resources/syntax#operation-timeouts):
+Configuration options:
 
 - `create` - (Default `3m`)
 - `read` - (Default `10m`)

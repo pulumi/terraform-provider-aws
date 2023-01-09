@@ -50,7 +50,7 @@ func ResourceFilter() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 512),
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 			"finding_criteria": {
 				Type:     schema.TypeList,
 				MaxItems: 1,

@@ -58,7 +58,7 @@ resource "aws_internet_gateway" "gw" {
   vpc_id = aws_vpc.default.id
 }
 
-resource "aws_subnet" "tf_test_subnet" {
+resource "aws_subnet" "my_test_subnet" {
   vpc_id                  = aws_vpc.default.id
   cidr_block              = "10.0.0.0/24"
   map_public_ip_on_launch = true
@@ -72,7 +72,7 @@ resource "aws_instance" "foo" {
   instance_type = "t2.micro"
 
   private_ip = "10.0.0.12"
-  subnet_id  = aws_subnet.tf_test_subnet.id
+  subnet_id  = aws_subnet.my_test_subnet.id
 }
 
 resource "aws_eip" "bar" {
@@ -105,7 +105,7 @@ The following arguments are supported:
 * `network_interface` - (Optional) Network interface ID to associate with.
 * `public_ipv4_pool` - (Optional) EC2 IPv4 address pool identifier or `amazon`.
   This option is only available for VPC EIPs.
-* `tags` - (Optional) Map of tags to assign to the resource. Tags can only be applied to EIPs in a VPC. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Map of tags to assign to the resource. Tags can only be applied to EIPs in a VPC. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 * `vpc` - (Optional) Boolean if the EIP is in a VPC or not.
   Defaults to `true` unless the region supports EC2-Classic.
 
@@ -128,13 +128,13 @@ In addition to all arguments above, the following attributes are exported:
 * `private_ip` - Contains the private IP address (if in VPC).
 * `public_dns` - Public DNS associated with the Elastic IP address.
 * `public_ip` - Contains the public IP address.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ~> **Note:** The resource computes the `public_dns` and `private_dns` attributes according to the [VPC DNS Guide](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-dns.html#vpc-dns-hostnames) as they are not available with the EC2 API.
 
 ## Timeouts
 
-[Configuration options](https://developer.hashicorp.com/terraform/language/resources/syntax#operation-timeouts):
+Configuration options:
 
 - `read` - (Default `15m`)
 - `update` - (Default `5m`)
@@ -154,4 +154,3 @@ EIPs in EC2-Classic can be imported using their Public IP, e.g.,
 $ terraform import aws_eip.bar 52.0.0.0
 ```
 
-[1]: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_AssociateAddress.html

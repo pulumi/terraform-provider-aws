@@ -53,6 +53,6 @@ Note that the indexes of Instance Type Offering instance types, locations and lo
 
 ## Timeouts
 
-[Configuration options](https://developer.hashicorp.com/terraform/language/resources/syntax#operation-timeouts):
+Configuration options:
 
 - `read` - (Default `20m`)

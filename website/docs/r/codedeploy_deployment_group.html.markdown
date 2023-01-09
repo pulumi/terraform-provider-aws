@@ -10,7 +10,7 @@ description: |-
 
 Provides a CodeDeploy Deployment Group for a CodeDeploy Application
 
-~> **NOTE on blue/green deployments:** When using `green_fleet_provisioning_option` with the `COPY_AUTO_SCALING_GROUP` action, CodeDeploy will create a new ASG with a different name. This ASG is _not_ managed by terraform and will conflict with existing configuration and state. You may want to use a different approach to managing deployments that involve multiple ASG, such as `DISCOVER_EXISTING` with separate blue and green ASG.
+~> **NOTE on blue/green deployments:** When using `green_fleet_provisioning_option` with the `COPY_AUTO_SCALING_GROUP` action, CodeDeploy will create a new ASG with a different name. This ASG is _not_ managed by this provider and will conflict with existing configuration and state. You may want to use a different approach to managing deployments that involve multiple ASG, such as `DISCOVER_EXISTING` with separate blue and green ASG.
 
 ## Example Usage
 
@@ -202,7 +202,7 @@ The following arguments are supported:
 * `load_balancer_info` - (Optional) Single configuration block of the load balancer to use in a blue/green deployment (documented below).
 * `on_premises_instance_tag_filter` - (Optional) On premise tag filters associated with the group. See the AWS docs for details.
 * `trigger_configuration` - (Optional) Configuration block(s) of the triggers for the deployment group (documented below).
-* `tags` - (Optional) Key-value map of resource tags. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Key-value map of resource tags. .If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ### alarm_configuration Argument Reference
 
@@ -355,7 +355,7 @@ In addition to all arguments above, the following attributes are exported:
 * `id` - Application name and deployment group name.
 * `compute_platform` - The destination platform type for the deployment.
 * `deployment_group_id` - The ID of the CodeDeploy deployment group.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

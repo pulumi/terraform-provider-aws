@@ -45,7 +45,7 @@ resource "aws_ecr_registry_policy" "example" {
 
 The following arguments are supported:
 
-* `policy` - (Required) The policy document. This is a JSON formatted string. For more information about building IAM policy documents with Terraform, see the [AWS IAM Policy Document Guide](https://learn.hashicorp.com/terraform/aws/iam-policy)
+* `policy` - (Required) The policy document. This is a JSON formatted string.
 
 ## Attributes Reference
 

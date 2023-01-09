@@ -14,7 +14,7 @@ can be found in the [API Gateway Developer Guide](https://docs.aws.amazon.com/ap
 This resource just establishes ownership of and the TLS settings for
 a particular domain name. An API can be attached to a particular path
 under the registered domain name using
-[the `aws_api_gateway_base_path_mapping` resource](api_gateway_base_path_mapping.html).
+the `aws_api_gateway_base_path_mapping` resource.
 
 API Gateway domains can be defined as either 'edge-optimized' or 'regional'.  In an edge-optimized configuration,
 API Gateway internally creates and manages a CloudFront distribution to route requests on the given hostname. In
@@ -27,7 +27,7 @@ a distribution can be created if needed. In either case, it is necessary to crea
 given domain name which is an alias (either Route53 alias or traditional CNAME) to the regional domain name exported in
 the `regional_domain_name` attribute.
 
-~> **Note:** API Gateway requires the use of AWS Certificate Manager (ACM) certificates instead of Identity and Access Management (IAM) certificates in regions that support ACM. Regions that support ACM can be found in the [Regions and Endpoints Documentation](https://docs.aws.amazon.com/general/latest/gr/rande.html#acm_region). To import an existing private key and certificate into ACM or request an ACM certificate, see the [`aws_acm_certificate` resource](/docs/providers/aws/r/acm_certificate.html).
+~> **Note:** API Gateway requires the use of AWS Certificate Manager (ACM) certificates instead of Identity and Access Management (IAM) certificates in regions that support ACM. Regions that support ACM can be found in the [Regions and Endpoints Documentation](https://docs.aws.amazon.com/general/latest/gr/rande.html#acm_region). To import an existing private key and certificate into ACM or request an ACM certificate, see the `aws_acm_certificate` resource.
 
 ~> **Note:** The `aws_api_gateway_domain_name` resource expects dependency on the `aws_acm_certificate_validation` as
 only verified certificates can be used. This can be made either explicitly by adding the
@@ -35,12 +35,7 @@ only verified certificates can be used. This can be made either explicitly by ad
 from the validation resource where it will be available after the resource creation:
 `regional_certificate_arn = aws_acm_certificate_validation.cert.certificate_arn`.
 
-~> **Note:** All arguments including the private key will be stored in the raw state as plain-text.
-[Read more about sensitive data in state](https://www.terraform.io/docs/state/sensitive-data.html).
-
 ## Example Usage
-
-An end-to-end example of a REST API configured with OpenAPI can be found in the [`/examples/api-gateway-rest-api-openapi` directory within the GitHub repository](https://github.com/hashicorp/terraform-provider-aws/tree/main/examples/api-gateway-rest-api-openapi).
 
 ### Edge Optimized (ACM Certificate)
 
@@ -159,7 +154,7 @@ The following arguments are supported:
 * `mutual_tls_authentication` - (Optional) Mutual TLS authentication configuration for the domain name. See below.
 * `ownership_verification_certificate_arn` - (Optional) ARN of the AWS-issued certificate used to validate custom domain ownership (when `certificate_arn` is issued via an ACM Private CA or `mutual_tls_authentication` is configured with an ACM-imported certificate.)
 * `security_policy` - (Optional) Transport Layer Security (TLS) version + cipher suite for this DomainName. Valid values are `TLS_1_0` and `TLS_1_2`. Must be configured to perform drift detection.
-* `tags` - (Optional) Key-value map of resource tags. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Key-value map of resource tags. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 When referencing an AWS-managed certificate, the following arguments are supported:
 
@@ -194,7 +189,7 @@ In addition to all arguments above, the following attributes are exported:
 * `id` - Internal identifier assigned to this domain name by API Gateway.
 * `regional_domain_name` - Hostname for the custom domain's regional endpoint.
 * `regional_zone_id` - Hosted zone ID that can be used to create a Route53 alias record for the regional endpoint.
-* `tags_all` - Map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - Map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

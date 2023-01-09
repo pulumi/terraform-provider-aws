@@ -28,7 +28,7 @@ The following arguments are supported:
 * `space_name` - (Required) The name of the space.
 * `domain_id` - (Required) The ID of the associated Domain.
 * `space_settings` - (Required) A collection of space settings. See [Space Settings](#space-settings) below.
-* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ### Space Settings
 
@@ -71,7 +71,7 @@ In addition to all arguments above, the following attributes are exported:
 * `id` - The space's Amazon Resource Name (ARN).
 * `arn` - The space's Amazon Resource Name (ARN).
 * `home_efs_file_system_uid` - The ID of the space's profile in the Amazon Elastic File System volume.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

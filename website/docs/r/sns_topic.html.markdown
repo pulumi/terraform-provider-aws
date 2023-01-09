@@ -72,10 +72,10 @@ The `<endpoint>_success_feedback_role_arn` and `<endpoint>_failure_feedback_role
 
 The following arguments are supported:
 
-* `name` - (Optional) The name of the topic. Topic names must be made up of only uppercase and lowercase ASCII letters, numbers, underscores, and hyphens, and must be between 1 and 256 characters long. For a FIFO (first-in-first-out) topic, the name must end with the `.fifo` suffix. If omitted, Terraform will assign a random, unique name. Conflicts with `name_prefix`
+* `name` - (Optional) The name of the topic. Topic names must be made up of only uppercase and lowercase ASCII letters, numbers, underscores, and hyphens, and must be between 1 and 256 characters long. For a FIFO (first-in-first-out) topic, the name must end with the `.fifo` suffix. If omitted, this provider will assign a random, unique name. Conflicts with `name_prefix`
 * `name_prefix` - (Optional) Creates a unique name beginning with the specified prefix. Conflicts with `name`
 * `display_name` - (Optional) The display name for the topic
-* `policy` - (Optional) The fully-formed AWS policy as JSON. For more information about building AWS IAM policy documents with Terraform, see the [AWS IAM Policy Document Guide](https://learn.hashicorp.com/terraform/aws/iam-policy).
+* `policy` - (Optional) The fully-formed AWS policy as JSON.
 * `delivery_policy` - (Optional) The SNS delivery policy. More on [AWS documentation](https://docs.aws.amazon.com/sns/latest/dg/DeliveryPolicies.html)
 * `application_success_feedback_role_arn` - (Optional) The IAM role permitted to receive success feedback for this topic
 * `application_success_feedback_sample_rate` - (Optional) Percentage of success to sample
@@ -95,7 +95,7 @@ The following arguments are supported:
 * `firehose_success_feedback_role_arn` - (Optional) The IAM role permitted to receive success feedback for this topic
 * `firehose_success_feedback_sample_rate` - (Optional) Percentage of success to sample
 * `firehose_failure_feedback_role_arn` - (Optional) IAM role for failure feedback
-* `tags` - (Optional) Key-value map of resource tags. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Key-value map of resource tags. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ## Attributes Reference
 
@@ -104,7 +104,7 @@ In addition to all arguments above, the following attributes are exported:
 * `id` - The ARN of the SNS topic
 * `arn` - The ARN of the SNS topic, as a more obvious property (clone of id)
 * `owner` - The AWS Account ID of the SNS topic owner
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

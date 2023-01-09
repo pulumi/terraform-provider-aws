@@ -55,7 +55,7 @@ func ResourceTrafficMirrorSession() *schema.Resource {
 				ValidateFunc: validation.IntBetween(1, 32766),
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 			"traffic_mirror_filter_id": {
 				Type:     schema.TypeString,
 				Required: true,

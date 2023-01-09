@@ -12,7 +12,7 @@ Provides a AWS Transfer Server resource.
 
 ~> **NOTE on AWS IAM permissions:** If the `endpoint_type` is set to `VPC`, the `ec2:DescribeVpcEndpoints` and `ec2:ModifyVpcEndpoint` [actions](https://docs.aws.amazon.com/service-authorization/latest/reference/list_amazonec2.html#amazonec2-actions-as-permissions) are used.
 
-~> **NOTE:** Use the [`aws_transfer_tag`](transfer_tag.html) resource to manage the system tags used for [custom hostnames](https://docs.aws.amazon.com/transfer/latest/userguide/requirements-dns.html#tag-custom-hostname-cdk).
+~> **NOTE:** Use the `aws_transfer_tag` resource to manage the system tags used for [custom hostnames](https://docs.aws.amazon.com/transfer/latest/userguide/requirements-dns.html#tag-custom-hostname-cdk).
 
 ## Example Usage
 
@@ -109,7 +109,7 @@ The following arguments are supported:
 * `post_authentication_login_banner`- (Optional) Specify a string to display when users connect to a server. This string is displayed after the user authenticates. The SFTP protocol does not support post-authentication display banners.
 * `pre_authentication_login_banner`- (Optional) Specify a string to display when users connect to a server. This string is displayed before the user authenticates.
 * `security_policy_name` - (Optional) Specifies the name of the security policy that is attached to the server. Possible values are `TransferSecurityPolicy-2018-11`, `TransferSecurityPolicy-2020-06`, `TransferSecurityPolicy-FIPS-2020-06` and `TransferSecurityPolicy-2022-03`. Default value is: `TransferSecurityPolicy-2018-11`.
-* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 * `workflow_details` - (Optional) Specifies the workflow details. See Workflow Details below.
 
 ### Endpoint Details
@@ -136,7 +136,7 @@ In addition to all arguments above, the following attributes are exported:
 * `id`  - The Server ID of the Transfer Server (e.g., `s-12345678`)
 * `endpoint` - The endpoint of the Transfer Server (e.g., `s-12345678.server.transfer.REGION.amazonaws.com`)
 * `host_key_fingerprint` - This value contains the message-digest algorithm (MD5) hash of the server's host key. This value is equivalent to the output of the `ssh-keygen -l -E md5 -f my-new-server-key` command.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 
@@ -146,4 +146,4 @@ Transfer Servers can be imported using the `server id`, e.g.,
 $ terraform import aws_transfer_server.example s-12345678
 ```
 
-Certain resource arguments, such as `host_key`, cannot be read via the API and imported into Terraform. Terraform will display a difference for these arguments the first run after import if declared in the Terraform configuration for an imported resource.
+Certain resource arguments, such as `host_key`, cannot be read via the API and imported into the provider. This provider will display a difference for these arguments the first run after import if declared in the provider configuration for an imported resource.

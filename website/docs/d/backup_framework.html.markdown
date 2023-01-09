@@ -14,7 +14,7 @@ Use this data source to get information on an existing backup framework.
 
 ```terraform
 data "aws_backup_framework" "example" {
-  name = "tf_example_backup_framework_name"
+  name = "my_example_backup_framework_name"
 }
 ```
 

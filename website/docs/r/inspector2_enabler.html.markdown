@@ -3,14 +3,14 @@ subcategory: "Inspector V2"
 layout: "aws"
 page_title: "AWS: aws_inspector2_enabler"
 description: |-
-  Terraform resource for enabling AWS Inspector V2 resource scans.
+  Resource for enabling AWS Inspector V2 resource scans.
 ---
 
 # Resource: aws_inspector2_enabler
 
-Terraform resource for enabling AWS Inspector V2 resource scans.
+Resource for enabling AWS Inspector V2 resource scans.
 
-~> **NOTE:** Due to testing limitations, we provide this resource as best effort. If you use it or have the ability to test it, and notice problems, please consider reaching out to us on [GitHub](https://github.com/hashicorp/terraform-provider-aws/issues/new/choose).
+~> **NOTE:** Due to testing limitations, we provide this resource as best effort. If you use it or have the ability to test it, and notice problems, please consider reaching out to us on GitHub.
 
 ## Example Usage
 
@@ -39,7 +39,7 @@ resource "aws_inspector2_enabler" "test" {
 The following arguments are required:
 
 * `account_ids` - (Required) Set of account IDs.
-* `resource_types` - (Required) Type of resources to scan. Valid values are `EC2`, `ECR`, and `LAMBDA`. If you only use one type, Terraform will ignore the status of the other type.
+* `resource_types` - (Required) Type of resources to scan. Valid values are `EC2`, `ECR`, and `LAMBDA`. If you only use one type, the provider will ignore the status of the other type.
 
 ## Attributes Reference
 
@@ -47,7 +47,7 @@ No additional attributes are exported.
 
 ## Timeouts
 
-[Configuration options](https://developer.hashicorp.com/terraform/language/resources/syntax#operation-timeouts):
+Configuration options:
 
 * `create` - (Default `15m`)
 * `update` - (Default `15m`)

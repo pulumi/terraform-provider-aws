@@ -62,7 +62,7 @@ The following arguments are optional:
 
 * `default_value` - (Optional) Default value for the cost category.
 * `split_charge_rule` - (Optional) Configuration block for the split charge rules used to allocate your charges between your Cost Category values. See below.
-* `tags` - (Optional) Key-value mapping of resource tags. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Key-value mapping of resource tags. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ### `rule`
 
@@ -122,7 +122,7 @@ In addition to all arguments above, the following attributes are exported:
 * `arn` - ARN of the cost category.
 * `effective_end` - Effective end data of your Cost Category.
 * `id` - Unique ID of the cost category.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

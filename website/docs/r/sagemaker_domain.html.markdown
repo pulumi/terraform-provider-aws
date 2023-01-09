@@ -103,7 +103,7 @@ The following arguments are optional:
 * `domain_settings` - (Optional) The domain's settings.
 * `kms_key_id` - (Optional) The AWS KMS customer managed CMK used to encrypt the EFS volume attached to the domain.
 * `retention_policy` - (Optional) The retention policy for this domain, which specifies whether resources will be retained after the Domain is deleted. By default, all resources are retained. See [Retention Policy](#retention_policy) below.
-* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) A map of tags to assign to the resource. .If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ### default_space_settings
 
@@ -195,7 +195,7 @@ In addition to all arguments above, the following attributes are exported:
 * `single_sign_on_managed_application_instance_id` - The SSO managed application instance ID.
 * `security_group_id_for_domain_boundary` - The ID of the security group that authorizes traffic between the RSessionGateway apps and the RStudioServerPro app.
 * `home_efs_file_system_id` - The ID of the Amazon Elastic File System (EFS) managed by this Domain.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

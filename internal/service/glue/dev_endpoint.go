@@ -119,7 +119,7 @@ func ResourceDevEndpoint() *schema.Resource {
 				RequiredWith: []string{"security_group_ids"},
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 			"private_address": {
 				Type:     schema.TypeString,
 				Computed: true,

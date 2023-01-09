@@ -772,7 +772,7 @@ func ResourceSpotFleetRequest() *schema.Resource {
 				Computed: true,
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 			"target_capacity": {
 				Type:     schema.TypeInt,
 				Required: true,

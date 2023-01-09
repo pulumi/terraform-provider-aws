@@ -11,9 +11,6 @@ description: |-
 Manages a Site-to-Site VPN connection. A Site-to-Site VPN connection is an Internet Protocol security (IPsec) VPN connection between a VPC and an on-premises network.
 Any new Site-to-Site VPN connection that you create is an [AWS VPN connection](https://docs.aws.amazon.com/vpn/latest/s2svpn/vpn-categories.html).
 
-~> **Note:** All arguments including `tunnel1_preshared_key` and `tunnel2_preshared_key` will be stored in the raw state as plain-text.
-[Read more about sensitive data in state](https://www.terraform.io/docs/state/sensitive-data.html).
-
 ~> **Note:** The CIDR blocks in the arguments `tunnel1_inside_cidr` and `tunnel2_inside_cidr` must have a prefix of /30 and be a part of a specific range.
 [Read more about this in the AWS documentation](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_VpnTunnelOptionsSpecification.html).
 
@@ -66,13 +63,13 @@ resource "aws_vpn_connection" "main" {
 
 ```terraform
 resource "aws_dx_gateway" "example" {
-  name            = "terraform_ipsec_vpn_example"
+  name            = "example_ipsec_vpn_example"
   amazon_side_asn = "64512"
 }
 
 resource "aws_ec2_transit_gateway" "example" {
   amazon_side_asn = "64513"
-  description     = "terraform_ipsec_vpn_example"
+  description     = "example_ipsec_vpn_example"
   transit_gateway_cidr_blocks = [
     "10.0.0.0/24",
   ]
@@ -84,7 +81,7 @@ resource "aws_customer_gateway" "example" {
   type       = "ipsec.1"
 
   tags = {
-    Name = "terraform_ipsec_vpn_example"
+    Name = "example_ipsec_vpn_example"
   }
 }
 
@@ -114,7 +111,7 @@ resource "aws_vpn_connection" "example" {
   type                                    = "ipsec.1"
 
   tags = {
-    Name = "terraform_ipsec_vpn_example"
+    Name = "example_ipsec_vpn_example"
   }
 }
 ```
@@ -129,7 +126,7 @@ The following arguments are supported:
 * `vpn_gateway_id` - (Optional) The ID of the Virtual Private Gateway.
 * `static_routes_only` - (Optional, Default `false`) Whether the VPN connection uses static routes exclusively. Static routes must be used for devices that don't support BGP.
 * `enable_acceleration` - (Optional, Default `false`) Indicate whether to enable acceleration for the VPN connection. Supports only EC2 Transit Gateway.
-* `tags` - (Optional) Tags to apply to the connection. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Tags to apply to the connection. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 * `local_ipv4_network_cidr` - (Optional, Default `0.0.0.0/0`) The IPv4 CIDR on the customer gateway (on-premises) side of the VPN connection.
 * `local_ipv6_network_cidr` - (Optional, Default `::/0`) The IPv6 CIDR on the customer gateway (on-premises) side of the VPN connection.
 * `outside_ip_address_type` - (Optional, Default `PublicIpv4`) Indicates if a Public S2S VPN or Private S2S VPN over AWS Direct Connect. Valid values are `PublicIpv4 | PrivateIpv4`
@@ -202,8 +199,8 @@ In addition to all arguments above, the following attributes are exported:
 * `customer_gateway_id` - The ID of the customer gateway to which the connection is attached.
 * `routes` - The static routes associated with the VPN connection. Detailed below.
 * `static_routes_only` - Whether the VPN connection uses static routes exclusively.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
-* `transit_gateway_attachment_id` - When associated with an EC2 Transit Gateway (`transit_gateway_id` argument), the attachment ID. See also the [`aws_ec2_tag` resource](/docs/providers/aws/r/ec2_tag.html) for tagging the EC2 Transit Gateway VPN Attachment.
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
+* `transit_gateway_attachment_id` - When associated with an EC2 Transit Gateway (`transit_gateway_id` argument), the attachment ID. See also the `aws_ec2_tag` resource for tagging the EC2 Transit Gateway VPN Attachment.
 * `tunnel1_address` - The public IP address of the first VPN tunnel.
 * `tunnel1_cgw_inside_address` - The RFC 6890 link-local address of the first VPN tunnel (Customer Gateway Side).
 * `tunnel1_vgw_inside_address` - The RFC 6890 link-local address of the first VPN tunnel (VPN Gateway Side).

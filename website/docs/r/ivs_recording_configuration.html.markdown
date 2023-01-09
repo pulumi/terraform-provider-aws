@@ -3,12 +3,12 @@ subcategory: "IVS (Interactive Video)"
 layout: "aws"
 page_title: "AWS: aws_ivs_recording_configuration"
 description: |-
-  Terraform resource for managing an AWS IVS (Interactive Video) Recording Configuration.
+  Resource for managing an AWS IVS (Interactive Video) Recording Configuration.
 ---
 
 # Resource: aws_ivs_recording_configuration
 
-Terraform resource for managing an AWS IVS (Interactive Video) Recording Configuration.
+Resource for managing an AWS IVS (Interactive Video) Recording Configuration.
 
 ## Example Usage
 
@@ -37,7 +37,7 @@ The following arguments are optional:
 
 * `name` - (Optional) Recording Configuration name.
 * `recording_reconnect_window_seconds` - (Optional) If a broadcast disconnects and then reconnects within the specified interval, the multiple streams will be considered a single broadcast and merged together.
-* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 * `thumbnail_configuration` - (Optional) Object containing information to enable/disable the recording of thumbnails for a live session and modify the interval at which thumbnails are generated for the live session.
     * `recording_mode` - (Optional) Thumbnail recording mode. Valid values: `DISABLED`, `INTERVAL`.
     * `target_interval_seconds` (Configurable [and required] only if `recording_mode` is `INTERVAL`) - The targeted thumbnail-generation interval in seconds.
@@ -48,11 +48,11 @@ In addition to all arguments above, the following attributes are exported:
 
 * `arn` - ARN of the Recording Configuration.
 * `state` -  The current state of the Recording Configuration.
-* `tags_all` - Map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - Map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Timeouts
 
-[Configuration options](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts):
+Configuration options:
 
 * `create` - (Default `10m`)
 * `delete` - (Default `10m`)

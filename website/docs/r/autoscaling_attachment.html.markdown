@@ -10,14 +10,13 @@ description: |-
 
 Provides an Auto Scaling Attachment resource.
 
-~> **NOTE on Auto Scaling Groups and ASG Attachments:** Terraform currently provides
-both a standalone [`aws_autoscaling_attachment`](autoscaling_attachment.html) resource
-(describing an ASG attached to an ELB or ALB), and an [`aws_autoscaling_group`](autoscaling_group.html)
+~> **NOTE on Auto Scaling Groups and ASG Attachments:** This provider currently provides
+both a standalone `aws_autoscaling_attachment` resource
+(describing an ASG attached to an ELB or ALB), and an `aws_autoscaling_group`
 with `load_balancers` and `target_group_arns` defined in-line. These two methods are not
 mutually-exclusive. If `aws_autoscaling_attachment` resources are used, either alone or with inline
 `load_balancers` or `target_group_arns`, the `aws_autoscaling_group` resource must be configured
-to ignore changes to the `load_balancers` and `target_group_arns` arguments within a
-[`lifecycle` configuration block](https://www.terraform.io/docs/configuration/meta-arguments/lifecycle.html).
+to ignore changes to the `load_balancers` and `target_group_arns` arguments.
 
 ## Example Usage
 

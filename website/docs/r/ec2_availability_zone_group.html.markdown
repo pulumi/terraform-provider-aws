@@ -10,7 +10,7 @@ description: |-
 
 Manages an EC2 Availability Zone Group, such as updating its opt-in status.
 
-~> **NOTE:** This is an advanced Terraform resource. Terraform will automatically assume management of the EC2 Availability Zone Group without import and perform no actions on removal from configuration.
+~> **NOTE:** This is an advanced resource. The provider will automatically assume management of the EC2 Availability Zone Group without import and perform no actions on removal from configuration.
 
 ## Example Usage
 

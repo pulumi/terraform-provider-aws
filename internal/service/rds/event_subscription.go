@@ -86,7 +86,7 @@ func ResourceEventSubscription() *schema.Resource {
 				ValidateFunc: validation.StringInSlice(rds.SourceType_Values(), false),
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 		},
 
 		CustomizeDiff: verify.SetTagsDiff,

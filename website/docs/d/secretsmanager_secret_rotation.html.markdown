@@ -8,7 +8,7 @@ description: |-
 
 # Data Source: aws_secretsmanager_secret_rotation
 
-Retrieve information about a Secrets Manager secret rotation. To retrieve secret metadata, see the [`aws_secretsmanager_secret` data source](/docs/providers/aws/d/secretsmanager_secret.html). To retrieve a secret value, see the [`aws_secretsmanager_secret_version` data source](/docs/providers/aws/d/secretsmanager_secret_version.html).
+Retrieve information about a Secrets Manager secret rotation. To retrieve secret metadata, see the `aws_secretsmanager_secret` data source. To retrieve a secret value, see the `aws_secretsmanager_secret_version` data source.
 
 ## Example Usage
 

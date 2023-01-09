@@ -55,7 +55,7 @@ func ResourceRegion() *schema.Resource {
 				ValidateFunc: verify.ValidRegionName,
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 			"vpc_settings": {
 				Type:     schema.TypeList,
 				MaxItems: 1,
