@@ -27,7 +27,7 @@ For more information see the Amazon S3 User Guide on [`Lifecycle Configuration E
 The Lifecycle rule applies to a subset of objects based on the key name prefix (`""`).
 
 This configuration is intended to replicate the default behavior of the `lifecycle_rule`
-parameter in the Terraform AWS Provider `aws_s3_bucket` resource prior to `v4.0`.
+parameter in the AWS Provider `aws_s3_bucket` resource prior to `v4.0`.
 
 ```terraform
 resource "aws_s3_bucket_lifecycle_configuration" "example" {
@@ -365,11 +365,11 @@ The following arguments are supported:
 ### rule
 
 ~> **NOTE:** The `filter` argument, while Optional, is required if the `rule` configuration block does not contain a `prefix` **and** you intend to override the default behavior of setting the rule to filter objects with the empty string prefix (`""`).
-Since `prefix` is deprecated by Amazon S3 and will be removed in the next major version of the Terraform AWS Provider, we recommend users either specify `filter` or leave both `filter` and `prefix` unspecified.
+Since `prefix` is deprecated by Amazon S3 and will be removed in the next major version of the AWS Provider, we recommend users either specify `filter` or leave both `filter` and `prefix` unspecified.
 
 ~> **NOTE:** A rule cannot be updated from having a filter (via either the `rule.filter` parameter or when neither `rule.filter` and `rule.prefix` are specified) to only having a prefix via the `rule.prefix` parameter.
 
-~> **NOTE** Terraform cannot distinguish a difference between configurations that use `rule.filter {}` and configurations that neither use `rule.filter` nor `rule.prefix`, so a rule cannot be updated from applying to all objects in the bucket via `rule.filter {}` to applying to a subset of objects based on the key prefix `""` and vice versa.
+~> **NOTE** The provider cannot distinguish a difference between configurations that use `rule.filter {}` and configurations that neither use `rule.filter` nor `rule.prefix`, so a rule cannot be updated from applying to all objects in the bucket via `rule.filter {}` to applying to a subset of objects based on the key prefix `""` and vice versa.
 
 The `rule` configuration block supports the following arguments:
 
@@ -460,14 +460,14 @@ In addition to all arguments above, the following attributes are exported:
 
 S3 bucket lifecycle configuration can be imported in one of two ways.
 
-If the owner (account ID) of the source bucket is the same account used to configure the Terraform AWS Provider,
+If the owner (account ID) of the source bucket is the same account used to configure the AWS Provider,
 the S3 bucket lifecycle configuration resource should be imported using the `bucket` e.g.,
 
 ```sh
 $ terraform import aws_s3_bucket_lifecycle_configuration.example bucket-name
 ```
 
-If the owner (account ID) of the source bucket differs from the account used to configure the Terraform AWS Provider,
+If the owner (account ID) of the source bucket differs from the account used to configure the AWS Provider,
 the S3 bucket lifecycle configuration resource should be imported using the `bucket` and `expected_bucket_owner` separated by a comma (`,`) e.g.,
 
 ```

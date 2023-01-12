@@ -183,7 +183,7 @@ func ResourceSpace() *schema.Resource {
 				},
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 			"home_efs_file_system_uid": {
 				Type:     schema.TypeString,
 				Computed: true,

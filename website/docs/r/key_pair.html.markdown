@@ -31,10 +31,10 @@ resource "aws_key_pair" "deployer" {
 
 The following arguments are supported:
 
-* `key_name` - (Optional) The name for the key pair. If neither `key_name` nor `key_name_prefix` is provided, Terraform will create a unique key name using the prefix `terraform-`.
-* `key_name_prefix` - (Optional) Creates a unique name beginning with the specified prefix. Conflicts with `key_name`. If neither `key_name` nor `key_name_prefix` is provided, Terraform will create a unique key name using the prefix `terraform-`.
+* `key_name` - (Optional) The name for the key pair. If neither `key_name` nor `key_name_prefix` is provided, the provider will create a unique key name.
+* `key_name_prefix` - (Optional) Creates a unique name beginning with the specified prefix. Conflicts with `key_name`. If neither `key_name` nor `key_name_prefix` is provided, the provider will create a unique key name.
 * `public_key` - (Required) The public key material.
-* `tags` - (Optional) Key-value map of resource tags. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Key-value map of resource tags. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ## Attributes Reference
 
@@ -46,7 +46,7 @@ In addition to all arguments above, the following attributes are exported:
 * `key_pair_id` - The key pair ID.
 * `key_type` - The type of key pair.
 * `fingerprint` - The MD5 public key fingerprint as specified in section 4 of RFC 4716.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 
@@ -56,4 +56,4 @@ Key Pairs can be imported using the `key_name`, e.g.,
 $ terraform import aws_key_pair.deployer deployer-key
 ```
 
-~> **NOTE:** The AWS API does not include the public key in the response, so `terraform apply` will attempt to replace the key pair. There is currently no supported workaround for this limitation.
+~> **NOTE:** The AWS API does not include the public key in the response, so `pulumi up` will attempt to replace the key pair. There is currently no supported workaround for this limitation.

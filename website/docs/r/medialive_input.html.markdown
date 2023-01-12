@@ -3,12 +3,12 @@ subcategory: "Elemental MediaLive"
 layout: "aws"
 page_title: "AWS: aws_medialive_input"
 description: |-
-  Terraform resource for managing an AWS MediaLive Input.
+  Resource for managing an AWS MediaLive Input.
 ---
 
 # Resource: aws_medialive_input
 
-Terraform resource for managing an AWS MediaLive Input.
+Resource for managing an AWS MediaLive Input.
 
 ## Example Usage
 
@@ -51,7 +51,7 @@ The following arguments are optional:
 * `media_connect_flows` - (Optional) A list of the MediaConnect Flows. See [Media Connect Flows](#media-connect-flows) for more details.
 * `role_arn` - (Optional) The ARN of the role this input assumes during and after creation.
 * `sources` - (Optional) The source URLs for a PULL-type input. See [Sources](#sources) for more details.
-* `tags`- (Optional) A map of tags to assign to the Input. If configured with a provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags`- (Optional) A map of tags to assign to the Input. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 * `vpc` - (Optional) Settings for a private VPC Input. See [VPC](#vpc) for more details.
 
 ### Destinations
@@ -89,7 +89,7 @@ In addition to all arguments above, the following attributes are exported:
 
 ## Timeouts
 
-[Configuration options](https://developer.hashicorp.com/terraform/language/resources/syntax#operation-timeouts):
+Configuration options:
 
 * `create` - (Default `30m`)
 * `update` - (Default `30m`)

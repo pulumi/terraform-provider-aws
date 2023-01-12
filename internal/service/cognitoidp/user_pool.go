@@ -499,7 +499,7 @@ func ResourceUserPool() *schema.Resource {
 				},
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 			"user_attribute_update_settings": {
 				Type:     schema.TypeList,
 				Optional: true,

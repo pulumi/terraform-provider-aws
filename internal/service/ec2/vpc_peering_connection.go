@@ -64,7 +64,7 @@ func ResourceVPCPeeringConnection() *schema.Resource {
 			},
 			"requester": vpcPeeringConnectionOptionsSchema,
 			"tags":      tftags.TagsSchema(),
-			"tags_all":  tftags.TagsSchemaComputed(),
+			"tags_all":  tftags.TagsSchemaTrulyComputed(),
 			"vpc_id": {
 				Type:     schema.TypeString,
 				Required: true,

@@ -3,7 +3,7 @@ subcategory: "Managed Streaming for Kafka"
 layout: "aws"
 page_title: "AWS: aws_msk_configuration"
 description: |-
-  Terraform resource for managing an Amazon Managed Streaming for Kafka configuration
+  this provider resource for managing an Amazon Managed Streaming for Kafka configuration
 ---
 
 # Resource: aws_msk_configuration

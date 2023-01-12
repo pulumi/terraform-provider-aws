@@ -3,12 +3,12 @@ subcategory: "Audit Manager"
 layout: "aws"
 page_title: "AWS: aws_auditmanager_assessment"
 description: |-
-  Terraform resource for managing an AWS Audit Manager Assessment.
+  Resource for managing an AWS Audit Manager Assessment.
 ---
 
 # Resource: aws_auditmanager_assessment
 
-Terraform resource for managing an AWS Audit Manager Assessment.
+Resource for managing an AWS Audit Manager Assessment.
 
 ## Example Usage
 
@@ -54,7 +54,7 @@ The following arguments are required:
 The following arguments are optional:
 
 * `description` - (Optional) Description of the assessment.
-* `tags` - (Optional) A map of tags to assign to the assessment. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) A map of tags to assign to the assessment. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ### assessment_reports_destination
 

@@ -12,15 +12,15 @@ Provides an AWS App Mesh virtual router resource.
 
 ## Breaking Changes
 
-Because of backward incompatible API changes (read [here](https://github.com/awslabs/aws-app-mesh-examples/issues/92) and [here](https://github.com/awslabs/aws-app-mesh-examples/issues/94)), `aws_appmesh_virtual_router` resource definitions created with provider versions earlier than v2.3.0 will need to be modified:
+Because of backward incompatible API changes (read here and here), `aws_appmesh_virtual_router` resource definitions created with provider versions earlier than v2.3.0 will need to be modified:
 
 * Remove service `service_names` from the `spec` argument.
 AWS has created a `aws_appmesh_virtual_service` resource for each of service names.
-These resource can be imported using `terraform import`.
+These resource can be imported using `import`.
 
 * Add a `listener` configuration block to the `spec` argument.
 
-The Terraform state associated with existing resources will automatically be migrated.
+The state associated with existing resources will automatically be migrated.
 
 ## Example Usage
 
@@ -46,9 +46,9 @@ The following arguments are supported:
 
 * `name` - (Required) Name to use for the virtual router. Must be between 1 and 255 characters in length.
 * `mesh_name` - (Required) Name of the service mesh in which to create the virtual router. Must be between 1 and 255 characters in length.
-* `mesh_owner` - (Optional) AWS account ID of the service mesh's owner. Defaults to the account ID the [AWS provider][1] is currently connected to.
+* `mesh_owner` - (Optional) AWS account ID of the service mesh's owner. Defaults to the account ID the AWS provider is currently connected to.
 * `spec` - (Required) Virtual router specification to apply.
-* `tags` - (Optional) Map of tags to assign to the resource. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Map of tags to assign to the resource. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 The `spec` object supports the following:
 
@@ -73,7 +73,7 @@ In addition to all arguments above, the following attributes are exported:
 * `created_date` - Creation date of the virtual router.
 * `last_updated_date` - Last update date of the virtual router.
 * `resource_owner` - Resource owner's AWS account ID.
-* `tags_all` - Map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - Map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 
@@ -83,5 +83,3 @@ e.g.,
 ```
 $ terraform import aws_appmesh_virtual_router.serviceb simpleapp/serviceB
 ```
-
-[1]: /docs/providers/aws/index.html

@@ -10,9 +10,6 @@ description: |-
 
 Provides an IAM Signing Certificate resource to upload Signing Certificates.
 
-~> **Note:** All arguments including the certificate body will be stored in the raw state as plain-text.
-[Read more about sensitive data in state](https://www.terraform.io/docs/state/sensitive-data.html).
-
 ## Example Usage
 
 **Using certs on file:**

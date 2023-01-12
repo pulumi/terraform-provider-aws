@@ -3,12 +3,12 @@ subcategory: "SQS (Simple Queue)"
 layout: "aws"
 page_title: "AWS: aws_sqs_queues"
 description: |-
-  Terraform data source for managing an AWS SQS (Simple Queue) Queues.
+  Data source for managing an AWS SQS (Simple Queue) Queues.
 ---
 
 # Data Source: aws_sqs_queues
 
-Terraform data source for managing an AWS SQS (Simple Queue) Queues.
+Data source for managing an AWS SQS (Simple Queue) Queues.
 
 ## Example Usage
 

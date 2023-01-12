@@ -11,11 +11,11 @@ description: |-
 Manages a Config Conformance Pack. More information about this collection of Config rules and remediation actions can be found in the
 [Conformance Packs](https://docs.aws.amazon.com/config/latest/developerguide/conformance-packs.html) documentation.
 Sample Conformance Pack templates may be found in the
-[AWS Config Rules Repository](https://github.com/awslabs/aws-config-rules/tree/master/aws-config-conformance-packs).
+AWS Config Rules Repository.
 
 ~> **NOTE:** The account must have a Configuration Recorder with proper IAM permissions before the Conformance Pack will
 successfully create or update. See also the
-[`aws_config_configuration_recorder` resource](/docs/providers/aws/r/config_configuration_recorder.html).
+`aws_config_configuration_recorder` resource.
 
 ## Example Usage
 

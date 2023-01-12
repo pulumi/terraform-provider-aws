@@ -3,12 +3,12 @@ subcategory: "Lambda"
 layout: "aws"
 page_title: "AWS: aws_lambda_functions"
 description: |-
-  Terraform data resource to get a list of Lambda Functions.
+  Data resource to get a list of Lambda Functions.
 ---
 
 # aws_lambda_functions
 
-Terraform data resource to get a list of Lambda Functions.
+Data resource to get a list of Lambda Functions.
 
 ## Example Usage
 

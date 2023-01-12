@@ -3,12 +3,12 @@ subcategory: "SESv2 (Simple Email V2)"
 layout: "aws"
 page_title: "AWS: aws_sesv2_configuration_set"
 description: |-
-  Terraform resource for managing an AWS SESv2 (Simple Email V2) Configuration Set.
+  Resource for managing an AWS SESv2 (Simple Email V2) Configuration Set.
 ---
 
 # Resource: aws_sesv2_configuration_set
 
-Terraform resource for managing an AWS SESv2 (Simple Email V2) Configuration Set.
+Resource for managing an AWS SESv2 (Simple Email V2) Configuration Set.
 
 ## Example Usage
 
@@ -49,7 +49,7 @@ The following arguments are supported:
 * `reputation_options` - (Optional) An object that defines whether or not Amazon SES collects reputation metrics for the emails that you send that use the configuration set.
 * `sending_options` - (Optional) An object that defines whether or not Amazon SES can send email that you send using the configuration set.
 * `suppression_options` - (Optional) An object that contains information about the suppression list preferences for your account.
-* `tags` - (Optional) A map of tags to assign to the service. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) A map of tags to assign to the service. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 * `tracking_options` - (Optional) An object that defines the open and click tracking options for emails that you send using the configuration set.
 
 ### delivery_options

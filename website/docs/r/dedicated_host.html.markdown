@@ -48,7 +48,7 @@ The following arguments are supported:
 
 ### Timeouts
 
-The `timeouts` block allows you to specify [timeouts](https://www.terraform.io/docs/configuration/resources.html#timeouts) for certain actions:
+The `timeouts` block allows you to specify timeouts for certain actions:
 
 * `create` - (Defaults to 10 mins) Used when launching the host (until it reaches the initial `running` state)
 * `update` - (Defaults to 10 mins) Used when stopping and starting the host when necessary during update - e.g. when changing host type

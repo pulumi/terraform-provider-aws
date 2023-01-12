@@ -36,7 +36,7 @@ The following arguments are supported:
 * `instance_type` - (Required) The instance type for which to reserve capacity.
 * `outpost_arn` - (Optional) The Amazon Resource Name (ARN) of the Outpost on which to create the Capacity Reservation.
 * `placement_group_arn` - (Optional) The Amazon Resource Name (ARN) of the cluster placement group in which to create the Capacity Reservation.
-* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 * `tenancy` - (Optional) Indicates the tenancy of the Capacity Reservation. Specify either `default` or `dedicated`.
 
 ## Attributes Reference
@@ -46,7 +46,7 @@ In addition to all arguments above, the following attributes are exported:
 * `id` - The Capacity Reservation ID.
 * `owner_id` - The ID of the AWS account that owns the Capacity Reservation.
 * `arn` - The ARN of the Capacity Reservation.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block)
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block
 
 ## Import
 

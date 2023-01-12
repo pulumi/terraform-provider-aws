@@ -274,7 +274,7 @@ resource "aws_s3_bucket_notification" "bucket_notification" {
 }
 ```
 
-For Terraform's [JSON syntax](https://www.terraform.io/docs/configuration/syntax.html), use an array instead of defining the `queue` key twice.
+For JSON syntax, use an array instead of defining the `queue` key twice.
 
 ```json
 {

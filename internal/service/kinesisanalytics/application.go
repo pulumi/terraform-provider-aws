@@ -605,7 +605,7 @@ func ResourceApplication() *schema.Resource {
 
 			"tags": tftags.TagsSchema(),
 
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 
 			"version": {
 				Type:     schema.TypeInt,

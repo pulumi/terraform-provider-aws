@@ -46,7 +46,7 @@ func ResourceTransitGatewayVPCAttachmentAccepter() *schema.Resource {
 				Elem:     &schema.Schema{Type: schema.TypeString},
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 			"transit_gateway_attachment_id": {
 				Type:     schema.TypeString,
 				Required: true,

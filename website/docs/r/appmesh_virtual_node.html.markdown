@@ -12,14 +12,14 @@ Provides an AWS App Mesh virtual node resource.
 
 ## Breaking Changes
 
-Because of backward incompatible API changes (read [here](https://github.com/awslabs/aws-app-mesh-examples/issues/92)), `aws_appmesh_virtual_node` resource definitions created with provider versions earlier than v2.3.0 will need to be modified:
+Because of backward incompatible API changes (read here), `aws_appmesh_virtual_node` resource definitions created with provider versions earlier than v2.3.0 will need to be modified:
 
 * Rename the `service_name` attribute of the `dns` object to `hostname`.
 
 * Replace the `backends` attribute of the `spec` object with one or more `backend` configuration blocks,
 setting `virtual_service_name` to the name of the service.
 
-The Terraform state associated with existing resources will automatically be migrated.
+The state associated with existing resources will automatically be migrated.
 
 ## Example Usage
 
@@ -175,9 +175,9 @@ The following arguments are supported:
 
 * `name` - (Required) Name to use for the virtual node. Must be between 1 and 255 characters in length.
 * `mesh_name` - (Required) Name of the service mesh in which to create the virtual node. Must be between 1 and 255 characters in length.
-* `mesh_owner` - (Optional) AWS account ID of the service mesh's owner. Defaults to the account ID the [AWS provider][1] is currently connected to.
+* `mesh_owner` - (Optional) AWS account ID of the service mesh's owner. Defaults to the account ID the AWS provider is currently connected to.
 * `spec` - (Required) Virtual node specification to apply.
-* `tags` - (Optional) Map of tags to assign to the resource. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Map of tags to assign to the resource. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 The `spec` object supports the following:
 
@@ -286,8 +286,8 @@ The `aws_cloud_map` object supports the following:
 
 * `attributes` - (Optional) String map that contains attributes with values that you can use to filter instances by any custom attribute that you specified when you registered the instance. Only instances that match all of the specified key/value pairs will be returned.
 * `namespace_name` - (Required) Name of the AWS Cloud Map namespace to use.
-Use the [`aws_service_discovery_http_namespace`](/docs/providers/aws/r/service_discovery_http_namespace.html) resource to configure a Cloud Map namespace. Must be between 1 and 1024 characters in length.
-* `service_name` - (Required) Name of the AWS Cloud Map service to use. Use the [`aws_service_discovery_service`](/docs/providers/aws/r/service_discovery_service.html) resource to configure a Cloud Map service. Must be between 1 and 1024 characters in length.
+Use the `aws_service_discovery_http_namespace` resource to configure a Cloud Map namespace. Must be between 1 and 1024 characters in length.
+* `service_name` - (Required) Name of the AWS Cloud Map service to use. Use the `aws_service_discovery_service` resource to configure a Cloud Map service. Must be between 1 and 1024 characters in length.
 
 The `dns` object supports the following:
 
@@ -441,7 +441,7 @@ In addition to all arguments above, the following attributes are exported:
 * `created_date` - Creation date of the virtual node.
 * `last_updated_date` - Last update date of the virtual node.
 * `resource_owner` - Resource owner's AWS account ID.
-* `tags_all` - Map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - Map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 
@@ -451,5 +451,3 @@ e.g.,
 ```
 $ terraform import aws_appmesh_virtual_node.serviceb1 simpleapp/serviceBv1
 ```
-
-[1]: /docs/providers/aws/index.html

@@ -57,7 +57,7 @@ func ResourcePrivateDNSNamespace() *schema.Resource {
 				ValidateFunc: validNamespaceName,
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 			"vpc": {
 				Type:     schema.TypeString,
 				Required: true,

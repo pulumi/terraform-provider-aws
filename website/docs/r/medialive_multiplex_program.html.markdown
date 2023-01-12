@@ -3,12 +3,12 @@ subcategory: "Elemental MediaLive"
 layout: "aws"
 page_title: "AWS: aws_medialive_multiplex_program"
 description: |-
-  Terraform resource for managing an AWS MediaLive MultiplexProgram.
+  Resource for managing an AWS MediaLive MultiplexProgram.
 ---
 
 # Resource: aws_medialive_multiplex_program
 
-Terraform resource for managing an AWS MediaLive MultiplexProgram.
+Resource for managing an AWS MediaLive MultiplexProgram.
 
 ~> **Note** Attribute `statemux_settings` has been deprecated and will be removed in a future major release. Please use `statmux_settings` instead.
 

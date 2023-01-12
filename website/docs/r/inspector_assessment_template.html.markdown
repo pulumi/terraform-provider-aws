@@ -41,7 +41,7 @@ The following arguments are supported:
 * `duration` - (Required) The duration of the inspector run.
 * `rules_package_arns` - (Required) The rules to be used during the run.
 * `event_subscription` - (Optional) A block that enables sending notifications about a specified assessment template event to a designated SNS topic. See [Event Subscriptions](#event-subscriptions) for details.
-* `tags` - (Optional) Key-value map of tags for the Inspector assessment template. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Key-value map of tags for the Inspector assessment template. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ### Event Subscriptions
 
@@ -55,7 +55,7 @@ The event subscription configuration block supports the following arguments:
 In addition to all arguments above, the following attributes are exported:
 
 * `arn` - The template assessment ARN.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

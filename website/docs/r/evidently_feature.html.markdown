@@ -115,7 +115,7 @@ The following arguments are supported:
 * `evaluation_strategy` - (Optional) Specify `ALL_RULES` to activate the traffic allocation specified by any ongoing launches or experiments. Specify `DEFAULT_VARIATION` to serve the default variation to all users instead.
 * `name` - (Required) The name for the new feature. Minimum length of `1`. Maximum length of `127`.
 * `project` - (Required) The name or ARN of the project that is to contain the new feature.
-* `tags` - (Optional) Tags to apply to the feature. If configured with a provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Tags to apply to the feature. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 * `variations` - (Required) One or more blocks that contain the configuration of the feature's different variations. [Detailed below](#variations)
 
 ### `variations`
@@ -138,7 +138,7 @@ The `value` block supports the following arguments:
 
 ## Timeouts
 
-[Configuration options](https://www.terraform.io/docs/configuration/blocks/resources/syntax.html#operation-timeouts):
+Configuration options:
 
 * `create` - (Default `2m`)
 * `delete` - (Default `2m`)
@@ -154,7 +154,7 @@ In addition to all arguments above, the following attributes are exported:
 * `id` - The feature `name` and the project `name` or `arn` separated by a colon (`:`).
 * `last_updated_time` - The date and time that the feature was most recently updated.
 * `status` - The current state of the feature. Valid values are `AVAILABLE` and `UPDATING`.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 * `value_type` - Defines the type of value used to define the different feature variations. Valid Values: `STRING`, `LONG`, `DOUBLE`, `BOOLEAN`.
 
 ### `evaluation_rules`

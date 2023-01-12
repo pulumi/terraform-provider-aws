@@ -94,7 +94,7 @@ func ResourceNetworkProfile() *schema.Resource {
 				ValidateFunc: validation.StringInSlice(devicefarm.NetworkProfileType_Values(), false),
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 		},
 		CustomizeDiff: verify.SetTagsDiff,
 	}

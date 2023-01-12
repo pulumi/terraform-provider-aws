@@ -3,12 +3,12 @@ subcategory: "RDS (Relational Database)"
 layout: "aws"
 page_title: "AWS: aws_db_instances"
 description: |-
-  Terraform data source for listing RDS Database Instances.
+  Data source for listing RDS Database Instances.
 ---
 
 # Data Source: aws_db_instances
 
-Terraform data source for listing RDS Database Instances.
+Data source for listing RDS Database Instances.
 
 ## Example Usage
 

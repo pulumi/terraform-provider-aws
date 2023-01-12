@@ -3,12 +3,12 @@ subcategory: "Audit Manager"
 layout: "aws"
 page_title: "AWS: aws_auditmanager_framework"
 description: |-
-  Terraform resource for managing an AWS Audit Manager Framework.
+  Resource for managing an AWS Audit Manager Framework.
 ---
 
 # Resource: aws_auditmanager_framework
 
-Terraform resource for managing an AWS Audit Manager Framework.
+Resource for managing an AWS Audit Manager Framework.
 
 ## Example Usage
 
@@ -38,7 +38,7 @@ The following arguments are optional:
 
 * `compliance_type` - (Optional) Compliance type that the new custom framework supports, such as `CIS` or `HIPAA`.
 * `description` - (Optional) Description of the framework.
-* `tags` - (Optional) A map of tags to assign to the framework. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) A map of tags to assign to the framework. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ### control_sets
 

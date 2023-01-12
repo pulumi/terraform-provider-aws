@@ -11,7 +11,7 @@ description: |-
 Provides an S3 bucket Object Lock configuration resource. For more information about Object Locking, go to [Using S3 Object Lock](https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lock.html) in the Amazon S3 User Guide.
 
 ~> **NOTE:** This resource **does not enable** Object Lock for **new** buckets. It configures a default retention period for objects placed in the specified bucket.
-Thus, to **enable** Object Lock for a **new** bucket, see the [Using object lock configuration](s3_bucket.html.markdown#Using-object-lock-configuration) section in  the `aws_s3_bucket` resource or the [Object Lock configuration for a new bucket](#object-lock-configuration-for-a-new-bucket) example below.
+Thus, to **enable** Object Lock for a **new** bucket, see the Using object lock configuration section in  the `aws_s3_bucket` resource or the [Object Lock configuration for a new bucket](#object-lock-configuration-for-a-new-bucket) example below.
 If you want to **enable** Object Lock for an **existing** bucket, contact AWS Support and see the [Object Lock configuration for an existing bucket](#object-lock-configuration-for-an-existing-bucket) example below.
 
 ## Example Usage
@@ -89,7 +89,7 @@ The following arguments are supported:
 * `object_lock_enabled` - (Optional, Forces new resource) Indicates whether this bucket has an Object Lock configuration enabled. Defaults to `Enabled`. Valid values: `Enabled`.
 * `rule` - (Optional) Configuration block for specifying the Object Lock rule for the specified object [detailed below](#rule).
 * `token` - (Optional) A token to allow Object Lock to be enabled for an existing bucket. You must contact AWS support for the bucket's "Object Lock token".
-The token is generated in the back-end when [versioning](https://docs.aws.amazon.com/AmazonS3/latest/userguide/manage-versioning-examples.html) is enabled on a bucket. For more details on versioning, see the [`aws_s3_bucket_versioning` resource](s3_bucket_versioning.html.markdown).
+The token is generated in the back-end when [versioning](https://docs.aws.amazon.com/AmazonS3/latest/userguide/manage-versioning-examples.html) is enabled on a bucket. For more details on versioning, see the `aws_s3_bucket_versioning` resource.
 
 ### rule
 
@@ -115,14 +115,14 @@ In addition to all arguments above, the following attributes are exported:
 
 S3 bucket Object Lock configuration can be imported in one of two ways.
 
-If the owner (account ID) of the source bucket is the same account used to configure the Terraform AWS Provider,
+If the owner (account ID) of the source bucket is the same account used to configure the AWS Provider,
 the S3 bucket Object Lock configuration resource should be imported using the `bucket` e.g.,
 
 ```
 $ terraform import aws_s3_bucket_object_lock_configuration.example bucket-name
 ```
 
-If the owner (account ID) of the source bucket differs from the account used to configure the Terraform AWS Provider,
+If the owner (account ID) of the source bucket differs from the account used to configure the AWS Provider,
 the S3 bucket Object Lock configuration resource should be imported using the `bucket` and `expected_bucket_owner` separated by a comma (`,`) e.g.,
 
 ```
