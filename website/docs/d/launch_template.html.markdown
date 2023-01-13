@@ -51,10 +51,10 @@ In addition to all arguments above, the following attributes are exported:
 
 * `id` - ID of the launch template.
 
-This resource also exports a full set of attributes corresponding to the arguments of the [`aws_launch_template`](/docs/providers/aws/r/launch_template.html) resource.
+This resource also exports a full set of attributes corresponding to the arguments of the `aws_launch_template` resource.
 
 ## Timeouts
 
-[Configuration options](https://developer.hashicorp.com/terraform/language/resources/syntax#operation-timeouts):
+Configuration options:
 
 - `read` - (Default `20m`)

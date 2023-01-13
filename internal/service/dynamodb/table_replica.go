@@ -79,8 +79,8 @@ func ResourceTableReplica() *schema.Resource {
 				ForceNew:     true,
 				ValidateFunc: validation.StringInSlice(dynamodb.TableClass_Values(), false),
 			},
-			"tags":     tftags.TagsSchema(),         // direct to replica
-			"tags_all": tftags.TagsSchemaComputed(), // direct to replica
+			"tags":     tftags.TagsSchema(),              // direct to replica
+			"tags_all": tftags.TagsSchemaTrulyComputed(), // direct to replica
 		},
 	}
 }

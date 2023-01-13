@@ -17,7 +17,7 @@ To create a basic traffic mirror session
 
 ```terraform
 resource "aws_ec2_traffic_mirror_filter" "filter" {
-  description      = "traffic mirror filter - terraform example"
+  description      = "traffic mirror filter - example"
   network_services = ["amazon-dns"]
 }
 
@@ -26,7 +26,7 @@ resource "aws_ec2_traffic_mirror_target" "target" {
 }
 
 resource "aws_ec2_traffic_mirror_session" "session" {
-  description              = "traffic mirror session - terraform example"
+  description              = "traffic mirror session - example"
   network_interface_id     = aws_instance.test.primary_network_interface_id
   session_number           = 1
   traffic_mirror_filter_id = aws_ec2_traffic_mirror_filter.filter.id
@@ -45,7 +45,7 @@ The following arguments are supported:
 * `packet_length` - (Optional) The number of bytes in each packet to mirror. These are bytes after the VXLAN header. Do not specify this parameter when you want to mirror the entire packet. To mirror a subset of the packet, set this to the length (in bytes) that you want to mirror.
 * `session_number` - (Required) - The session number determines the order in which sessions are evaluated when an interface is used by multiple sessions. The first session with a matching filter is the one that mirrors the packets.
 * `virtual_network_id` - (Optional) - The VXLAN ID for the Traffic Mirror session. For more information about the VXLAN protocol, see RFC 7348. If you do not specify a VirtualNetworkId, an account-wide unique id is chosen at random.
-* `tags` - (Optional) Key-value map of resource tags. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Key-value map of resource tags. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ## Attributes Reference
 
@@ -53,7 +53,7 @@ In addition to all arguments above, the following attributes are exported:
 
 * `arn` - The ARN of the traffic mirror session.
 * `id` - The name of the session.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 * `owner_id` - The AWS account ID of the session owner.
 
 ## Import

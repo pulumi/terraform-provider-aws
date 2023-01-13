@@ -74,6 +74,6 @@ In addition to all arguments above, the following attributes are exported:
 * `subnet_change_protection` - A boolean flag indicating whether it is possible to change the associated subnet(s).
 * `subnet_mapping` - Set of configuration blocks describing the public subnets. Each subnet must belong to a different Availability Zone in the VPC. AWS Network Firewall creates a firewall endpoint in each subnet.
     * `subnet_id` - The unique identifier for the subnet.
-* `tags` - Map of resource tags to associate with the resource. If configured with a provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - Map of resource tags to associate with the resource. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 * `update_token` - String token used when updating a firewall.
 * `vpc_id` - Unique identifier of the VPC where AWS Network Firewall should create the firewall.

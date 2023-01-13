@@ -874,7 +874,7 @@ func ResourceDeliveryStream() *schema.Resource {
 
 			"tags": tftags.TagsSchema(),
 
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 
 			"server_side_encryption": {
 				Type:             schema.TypeList,

@@ -16,13 +16,12 @@ when using autoscaling policies. It's good practice to pick either
 or [dynamic](https://docs.aws.amazon.com/AutoScaling/latest/DeveloperGuide/as-scale-based-on-demand.html)
 (policy-based) scaling.
 
-> **Hands-on:** Try the [Manage AWS Auto Scaling Groups](https://learn.hashicorp.com/tutorials/terraform/aws-asg?utm_source=WEBSITE&utm_medium=WEB_IO&utm_offer=ARTICLE_PAGE&utm_content=DOCS) tutorial on HashiCorp Learn.
 
 ## Example Usage
 
 ```terraform
 resource "aws_autoscaling_policy" "bat" {
-  name                   = "foobar3-terraform-test"
+  name                   = "foobar3-test"
   scaling_adjustment     = 4
   adjustment_type        = "ChangeInCapacity"
   cooldown               = 300
@@ -31,7 +30,7 @@ resource "aws_autoscaling_policy" "bat" {
 
 resource "aws_autoscaling_group" "bar" {
   availability_zones        = ["us-east-1a"]
-  name                      = "foobar3-terraform-test"
+  name                      = "foobar3-test"
   max_size                  = 5
   min_size                  = 2
   health_check_grace_period = 300

@@ -500,7 +500,7 @@ func ResourceClassificationJob() *schema.Resource {
 				},
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 			"job_id": {
 				Type:     schema.TypeString,
 				Computed: true,

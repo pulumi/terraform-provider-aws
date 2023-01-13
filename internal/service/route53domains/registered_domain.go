@@ -215,7 +215,7 @@ func ResourceRegisteredDomain() *schema.Resource {
 				Elem:     &schema.Schema{Type: schema.TypeString},
 			},
 			"tags":         tftags.TagsSchema(),
-			"tags_all":     tftags.TagsSchemaComputed(),
+			"tags_all":     tftags.TagsSchemaTrulyComputed(),
 			"tech_contact": contactSchema,
 			"tech_privacy": {
 				Type:     schema.TypeBool,

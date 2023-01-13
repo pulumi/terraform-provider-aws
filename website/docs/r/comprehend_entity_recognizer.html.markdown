@@ -3,12 +3,12 @@ subcategory: "Comprehend"
 layout: "aws"
 page_title: "AWS: aws_comprehend_entity_recognizer"
 description: |-
-  Terraform resource for managing an AWS Comprehend Entity Recognizer.
+  Resource for managing an AWS Comprehend Entity Recognizer.
 ---
 
 # Resource: aws_comprehend_entity_recognizer
 
-Terraform resource for managing an AWS Comprehend Entity Recognizer.
+Resource for managing an AWS Comprehend Entity Recognizer.
 
 ## Example Usage
 
@@ -68,10 +68,10 @@ The following arguments are required:
 The following arguments are optional:
 
 * `model_kms_key_id` - (Optional) The ID or ARN of a KMS Key used to encrypt trained Entity Recognizers.
-* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider [`default_tags` Configuration Block](/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider `default_tags` Configuration Block present, tags with matching keys will overwrite those defined at the provider-level.
 * `version_name` - (Optional) Name for the version of the Entity Recognizer.
   Each version must have a unique name within the Entity Recognizer.
-  If omitted, Terraform will assign a random, unique version name.
+  If omitted, the provider will assign a random, unique version name.
   If explicitly set to `""`, no version name will be set.
   Has a maximum length of 63 characters.
   Can contain upper- and lower-case letters, numbers, and hypen (`-`).
@@ -146,11 +146,11 @@ The following arguments are optional:
 In addition to all arguments above, the following attributes are exported:
 
 * `arn` - ARN of the Entity Recognizer version.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Timeouts
 
-`aws_comprehend_entity_recognizer` provides the following [Timeouts](https://developer.hashicorp.com/terraform/language/resources/syntax#operation-timeouts) configuration options:
+`aws_comprehend_entity_recognizer` provides the following Timeouts configuration options:
 
 * `create` - (Optional, Default: `60m`)
 * `update` - (Optional, Default: `60m`)

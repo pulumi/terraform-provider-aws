@@ -40,7 +40,7 @@ The following arguments are supported:
 * `network_interface_id` - (Optional, Forces new) The network interface ID that is associated with the target.
 * `network_load_balancer_arn` - (Optional, Forces new) The Amazon Resource Name (ARN) of the Network Load Balancer that is associated with the target.
 * `gateway_load_balancer_endpoint_id` - (Optional, Forces new) The VPC Endpoint Id of the Gateway Load Balancer that is associated with the target.
-* `tags` - (Optional) Key-value map of resource tags. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Key-value map of resource tags. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 **NOTE:** Either `network_interface_id` or `network_load_balancer_arn` should be specified and both should not be specified together
 
@@ -49,7 +49,7 @@ The following arguments are supported:
 In addition to all arguments above, the following attributes are exported:
 
 * `id` - The ID of the Traffic Mirror target.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 * `arn` - The ARN of the traffic mirror target.
 * `owner_id` - The ID of the AWS account that owns the traffic mirror target.
 

@@ -76,7 +76,7 @@ The following arguments are optional:
 * `end_date` - (Optional) The date, in UTC, before which the schedule can invoke its target. Depending on the schedule's recurrence expression, invocations might stop on, or before, the end date you specify. EventBridge Scheduler ignores the end date for one-time schedules. Example: `2030-01-01T01:00:00Z`.
 * `group_name` - (Optional, Forces new resource) Name of the schedule group to associate with this schedule. When omitted, the `default` schedule group is used.
 * `kms_key_arn` - (Optional) ARN for the customer managed KMS key that EventBridge Scheduler will use to encrypt and decrypt your data.
-* `name` - (Optional, Forces new resource) Name of the schedule. If omitted, Terraform will assign a random, unique name. Conflicts with `name_prefix`.
+* `name` - (Optional, Forces new resource) Name of the schedule. If omitted, the provider will assign a random, unique name. Conflicts with `name_prefix`.
 * `name_prefix` - (Optional, Forces new resource) Creates a unique name beginning with the specified prefix. Conflicts with `name`.
 * `schedule_expression_timezone` - (Optional) Timezone in which the scheduling expression is evaluated. Defaults to `UTC`. Example: `Australia/Sydney`.
 * `start_date` - (Optional) The date, in UTC, after which the schedule can begin invoking its target. Depending on the schedule's recurrence expression, invocations might occur on, or after, the start date you specify. EventBridge Scheduler ignores the start date for one-time schedules. Example: `2030-01-01T01:00:00Z`.

@@ -14,7 +14,7 @@ Use this data source to get information on an existing backup plan.
 
 ```terraform
 data "aws_backup_plan" "example" {
-  plan_id = "tf_example_backup_plan_id"
+  plan_id = "my_example_backup_plan_id"
 }
 ```
 

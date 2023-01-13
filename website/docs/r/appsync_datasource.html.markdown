@@ -68,12 +68,12 @@ EOF
 
 resource "aws_appsync_graphql_api" "example" {
   authentication_type = "API_KEY"
-  name                = "tf_appsync_example"
+  name                = "my_appsync_example"
 }
 
 resource "aws_appsync_datasource" "example" {
   api_id           = aws_appsync_graphql_api.example.id
-  name             = "tf_appsync_example"
+  name             = "my_appsync_example"
   service_role_arn = aws_iam_role.example.arn
   type             = "AMAZON_DYNAMODB"
 

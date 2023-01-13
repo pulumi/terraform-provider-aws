@@ -8,9 +8,9 @@ description: |-
 
 # Resource: aws_iam_user_login_profile
 
-Manages an IAM User Login Profile with limited support for password creation during Terraform resource creation. Uses PGP to encrypt the password for safe transport to the user. PGP keys can be obtained from Keybase.
+Manages an IAM User Login Profile with limited support for password creation during this provider resource creation. Uses PGP to encrypt the password for safe transport to the user. PGP keys can be obtained from Keybase.
 
--> To reset an IAM User login password via Terraform, you can use the [`terraform taint` command](https://www.terraform.io/docs/commands/taint.html) or change any of the arguments.
+-> To reset an IAM User login password via this provider, you can use delete and recreate this resource or change any of the arguments.
 
 ## Example Usage
 
@@ -45,11 +45,11 @@ The following arguments are supported:
 In addition to all arguments above, the following attributes are exported:
 
 * `password` - The plain text password, only available when `pgp_key` is not provided.
-* `key_fingerprint` - The fingerprint of the PGP key used to encrypt the password. Only available if password was handled on Terraform resource creation, not import.
-* `encrypted_password` - The encrypted password, base64 encoded. Only available if password was handled on Terraform resource creation, not import.
+* `key_fingerprint` - The fingerprint of the PGP key used to encrypt the password. Only available if password was handled on this provider resource creation, not import.
+* `encrypted_password` - The encrypted password, base64 encoded. Only available if password was handled on resource creation, not import.
 
 ~> **NOTE:** The encrypted password may be decrypted using the command line,
-   for example: `terraform output password | base64 --decode | keybase pgp decrypt`.
+   for example: `pulumi stack output password | base64 --decode | keybase pgp decrypt`.
 
 ## Import
 
@@ -59,7 +59,7 @@ IAM User Login Profiles can be imported without password information support via
 $ terraform import aws_iam_user_login_profile.example myusername
 ```
 
-Since Terraform has no method to read the PGP or password information during import, use the [Terraform resource `lifecycle` configuration block `ignore_changes` argument](https://www.terraform.io/docs/configuration/meta-arguments/lifecycle.html#ignore_changes) to ignore them unless password recreation is desiredE.g.,
+Since this provider has no method to read the PGP or password information during import, use [`ignore_changes` argument](https://www.pulumi.com/docs/intro/concepts/programming-model/#ignorechanges) to ignore them unless password recreation is desired. e.g.
 
 ```terraform
 resource "aws_iam_user_login_profile" "example" {

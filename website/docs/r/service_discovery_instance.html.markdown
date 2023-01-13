@@ -20,7 +20,7 @@ resource "aws_vpc" "example" {
 }
 
 resource "aws_service_discovery_private_dns_namespace" "example" {
-  name        = "example.terraform.local"
+  name        = "example.domain.local"
   description = "example"
   vpc         = aws_vpc.example.id
 }
@@ -57,7 +57,7 @@ resource "aws_service_discovery_instance" "example" {
 
 ```terraform
 resource "aws_service_discovery_http_namespace" "example" {
-  name        = "example.terraform.com"
+  name        = "example.domain.test"
   description = "example"
 }
 

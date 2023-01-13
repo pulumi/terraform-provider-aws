@@ -14,10 +14,10 @@ Provides an AWS Backup plan resource.
 
 ```terraform
 resource "aws_backup_plan" "example" {
-  name = "tf_example_backup_plan"
+  name = "my_example_backup_plan"
 
   rule {
-    rule_name         = "tf_example_backup_rule"
+    rule_name         = "my_example_backup_rule"
     target_vault_name = aws_backup_vault.test.name
     schedule          = "cron(0 12 * * ? *)"
 
@@ -42,7 +42,7 @@ The following arguments are supported:
 * `name` - (Required) The display name of a backup plan.
 * `rule` - (Required) A rule object that specifies a scheduled task that is used to back up a selection of resources.
 * `advanced_backup_setting` - (Optional) An object that specifies backup options for each resource type.
-* `tags` - (Optional) Metadata that you can assign to help organize the plans you create. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Metadata that you can assign to help organize the plans you create. .If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ### Rule Arguments
 For **rule** the following attributes are supported:
@@ -81,7 +81,7 @@ In addition to all arguments above, the following attributes are exported:
 
 * `id` - The id of the backup plan.
 * `arn` - The ARN of the backup plan.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 * `version` - Unique, randomly generated, Unicode, UTF-8 encoded string that serves as the version ID of the backup plan.
 
 ## Import

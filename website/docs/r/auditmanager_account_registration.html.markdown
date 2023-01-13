@@ -3,12 +3,12 @@ subcategory: "Audit Manager"
 layout: "aws"
 page_title: "AWS: aws_auditmanager_account_registration"
 description: |-
-  Terraform resource for managing AWS Audit Manager Account Registration.
+  Resource for managing AWS Audit Manager Account Registration.
 ---
 
 # Resource: aws_auditmanager_account_registration
 
-Terraform resource for managing AWS Audit Manager Account Registration.
+Resource for managing AWS Audit Manager Account Registration.
 
 ## Example Usage
 

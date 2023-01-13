@@ -1068,7 +1068,7 @@ func ResourceTopicRule() *schema.Resource {
 				},
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 			"timestream": {
 				Type:     schema.TypeSet,
 				Optional: true,

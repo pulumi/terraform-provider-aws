@@ -95,7 +95,7 @@ func ResourcePublicVirtualInterface() *schema.Resource {
 				MinItems: 1,
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 			"vlan": {
 				Type:         schema.TypeInt,
 				Required:     true,

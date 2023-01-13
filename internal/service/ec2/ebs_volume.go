@@ -100,7 +100,7 @@ func ResourceEBSVolume() *schema.Resource {
 				AtLeastOneOf: []string{"size", "snapshot_id"},
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 			"throughput": {
 				Type:         schema.TypeInt,
 				Optional:     true,

@@ -568,7 +568,7 @@ func ResourceDomain() *schema.Resource {
 				Elem:     &schema.Schema{Type: schema.TypeString},
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 			"url": {
 				Type:     schema.TypeString,
 				Computed: true,

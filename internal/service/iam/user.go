@@ -72,7 +72,7 @@ func ResourceUser() *schema.Resource {
 				Description: "Delete user even if it has non-Terraform-managed IAM access keys, login profile or MFA devices",
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 		},
 
 		CustomizeDiff: verify.SetTagsDiff,

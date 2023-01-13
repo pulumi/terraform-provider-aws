@@ -183,7 +183,7 @@ func ResourceServer() *schema.Resource {
 				ValidateFunc: validation.StringInSlice(SecurityPolicyName_Values(), false),
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 			"url": {
 				Type:     schema.TypeString,
 				Optional: true,

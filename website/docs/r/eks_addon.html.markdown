@@ -126,7 +126,7 @@ The following arguments are optional:
 * `resolve_conflicts` - (Optional) Define how to resolve parameter value conflicts
   when migrating an existing add-on to an Amazon EKS add-on or when applying
   version updates to the add-on. Valid values are `NONE`, `OVERWRITE` and `PRESERVE`. For more details check [UpdateAddon](https://docs.aws.amazon.com/eks/latest/APIReference/API_UpdateAddon.html) API Docs.
-* `tags` - (Optional) Key-value map of resource tags. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Key-value map of resource tags. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 * `preserve` - (Optional) Indicates if you want to preserve the created resources when deleting the EKS add-on.
 * `service_account_role_arn` - (Optional) The Amazon Resource Name (ARN) of an
   existing IAM role to bind to the add-on's service account. The role must be
@@ -149,11 +149,11 @@ In addition to all arguments above, the following attributes are exported:
 * `status` - Status of the EKS add-on.
 * `created_at` - Date and time in [RFC3339 format](https://tools.ietf.org/html/rfc3339#section-5.8) that the EKS add-on was created.
 * `modified_at` - Date and time in [RFC3339 format](https://tools.ietf.org/html/rfc3339#section-5.8) that the EKS add-on was updated.
-* `tags_all` - (Optional) Key-value map of resource tags, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - (Optional) Key-value map of resource tags, including those inherited from the provider `default_tags` configuration block.
 
 ## Timeouts
 
-[Configuration options](https://developer.hashicorp.com/terraform/language/resources/syntax#operation-timeouts):
+Configuration options:
 
 * `create` - (Default `20m`)
 * `update` - (Default `20m`)

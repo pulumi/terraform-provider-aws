@@ -55,7 +55,7 @@ func ResourceTapePool() *schema.Resource {
 				ValidateFunc: validation.IntBetween(0, 36500),
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 		},
 
 		CustomizeDiff: verify.SetTagsDiff,

@@ -57,11 +57,11 @@ The following arguments are supported:
 * `description` - (Optional) Description of the Core Network.
 * `global_network_id` - (Required) The ID of the global network that a core network will be a part of.
 * `policy_document` - (Optional) Policy document for creating a core network. Note that updating this argument will result in the new policy document version being set as the `LATEST` and `LIVE` policy document. Refer to the [Core network policies documentation](https://docs.aws.amazon.com/network-manager/latest/cloudwan/cloudwan-policy-change-sets.html) for more information.
-* `tags` - (Optional) Key-value tags for the Core Network. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Key-value tags for the Core Network. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ## Timeouts
 
-[Configuration options](https://developer.hashicorp.com/terraform/language/resources/syntax#operation-timeouts):
+Configuration options:
 
 * `create` - (Default `30m`)
 * `delete` - (Default `30m`)
@@ -77,7 +77,7 @@ In addition to all arguments above, the following attributes are exported:
 * `id` - Core Network ID.
 * `segments` - One or more blocks detailing the segments within a core network. [Detailed below](#segments).
 * `state` - Current state of a core network.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ### `edges`
 

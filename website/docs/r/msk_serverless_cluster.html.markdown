@@ -3,14 +3,14 @@ subcategory: "Managed Streaming for Kafka"
 layout: "aws"
 page_title: "AWS: aws_msk_serverless_cluster"
 description: |-
-  Terraform resource for managing an Amazon MSK Serverless cluster.
+  Resource for managing an Amazon MSK Serverless cluster.
 ---
 
 # Resource: aws_msk_serverless_cluster
 
 Manages an Amazon MSK Serverless cluster.
 
--> **Note:** To manage a _provisioned_ Amazon MSK cluster, use the [`aws_msk_cluster`](/docs/providers/aws/r/msk_cluster.html) resource.
+-> **Note:** To manage a _provisioned_ Amazon MSK cluster, use the `aws_msk_cluster` resource.
 
 ## Example Usage
 
@@ -39,7 +39,7 @@ The following arguments are supported:
 
 * `client_authentication` - (Required) Specifies client authentication information for the serverless cluster. See below.
 * `cluster_name` - (Required) The name of the serverless cluster.
-* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 * `vpc_config` - (Required) VPC configuration information. See below.
 
 ### client_authentication Argument Reference
@@ -64,11 +64,11 @@ The following arguments are supported:
 In addition to all arguments above, the following attributes are exported:
 
 * `arn` - The ARN of the serverless cluster.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Timeouts
 
-[Configuration options](https://developer.hashicorp.com/terraform/language/resources/syntax#operation-timeouts):
+Configuration options:
 
 * `create` - (Default `120m`)
 * `delete` - (Default `120m`)

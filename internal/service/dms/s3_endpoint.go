@@ -85,7 +85,7 @@ func ResourceS3Endpoint() *schema.Resource {
 				Computed: true,
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 
 			/////// S3-Specific Settings
 			"add_column_name": {

@@ -3,7 +3,7 @@ subcategory: "Elasticsearch"
 layout: "aws"
 page_title: "AWS: aws_elasticsearch_domain"
 description: |-
-  Terraform resource for managing an AWS Elasticsearch Domain.
+  Provides a resource for managing an AWS Elasticsearch Domain.
 ---
 
 # Resource: aws_elasticsearch_domain
@@ -31,7 +31,7 @@ resource "aws_elasticsearch_domain" "example" {
 
 ### Access Policy
 
--> See also: [`aws_elasticsearch_domain_policy` resource](/docs/providers/aws/r/elasticsearch_domain_policy.html)
+-> See also: `aws_elasticsearch_domain_policy` resource
 
 ```terraform
 variable "domain" {
@@ -136,7 +136,7 @@ data "aws_caller_identity" "current" {}
 
 resource "aws_security_group" "es" {
   name        = "${var.vpc}-elasticsearch-${var.domain}"
-  description = "Managed by Terraform"
+  description = "Managed by Pulumi"
   vpc_id      = data.aws_vpc.selected.id
 
   ingress {
@@ -207,7 +207,7 @@ The following arguments are required:
 The following arguments are optional:
 
 * `access_policies` - (Optional) IAM policy document specifying the access policies for the domain.
-* `advanced_options` - (Optional) Key-value string pairs to specify advanced configuration options. Note that the values for these configuration options must be strings (wrapped in quotes) or they may be wrong and cause a perpetual diff, causing Terraform to want to recreate your Elasticsearch domain on every apply.
+* `advanced_options` - (Optional) Key-value string pairs to specify advanced configuration options. Note that the values for these configuration options must be strings (wrapped in quotes) or they may be wrong and cause a perpetual diff, causing the provider to want to recreate your Elasticsearch domain on every apply.
 * `advanced_security_options` - (Optional) Configuration block for [fine-grained access control](https://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/fgac.html). Detailed below.
 * `auto_tune_options` - (Optional) Configuration block for the Auto-Tune options of the domain. Detailed below.
 * `cluster_config` - (Optional) Configuration block for the cluster of the domain. Detailed below.
@@ -219,7 +219,7 @@ The following arguments are optional:
 * `log_publishing_options` - (Optional) Configuration block for publishing slow and application logs to CloudWatch Logs. This block can be declared multiple times, for each log_type, within the same resource. Detailed below.
 * `node_to_node_encryption` - (Optional) Configuration block for node-to-node encryption options. Detailed below.
 * `snapshot_options` - (Optional) Configuration block for snapshot related options. Detailed below. DEPRECATED. For domains running Elasticsearch 5.3 and later, Amazon ES takes hourly automated snapshots, making this setting irrelevant. For domains running earlier versions of Elasticsearch, Amazon ES takes daily automated snapshots.
-* `tags` - (Optional) Map of tags to assign to the resource. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Map of tags to assign to the resource. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 * `vpc_options` - (Optional) Configuration block for VPC related options. Adding or removing this configuration forces a new resource ([documentation](https://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-vpc.html#es-vpc-limitations)). Detailed below.
 
 ### advanced_security_options
@@ -288,7 +288,7 @@ AWS documentation: [Amazon Cognito Authentication for Kibana](https://docs.aws.a
 * `custom_endpoint_enabled` - (Optional) Whether to enable custom endpoint for the Elasticsearch domain.
 * `custom_endpoint` - (Optional) Fully qualified domain for your custom endpoint.
 * `enforce_https` - (Optional) Whether or not to require HTTPS. Defaults to `true`.
-* `tls_security_policy` - (Optional) Name of the TLS security policy that needs to be applied to the HTTPS endpoint. Valid values:  `Policy-Min-TLS-1-0-2019-07` and `Policy-Min-TLS-1-2-2019-07`. Terraform will only perform drift detection if a configuration value is provided.
+* `tls_security_policy` - (Optional) Name of the TLS security policy that needs to be applied to the HTTPS endpoint. Valid values:  `Policy-Min-TLS-1-0-2019-07` and `Policy-Min-TLS-1-2-2019-07`. The provider will only perform drift detection if a configuration value is provided.
 
 ### ebs_options
 
@@ -300,10 +300,10 @@ AWS documentation: [Amazon Cognito Authentication for Kibana](https://docs.aws.a
 
 ### encrypt_at_rest
 
-~> **Note:** You can enable `encrypt_at_rest` _in place_ for an existing, unencrypted domain only if your Elasticsearch version is 6.7 or greater. For lower versions, if you enable `encrypt_at_rest`, Terraform with recreate the domain, potentially causing data loss. For any version, if you disable `encrypt_at_rest` for an existing, encrypted domain, Terraform will recreate the domain, potentially causing data loss. If you change the `kms_key_id`, Terraform will also recreate the domain, potentially causing data loss.
+~> **Note:** You can enable `encrypt_at_rest` _in place_ for an existing, unencrypted domain only if your Elasticsearch version is 6.7 or greater. For lower versions, if you enable `encrypt_at_rest`, the provider will recreate the domain, potentially causing data loss. For any version, if you disable `encrypt_at_rest` for an existing, encrypted domain, the provider will recreate the domain, potentially causing data loss. If you change the `kms_key_id`, the provider will also recreate the domain, potentially causing data loss.
 
 * `enabled` - (Required) Whether to enable encryption at rest. If the `encrypt_at_rest` block is not provided then this defaults to `false`. Enabling encryption on new domains requires `elasticsearch_version` 5.1 or greater.
-* `kms_key_id` - (Optional) KMS key ARN to encrypt the Elasticsearch domain with. If not specified then it defaults to using the `aws/es` service KMS key. Note that KMS will accept a KMS key ID but will return the key ARN. To prevent Terraform detecting unwanted changes, use the key ARN instead.
+* `kms_key_id` - (Optional) KMS key ARN to encrypt the Elasticsearch domain with. If not specified then it defaults to using the `aws/es` service KMS key. Note that KMS will accept a KMS key ID but will return the key ARN. To prevent the provider detecting unwanted changes, use the key ARN instead.
 
 ### log_publishing_options
 
@@ -313,7 +313,7 @@ AWS documentation: [Amazon Cognito Authentication for Kibana](https://docs.aws.a
 
 ### node_to_node_encryption
 
-~> **Note:** You can enable `node_to_node_encryption` _in place_ for an existing, unencrypted domain only if your Elasticsearch version is 6.7 or greater. For lower versions, if you enable `node_to_node_encryption`, Terraform will recreate the domain, potentially causing data loss. For any version, if you disable `node_to_node_encryption` for an existing, node-to-node encrypted domain, Terraform will recreate the domain, potentially causing data loss.
+~> **Note:** You can enable `node_to_node_encryption` _in place_ for an existing, unencrypted domain only if your Elasticsearch version is 6.7 or greater. For lower versions, if you enable `node_to_node_encryption`, the provider will recreate the domain, potentially causing data loss. For any version, if you disable `node_to_node_encryption` for an existing, node-to-node encrypted domain, the provider will recreate the domain, potentially causing data loss.
 
 * `enabled` - (Required) Whether to enable node-to-node encryption. If the `node_to_node_encryption` block is not provided then this defaults to `false`. Enabling node-to-node encryption of a new domain requires an `elasticsearch_version` of `6.0` or greater.
 
@@ -341,13 +341,13 @@ In addition to all arguments above, the following attributes are exported:
 * `domain_name` - Name of the Elasticsearch domain.
 * `endpoint` - Domain-specific endpoint used to submit index, search, and data upload requests.
 * `kibana_endpoint` - Domain-specific endpoint for kibana without https scheme.
-* `tags_all` - Map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - Map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 * `vpc_options.0.availability_zones` - If the domain was created inside a VPC, the names of the availability zones the configured `subnet_ids` were created inside.
 * `vpc_options.0.vpc_id` - If the domain was created inside a VPC, the ID of the VPC.
 
 ## Timeouts
 
-[Configuration options](https://developer.hashicorp.com/terraform/language/resources/syntax#operation-timeouts):
+Configuration options:
 
 * `create` - (Default `60m`)
 * `update` - (Default `60m`)

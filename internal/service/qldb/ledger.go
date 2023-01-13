@@ -66,7 +66,7 @@ func ResourceLedger() *schema.Resource {
 				ValidateFunc: validation.StringInSlice(qldb.PermissionsMode_Values(), false),
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 		},
 
 		CustomizeDiff: verify.SetTagsDiff,

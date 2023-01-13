@@ -3,7 +3,7 @@ subcategory: "CloudFront"
 layout: "aws"
 page_title: "AWS: aws_cloudfront_origin_access_control"
 description: |-
-  Terraform resource for managing an AWS CloudFront Origin Access Control.
+  Resource for managing an AWS CloudFront Origin Access Control.
 ---
 
 # Resource: aws_cloudfront_origin_access_control

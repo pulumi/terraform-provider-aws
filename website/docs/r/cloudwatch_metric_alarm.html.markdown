@@ -14,7 +14,7 @@ Provides a CloudWatch Metric Alarm resource.
 
 ```terraform
 resource "aws_cloudwatch_metric_alarm" "foobar" {
-  alarm_name                = "terraform-test-foobar5"
+  alarm_name                = "test-foobar5"
   comparison_operator       = "GreaterThanOrEqualToThreshold"
   evaluation_periods        = "2"
   metric_name               = "CPUUtilization"
@@ -31,7 +31,7 @@ resource "aws_cloudwatch_metric_alarm" "foobar" {
 
 ```terraform
 resource "aws_autoscaling_policy" "bat" {
-  name                   = "foobar3-terraform-test"
+  name                   = "foobar3-test"
   scaling_adjustment     = 4
   adjustment_type        = "ChangeInCapacity"
   cooldown               = 300
@@ -39,7 +39,7 @@ resource "aws_autoscaling_policy" "bat" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "bat" {
-  alarm_name          = "terraform-test-foobar5"
+  alarm_name          = "test-foobar5"
   comparison_operator = "GreaterThanOrEqualToThreshold"
   evaluation_periods  = "2"
   metric_name         = "CPUUtilization"
@@ -61,7 +61,7 @@ resource "aws_cloudwatch_metric_alarm" "bat" {
 
 ```terraform
 resource "aws_cloudwatch_metric_alarm" "foobar" {
-  alarm_name                = "terraform-test-foobar"
+  alarm_name                = "test-foobar"
   comparison_operator       = "GreaterThanOrEqualToThreshold"
   evaluation_periods        = "2"
   threshold                 = "10"
@@ -111,7 +111,7 @@ resource "aws_cloudwatch_metric_alarm" "foobar" {
 
 ```terraform
 resource "aws_cloudwatch_metric_alarm" "xx_anomaly_detection" {
-  alarm_name                = "terraform-test-foobar"
+  alarm_name                = "test-foobar"
   comparison_operator       = "GreaterThanUpperThreshold"
   evaluation_periods        = "2"
   threshold_metric_id       = "e1"
@@ -205,7 +205,7 @@ If you specify `evaluate` or omit this parameter, the alarm will always be
 evaluated and possibly change state no matter how many data points are available.
 The following values are supported: `ignore`, and `evaluate`.
 * `metric_query` (Optional) Enables you to create an alarm based on a metric math expression. You may specify at most 20.
-* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) A map of tags to assign to the resource. .If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ~> **NOTE:**  If you specify at least one `metric_query`, you may not specify a `metric_name`, `namespace`, `period` or `statistic`. If you do not specify a `metric_query`, you must specify each of these (although you may use `extended_statistic` instead of `statistic`).
 
@@ -240,7 +240,7 @@ In addition to all arguments above, the following attributes are exported:
 
 * `arn` - The ARN of the CloudWatch Metric Alarm.
 * `id` - The ID of the health check.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

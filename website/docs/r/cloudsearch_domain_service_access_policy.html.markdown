@@ -10,7 +10,7 @@ description: |-
 
 Provides an CloudSearch domain service access policy resource.
 
-Terraform waits for the domain service access policy to become `Active` when applying a configuration.
+The provider waits for the domain service access policy to become `Active` when applying a configuration.
 
 ## Example Usage
 
@@ -53,7 +53,7 @@ No additional attributes are exported.
 
 ## Timeouts
 
-[Configuration options](https://developer.hashicorp.com/terraform/language/resources/syntax#operation-timeouts):
+Configuration options:
 
 * `update` - (Default `20m`)
 * `delete` - (Default `20m`)

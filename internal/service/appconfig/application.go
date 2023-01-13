@@ -41,7 +41,7 @@ func ResourceApplication() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(1, 64),
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 		},
 		CustomizeDiff: verify.SetTagsDiff,
 	}

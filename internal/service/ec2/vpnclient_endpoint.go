@@ -192,7 +192,7 @@ func ResourceClientVPNEndpoint() *schema.Resource {
 				Deprecated: `This attribute has been deprecated.`,
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 			"transport_protocol": {
 				Type:         schema.TypeString,
 				Optional:     true,

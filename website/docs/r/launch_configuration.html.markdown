@@ -10,7 +10,7 @@ description: |-
 
 Provides a resource to create a new launch configuration, used for autoscaling groups.
 
--> **Note** When using `aws_launch_configuration` with `aws_autoscaling_group`, it is recommended to use the `name_prefix` (Optional) instead of the `name` (Optional) attribute. This will allow Terraform lifecycles to detect changes to the launch configuration and update the autoscaling group correctly.
+-> **Note** When using `aws_launch_configuration` with `aws_autoscaling_group`, it is recommended to use the `name_prefix` (Optional) instead of the `name` (Optional) attribute.
 
 ## Example Usage
 
@@ -41,10 +41,10 @@ resource "aws_launch_configuration" "as_conf" {
 ## Using with AutoScaling Groups
 
 Launch Configurations cannot be updated after creation with the Amazon
-Web Service API. In order to update a Launch Configuration, Terraform will
+Web Service API. In order to update a Launch Configuration, this provider will
 destroy the existing resource and create a replacement. In order to effectively
-use a Launch Configuration resource with an [AutoScaling Group resource][1],
-it's recommended to specify `create_before_destroy` in a [lifecycle][2] block.
+use a Launch Configuration resource with an AutoScaling Group resource,
+it's recommended to specify `create_before_destroy` in a lifecycle block.
 Either omit the Launch Configuration `name` attribute, or specify a partial name
 with `name_prefix`.  Example:
 
@@ -66,7 +66,7 @@ data "aws_ami" "ubuntu" {
 }
 
 resource "aws_launch_configuration" "as_conf" {
-  name_prefix   = "terraform-lc-example-"
+  name_prefix   = "lc-example-"
   image_id      = data.aws_ami.ubuntu.id
   instance_type = "t2.micro"
 
@@ -76,7 +76,7 @@ resource "aws_launch_configuration" "as_conf" {
 }
 
 resource "aws_autoscaling_group" "bar" {
-  name                 = "terraform-asg-example"
+  name                 = "asg-example"
   launch_configuration = aws_launch_configuration.as_conf.name
   min_size             = 1
   max_size             = 2
@@ -87,7 +87,7 @@ resource "aws_autoscaling_group" "bar" {
 }
 ```
 
-With this setup Terraform generates a unique name for your Launch
+With this setup this provider generates a unique name for your Launch
 Configuration and can then update the AutoScaling Group without conflict before
 destroying the previous Launch Configuration.
 
@@ -98,7 +98,7 @@ Auto Scaling Group to reserve instances. Simply specifying the `spot_price`
 parameter will set the price on the Launch Configuration which will attempt to
 reserve your instances at this price.  See the [AWS Spot Instance
 documentation](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-spot-instances.html)
-for more information or how to launch [Spot Instances][3] with Terraform.
+for more information or how to launch [Spot Instances][3] with this provider.
 
 ```terraform
 data "aws_ami" "ubuntu" {
@@ -128,7 +128,7 @@ resource "aws_launch_configuration" "as_conf" {
 }
 
 resource "aws_autoscaling_group" "bar" {
-  name                 = "terraform-asg-example"
+  name                 = "asg-example"
   launch_configuration = aws_launch_configuration.as_conf.name
 }
 ```
@@ -153,7 +153,7 @@ The following arguments are optional:
     * `http_endpoint` - The state of the metadata service: `enabled`, `disabled`.
     * `http_tokens` - If session tokens are required: `optional`, `required`.
     * `http_put_response_hop_limit` - The desired HTTP PUT response hop limit for instance metadata requests.
-* `name` - (Optional) The name of the launch configuration. If you leave this blank, Terraform will auto-generate a unique name. Conflicts with `name_prefix`.
+* `name` - (Optional) The name of the launch configuration. If you leave this blank, this provider will auto-generate a unique name. Conflicts with `name_prefix`.
 * `name_prefix` - (Optional) Creates a unique name beginning with the specified prefix. Conflicts with `name`.* `security_groups` - (Optional) A list of associated security group IDS.
 * `placement_tenancy` - (Optional) The tenancy of the instance. Valid values are `default` or `dedicated`, see [AWS's Create Launch Configuration](http://docs.aws.amazon.com/AutoScaling/latest/APIReference/API_CreateLaunchConfiguration.html) for more details.
 * `root_block_device` - (Optional) Customize details about the root block device of the instance. See [Block Devices](#block-devices) below for details.
@@ -177,9 +177,9 @@ of which ephemeral devices are available on each type. The devices are always
 identified by the `virtual_name` in the format `ephemeral{0..N}`.
 
 ~> **NOTE:** Changes to `*_block_device` configuration of _existing_ resources
-cannot currently be detected by Terraform. After updating to block device
+cannot currently be detected by this provider. After updating to block device
 configuration, resource recreation can be manually triggered by using the
-[`taint` command](https://www.terraform.io/docs/commands/taint.html).
+[`up` command with the --replace argument](https://www.pulumi.com/docs/reference/cli/pulumi_up/).
   
 ### ebs_block_device
 
@@ -223,14 +223,11 @@ In addition to all arguments above, the following attributes are exported:
 * `arn` - The Amazon Resource Name of the launch configuration.
 * `name` - The name of the launch configuration.
 
-[1]: /docs/providers/aws/r/autoscaling_group.html
-[2]: https://www.terraform.io/docs/configuration/meta-arguments/lifecycle.html
-[3]: /docs/providers/aws/r/spot_instance_request.html
 
 ## Import
 
 Launch configurations can be imported using the `name`, e.g.,
 
 ```
-$ terraform import aws_launch_configuration.as_conf terraform-lg-123456
+$ terraform import aws_launch_configuration.as_conf lg-123456
 ```

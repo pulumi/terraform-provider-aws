@@ -37,8 +37,8 @@ The following arguments are supported:
 
 * `production_variants` - (Required) An list of ProductionVariant objects, one for each model that you want to host at this endpoint. Fields are documented below.
 * `kms_key_arn` - (Optional) Amazon Resource Name (ARN) of a AWS Key Management Service key that Amazon SageMaker uses to encrypt data on the storage volume attached to the ML compute instance that hosts the endpoint.
-* `name` - (Optional) The name of the endpoint configuration. If omitted, Terraform will assign a random, unique name.
-* `tags` - (Optional) A mapping of tags to assign to the resource. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `name` - (Optional) The name of the endpoint configuration. If omitted, this provider will assign a random, unique name.
+* `tags` - (Optional) A mapping of tags to assign to the resource. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 * `data_capture_config` - (Optional) Specifies the parameters to capture input/output of SageMaker models endpoints. Fields are documented below.
 * `async_inference_config` - (Optional) Specifies configuration for how an endpoint performs asynchronous inference.
 * `shadow_production_variants` - (Optional) Array of ProductionVariant objects. There is one for each model that you want to host at this endpoint in shadow mode with production traffic replicated from the model specified on ProductionVariants.If you use this field, you can only specify one variant for ProductionVariants and one variant for ShadowProductionVariants. Fields are documented below.
@@ -54,7 +54,7 @@ The following arguments are supported:
 * `model_data_download_timeout_in_seconds` - (Optional) The timeout value, in seconds, to download and extract the model that you want to host from Amazon S3 to the individual inference instance associated with this production variant. Valid values between `60` and `3600`.
 * `model_name` - (Required) The name of the model to use.
 * `serverless_config` - (Optional) Specifies configuration for how an endpoint performs asynchronous inference.
-* `variant_name` - (Optional) The name of the variant. If omitted, Terraform will assign a random, unique name.
+* `variant_name` - (Optional) The name of the variant. If omitted, this provider will assign a random, unique name.
 * `volume_size_in_gb` - (Optional) The size, in GB, of the ML storage volume attached to individual inference instance associated with the production variant. Valid values between `1` and `512`.
 
 #### core_dump_config
@@ -111,7 +111,7 @@ In addition to all arguments above, the following attributes are exported:
 
 * `arn` - The Amazon Resource Name (ARN) assigned by AWS to this endpoint configuration.
 * `name` - The name of the endpoint configuration.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 
