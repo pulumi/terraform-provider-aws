@@ -305,7 +305,7 @@ func ResourceTargetGroup() *schema.Resource {
 				ValidateFunc: validation.StringInSlice(elbv2.TargetTypeEnum_Values(), false),
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 			"vpc_id": {
 				Type:     schema.TypeString,
 				Optional: true,

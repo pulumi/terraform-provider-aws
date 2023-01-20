@@ -34,7 +34,7 @@ The following arguments are optional:
 * `publicly_accessible` - (Optional) A value that specifies whether the workgroup can be accessed from a public network.
 * `security_group_ids` - (Optional) An array of security group IDs to associate with the workgroup.
 * `subnet_ids` - (Optional) An array of VPC subnet IDs to associate with the workgroup.
-* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ### Config Parameter
 
@@ -49,7 +49,7 @@ In addition to all arguments above, the following attributes are exported:
 * `id` - The Redshift Workgroup Name.
 * `workgroup_id` - The Redshift Workgroup ID.
 * `endpoint` - The endpoint that is created from the workgroup. See `Endpoint` below.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ### Endpoint
 

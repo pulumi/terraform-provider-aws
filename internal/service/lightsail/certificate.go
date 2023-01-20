@@ -102,7 +102,7 @@ func ResourceCertificate() *schema.Resource {
 				Set: schema.HashString,
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 		},
 
 		CustomizeDiff: customdiff.Sequence(

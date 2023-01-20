@@ -84,7 +84,7 @@ func ResourceParameterGroup() *schema.Resource {
 				Set: ParameterHash,
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 		},
 	}
 }

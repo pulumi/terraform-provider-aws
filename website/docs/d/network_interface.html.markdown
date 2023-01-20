@@ -27,7 +27,7 @@ The following arguments are supported:
 
 ## Attributes Reference
 
-See the [Network Interface](/docs/providers/aws/r/network_interface.html) for details on the returned attributes.
+See the Network Interface for details on the returned attributes.
 
 Additionally, the following attributes are exported:
 
@@ -61,6 +61,6 @@ Additionally, the following attributes are exported:
 
 ## Timeouts
 
-[Configuration options](https://developer.hashicorp.com/terraform/language/resources/syntax#operation-timeouts):
+Configuration options:
 
 - `read` - (Default `20m`)

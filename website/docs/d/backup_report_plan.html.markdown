@@ -14,7 +14,7 @@ Use this data source to get information on an existing backup report plan.
 
 ```terraform
 data "aws_backup_report_plan" "example" {
-  name = "tf_example_backup_report_plan_name"
+  name = "my_example_backup_report_plan_name"
 }
 ```
 

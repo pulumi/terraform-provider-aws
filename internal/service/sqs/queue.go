@@ -138,7 +138,7 @@ var (
 			ConflictsWith: []string{"kms_master_key_id"},
 		},
 		"tags":     tftags.TagsSchema(),
-		"tags_all": tftags.TagsSchemaComputed(),
+		"tags_all": tftags.TagsSchemaTrulyComputed(),
 		"url": {
 			Type:     schema.TypeString,
 			Computed: true,

@@ -51,7 +51,7 @@ func ResourceBackup() *schema.Resource {
 				Computed: true,
 			},
 			"tags":     tftags.TagsSchemaComputed(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 			"type": {
 				Type:     schema.TypeString,
 				Computed: true,

@@ -64,13 +64,13 @@ The following arguments are supported:
 For WebSocket APIs, valid values are `NONE` for open access, `AWS_IAM` for using AWS IAM permissions, and `CUSTOM` for using a Lambda authorizer.
 For HTTP APIs, valid values are `NONE` for open access, `JWT` for using JSON Web Tokens, `AWS_IAM` for using AWS IAM permissions, and `CUSTOM` for using a Lambda authorizer.
 Defaults to `NONE`.
-* `authorizer_id` - (Optional) Identifier of the [`aws_apigatewayv2_authorizer`](apigatewayv2_authorizer.html) resource to be associated with this route.
+* `authorizer_id` - (Optional) Identifier of the `aws_apigatewayv2_authorizer` resource to be associated with this route.
 * `model_selection_expression` - (Optional) The [model selection expression](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-websocket-api-selection-expressions.html#apigateway-websocket-api-model-selection-expressions) for the route. Supported only for WebSocket APIs.
 * `operation_name` - (Optional) Operation name for the route. Must be between 1 and 64 characters in length.
 * `request_models` - (Optional) Request models for the route. Supported only for WebSocket APIs.
 * `request_parameter` - (Optional) Request parameters for the route. Supported only for WebSocket APIs.
 * `route_response_selection_expression` - (Optional) The [route response selection expression](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-websocket-api-selection-expressions.html#apigateway-websocket-api-route-response-selection-expressions) for the route. Supported only for WebSocket APIs.
-* `target` - (Optional) Target for the route, of the form `integrations/`*`IntegrationID`*, where *`IntegrationID`* is the identifier of an [`aws_apigatewayv2_integration`](apigatewayv2_integration.html) resource.
+* `target` - (Optional) Target for the route, of the form `integrations/`*`IntegrationID`*, where *`IntegrationID`* is the identifier of an `aws_apigatewayv2_integration` resource.
 
 The `request_parameter` object supports the following:
 

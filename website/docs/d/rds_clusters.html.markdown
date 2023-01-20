@@ -3,12 +3,12 @@ subcategory: "RDS (Relational Database)"
 layout: "aws"
 page_title: "AWS: aws_rds_clusters"
 description: |-
-  Terraform data source for managing an AWS RDS (Relational Database) Clusters.
+  Data source for managing an AWS RDS (Relational Database) Clusters.
 ---
 
 # Data Source: aws_rds_clusters
 
-Terraform data source for managing an AWS RDS (Relational Database) Clusters.
+Data source for managing an AWS RDS (Relational Database) Clusters.
 
 ## Example Usage
 

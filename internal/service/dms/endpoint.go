@@ -667,7 +667,7 @@ func ResourceEndpoint() *schema.Resource {
 				ValidateFunc: validation.StringInSlice(dms.DmsSslModeValue_Values(), false),
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 			"username": {
 				Type:          schema.TypeString,
 				Optional:      true,

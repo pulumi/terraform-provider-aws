@@ -55,7 +55,7 @@ Valid values: `1.0`, `2.0`.
 If it is greater than 0, API Gateway caches authorizer responses. The maximum value is 3600, or 1 hour. Defaults to `300`.
 Supported only for HTTP API Lambda authorizers.
 * `authorizer_uri` - (Optional) Authorizer's Uniform Resource Identifier (URI).
-For `REQUEST` authorizers this must be a well-formed Lambda function URI, such as the `invoke_arn` attribute of the [`aws_lambda_function`](/docs/providers/aws/r/lambda_function.html) resource.
+For `REQUEST` authorizers this must be a well-formed Lambda function URI, such as the `invoke_arn` attribute of the `aws_lambda_function` resource.
 Supported only for `REQUEST` authorizers. Must be between 1 and 2048 characters in length.
 * `enable_simple_responses` - (Optional) Whether a Lambda authorizer returns a response in a simple format. If enabled, the Lambda authorizer can return a boolean value instead of an IAM policy.
 Supported only for HTTP APIs.
@@ -68,7 +68,7 @@ Supported only for HTTP APIs.
 The `jwt_configuration` object supports the following:
 
 * `audience` - (Optional) List of the intended recipients of the JWT. A valid JWT must provide an aud that matches at least one entry in this list.
-* `issuer` - (Optional) Base domain of the identity provider that issues JSON Web Tokens, such as the `endpoint` attribute of the [`aws_cognito_user_pool`](/docs/providers/aws/r/cognito_user_pool.html) resource.
+* `issuer` - (Optional) Base domain of the identity provider that issues JSON Web Tokens, such as the `endpoint` attribute of the `aws_cognito_user_pool` resource.
 
 ## Attributes Reference
 

@@ -10,8 +10,8 @@ description: |-
 
 Provides a resource to manage VPC peering connection options.
 
-~> **NOTE on VPC Peering Connections and VPC Peering Connection Options:** Terraform provides
-both a standalone VPC Peering Connection Options and a [VPC Peering Connection](vpc_peering_connection.html)
+~> **NOTE on VPC Peering Connections and VPC Peering Connection Options:** This provider provides
+both a standalone VPC Peering Connection Options and a VPC Peering Connection
 resource with `accepter` and `requester` attributes. Do not manage options for the same VPC peering
 connection in both a VPC Peering Connection resource and a VPC Peering Connection Options resource.
 Doing so will cause a conflict of options and will overwrite the options.
@@ -154,7 +154,7 @@ the peering connection (a maximum of one).
 
 -> **Note:** When enabled, the DNS resolution feature requires that VPCs participating in the peering
 must have support for the DNS hostnames enabled. This can be done using the [`enable_dns_hostnames`]
-(vpc.html#enable_dns_hostnames) attribute in the [`aws_vpc`](vpc.html) resource. See [Using DNS with Your VPC]
+(vpc.html#enable_dns_hostnames) attribute in the `aws_vpc` resource. See [Using DNS with Your VPC]
 (http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/vpc-dns.html) user guide for more information.
 
 * `allow_remote_vpc_dns_resolution` - (Optional) Allow a local VPC to resolve public DNS hostnames to

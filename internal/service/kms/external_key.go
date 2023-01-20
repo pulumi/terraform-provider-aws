@@ -101,7 +101,7 @@ func ResourceExternalKey() *schema.Resource {
 				},
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 			"valid_to": {
 				Type:         schema.TypeString,
 				Optional:     true,

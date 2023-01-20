@@ -16,8 +16,6 @@ Provides an IoT policy.
 resource "aws_iot_policy" "pubsub" {
   name = "PubSubToAnyTopic"
 
-  # Terraform's "jsonencode" function converts a
-  # Terraform expression result to valid JSON syntax.
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -38,7 +36,7 @@ resource "aws_iot_policy" "pubsub" {
 The following arguments are supported:
 
 * `name` - (Required) The name of the policy.
-* `policy` - (Required) The policy document. This is a JSON formatted string. Use the [IoT Developer Guide](http://docs.aws.amazon.com/iot/latest/developerguide/iot-policies.html) for more information on IoT Policies. For more information about building AWS IAM policy documents with Terraform, see the [AWS IAM Policy Document Guide](https://learn.hashicorp.com/terraform/aws/iam-policy).
+* `policy` - (Required) The policy document. This is a JSON formatted string. Use the [IoT Developer Guide](http://docs.aws.amazon.com/iot/latest/developerguide/iot-policies.html) for more information on IoT Policies.
 
 ## Attributes Reference
 

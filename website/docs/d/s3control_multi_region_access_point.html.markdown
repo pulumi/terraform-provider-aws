@@ -22,7 +22,7 @@ data "aws_s3control_multi_region_access_point" "example" {
 
 The following arguments are supported:
 
-* `account_id` - (Optional) The AWS account ID of the S3 Multi-Region Access Point. Defaults to automatically determined account ID of the Terraform AWS provider.
+* `account_id` - (Optional) The AWS account ID of the S3 Multi-Region Access Point. Defaults to automatically determined account ID of the AWS provider.
 * `name` - (Required) The name of the Multi-Region Access Point.
 
 ## Attributes Reference

@@ -35,7 +35,7 @@ The following, more-complex example retrieves only the metadata for a zip
 file stored in S3, which is then used to pass the most recent `version_id`
 to AWS Lambda for use as a function implementation. More information about
 Lambda functions is available in the documentation for
-[`aws_lambda_function`](/docs/providers/aws/r/lambda_function.html).
+`aws_lambda_function`.
 
 ```terraform
 data "aws_s3_object" "lambda" {
@@ -88,4 +88,4 @@ In addition to all arguments above, the following attributes are exported:
 * `website_redirect_location` - If the bucket is configured as a website, redirects requests for this object to another object in the same bucket or to an external URL. Amazon S3 stores the value of this header in the object metadata.
 * `tags`  - Map of tags assigned to the object.
 
--> **Note:** Terraform ignores all leading `/`s in the object's `key` and treats multiple `/`s in the rest of the object's `key` as a single `/`, so values of `/index.html` and `index.html` correspond to the same S3 object as do `first//second///third//` and `first/second/third/`.
+-> **Note:** The provider ignores all leading `/`s in the object's `key` and treats multiple `/`s in the rest of the object's `key` as a single `/`, so values of `/index.html` and `index.html` correspond to the same S3 object as do `first//second///third//` and `first/second/third/`.

@@ -3,12 +3,12 @@ subcategory: "SESv2 (Simple Email V2)"
 layout: "aws"
 page_title: "AWS: aws_sesv2_configuration_set_event_destination"
 description: |-
-  Terraform resource for managing an AWS SESv2 (Simple Email V2) Configuration Set Event Destination.
+  Resource for managing an AWS SESv2 (Simple Email V2) Configuration Set Event Destination.
 ---
 
 # Resource: aws_sesv2_configuration_set_event_destination
 
-Terraform resource for managing an AWS SESv2 (Simple Email V2) Configuration Set Event Destination.
+Resource for managing an AWS SESv2 (Simple Email V2) Configuration Set Event Destination.
 
 ## Example Usage
 

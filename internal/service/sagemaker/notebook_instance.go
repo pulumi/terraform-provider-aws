@@ -138,7 +138,7 @@ func ResourceNotebookInstance() *schema.Resource {
 				ForceNew: true,
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 			"url": {
 				Type:     schema.TypeString,
 				Computed: true,

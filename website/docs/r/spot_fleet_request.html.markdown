@@ -81,7 +81,7 @@ resource "aws_spot_fleet_request" "foo" {
 }
 ```
 
-~> **NOTE:** Terraform does not support the functionality where multiple `subnet_id` or `availability_zone` parameters can be specified in the same
+~> **NOTE:** This provider does not support the functionality where multiple `subnet_id` or `availability_zone` parameters can be specified in the same
 launch configuration block. If you want to specify multiple values, then separate launch configuration blocks should be used or launch template overrides should be configured, one per subnet:
 
 ### Using multiple launch specifications
@@ -109,7 +109,7 @@ resource "aws_spot_fleet_request" "foo" {
 }
 ```
 
--> In this example, we use a [`dynamic` block](https://www.terraform.io/language/expressions/dynamic-blocks) to define zero or more `launch_specification` blocks, producing one for each element in the list of subnet ids.
+-> In this example, we use a `dynamic` block to define zero or more `launch_specification` blocks, producing one for each element in the list of subnet ids.
 
 ```terraform
 variable "subnets" {}
@@ -204,15 +204,15 @@ terminateInstancesWithExpiration.
 across different markets and instance types. Conflicts with `launch_template_config`. At least one of `launch_specification` or `launch_template_config` is required.
 
     **Note**: This takes in similar but not
-    identical inputs as [`aws_instance`](instance.html).  There are limitations on
+    identical inputs as `aws_instance`.  There are limitations on
     what you can specify. See the list of officially supported inputs in the
-    [reference documentation](http://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_SpotFleetLaunchSpecification.html). Any normal [`aws_instance`](instance.html) parameter that corresponds to those inputs may be used and it have
+    [reference documentation](http://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_SpotFleetLaunchSpecification.html). Any normal `aws_instance` parameter that corresponds to those inputs may be used and it have
     a additional parameter `iam_instance_profile_arn` takes `aws_iam_instance_profile` attribute `arn` as input.
 
 * `launch_template_config` - (Optional) Launch template configuration block. See [Launch Template Configs](#launch-template-configs) below for more details. Conflicts with `launch_specification`. At least one of `launch_specification` or `launch_template_config` is required.
 * `spot_maintenance_strategies` - (Optional) Nested argument containing maintenance strategies for managing your Spot Instances that are at an elevated risk of being interrupted. Defined below.
 * `spot_price` - (Optional; Default: On-demand price) The maximum bid price per unit hour.
-* `wait_for_fulfillment` - (Optional; Default: false) If set, Terraform will
+* `wait_for_fulfillment` - (Optional; Default: false) If set, this provider will
   wait for the Spot Request to be fulfilled, and will throw an error if the
   timeout of 10m is reached.
 * `target_capacity` - The number of units to request. You can choose to set the
@@ -247,7 +247,7 @@ across different markets and instance types. Conflicts with `launch_template_con
 * `on_demand_allocation_strategy` - The order of the launch template overrides to use in fulfilling On-Demand capacity. the possible values are: `lowestPrice` and `prioritized`. the default is `lowestPrice`.
 * `on_demand_max_total_price` - The maximum amount per hour for On-Demand Instances that you're willing to pay. When the maximum amount you're willing to pay is reached, the fleet stops launching instances even if it hasn’t met the target capacity.
 * `on_demand_target_capacity` - The number of On-Demand units to request. If the request type is `maintain`, you can specify a target capacity of 0 and add capacity later.
-* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) A map of tags to assign to the resource. .If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ### Launch Template Configs
 
@@ -263,7 +263,7 @@ The `launch_template_config` block supports the following:
 * `version` - (Optional) Template version. Unlike the autoscaling equivalent, does not support `$Latest` or `$Default`, so use the launch_template resource's attribute, e.g., `"${aws_launch_template.foo.latest_version}"`. It will use the default version if omitted.
 
     **Note:** The specified launch template can specify only a subset of the
-    inputs of [`aws_launch_template`](launch_template.html).  There are limitations on
+    inputs of `aws_launch_template`.  There are limitations on
     what you can specify as spot fleet does not support all the attributes that are supported by autoscaling groups. [AWS documentation](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-launch-templates.html#launch-templates-spot-fleet) is currently sparse, but at least `instance_initiated_shutdown_behavior` is confirmed unsupported.
 
 ### spot_maintenance_strategies
@@ -389,11 +389,11 @@ In addition to all arguments above, the following attributes are exported:
 
 * `id` - The Spot fleet request ID
 * `spot_request_state` - The state of the Spot fleet request.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Timeouts
 
-[Configuration options](https://developer.hashicorp.com/terraform/language/resources/syntax#operation-timeouts):
+Configuration options:
 
 * `create` - (Default `10m`)
 * `delete` - (Default `15m`)

@@ -25,14 +25,14 @@ For capturing events from services like IAM, `include_global_service_events` mus
 data "aws_caller_identity" "current" {}
 
 resource "aws_cloudtrail" "foobar" {
-  name                          = "tf-trail-foobar"
+  name                          = "my-trail-foobar"
   s3_bucket_name                = aws_s3_bucket.foo.id
   s3_key_prefix                 = "prefix"
   include_global_service_events = false
 }
 
 resource "aws_s3_bucket" "foo" {
-  bucket        = "tf-test-trail"
+  bucket        = "my-test-trail"
   force_destroy = true
 }
 
@@ -314,7 +314,7 @@ The following arguments are optional:
 * `kms_key_id` - (Optional) KMS key ARN to use to encrypt the logs delivered by CloudTrail.
 * `s3_key_prefix` - (Optional) S3 key prefix that follows the name of the bucket you have designated for log file delivery.
 * `sns_topic_name` - (Optional) Name of the Amazon SNS topic defined for notification of log file delivery.
-* `tags` - (Optional) Map of tags to assign to the trail. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Map of tags to assign to the trail. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ### event_selector
 
@@ -354,7 +354,7 @@ In addition to all arguments above, the following attributes are exported:
 * `arn` - ARN of the trail.
 * `home_region` - Region in which the trail was created.
 * `id` - Name of the trail.
-* `tags_all` - Map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - Map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

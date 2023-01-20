@@ -20,7 +20,7 @@ resource "aws_vpc" "example" {
 }
 
 resource "aws_service_discovery_private_dns_namespace" "example" {
-  name        = "example.terraform.local"
+  name        = "example.mydomain.local"
   description = "example"
   vpc         = aws_vpc.example.id
 }
@@ -47,7 +47,7 @@ resource "aws_service_discovery_service" "example" {
 
 ```terraform
 resource "aws_service_discovery_public_dns_namespace" "example" {
-  name        = "example.terraform.com"
+  name        = "example.mydomain.com"
   description = "example"
 }
 
@@ -83,7 +83,7 @@ The following arguments are supported:
 * `health_check_custom_config` - (Optional, ForceNew) A complex type that contains settings for ECS managed health checks.
 * `namespace_id` - (Optional) The ID of the namespace that you want to use to create the service.
 * `type` - (Optional) If present, specifies that the service instances are only discoverable using the `DiscoverInstances` API operation. No DNS records is registered for the service instances. The only valid value is `HTTP`.
-* `tags` - (Optional) A map of tags to assign to the service. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) A map of tags to assign to the service. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ### dns_config
 
@@ -120,7 +120,7 @@ In addition to all arguments above, the following attributes are exported:
 
 * `id` - The ID of the service.
 * `arn` - The ARN of the service.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

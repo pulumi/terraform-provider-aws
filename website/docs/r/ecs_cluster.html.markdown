@@ -10,7 +10,7 @@ description: |-
 
 Provides an ECS cluster.
 
-~> **NOTE on Clusters and Cluster Capacity Providers:** Terraform provides both a standalone [`aws_ecs_cluster_capacity_providers`](/docs/providers/aws/r/ecs_cluster_capacity_providers.html) resource, as well as allowing the capacity providers and default strategies to be managed in-line by the `aws_ecs_cluster` resource. You cannot use a Cluster with in-line capacity providers in conjunction with the Capacity Providers resource, nor use more than one Capacity Providers resource with a single Cluster, as doing so will cause a conflict and will lead to mutual overwrites.
+~> **NOTE on Clusters and Cluster Capacity Providers:** this provider provides both a standalone `aws_ecs_cluster_capacity_providers` resource, as well as allowing the capacity providers and default strategies to be managed in-line by the `aws_ecs_cluster` resource. You cannot use a Cluster with in-line capacity providers in conjunction with the Capacity Providers resource, nor use more than one Capacity Providers resource with a single Cluster, as doing so will cause a conflict and will lead to mutual overwrites.
 
 ## Example Usage
 
@@ -92,7 +92,7 @@ The following arguments are supported:
 * `name` - (Required) Name of the cluster (up to 255 letters, numbers, hyphens, and underscores)
 * `service_connect_defaults` - (Optional) Configures a default Service Connect namespace. Detailed below.
 * `setting` - (Optional) Configuration block(s) with cluster settings. For example, this can be used to enable CloudWatch Container Insights for a cluster. Detailed below.
-* `tags` - (Optional) Key-value map of resource tags. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Key-value map of resource tags. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ### `configuration`
 
@@ -125,7 +125,7 @@ The following arguments are supported:
 
 ### `service_connect_defaults`
 
-* `namespace` - (Required) The ARN of the [`aws_service_discovery_http_namespace`](/docs/providers/aws/r/service_discovery_http_namespace.html) that's used when you create a service and don't specify a Service Connect configuration.
+* `namespace` - (Required) The ARN of the `aws_service_discovery_http_namespace` that's used when you create a service and don't specify a Service Connect configuration.
 
 ## Attributes Reference
 
@@ -133,7 +133,7 @@ In addition to all arguments above, the following attributes are exported:
 
 * `arn` - ARN that identifies the cluster.
 * `id` - ARN that identifies the cluster.
-* `tags_all` - Map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - Map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

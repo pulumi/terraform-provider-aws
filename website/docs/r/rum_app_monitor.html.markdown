@@ -27,7 +27,7 @@ The following arguments are supported:
 * `domain` - (Required) The top-level internet domain name for which your application has administrative authority.
 * `app_monitor_configuration` - (Optional) configuration data for the app monitor. See [app_monitor_configuration](#app_monitor_configuration) below.
 * `cw_log_enabled` - (Optional) Data collected by RUM is kept by RUM for 30 days and then deleted. This parameter  specifies whether RUM sends a copy of this telemetry data to Amazon CloudWatch Logs in your account. This enables you to keep the telemetry data for more than 30 days, but it does incur Amazon CloudWatch Logs charges. Default value is `false`.
-* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) A map of tags to assign to the resource. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ### app_monitor_configuration
 
@@ -49,7 +49,7 @@ In addition to all arguments above, the following attributes are exported:
 * `id` - The CloudWatch RUM name as it is the identifier of a RUM.
 * `app_monitor_id` - The unique ID of the app monitor. Useful for JS templates.
 * `cw_log_group` - The name of the log group where the copies are stored.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Import
 

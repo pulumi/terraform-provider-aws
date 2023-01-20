@@ -35,7 +35,7 @@ func ResourceHostedTransitVirtualInterfaceAccepter() *schema.Resource {
 				ForceNew: true,
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 			"virtual_interface_id": {
 				Type:     schema.TypeString,
 				Required: true,

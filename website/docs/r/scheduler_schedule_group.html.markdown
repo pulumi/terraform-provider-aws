@@ -26,9 +26,9 @@ resource "aws_scheduler_schedule_group" "example" {
 
 The following arguments are optional:
 
-* `name` - (Optional, Forces new resource) Name of the schedule group. If omitted, Terraform will assign a random, unique name. Conflicts with `name_prefix`.
+* `name` - (Optional, Forces new resource) Name of the schedule group. If omitted, the provider will assign a random, unique name. Conflicts with `name_prefix`.
 * `name_prefix` - (Optional, Forces new resource) Creates a unique name beginning with the specified prefix. Conflicts with `name`.
-* `tags` - (Optional) Key-value mapping of resource tags. If configured with a provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Key-value mapping of resource tags. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ## Attributes Reference
 
@@ -39,11 +39,11 @@ In addition to all arguments above, the following attributes are exported:
 * `creation_date` - Time at which the schedule group was created.
 * `last_modification_date` - Time at which the schedule group was last modified.
 * `state` - State of the schedule group. Can be `ACTIVE` or `DELETING`.
-* `tags_all` - Map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](/docs/providers/aws/index.html#default_tags-configuration-block).
+* `tags_all` - Map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 
 ## Timeouts
 
-[Configuration options](https://developer.hashicorp.com/terraform/language/resources/syntax#operation-timeouts):
+Configuration options:
 
 - `create` - (Default `5m`)
 - `delete` - (Default `5m`)

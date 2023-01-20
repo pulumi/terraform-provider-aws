@@ -40,6 +40,6 @@ The `endpoint` object supports the following:
 
 The `kinesis_stream_config` object supports the following:
 
-* `role_arn` - (Required) ARN of an [IAM role](iam_role.html) that CloudFront can use to send real-time log data to the Kinesis data stream.
+* `role_arn` - (Required) ARN of an IAM role that CloudFront can use to send real-time log data to the Kinesis data stream.
 See the [AWS documentation](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/real-time-logs.html#understand-real-time-log-config-iam-role) for more information.
-* `stream_arn` - (Required) ARN of the [Kinesis data stream](kinesis_stream.html).
+* `stream_arn` - (Required) ARN of the Kinesis data stream.

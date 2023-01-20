@@ -3,12 +3,12 @@ subcategory: "Audit Manager"
 layout: "aws"
 page_title: "AWS: aws_auditmanager_assessment_report"
 description: |-
-  Terraform resource for managing an AWS Audit Manager Assessment Report.
+  Resource for managing an AWS Audit Manager Assessment Report.
 ---
 
 # Resource: aws_auditmanager_assessment_report
 
-Terraform resource for managing an AWS Audit Manager Assessment Report.
+Resource for managing an AWS Audit Manager Assessment Report.
 
 ## Example Usage
 

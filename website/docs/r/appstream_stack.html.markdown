@@ -83,9 +83,9 @@ The following arguments are optional:
 * `redirect_url` - (Optional) URL that users are redirected to after their streaming session ends.
 * `storage_connectors` - (Optional) Configuration block for the storage connectors to enable.
   See [`storage_connectors`](#storage_connectors) below.
-* `user_settings` - (Optional) Configuration block for the actions that are enabled or disabled for users during their streaming sessions. If not provided, these settings are configured automatically by AWS. If provided, the terraform configuration should include a block for each configurable action.
+* `user_settings` - (Optional) Configuration block for the actions that are enabled or disabled for users during their streaming sessions. If not provided, these settings are configured automatically by AWS. If provided, the configuration should include a block for each configurable action.
   See [`user_settings`](#user_settings) below.
-* `tags` - (Optional) Key-value mapping of resource tags. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level.
+* `tags` - (Optional) Key-value mapping of resource tags. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level.
 
 ### `access_endpoints`
 

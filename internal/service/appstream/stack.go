@@ -177,7 +177,7 @@ func ResourceStack() *schema.Resource {
 				Set: userSettingsHash,
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 		},
 
 		CustomizeDiff: customdiff.All(

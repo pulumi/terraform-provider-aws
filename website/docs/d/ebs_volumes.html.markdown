@@ -70,6 +70,6 @@ data "aws_ebs_volumes" "ten_or_twenty_gb_volumes" {
 
 ## Timeouts
 
-[Configuration options](https://developer.hashicorp.com/terraform/language/resources/syntax#operation-timeouts):
+Configuration options:
 
 - `read` - (Default `20m`)

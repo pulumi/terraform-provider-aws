@@ -151,7 +151,7 @@ func ResourceDirectory() *schema.Resource {
 				ValidateFunc: validation.StringInSlice(directoryservice.DirectorySize_Values(), false),
 			},
 			"tags":     tftags.TagsSchema(),
-			"tags_all": tftags.TagsSchemaComputed(),
+			"tags_all": tftags.TagsSchemaTrulyComputed(),
 			"type": {
 				Type:         schema.TypeString,
 				Optional:     true,

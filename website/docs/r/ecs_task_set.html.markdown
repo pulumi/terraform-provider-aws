@@ -30,7 +30,7 @@ resource "aws_ecs_task_set" "example" {
 
 ### Ignoring Changes to Scale
 
-You can utilize the generic Terraform resource [lifecycle configuration block](https://www.terraform.io/docs/configuration/meta-arguments/lifecycle.html) with `ignore_changes` to create an ECS service with an initial count of running instances, then ignore any changes to that count caused externally (e.g. Application Autoscaling).
+You can utilize the generic resource lifecycle configuration block with `ignore_changes` to create an ECS service with an initial count of running instances, then ignore any changes to that count caused externally (e.g. Application Autoscaling).
 
 ```terraform
 resource "aws_ecs_task_set" "example" {
@@ -41,7 +41,7 @@ resource "aws_ecs_task_set" "example" {
     value = 50.0
   }
 
-  # Optional: Allow external changes without Terraform plan difference
+  # Optional: Allow external changes without preview difference
   lifecycle {
     ignore_changes = ["scale"]
   }
@@ -60,15 +60,15 @@ The following arguments are optional:
 
 * `capacity_provider_strategy` - (Optional) The capacity provider strategy to use for the service. Can be one or more.  [Defined below](#capacity_provider_strategy).
 * `external_id` - (Optional) The external ID associated with the task set.
-* `force_delete` - (Optional) Whether to allow deleting the task set without waiting for scaling down to 0. You can force a task set to delete even if it's in the process of scaling a resource. Normally, Terraform drains all the tasks before deleting the task set. This bypasses that behavior and potentially leaves resources dangling.
+* `force_delete` - (Optional) Whether to allow deleting the task set without waiting for scaling down to 0. You can force a task set to delete even if it's in the process of scaling a resource. Normally, the provider drains all the tasks before deleting the task set. This bypasses that behavior and potentially leaves resources dangling.
 * `launch_type` - (Optional) The launch type on which to run your service. The valid values are `EC2`, `FARGATE`, and `EXTERNAL`. Defaults to `EC2`.
 * `load_balancer` - (Optional) Details on load balancers that are used with a task set. [Detailed below](#load_balancer).
 * `platform_version` - (Optional) The platform version on which to run your service. Only applicable for `launch_type` set to `FARGATE`. Defaults to `LATEST`. More information about Fargate platform versions can be found in the [AWS ECS User Guide](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/platform_versions.html).
 * `network_configuration` - (Optional) The network configuration for the service. This parameter is required for task definitions that use the `awsvpc` network mode to receive their own Elastic Network Interface, and it is not supported for other network modes. [Detailed below](#network_configuration).
 * `scale` - (Optional) A floating-point percentage of the desired number of tasks to place and keep running in the task set. [Detailed below](#scale).
 * `service_registries` - (Optional) The service discovery registries for the service. The maximum number of `service_registries` blocks is `1`. [Detailed below](#service_registries).
-* `tags` - (Optional) A map of tags to assign to the file system. If configured with a provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block) present, tags with matching keys will overwrite those defined at the provider-level. If you have set `copy_tags_to_backups` to true, and you specify one or more tags, no existing file system tags are copied from the file system to the backup.
-* `wait_until_stable` - (Optional) Whether `terraform` should wait until the task set has reached `STEADY_STATE`.
+* `tags` - (Optional) A map of tags to assign to the file system. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level. If you have set `copy_tags_to_backups` to true, and you specify one or more tags, no existing file system tags are copied from the file system to the backup.
+* `wait_until_stable` - (Optional) Whether the provider should wait until the task set has reached `STEADY_STATE`.
 * `wait_until_stable_timeout` - (Optional) Wait timeout for task set to reach `STEADY_STATE`. Valid time units include `ns`, `us` (or `µs`), `ms`, `s`, `m`, and `h`. Default `10m`.
 
 ## capacity_provider_strategy
@@ -111,7 +111,7 @@ The `scale` configuration block supports the following:
 
 `service_registries` support the following:
 
-* `registry_arn` - (Required) The ARN of the Service Registry. The currently supported service registry is Amazon Route 53 Auto Naming Service([`aws_service_discovery_service` resource](/docs/providers/aws/r/service_discovery_service.html)). For more information, see [Service](https://docs.aws.amazon.com/Route53/latest/APIReference/API_autonaming_Service.html).
+* `registry_arn` - (Required) The ARN of the Service Registry. The currently supported service registry is Amazon Route 53 Auto Naming Service(`aws_service_discovery_service` resource). For more information, see [Service](https://docs.aws.amazon.com/Route53/latest/APIReference/API_autonaming_Service.html).
 * `port` - (Optional) The port value used if your Service Discovery service specified an SRV record.
 * `container_port` - (Optional) The port value, already specified in the task definition, to be used for your service discovery service.
 * `container_name` - (Optional) The container name value, already specified in the task definition, to be used for your service discovery service.
@@ -124,7 +124,7 @@ In addition to all arguments above, the following attributes are exported:
 * `arn` - The Amazon Resource Name (ARN) that identifies the task set.
 * `stability_status` - The stability status. This indicates whether the task set has reached a steady state.
 * `status` - The status of the task set.
-* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider [`default_tags` configuration block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block).
+* `tags_all` - A map of tags assigned to the resource, including those inherited from the provider `default_tags` configuration block.
 * `task_set_id` - The ID of the task set.
 
 ## Import
