@@ -1,13 +1,14 @@
 package gamelift
 
 import (
-	"fmt"
+	"context"
 	"log"
 	"regexp"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/gamelift"
 	"github.com/hashicorp/aws-sdk-go-base/v2/awsv1shim/v2/tfawserr"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
 	"github.com/hashicorp/terraform-provider-aws/internal/conns"
@@ -17,10 +18,10 @@ import (
 
 func ResourceMatchMakingConfiguration() *schema.Resource {
 	return &schema.Resource{
-		Create: resourceMatchmakingConfigurationCreate,
-		Read:   resourceMatchmakingConfigurationRead,
-		Update: resourceMatchmakingConfigurationUpdate,
-		Delete: resourceMatchmakingConfigurationDelete,
+		CreateWithoutTimeout: resourceMatchmakingConfigurationCreate,
+		ReadWithoutTimeout:   resourceMatchmakingConfigurationRead,
+		UpdateWithoutTimeout: resourceMatchmakingConfigurationUpdate,
+		DeleteWithoutTimeout: resourceMatchmakingConfigurationDelete,
 		Importer: &schema.ResourceImporter{
 			StateContext: schema.ImportStatePassthroughContext,
 		},
@@ -144,10 +145,10 @@ func ResourceMatchMakingConfiguration() *schema.Resource {
 	}
 }
 
-func resourceMatchmakingConfigurationCreate(d *schema.ResourceData, meta interface{}) error {
+func resourceMatchmakingConfigurationCreate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	conn := meta.(*conns.AWSClient).GameLiftConn()
 	defaultTagsConfig := meta.(*conns.AWSClient).DefaultTagsConfig
-	tags := defaultTagsConfig.MergeTags(tftags.New(d.Get("tags").(map[string]interface{})))
+	tags := defaultTagsConfig.MergeTags(tftags.New(ctx, d.Get("tags").(map[string]interface{})))
 
 	input := gamelift.CreateMatchmakingConfigurationInput{
 		AcceptanceRequired:    aws.Bool(d.Get("acceptance_required").(bool)),
@@ -192,14 +193,14 @@ func resourceMatchmakingConfigurationCreate(d *schema.ResourceData, meta interfa
 	log.Printf("[INFO] Creating GameLift Matchmaking Configuration: %s", input)
 	out, err := conn.CreateMatchmakingConfiguration(&input)
 	if err != nil {
-		return fmt.Errorf("error creating GameLift Matchmaking Configuration: %s", err)
+		return diag.Errorf("error creating GameLift Matchmaking Configuration: %s", err)
 	}
 
 	d.SetId(aws.StringValue(out.Configuration.ConfigurationArn))
-	return resourceMatchmakingConfigurationRead(d, meta)
+	return resourceMatchmakingConfigurationRead(ctx, d, meta)
 }
 
-func resourceMatchmakingConfigurationRead(d *schema.ResourceData, meta interface{}) error {
+func resourceMatchmakingConfigurationRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	conn := meta.(*conns.AWSClient).GameLiftConn()
 	defaultTagsConfig := meta.(*conns.AWSClient).DefaultTagsConfig
 	ignoreTagsConfig := meta.(*conns.AWSClient).IgnoreTagsConfig
@@ -214,7 +215,7 @@ func resourceMatchmakingConfigurationRead(d *schema.ResourceData, meta interface
 			d.SetId("")
 			return nil
 		}
-		return fmt.Errorf("error reading GameLift Matchmaking Configuration (%s): %s", d.Id(), err)
+		return diag.Errorf("error reading GameLift Matchmaking Configuration (%s): %s", d.Id(), err)
 	}
 	configurations := out.Configurations
 
@@ -224,7 +225,7 @@ func resourceMatchmakingConfigurationRead(d *schema.ResourceData, meta interface
 		return nil
 	}
 	if len(configurations) != 1 {
-		return fmt.Errorf("expected exactly 1 GameLift Matchmaking Configuration, found %d under %q",
+		return diag.Errorf("expected exactly 1 GameLift Matchmaking Configuration, found %d under %q",
 			len(configurations), d.Id())
 	}
 	configuration := configurations[0]
@@ -248,27 +249,27 @@ func resourceMatchmakingConfigurationRead(d *schema.ResourceData, meta interface
 	d.Set("rule_set_arn", configuration.RuleSetArn)
 	d.Set("rule_set_name", configuration.RuleSetName)
 
-	tags, err := ListTags(conn, arn)
+	tags, err := ListTags(ctx, conn, arn)
 
 	if err != nil {
-		return fmt.Errorf("error listing tags for GameLift Matchmaking Configuration (%s): %s", arn, err)
+		return diag.Errorf("error listing tags for GameLift Matchmaking Configuration (%s): %s", arn, err)
 	}
 
 	tags = tags.IgnoreAWS().IgnoreConfig(ignoreTagsConfig)
 
 	//lintignore:AWSR002
 	if err := d.Set("tags", tags.RemoveDefaultConfig(defaultTagsConfig).Map()); err != nil {
-		return fmt.Errorf("error setting tags: %w", err)
+		return diag.Errorf("error setting tags: %w", err)
 	}
 
 	if err := d.Set("tags_all", tags.Map()); err != nil {
-		return fmt.Errorf("error setting tags_all: %w", err)
+		return diag.Errorf("error setting tags_all: %w", err)
 	}
 
 	return nil
 }
 
-func resourceMatchmakingConfigurationUpdate(d *schema.ResourceData, meta interface{}) error {
+func resourceMatchmakingConfigurationUpdate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	conn := meta.(*conns.AWSClient).GameLiftConn()
 
 	log.Printf("[INFO] Updating GameLift Matchmaking Configuration: %s", d.Id())
@@ -316,7 +317,7 @@ func resourceMatchmakingConfigurationUpdate(d *schema.ResourceData, meta interfa
 
 	_, err := conn.UpdateMatchmakingConfiguration(&input)
 	if err != nil {
-		return fmt.Errorf("error updating Gamelift Matchmaking Configuration (%s): %s", d.Id(), err)
+		return diag.Errorf("error updating Gamelift Matchmaking Configuration (%s): %s", d.Id(), err)
 	}
 
 	arn := d.Id()
@@ -324,15 +325,15 @@ func resourceMatchmakingConfigurationUpdate(d *schema.ResourceData, meta interfa
 	if d.HasChange("tags_all") {
 		o, n := d.GetChange("tags_all")
 
-		if err := UpdateTags(conn, arn, o, n); err != nil {
-			return fmt.Errorf("error updating GameLift Matchmaking Configuration (%s) tags: %s", arn, err)
+		if err := UpdateTags(ctx, conn, arn, o, n); err != nil {
+			return diag.Errorf("error updating GameLift Matchmaking Configuration (%s) tags: %s", arn, err)
 		}
 	}
 
-	return resourceMatchmakingConfigurationRead(d, meta)
+	return resourceMatchmakingConfigurationRead(ctx, d, meta)
 }
 
-func resourceMatchmakingConfigurationDelete(d *schema.ResourceData, meta interface{}) error {
+func resourceMatchmakingConfigurationDelete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	conn := meta.(*conns.AWSClient).GameLiftConn()
 	log.Printf("[INFO] Deleting GameLift Matchmaking Configuration: %s", d.Id())
 	_, err := conn.DeleteMatchmakingConfiguration(&gamelift.DeleteMatchmakingConfigurationInput{
@@ -342,7 +343,7 @@ func resourceMatchmakingConfigurationDelete(d *schema.ResourceData, meta interfa
 		return nil
 	}
 	if err != nil {
-		return fmt.Errorf("error deleting GameLift Matchmaking Configuration (%s): %s", d.Id(), err)
+		return diag.Errorf("error deleting GameLift Matchmaking Configuration (%s): %s", d.Id(), err)
 	}
 
 	return nil
