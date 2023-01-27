@@ -20,6 +20,7 @@ import (
 	"github.com/aws/aws-sdk-go/service/s3"
 	"github.com/aws/aws-sdk-go/service/s3/s3manager"
 	"github.com/hashicorp/aws-sdk-go-base/tfawserr"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/structure"
@@ -34,12 +35,12 @@ import (
 
 func ResourceBucketLegacy() *schema.Resource {
 	return &schema.Resource{
-		Create: resourceBucketLegacyCreate,
-		Read:   resourceBucketLegacyRead,
-		Update: resourceBucketLegacyUpdate,
-		Delete: resourceBucketLegacyDelete,
+		CreateWithoutTimeout: resourceBucketLegacyCreate,
+		ReadWithoutTimeout:   resourceBucketLegacyRead,
+		UpdateWithoutTimeout: resourceBucketLegacyUpdate,
+		DeleteWithoutTimeout: resourceBucketLegacyDelete,
 		Importer: &schema.ResourceImporter{
-			State: schema.ImportStatePassthrough,
+			StateContext: schema.ImportStatePassthroughContext,
 		},
 
 		Schema: map[string]*schema.Schema{
@@ -670,8 +671,8 @@ func ResourceBucketLegacy() *schema.Resource {
 	}
 }
 
-func resourceBucketLegacyCreate(d *schema.ResourceData, meta interface{}) error {
-	conn := meta.(*conns.AWSClient).S3Conn()
+func resourceBucketLegacyCreate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+	conn := meta.(*conns.AWSClient).S3Conn(ctx)
 
 	// Get the bucket and acl
 	var bucket string
@@ -708,7 +709,7 @@ func resourceBucketLegacyCreate(d *schema.ResourceData, meta interface{}) error 
 	}
 
 	if err := ValidBucketNameLegacy(bucket, awsRegion); err != nil {
-		return fmt.Errorf("Error validating S3 bucket name: %s", err)
+		return diag.Errorf("Error validating S3 bucket name: %s", err)
 	}
 
 	// S3 Object Lock can only be enabled on bucket creation.
@@ -735,16 +736,16 @@ func resourceBucketLegacyCreate(d *schema.ResourceData, meta interface{}) error 
 		_, err = conn.CreateBucket(req)
 	}
 	if err != nil {
-		return fmt.Errorf("Error creating S3 bucket: %s", err)
+		return diag.Errorf("Error creating S3 bucket: %s", err)
 	}
 
 	// Assign the bucket name as the resource ID
 	d.SetId(bucket)
-	return resourceBucketLegacyUpdate(d, meta)
+	return resourceBucketLegacyUpdate(ctx, d, meta)
 }
 
-func resourceBucketLegacyUpdate(d *schema.ResourceData, meta interface{}) error {
-	conn := meta.(*conns.AWSClient).S3Conn()
+func resourceBucketLegacyUpdate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+	conn := meta.(*conns.AWSClient).S3Conn(ctx)
 
 	if d.HasChange("tags_all") {
 		o, n := d.GetChange("tags_all")
@@ -755,25 +756,25 @@ func resourceBucketLegacyUpdate(d *schema.ResourceData, meta interface{}) error 
 			return nil, terr
 		})
 		if err != nil {
-			return fmt.Errorf("error updating S3 Bucket (%s) tags: %s", d.Id(), err)
+			return diag.Errorf("error updating S3 Bucket (%s) tags: %s", d.Id(), err)
 		}
 	}
 
 	if d.HasChange("policy") {
-		if err := resourceBucketLegacyPolicyUpdate(conn, d); err != nil {
+		if err := resourceBucketLegacyPolicyUpdate(ctx, conn, d); err != nil {
 			return err
 		}
 	}
 
 	if d.HasChange("cors_rule") {
 		if err := resourceBucketLegacyCorsUpdate(conn, d); err != nil {
-			return err
+			return diag.FromErr(err)
 		}
 	}
 
 	if d.HasChange("website") {
 		if err := resourceBucketLegacyWebsiteUpdate(conn, d); err != nil {
-			return err
+			return diag.FromErr(err)
 		}
 	}
 
@@ -784,75 +785,75 @@ func resourceBucketLegacyUpdate(d *schema.ResourceData, meta interface{}) error 
 			if versioning := expandVersioningWhenIsNewResourceLegacy(v); versioning != nil {
 				err := resourceBucketLegacyVersioningUpdate(conn, d.Id(), versioning)
 				if err != nil {
-					return err
+					return diag.FromErr(err)
 				}
 			}
 		} else {
 			if err := resourceBucketLegacyVersioningUpdate(conn, d.Id(), expandVersioningLegacy(v)); err != nil {
-				return err
+				return diag.FromErr(err)
 			}
 		}
 	}
 
 	if d.HasChange("acl") && !d.IsNewResource() {
 		if err := resourceBucketLegacyACLUpdate(conn, d); err != nil {
-			return err
+			return diag.FromErr(err)
 		}
 	}
 
 	if d.HasChange("grant") {
-		if err := resourceBucketLegacyGrantsUpdate(conn, d); err != nil {
+		if err := resourceBucketLegacyGrantsUpdate(ctx, conn, d); err != nil {
 			return err
 		}
 	}
 
 	if d.HasChange("logging") {
 		if err := resourceBucketLegacyLoggingUpdate(conn, d); err != nil {
-			return err
+			return diag.FromErr(err)
 		}
 	}
 
 	if d.HasChange("lifecycle_rule") {
 		if err := resourceBucketLegacyLifecycleUpdate(conn, d); err != nil {
-			return err
+			return diag.FromErr(err)
 		}
 	}
 
 	if d.HasChange("acceleration_status") {
 		if err := resourceBucketLegacyAccelerationUpdate(conn, d); err != nil {
-			return err
+			return diag.FromErr(err)
 		}
 	}
 
 	if d.HasChange("request_payer") {
 		if err := resourceBucketLegacyRequestPayerUpdate(conn, d); err != nil {
-			return err
+			return diag.FromErr(err)
 		}
 	}
 
 	if d.HasChange("replication_configuration") {
 		if err := resourceBucketLegacyInternalReplicationConfigurationUpdate(conn, d); err != nil {
-			return err
+			return diag.FromErr(err)
 		}
 	}
 
 	if d.HasChange("server_side_encryption_configuration") {
-		if err := resourceBucketLegacyServerSideEncryptionConfigurationUpdate(conn, d); err != nil {
-			return err
+		if err := resourceBucketLegacyServerSideEncryptionConfigurationUpdate(ctx, conn, d); err != nil {
+			return diag.FromErr(err)
 		}
 	}
 
 	if d.HasChange("object_lock_configuration") {
 		if err := resourceBucketLegacyObjectLockConfigurationUpdate(conn, d); err != nil {
-			return err
+			return diag.FromErr(err)
 		}
 	}
 
-	return resourceBucketLegacyRead(d, meta)
+	return resourceBucketLegacyRead(ctx, d, meta)
 }
 
-func resourceBucketLegacyRead(d *schema.ResourceData, meta interface{}) error {
-	conn := meta.(*conns.AWSClient).S3Conn()
+func resourceBucketLegacyRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+	conn := meta.(*conns.AWSClient).S3Conn(ctx)
 	defaultTagsConfig := meta.(*conns.AWSClient).DefaultTagsConfig
 	ignoreTagsConfig := meta.(*conns.AWSClient).IgnoreTagsConfig
 
@@ -895,7 +896,7 @@ func resourceBucketLegacyRead(d *schema.ResourceData, meta interface{}) error {
 	}
 
 	if err != nil {
-		return fmt.Errorf("error reading S3 Bucket (%s): %w", d.Id(), err)
+		return diag.Errorf("error reading S3 Bucket (%s): %s", d.Id(), err)
 	}
 
 	// In the import case, we won't have this
@@ -916,24 +917,24 @@ func resourceBucketLegacyRead(d *schema.ResourceData, meta interface{}) error {
 		log.Printf("[DEBUG] S3 bucket: %s, read policy: %v", d.Id(), pol)
 		if err != nil {
 			if err := d.Set("policy", ""); err != nil {
-				return err
+				return diag.FromErr(err)
 			}
 		} else {
 			if v := pol.(*s3.GetBucketPolicyOutput).Policy; v == nil {
 				if err := d.Set("policy", ""); err != nil {
-					return err
+					return diag.FromErr(err)
 				}
 			} else {
 				policyToSet, err := verify.SecondJSONUnlessEquivalent(d.Get("policy").(string), aws.StringValue(v))
 
 				if err != nil {
-					return fmt.Errorf("while setting policy (%s), encountered: %w", aws.StringValue(v), err)
+					return diag.Errorf("while setting policy (%s), encountered: %s", aws.StringValue(v), err)
 				}
 
 				policyToSet, err = structure.NormalizeJsonString(policyToSet)
 
 				if err != nil {
-					return fmt.Errorf("policy (%s) contains invalid JSON: %w", d.Get("policy").(string), err)
+					return diag.Errorf("policy (%s) contains invalid JSON: %s", d.Get("policy").(string), err)
 				}
 
 				d.Set("policy", policyToSet)
@@ -944,7 +945,7 @@ func resourceBucketLegacyRead(d *schema.ResourceData, meta interface{}) error {
 	//Read the Grant ACL. Reset if `acl` (canned ACL) is set.
 	if acl, ok := d.GetOk("acl"); ok && acl.(string) != "private" {
 		if err := d.Set("grant", nil); err != nil {
-			return fmt.Errorf("error resetting grant %s", err)
+			return diag.Errorf("error resetting grant %s", err)
 		}
 	} else {
 		apResponse, err := retryOnAWSCode("NoSuchBucket", func() (interface{}, error) {
@@ -953,12 +954,12 @@ func resourceBucketLegacyRead(d *schema.ResourceData, meta interface{}) error {
 			})
 		})
 		if err != nil {
-			return fmt.Errorf("error getting S3 Bucket (%s) ACL: %s", d.Id(), err)
+			return diag.Errorf("error getting S3 Bucket (%s) ACL: %s", d.Id(), err)
 		}
 		log.Printf("[DEBUG] S3 bucket: %s, read ACL grants policy: %+v", d.Id(), apResponse)
 		grants := flattenGrantsLegacy(apResponse.(*s3.GetBucketAclOutput))
 		if err := d.Set("grant", schema.NewSet(grantHashLegacy, grants)); err != nil {
-			return fmt.Errorf("error setting grant %s", err)
+			return diag.Errorf("error setting grant %s", err)
 		}
 	}
 
@@ -969,7 +970,7 @@ func resourceBucketLegacyRead(d *schema.ResourceData, meta interface{}) error {
 		})
 	})
 	if err != nil && !tfawserr.ErrMessageContains(err, "NoSuchCORSConfiguration", "") {
-		return fmt.Errorf("error getting S3 Bucket CORS configuration: %s", err)
+		return diag.Errorf("error getting S3 Bucket CORS configuration: %s", err)
 	}
 
 	corsRules := make([]map[string]interface{}, 0)
@@ -991,7 +992,7 @@ func resourceBucketLegacyRead(d *schema.ResourceData, meta interface{}) error {
 		}
 	}
 	if err := d.Set("cors_rule", corsRules); err != nil {
-		return fmt.Errorf("error setting cors_rule: %s", err)
+		return diag.Errorf("error setting cors_rule: %s", err)
 	}
 
 	// Read the website configuration
@@ -1001,7 +1002,7 @@ func resourceBucketLegacyRead(d *schema.ResourceData, meta interface{}) error {
 		})
 	})
 	if err != nil && !tfawserr.ErrMessageContains(err, "NotImplemented", "") && !tfawserr.ErrMessageContains(err, "NoSuchWebsiteConfiguration", "") {
-		return fmt.Errorf("error getting S3 Bucket website configuration: %s", err)
+		return diag.Errorf("error getting S3 Bucket website configuration: %s", err)
 	}
 
 	websites := make([]map[string]interface{}, 0, 1)
@@ -1045,7 +1046,7 @@ func resourceBucketLegacyRead(d *schema.ResourceData, meta interface{}) error {
 		if v := ws.RoutingRules; v != nil {
 			rr, err := normalizeRoutingRulesLegacy(v)
 			if err != nil {
-				return fmt.Errorf("Error while marshaling routing rules: %s", err)
+				return diag.Errorf("Error while marshaling routing rules: %s", err)
 			}
 			w["routing_rules"] = rr
 		}
@@ -1057,7 +1058,7 @@ func resourceBucketLegacyRead(d *schema.ResourceData, meta interface{}) error {
 		}
 	}
 	if err := d.Set("website", websites); err != nil {
-		return fmt.Errorf("error setting website: %s", err)
+		return diag.Errorf("error setting website: %s", err)
 	}
 
 	// Read the versioning configuration
@@ -1069,12 +1070,12 @@ func resourceBucketLegacyRead(d *schema.ResourceData, meta interface{}) error {
 	})
 
 	if err != nil {
-		return fmt.Errorf("error getting S3 Bucket versioning (%s): %w", d.Id(), err)
+		return diag.Errorf("error getting S3 Bucket versioning (%s): %s", d.Id(), err)
 	}
 
 	if versioning, ok := versioningResponse.(*s3.GetBucketVersioningOutput); ok {
 		if err := d.Set("versioning", flattenVersioningLegacy(versioning)); err != nil {
-			return fmt.Errorf("error setting versioning: %w", err)
+			return diag.Errorf("error setting versioning: %s", err)
 		}
 	}
 
@@ -1088,7 +1089,7 @@ func resourceBucketLegacyRead(d *schema.ResourceData, meta interface{}) error {
 
 	// Amazon S3 Transfer Acceleration might not be supported in the region
 	if err != nil && !tfawserr.ErrMessageContains(err, "MethodNotAllowed", "") && !tfawserr.ErrMessageContains(err, "UnsupportedArgument", "") {
-		return fmt.Errorf("error getting S3 Bucket acceleration configuration: %s", err)
+		return diag.Errorf("error getting S3 Bucket acceleration configuration: %s", err)
 	}
 	if accelerate, ok := accelerateResponse.(*s3.GetBucketAccelerateConfigurationOutput); ok {
 		d.Set("acceleration_status", accelerate.Status)
@@ -1103,7 +1104,7 @@ func resourceBucketLegacyRead(d *schema.ResourceData, meta interface{}) error {
 	})
 
 	if err != nil {
-		return fmt.Errorf("error getting S3 Bucket request payment: %s", err)
+		return diag.Errorf("error getting S3 Bucket request payment: %s", err)
 	}
 
 	if payer, ok := payerResponse.(*s3.GetBucketRequestPaymentOutput); ok {
@@ -1118,7 +1119,7 @@ func resourceBucketLegacyRead(d *schema.ResourceData, meta interface{}) error {
 	})
 
 	if err != nil {
-		return fmt.Errorf("error getting S3 Bucket logging: %s", err)
+		return diag.Errorf("error getting S3 Bucket logging: %s", err)
 	}
 
 	lcl := make([]map[string]interface{}, 0, 1)
@@ -1134,7 +1135,7 @@ func resourceBucketLegacyRead(d *schema.ResourceData, meta interface{}) error {
 		lcl = append(lcl, lc)
 	}
 	if err := d.Set("logging", lcl); err != nil {
-		return fmt.Errorf("error setting logging: %s", err)
+		return diag.Errorf("error setting logging: %s", err)
 	}
 
 	// Read the lifecycle configuration
@@ -1145,7 +1146,7 @@ func resourceBucketLegacyRead(d *schema.ResourceData, meta interface{}) error {
 		})
 	})
 	if err != nil && !tfawserr.ErrMessageContains(err, "NoSuchLifecycleConfiguration", "") {
-		return err
+		return diag.FromErr(err)
 	}
 
 	lifecycleRules := make([]map[string]interface{}, 0)
@@ -1263,7 +1264,7 @@ func resourceBucketLegacyRead(d *schema.ResourceData, meta interface{}) error {
 		}
 	}
 	if err := d.Set("lifecycle_rule", lifecycleRules); err != nil {
-		return fmt.Errorf("error setting lifecycle_rule: %s", err)
+		return diag.Errorf("error setting lifecycle_rule: %s", err)
 	}
 
 	// Read the bucket replication configuration
@@ -1274,7 +1275,7 @@ func resourceBucketLegacyRead(d *schema.ResourceData, meta interface{}) error {
 		})
 	})
 	if err != nil && !tfawserr.ErrMessageContains(err, "ReplicationConfigurationNotFoundError", "") {
-		return fmt.Errorf("error getting S3 Bucket replication: %s", err)
+		return diag.Errorf("error getting S3 Bucket replication: %s", err)
 	}
 
 	replicationConfiguration := make([]map[string]interface{}, 0)
@@ -1282,7 +1283,7 @@ func resourceBucketLegacyRead(d *schema.ResourceData, meta interface{}) error {
 		replicationConfiguration = flattenBucketReplicationConfigurationLegacy(replication.ReplicationConfiguration)
 	}
 	if err := d.Set("replication_configuration", replicationConfiguration); err != nil {
-		return fmt.Errorf("error setting replication_configuration: %s", err)
+		return diag.Errorf("error setting replication_configuration: %s", err)
 	}
 
 	// Read the bucket server side encryption configuration
@@ -1293,7 +1294,7 @@ func resourceBucketLegacyRead(d *schema.ResourceData, meta interface{}) error {
 		})
 	})
 	if err != nil && !tfawserr.ErrMessageContains(err, "ServerSideEncryptionConfigurationNotFoundError", "encryption configuration was not found") {
-		return fmt.Errorf("error getting S3 Bucket encryption: %s", err)
+		return diag.Errorf("error getting S3 Bucket encryption: %s", err)
 	}
 
 	serverSideEncryptionConfiguration := make([]map[string]interface{}, 0)
@@ -1301,7 +1302,7 @@ func resourceBucketLegacyRead(d *schema.ResourceData, meta interface{}) error {
 		serverSideEncryptionConfiguration = flattenServerSideEncryptionConfigurationLegacy(encryption.ServerSideEncryptionConfiguration)
 	}
 	if err := d.Set("server_side_encryption_configuration", serverSideEncryptionConfiguration); err != nil {
-		return fmt.Errorf("error setting server_side_encryption_configuration: %s", err)
+		return diag.Errorf("error setting server_side_encryption_configuration: %s", err)
 	}
 
 	// Object Lock configuration.
@@ -1309,7 +1310,7 @@ func resourceBucketLegacyRead(d *schema.ResourceData, meta interface{}) error {
 
 	// Object lock not supported in all partitions (extra guard, also guards in read func)
 	if err != nil && (meta.(*conns.AWSClient).Partition == endpoints.AwsPartitionID || meta.(*conns.AWSClient).Partition == endpoints.AwsUsGovPartitionID) {
-		return fmt.Errorf("error getting S3 Bucket Object Lock configuration: %s", err)
+		return diag.Errorf("error getting S3 Bucket Object Lock configuration: %s", err)
 	}
 
 	if err != nil {
@@ -1318,7 +1319,7 @@ func resourceBucketLegacyRead(d *schema.ResourceData, meta interface{}) error {
 
 	if err == nil {
 		if err := d.Set("object_lock_configuration", conf); err != nil {
-			return fmt.Errorf("error setting object_lock_configuration: %s", err)
+			return diag.Errorf("error setting object_lock_configuration: %s", err)
 		}
 	}
 
@@ -1339,18 +1340,18 @@ func resourceBucketLegacyRead(d *schema.ResourceData, meta interface{}) error {
 		})
 	})
 	if err != nil {
-		return fmt.Errorf("error getting S3 Bucket location: %s", err)
+		return diag.Errorf("error getting S3 Bucket location: %s", err)
 	}
 
 	region := discoveredRegion.(string)
 	if err := d.Set("region", region); err != nil {
-		return err
+		return diag.FromErr(err)
 	}
 
 	// Add the bucket_regional_domain_name as an attribute
 	regionalEndpoint, err := bucketLegacyRegionalDomainName(d.Get("bucket").(string), region)
 	if err != nil {
-		return err
+		return diag.FromErr(err)
 	}
 	d.Set("bucket_regional_domain_name", regionalEndpoint)
 
@@ -1363,16 +1364,16 @@ func resourceBucketLegacyRead(d *schema.ResourceData, meta interface{}) error {
 	}
 
 	// Add website_endpoint as an attribute
-	websiteEndpoint, err := websiteLegacyEndpoint(meta.(*conns.AWSClient), d)
+	websiteEndpoint, err := websiteLegacyEndpoint(ctx, meta.(*conns.AWSClient), d)
 	if err != nil {
-		return err
+		return diag.FromErr(err)
 	}
 	if websiteEndpoint != nil {
 		if err := d.Set("website_endpoint", websiteEndpoint.Endpoint); err != nil {
-			return err
+			return diag.FromErr(err)
 		}
 		if err := d.Set("website_domain", websiteEndpoint.Domain); err != nil {
-			return err
+			return diag.FromErr(err)
 		}
 	}
 
@@ -1382,24 +1383,24 @@ func resourceBucketLegacyRead(d *schema.ResourceData, meta interface{}) error {
 	})
 
 	if err != nil {
-		return fmt.Errorf("error listing tags for S3 Bucket (%s): %s", d.Id(), err)
+		return diag.Errorf("error listing tags for S3 Bucket (%s): %s", d.Id(), err)
 	}
 
 	tags, ok := tagsRaw.(tftags.KeyValueTags)
 
 	if !ok {
-		return fmt.Errorf("error listing tags for S3 Bucket (%s): unable to convert tags", d.Id())
+		return diag.Errorf("error listing tags for S3 Bucket (%s): unable to convert tags", d.Id())
 	}
 
 	tags = tags.IgnoreAWS().IgnoreConfig(ignoreTagsConfig)
 
 	//lintignore:AWSR002
 	if err := d.Set("tags", tags.RemoveDefaultConfig(defaultTagsConfig).Map()); err != nil {
-		return fmt.Errorf("error setting tags: %w", err)
+		return diag.Errorf("error setting tags: %s", err)
 	}
 
 	if err := d.Set("tags_all", tags.Map()); err != nil {
-		return fmt.Errorf("error setting tags_all: %w", err)
+		return diag.Errorf("error setting tags_all: %s", err)
 	}
 
 	arn := arn.ARN{
@@ -1412,8 +1413,8 @@ func resourceBucketLegacyRead(d *schema.ResourceData, meta interface{}) error {
 	return nil
 }
 
-func resourceBucketLegacyDelete(d *schema.ResourceData, meta interface{}) error {
-	conn := meta.(*conns.AWSClient).S3Conn()
+func resourceBucketLegacyDelete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+	conn := meta.(*conns.AWSClient).S3Conn(ctx)
 
 	log.Printf("[DEBUG] S3 Delete Bucket: %s", d.Id())
 	_, err := conn.DeleteBucket(&s3.DeleteBucketInput{
@@ -1429,7 +1430,7 @@ func resourceBucketLegacyDelete(d *schema.ResourceData, meta interface{}) error 
 			// Use a S3 service client that can handle multiple slashes in URIs.
 			// While aws_s3_bucket_object resources cannot create these object
 			// keys, other AWS services and applications using the S3 Bucket can.
-			conn = meta.(*conns.AWSClient).S3ConnURICleaningDisabled()
+			conn = meta.(*conns.AWSClient).S3ConnURICleaningDisabled(ctx)
 
 			// bucket may have things delete them
 			log.Printf("[DEBUG] S3 Bucket attempting to forceDestroy %+v", err)
@@ -1444,28 +1445,28 @@ func resourceBucketLegacyDelete(d *schema.ResourceData, meta interface{}) error 
 			err = DeleteAllObjectVersions(conn, d.Id(), "", objectLockEnabled, false)
 
 			if err != nil {
-				return fmt.Errorf("error S3 Bucket force_destroy: %s", err)
+				return diag.Errorf("error S3 Bucket force_destroy: %s", err)
 			}
 
 			// this line recurses until all objects are deleted or an error is returned
-			return resourceBucketLegacyDelete(d, meta)
+			return resourceBucketLegacyDelete(ctx, d, meta)
 		}
 	}
 
 	if err != nil {
-		return fmt.Errorf("error deleting S3 Bucket (%s): %s", d.Id(), err)
+		return diag.Errorf("error deleting S3 Bucket (%s): %s", d.Id(), err)
 	}
 
 	return nil
 }
 
-func resourceBucketLegacyPolicyUpdate(conn *s3.S3, d *schema.ResourceData) error {
+func resourceBucketLegacyPolicyUpdate(ctx context.Context, conn *s3.S3, d *schema.ResourceData) diag.Diagnostics {
 	bucket := d.Get("bucket").(string)
 
 	policy, err := structure.NormalizeJsonString(d.Get("policy").(string))
 
 	if err != nil {
-		return fmt.Errorf("policy (%s) is an invalid JSON: %w", policy, err)
+		return diag.Errorf("policy (%s) is an invalid JSON: %s", policy, err)
 	}
 
 	if policy != "" {
@@ -1490,7 +1491,7 @@ func resourceBucketLegacyPolicyUpdate(conn *s3.S3, d *schema.ResourceData) error
 			_, err = conn.PutBucketPolicy(params)
 		}
 		if err != nil {
-			return fmt.Errorf("Error putting S3 policy: %s", err)
+			return diag.Errorf("Error putting S3 policy: %s", err)
 		}
 	} else {
 		log.Printf("[DEBUG] S3 bucket: %s, delete policy: %s", bucket, policy)
@@ -1501,21 +1502,21 @@ func resourceBucketLegacyPolicyUpdate(conn *s3.S3, d *schema.ResourceData) error
 		})
 
 		if err != nil {
-			return fmt.Errorf("Error deleting S3 policy: %s", err)
+			return diag.Errorf("Error deleting S3 policy: %s", err)
 		}
 	}
 
 	return nil
 }
 
-func resourceBucketLegacyGrantsUpdate(conn *s3.S3, d *schema.ResourceData) error {
+func resourceBucketLegacyGrantsUpdate(ctx context.Context, conn *s3.S3, d *schema.ResourceData) diag.Diagnostics {
 	bucket := d.Get("bucket").(string)
 	rawGrants := d.Get("grant").(*schema.Set).List()
 
 	if len(rawGrants) == 0 {
 		log.Printf("[DEBUG] S3 bucket: %s, Grants fallback to canned ACL", bucket)
 		if err := resourceBucketLegacyACLUpdate(conn, d); err != nil {
-			return fmt.Errorf("Error fallback to canned ACL, %s", err)
+			return diag.Errorf("Error fallback to canned ACL, %s", err)
 		}
 	} else {
 		apResponse, err := retryOnAWSCode("NoSuchBucket", func() (interface{}, error) {
@@ -1525,7 +1526,7 @@ func resourceBucketLegacyGrantsUpdate(conn *s3.S3, d *schema.ResourceData) error
 		})
 
 		if err != nil {
-			return fmt.Errorf("error getting S3 Bucket (%s) ACL: %s", d.Id(), err)
+			return diag.Errorf("error getting S3 Bucket (%s) ACL: %s", d.Id(), err)
 		}
 
 		ap := apResponse.(*s3.GetBucketAclOutput)
@@ -1570,7 +1571,7 @@ func resourceBucketLegacyGrantsUpdate(conn *s3.S3, d *schema.ResourceData) error
 		})
 
 		if err != nil {
-			return fmt.Errorf("Error putting S3 Grants: %s", err)
+			return diag.Errorf("Error putting S3 Grants: %s", err)
 		}
 	}
 	return nil
@@ -1751,7 +1752,7 @@ func resourceBucketLegacyWebsiteDelete(conn *s3.S3, d *schema.ResourceData) erro
 	return nil
 }
 
-func websiteLegacyEndpoint(client *conns.AWSClient, d *schema.ResourceData) (*S3WebsiteLegacy, error) {
+func websiteLegacyEndpoint(ctx context.Context, client *conns.AWSClient, d *schema.ResourceData) (*S3WebsiteLegacy, error) {
 	// If the bucket doesn't have a website configuration, return an empty
 	// endpoint
 	if _, ok := d.GetOk("website"); !ok {
@@ -1763,7 +1764,7 @@ func websiteLegacyEndpoint(client *conns.AWSClient, d *schema.ResourceData) (*S3
 	// Lookup the region for this bucket
 
 	locationResponse, err := retryOnAWSCode(s3.ErrCodeNoSuchBucket, func() (interface{}, error) {
-		return client.S3Conn().GetBucketLocation(
+		return client.S3Conn(ctx).GetBucketLocation(
 			&s3.GetBucketLocationInput{
 				Bucket: aws.String(bucket),
 			},
@@ -1948,7 +1949,7 @@ func resourceBucketLegacyRequestPayerUpdate(conn *s3.S3, d *schema.ResourceData)
 	return nil
 }
 
-func resourceBucketLegacyServerSideEncryptionConfigurationUpdate(conn *s3.S3, d *schema.ResourceData) error {
+func resourceBucketLegacyServerSideEncryptionConfigurationUpdate(ctx context.Context, conn *s3.S3, d *schema.ResourceData) error {
 	bucket := d.Get("bucket").(string)
 	serverSideEncryptionConfiguration := d.Get("server_side_encryption_configuration").([]interface{})
 	if len(serverSideEncryptionConfiguration) == 0 {
@@ -2000,7 +2001,7 @@ func resourceBucketLegacyServerSideEncryptionConfigurationUpdate(conn *s3.S3, d 
 	log.Printf("[DEBUG] S3 put bucket replication configuration: %#v", i)
 
 	_, err := tfresource.RetryWhenAWSErrCodeEquals(
-		context.Background(),
+		ctx,
 		propagationTimeout,
 		func() (interface{}, error) {
 			return conn.PutBucketEncryption(i)
