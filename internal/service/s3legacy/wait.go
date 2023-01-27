@@ -13,6 +13,6 @@ const (
 	propagationTimeout   = 1 * time.Minute
 )
 
-func retryWhenBucketNotFound(f func() (interface{}, error)) (interface{}, error) {
-	return tfresource.RetryWhenAWSErrCodeEquals(context.Background(), propagationTimeout, f, s3.ErrCodeNoSuchBucket)
+func retryWhenBucketNotFound(ctx context.Context, f func() (interface{}, error)) (interface{}, error) {
+	return tfresource.RetryWhenAWSErrCodeEquals(ctx, propagationTimeout, f, s3.ErrCodeNoSuchBucket)
 }
