@@ -2,12 +2,12 @@ package gamelift
 
 import (
 	"context"
-	"fmt"
 	"log"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/gamelift"
 	"github.com/hashicorp/aws-sdk-go-base/v2/awsv1shim/v2/tfawserr"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/structure"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
@@ -18,10 +18,10 @@ import (
 
 func ResourceMatchmakingRuleSet() *schema.Resource {
 	return &schema.Resource{
-		Create: resourceMatchmakingRuleSetCreate,
-		Read:   resourceMatchmakingRuleSetRead,
-		Update: resourceMatchmakingRuleSetUpdate,
-		Delete: resourceMatchmakingRuleSetDelete,
+		CreateWithoutTimeout: resourceMatchmakingRuleSetCreate,
+		ReadWithoutTimeout:   resourceMatchmakingRuleSetRead,
+		UpdateWithoutTimeout: resourceMatchmakingRuleSetUpdate,
+		DeleteWithoutTimeout: resourceMatchmakingRuleSetDelete,
 		Importer: &schema.ResourceImporter{
 			StateContext: schema.ImportStatePassthroughContext,
 		},
@@ -57,7 +57,7 @@ func ResourceMatchmakingRuleSet() *schema.Resource {
 	}
 }
 
-func resourceMatchmakingRuleSetCreate(d *schema.ResourceData, meta interface{}) error {
+func resourceMatchmakingRuleSetCreate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	conn := meta.(*conns.AWSClient).GameLiftConn()
 	defaultTagsConfig := meta.(*conns.AWSClient).DefaultTagsConfig
 	tags := defaultTagsConfig.MergeTags(tftags.New(context.Background(), d.Get("tags").(map[string]interface{})))
@@ -70,15 +70,15 @@ func resourceMatchmakingRuleSetCreate(d *schema.ResourceData, meta interface{}) 
 	log.Printf("[INFO] Creating GameLift Matchmaking Rule Set: %s", input)
 	out, err := conn.CreateMatchmakingRuleSet(&input)
 	if err != nil {
-		return fmt.Errorf("error creating GameLift Matchmaking Rule Set: %s", err)
+		return diag.Errorf("error creating GameLift Matchmaking Rule Set: %s", err)
 	}
 
 	d.SetId(aws.StringValue(out.RuleSet.RuleSetName))
 
-	return resourceMatchmakingRuleSetRead(d, meta)
+	return resourceMatchmakingRuleSetRead(ctx, d, meta)
 }
 
-func resourceMatchmakingRuleSetRead(d *schema.ResourceData, meta interface{}) error {
+func resourceMatchmakingRuleSetRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	conn := meta.(*conns.AWSClient).GameLiftConn()
 	defaultTagsConfig := meta.(*conns.AWSClient).DefaultTagsConfig
 
@@ -92,7 +92,7 @@ func resourceMatchmakingRuleSetRead(d *schema.ResourceData, meta interface{}) er
 			d.SetId("")
 			return nil
 		}
-		return fmt.Errorf("error reading GameLift Matchmaking Rule Set (%s): %s", d.Id(), err)
+		return diag.Errorf("error reading GameLift Matchmaking Rule Set (%s): %s", d.Id(), err)
 	}
 	ruleSets := out.RuleSets
 
@@ -102,7 +102,7 @@ func resourceMatchmakingRuleSetRead(d *schema.ResourceData, meta interface{}) er
 		return nil
 	}
 	if len(ruleSets) != 1 {
-		return fmt.Errorf("expected exactly 1 GameLift Matchmaking Rule Set, found %d under %q",
+		return diag.Errorf("expected exactly 1 GameLift Matchmaking Rule Set, found %d under %q",
 			len(ruleSets), d.Id())
 	}
 	ruleSet := ruleSets[0]
@@ -112,24 +112,24 @@ func resourceMatchmakingRuleSetRead(d *schema.ResourceData, meta interface{}) er
 	d.Set("name", ruleSet.RuleSetName)
 	d.Set("rule_set_body", ruleSet.RuleSetBody)
 
-	tags, err := ListTags(context.Background(), conn, arn)
+	tags, err := ListTags(ctx, conn, arn)
 
 	if err != nil {
-		return fmt.Errorf("error listing tags for GameLift Matchmaking Rule Set (%s): %s", arn, err)
+		return diag.Errorf("error listing tags for GameLift Matchmaking Rule Set (%s): %s", arn, err)
 	}
 
 	if err := d.Set("tags", tags.RemoveDefaultConfig(defaultTagsConfig).Map()); err != nil {
-		return fmt.Errorf("error setting tags: %w", err)
+		return diag.Errorf("error setting tags: %w", err)
 	}
 
 	if err := d.Set("tags_all", tags.Map()); err != nil {
-		return fmt.Errorf("error setting tags_all: %w", err)
+		return diag.Errorf("error setting tags_all: %w", err)
 	}
 
 	return nil
 }
 
-func resourceMatchmakingRuleSetUpdate(d *schema.ResourceData, meta interface{}) error {
+func resourceMatchmakingRuleSetUpdate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	conn := meta.(*conns.AWSClient).GameLiftConn()
 
 	log.Printf("[INFO] Updating GameLift Matchmaking Rule Set: %s", d.Id())
@@ -138,15 +138,15 @@ func resourceMatchmakingRuleSetUpdate(d *schema.ResourceData, meta interface{}) 
 	if d.HasChange("tags_all") {
 		o, n := d.GetChange("tags_all")
 
-		if err := UpdateTags(context.Background(), conn, arn, o, n); err != nil {
-			return fmt.Errorf("error updating GameLift Matchmaking Rule Set (%s) tags: %s", arn, err)
+		if err := UpdateTags(ctx, conn, arn, o, n); err != nil {
+			return diag.Errorf("error updating GameLift Matchmaking Rule Set (%s) tags: %s", arn, err)
 		}
 	}
 
-	return resourceMatchmakingRuleSetRead(d, meta)
+	return resourceMatchmakingRuleSetRead(ctx, d, meta)
 }
 
-func resourceMatchmakingRuleSetDelete(d *schema.ResourceData, meta interface{}) error {
+func resourceMatchmakingRuleSetDelete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	conn := meta.(*conns.AWSClient).GameLiftConn()
 	log.Printf("[INFO] Deleting GameLift Matchmaking Rule Set: %s", d.Id())
 	_, err := conn.DeleteMatchmakingRuleSet(&gamelift.DeleteMatchmakingRuleSetInput{
@@ -156,7 +156,7 @@ func resourceMatchmakingRuleSetDelete(d *schema.ResourceData, meta interface{}) 
 		return nil
 	}
 	if err != nil {
-		return fmt.Errorf("error deleting GameLift Matchmaking Rule Set (%s): %s", d.Id(), err)
+		return diag.Errorf("error deleting GameLift Matchmaking Rule Set (%s): %s", d.Id(), err)
 	}
 
 	return nil
