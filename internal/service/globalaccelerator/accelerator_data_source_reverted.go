@@ -142,7 +142,7 @@ func dataSourceAcceleratorRead(ctx context.Context, d *schema.ResourceData, meta
 		return diag.Errorf("error setting attributes: %w", err)
 	}
 
-	tags, err := ListTags(context.Background(), conn, d.Id())
+	tags, err := ListTags(ctx, conn, d.Id())
 	if err != nil {
 		return diag.Errorf("error listing tags for Global Accelerator Accelerator (%s): %w", d.Id(), err)
 	}
