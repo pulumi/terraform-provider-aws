@@ -1608,7 +1608,12 @@ func resourceProjectDelete(ctx context.Context, d *schema.ResourceData, meta int
 	_, err := conn.DeleteProjectWithContext(ctx, &codebuild.DeleteProjectInput{
 		Name: aws.String(d.Id()),
 	})
-	return sdkdiag.AppendErrorf(diags, "deleting CodeBuild project (%s): %s", d.Id(), err)
+	// TODO: Upstream code here always returns an error - remove this when upstream is resolved
+	//       PR is [here](https://github.com/hashicorp/terraform-provider-aws/pull/29042)
+	if err != nil {
+		return sdkdiag.AppendErrorf(diags, "deleting CodeBuild project (%s): %s", d.Id(), err)
+	}
+	return diags
 }
 
 func flattenProjectFileSystemLocations(apiObjects []*codebuild.ProjectFileSystemLocation) []interface{} {
