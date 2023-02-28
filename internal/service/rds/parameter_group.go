@@ -51,7 +51,7 @@ func ResourceParameterGroup() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 				ForceNew: true,
-				Default:  "Managed by Terraform",
+				Default:  "Managed by Pulumi",
 			},
 			"family": {
 				Type:     schema.TypeString,
