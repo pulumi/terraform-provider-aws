@@ -44,7 +44,7 @@ func ResourceChannel() *schema.Resource {
 			"description": {
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "Managed by Terraform",
+				Default:  "Managed by Pulumi",
 			},
 			"hls_ingest": {
 				Type:     schema.TypeList,
