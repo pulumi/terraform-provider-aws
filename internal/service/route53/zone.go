@@ -56,7 +56,7 @@ func ResourceZone() *schema.Resource {
 			"comment": {
 				Type:         schema.TypeString,
 				Optional:     true,
-				Default:      "Managed by Terraform",
+				Default:      "Managed by Pulumi",
 				ValidateFunc: validation.StringLenBetween(0, 256),
 			},
 			"delegation_set_id": {

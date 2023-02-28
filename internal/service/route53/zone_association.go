@@ -73,7 +73,7 @@ func resourceZoneAssociationCreate(ctx context.Context, d *schema.ResourceData, 
 			VPCId:     aws.String(vpcID),
 			VPCRegion: aws.String(vpcRegion),
 		},
-		Comment: aws.String("Managed by Terraform"),
+		Comment: aws.String("Managed by Pulumi"),
 	}
 
 	output, err := conn.AssociateVPCWithHostedZoneWithContext(ctx, input)
@@ -176,7 +176,7 @@ func resourceZoneAssociationDelete(ctx context.Context, d *schema.ResourceData, 
 			VPCId:     aws.String(vpcID),
 			VPCRegion: aws.String(vpcRegion),
 		},
-		Comment: aws.String("Managed by Terraform"),
+		Comment: aws.String("Managed by Pulumi"),
 	}
 
 	_, err = conn.DisassociateVPCFromHostedZoneWithContext(ctx, input)
