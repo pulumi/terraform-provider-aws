@@ -60,7 +60,7 @@ func ResourceSubnetGroup() *schema.Resource {
 			"description": {
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "Managed by Terraform",
+				Default:  "Managed by Pulumi",
 			},
 
 			"subnet_ids": {

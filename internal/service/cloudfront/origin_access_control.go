@@ -34,7 +34,7 @@ func ResourceOriginAccessControl() *schema.Resource {
 			"description": {
 				Type:         schema.TypeString,
 				Optional:     true,
-				Default:      "Managed by Terraform",
+				Default:      "Managed by Pulumi",
 				ValidateFunc: validation.StringLenBetween(0, 256),
 			},
 			"etag": {
