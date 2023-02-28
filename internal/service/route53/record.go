@@ -305,7 +305,7 @@ func resourceRecordCreate(ctx context.Context, d *schema.ResourceData, meta inte
 	// retry for us since Route53 sometimes returns errors about another
 	// operation happening at the same time.
 	changeBatch := &route53.ChangeBatch{
-		Comment: aws.String("Managed by Terraform"),
+		Comment: aws.String("Managed by Pulumi"),
 		Changes: []*route53.Change{
 			{
 				Action:            aws.String(action),
@@ -581,7 +581,7 @@ func resourceRecordUpdate(ctx context.Context, d *schema.ResourceData, meta inte
 	// StateChangeConf for this to retry for us since Route53 sometimes returns
 	// errors about another operation happening at the same time.
 	changeBatch := &route53.ChangeBatch{
-		Comment: aws.String("Managed by Terraform"),
+		Comment: aws.String("Managed by Pulumi"),
 		Changes: []*route53.Change{
 			{
 				Action:            aws.String(route53.ChangeActionDelete),
@@ -652,7 +652,7 @@ func resourceRecordDelete(ctx context.Context, d *schema.ResourceData, meta inte
 
 	// Change batch for deleting
 	changeBatch := &route53.ChangeBatch{
-		Comment: aws.String("Deleted by Terraform"),
+		Comment: aws.String("Deleted by Pulumi"),
 		Changes: []*route53.Change{
 			{
 				Action:            aws.String(route53.ChangeActionDelete),
