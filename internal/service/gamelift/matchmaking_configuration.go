@@ -148,7 +148,7 @@ func ResourceMatchMakingConfiguration() *schema.Resource {
 func resourceMatchmakingConfigurationCreate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	conn := meta.(*conns.AWSClient).GameLiftConn()
 	defaultTagsConfig := meta.(*conns.AWSClient).DefaultTagsConfig
-	tags := defaultTagsConfig.MergeTags(tftags.New(context.Background(), d.Get("tags").(map[string]interface{})))
+	tags := defaultTagsConfig.MergeTags(tftags.New(ctx, d.Get("tags").(map[string]interface{})))
 
 	input := gamelift.CreateMatchmakingConfigurationInput{
 		AcceptanceRequired:    aws.Bool(d.Get("acceptance_required").(bool)),
