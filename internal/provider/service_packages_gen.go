@@ -49,7 +49,6 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/service/codestarconnections"
 	"github.com/hashicorp/terraform-provider-aws/internal/service/codestarnotifications"
 	"github.com/hashicorp/terraform-provider-aws/internal/service/cognitoidentity"
-	"github.com/hashicorp/terraform-provider-aws/internal/service/cognitoidp"
 	"github.com/hashicorp/terraform-provider-aws/internal/service/comprehend"
 	"github.com/hashicorp/terraform-provider-aws/internal/service/computeoptimizer"
 	"github.com/hashicorp/terraform-provider-aws/internal/service/configservice"
@@ -251,7 +250,7 @@ func servicePackages(context.Context) []conns.ServicePackage {
 		codestarconnections.ServicePackage,
 		codestarnotifications.ServicePackage,
 		cognitoidentity.ServicePackage,
-		cognitoidp.ServicePackage,
+		// cognitoidp.ServicePackage,
 		comprehend.ServicePackage,
 		computeoptimizer.ServicePackage,
 		configservice.ServicePackage,
