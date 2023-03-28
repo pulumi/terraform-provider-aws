@@ -8,6 +8,7 @@ import (
 	"regexp"
 	"time"
 
+	"github.com/hashicorp/terraform-provider-aws/internal/service/cognitoidp"
 	"github.com/hashicorp/terraform-provider-aws/internal/service/ecr"
 	"github.com/hashicorp/terraform-provider-aws/internal/service/gamelift"
 	"github.com/hashicorp/terraform-provider-aws/internal/service/globalaccelerator"
@@ -268,6 +269,11 @@ func New(ctx context.Context) (*schema.Provider, error) {
 			"aws_service":                 meta.DataSourceService(),
 
 			"aws_caller_identity": sts.DataSourceCallerIdentity(),
+
+			"aws_cognito_user_pool_client":              cognitoidp.DataSourceUserPoolClient(),
+			"aws_cognito_user_pool_clients":             cognitoidp.DataSourceUserPoolClients(),
+			"aws_cognito_user_pool_signing_certificate": cognitoidp.DataSourceUserPoolSigningCertificate(),
+			"aws_cognito_user_pools":                    cognitoidp.DataSourceUserPools(),
 		},
 
 		ResourcesMap: map[string]*schema.Resource{
@@ -281,6 +287,17 @@ func New(ctx context.Context) (*schema.Provider, error) {
 
 			"aws_gamelift_matchmaking_configuration": gamelift.ResourceMatchMakingConfiguration(),
 			"aws_gamelift_matchmaking_rule_set":      gamelift.ResourceMatchmakingRuleSet(),
+
+			"aws_cognito_identity_provider":          cognitoidp.ResourceIdentityProvider(),
+			"aws_cognito_resource_server":            cognitoidp.ResourceResourceServer(),
+			"aws_cognito_risk_configuration":         cognitoidp.ResourceRiskConfiguration(),
+			"aws_cognito_user":                       cognitoidp.ResourceUser(),
+			"aws_cognito_user_group":                 cognitoidp.ResourceUserGroup(),
+			"aws_cognito_user_in_group":              cognitoidp.ResourceUserInGroup(),
+			"aws_cognito_user_pool":                  cognitoidp.ResourceUserPool(),
+			"aws_cognito_user_pool_client":           cognitoidp.ResourceUserPoolClient(),
+			"aws_cognito_user_pool_domain":           cognitoidp.ResourceUserPoolDomain(),
+			"aws_cognito_user_pool_ui_customization": cognitoidp.ResourceUserPoolUICustomization(),
 		},
 	}
 
