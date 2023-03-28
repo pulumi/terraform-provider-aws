@@ -29,7 +29,7 @@ func ResourceMatchMakingConfiguration() *schema.Resource {
 		Schema: map[string]*schema.Schema{
 			"acceptance_required": {
 				Type:     schema.TypeBool,
-				Required: true,
+				Optional: true,
 			},
 			"acceptance_timeout_seconds": {
 				Type:         schema.TypeInt,
@@ -91,7 +91,7 @@ func ResourceMatchMakingConfiguration() *schema.Resource {
 			},
 			"game_session_data": {
 				Type:         schema.TypeString,
-				Required:     true,
+				Optional:     true,
 				ValidateFunc: validation.StringLenBetween(0, 4096),
 			},
 			"game_session_queue_arns": {
@@ -259,11 +259,11 @@ func resourceMatchmakingConfigurationRead(ctx context.Context, d *schema.Resourc
 
 	//lintignore:AWSR002
 	if err := d.Set("tags", tags.RemoveDefaultConfig(defaultTagsConfig).Map()); err != nil {
-		return diag.Errorf("error setting tags: %w", err)
+		return diag.Errorf("error setting tags: %v", err)
 	}
 
 	if err := d.Set("tags_all", tags.Map()); err != nil {
-		return diag.Errorf("error setting tags_all: %w", err)
+		return diag.Errorf("error setting tags_all: %v", err)
 	}
 
 	return nil
