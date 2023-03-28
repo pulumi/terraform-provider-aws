@@ -85,6 +85,11 @@ func DataSourceAccelerator() *schema.Resource {
 	}
 }
 
+// Global Route53 Zone ID for Global Accelerators, exported as a
+// convenience attribute for Route53 aliases (see
+// https://docs.aws.amazon.com/Route53/latest/APIReference/API_AliasTarget.html).
+const route53ZoneID = "Z2BJ6XQ5FK7U4H"
+
 func dataSourceAcceleratorRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	conn := meta.(*conns.AWSClient).GlobalAcceleratorConn()
 	ignoreTagsConfig := meta.(*conns.AWSClient).IgnoreTagsConfig
