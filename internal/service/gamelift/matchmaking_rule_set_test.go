@@ -1,6 +1,7 @@
 package gamelift_test
 
 import (
+	"context"
 	"fmt"
 	"regexp"
 	"testing"
@@ -16,6 +17,7 @@ import (
 )
 
 func TestAccMatchmakingRuleSet_basic(t *testing.T) {
+	ctx := acctest.Context(t)
 
 	var conf gamelift.MatchmakingRuleSet
 
@@ -26,17 +28,17 @@ func TestAccMatchmakingRuleSet_basic(t *testing.T) {
 	resource.Test(t, resource.TestCase{
 		PreCheck: func() {
 			acctest.PreCheck(t)
-			acctest.PreCheckPartitionHasService(gamelift.EndpointsID, t)
-			testAccPreCheck(t)
+			acctest.PreCheckPartitionHasService(t, gamelift.EndpointsID)
+			testAccPreCheck(ctx, t)
 		},
 		ErrorCheck:               acctest.ErrorCheck(t, gamelift.EndpointsID),
 		ProtoV5ProviderFactories: acctest.ProtoV5ProviderFactories,
-		CheckDestroy:             testAccCheckGameServerGroupDestroy,
+		CheckDestroy:             testAccCheckGameServerGroupDestroy(ctx),
 		Steps: []resource.TestStep{
 			{
 				Config: testAccMatchmakingRuleSetBasicConfig(ruleSetName, maxPlayers),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckMatchmakingRuleSetExists(resourceName, &conf),
+					testAccCheckMatchmakingRuleSetExists(ctx, resourceName, &conf),
 					acctest.MatchResourceAttrRegionalARN(resourceName, "arn", "gamelift", regexp.MustCompile(`matchmakingruleset/.+`)),
 					resource.TestCheckResourceAttr(resourceName, "name", ruleSetName),
 					resource.TestCheckResourceAttr(resourceName, "rule_set_body", testAccMatchmakingRuleSetBody(maxPlayers)+"\n"),
@@ -53,6 +55,7 @@ func TestAccMatchmakingRuleSet_basic(t *testing.T) {
 }
 
 func TestAccMatchmakingRuleSet_disappears(t *testing.T) {
+	ctx := acctest.Context(t)
 
 	var conf gamelift.MatchmakingRuleSet
 
@@ -63,18 +66,18 @@ func TestAccMatchmakingRuleSet_disappears(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck: func() {
 			acctest.PreCheck(t)
-			acctest.PreCheckPartitionHasService(gamelift.EndpointsID, t)
-			testAccPreCheck(t)
+			acctest.PreCheckPartitionHasService(t, gamelift.EndpointsID)
+			testAccPreCheck(ctx, t)
 		},
 		ErrorCheck:               acctest.ErrorCheck(t, gamelift.EndpointsID),
 		ProtoV5ProviderFactories: acctest.ProtoV5ProviderFactories,
-		CheckDestroy:             testAccCheckGameServerGroupDestroy,
+		CheckDestroy:             testAccCheckGameServerGroupDestroy(ctx),
 		Steps: []resource.TestStep{
 			{
 				Config: testAccMatchmakingRuleSetBasicConfig(ruleSetName, maxPlayers),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckMatchmakingRuleSetExists(resourceName, &conf),
-					acctest.CheckResourceDisappears(acctest.Provider, tfgamelift.ResourceMatchmakingRuleSet(), resourceName),
+					testAccCheckMatchmakingRuleSetExists(ctx, resourceName, &conf),
+					acctest.CheckResourceDisappears(ctx, acctest.Provider, tfgamelift.ResourceMatchmakingRuleSet(), resourceName),
 				),
 				ExpectNonEmptyPlan: true,
 			},
@@ -82,7 +85,7 @@ func TestAccMatchmakingRuleSet_disappears(t *testing.T) {
 	})
 }
 
-func testAccCheckMatchmakingRuleSetExists(n string, res *gamelift.MatchmakingRuleSet) resource.TestCheckFunc {
+func testAccCheckMatchmakingRuleSetExists(ctx context.Context, n string, res *gamelift.MatchmakingRuleSet) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[n]
 
@@ -94,7 +97,7 @@ func testAccCheckMatchmakingRuleSetExists(n string, res *gamelift.MatchmakingRul
 			return fmt.Errorf("no Gamelift Matchmaking Rule Set Name is set")
 		}
 
-		conn := acctest.Provider.Meta().(*conns.AWSClient).GameLiftConn
+		conn := acctest.Provider.Meta().(*conns.AWSClient).GameLiftConn()
 
 		name := rs.Primary.Attributes["name"]
 		out, err := conn.DescribeMatchmakingRuleSets(&gamelift.DescribeMatchmakingRuleSetsInput{
