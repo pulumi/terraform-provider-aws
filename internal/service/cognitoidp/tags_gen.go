@@ -8,7 +8,6 @@ import (
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/cognitoidentityprovider"
 	"github.com/aws/aws-sdk-go/service/cognitoidentityprovider/cognitoidentityprovideriface"
-	"github.com/hashicorp/terraform-provider-aws/internal/conns"
 	tftags "github.com/hashicorp/terraform-provider-aws/internal/tags"
 	"github.com/hashicorp/terraform-provider-aws/internal/types"
 	"github.com/hashicorp/terraform-provider-aws/names"
@@ -31,21 +30,19 @@ func ListTags(ctx context.Context, conn cognitoidentityprovideriface.CognitoIden
 	return KeyValueTags(ctx, output.Tags), nil
 }
 
-// ListTags lists cognitoidp service tags and set them in Context.
-// It is called from outside this package.
-func (p *servicePackage) ListTags(ctx context.Context, meta any, identifier string) error {
-	tags, err := ListTags(ctx, meta.(*conns.AWSClient).CognitoIDPConn(), identifier)
+// func (p *servicePackage) ListTags(ctx context.Context, meta any, identifier string) error {
+// 	tags, err := ListTags(ctx, meta.(*conns.AWSClient).CognitoIDPConn(), identifier)
 
-	if err != nil {
-		return err
-	}
+// 	if err != nil {
+// 		return err
+// 	}
 
-	if inContext, ok := tftags.FromContext(ctx); ok {
-		inContext.TagsOut = types.Some(tags)
-	}
+// 	if inContext, ok := tftags.FromContext(ctx); ok {
+// 		inContext.TagsOut = types.Some(tags)
+// 	}
 
-	return nil
-}
+// 	return nil
+// }
 
 // map[string]*string handling
 
@@ -115,8 +112,8 @@ func UpdateTags(ctx context.Context, conn cognitoidentityprovideriface.CognitoId
 	return nil
 }
 
-// UpdateTags updates cognitoidp service tags.
-// It is called from outside this package.
-func (p *servicePackage) UpdateTags(ctx context.Context, meta any, identifier string, oldTags, newTags any) error {
-	return UpdateTags(ctx, meta.(*conns.AWSClient).CognitoIDPConn(), identifier, oldTags, newTags)
-}
+// // UpdateTags updates cognitoidp service tags.
+// // It is called from outside this package.
+// func (p *servicePackage) UpdateTags(ctx context.Context, meta any, identifier string, oldTags, newTags any) error {
+// 	return UpdateTags(ctx, meta.(*conns.AWSClient).CognitoIDPConn(), identifier, oldTags, newTags)
+// }
