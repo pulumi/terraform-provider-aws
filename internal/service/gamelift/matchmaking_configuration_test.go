@@ -1,6 +1,7 @@
 package gamelift_test
 
 import (
+	"context"
 	"fmt"
 	"regexp"
 	"testing"
@@ -18,6 +19,7 @@ import (
 
 func TestAccMatchmakingConfiguration_basic(t *testing.T) {
 
+	ctx := acctest.Context(t)
 	var conf gamelift.MatchmakingConfiguration
 
 	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
@@ -30,17 +32,17 @@ func TestAccMatchmakingConfiguration_basic(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck: func() {
 			acctest.PreCheck(t)
-			acctest.PreCheckPartitionHasService(gamelift.EndpointsID, t)
-			testAccPreCheck(t)
+			acctest.PreCheckPartitionHasService(t, gamelift.EndpointsID)
+			testAccPreCheck(ctx, t)
 		},
 		ErrorCheck:               acctest.ErrorCheck(t, gamelift.EndpointsID),
 		ProtoV5ProviderFactories: acctest.ProtoV5ProviderFactories,
-		CheckDestroy:             testAccCheckGameServerGroupDestroy,
+		CheckDestroy:             testAccCheckGameServerGroupDestroy(ctx),
 		Steps: []resource.TestStep{
 			{
 				Config: testAccGameServerMatchmakingConfiguration_basic(rName, queueName, ruleSetName, additionalParameters, 10),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckMatchmakingConfigurationExists(resourceName, &conf),
+					testAccCheckMatchmakingConfigurationExists(ctx, resourceName, &conf),
 					acctest.MatchResourceAttrRegionalARN(resourceName, "arn", "gamelift", regexp.MustCompile(`matchmakingconfiguration/.+`)),
 					resource.TestCheckResourceAttr(resourceName, "name", rName),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "0"),
@@ -62,6 +64,7 @@ func TestAccMatchmakingConfiguration_basic(t *testing.T) {
 
 func TestAccMatchmakingConfiguration_tags(t *testing.T) {
 
+	ctx := acctest.Context(t)
 	var conf gamelift.MatchmakingConfiguration
 
 	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
@@ -74,17 +77,17 @@ func TestAccMatchmakingConfiguration_tags(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck: func() {
 			acctest.PreCheck(t)
-			acctest.PreCheckPartitionHasService(gamelift.EndpointsID, t)
-			testAccPreCheck(t)
+			acctest.PreCheckPartitionHasService(t, gamelift.EndpointsID)
+			testAccPreCheck(ctx, t)
 		},
 		ErrorCheck:               acctest.ErrorCheck(t, gamelift.EndpointsID),
 		ProtoV5ProviderFactories: acctest.ProtoV5ProviderFactories,
-		CheckDestroy:             testAccCheckGameServerGroupDestroy,
+		CheckDestroy:             testAccCheckGameServerGroupDestroy(ctx),
 		Steps: []resource.TestStep{
 			{
 				Config: testAccGameServerMatchmakingConfiguration_tags(rName, queueName, ruleSetName, additionalParameters, 10),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckMatchmakingConfigurationExists(resourceName, &conf),
+					testAccCheckMatchmakingConfigurationExists(ctx, resourceName, &conf),
 					acctest.MatchResourceAttrRegionalARN(resourceName, "arn", "gamelift", regexp.MustCompile(`matchmakingconfiguration/.+`)),
 					resource.TestCheckResourceAttr(resourceName, "name", rName),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
@@ -106,6 +109,8 @@ func TestAccMatchmakingConfiguration_tags(t *testing.T) {
 }
 
 func TestAccMatchmakingConfiguration_disappears(t *testing.T) {
+
+	ctx := acctest.Context(t)
 	var conf gamelift.MatchmakingConfiguration
 
 	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
@@ -118,18 +123,18 @@ func TestAccMatchmakingConfiguration_disappears(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck: func() {
 			acctest.PreCheck(t)
-			acctest.PreCheckPartitionHasService(gamelift.EndpointsID, t)
-			testAccPreCheck(t)
+			acctest.PreCheckPartitionHasService(t, gamelift.EndpointsID)
+			testAccPreCheck(ctx, t)
 		},
 		ErrorCheck:               acctest.ErrorCheck(t, gamelift.EndpointsID),
 		ProtoV5ProviderFactories: acctest.ProtoV5ProviderFactories,
-		CheckDestroy:             testAccCheckGameServerGroupDestroy,
+		CheckDestroy:             testAccCheckGameServerGroupDestroy(ctx),
 		Steps: []resource.TestStep{
 			{
 				Config: testAccGameServerMatchmakingConfiguration_basic(rName, queueName, ruleSetName, additionalParameters, 10),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckMatchmakingConfigurationExists(resourceName, &conf),
-					acctest.CheckResourceDisappears(acctest.Provider, tfgamelift.ResourceMatchMakingConfiguration(), resourceName),
+					testAccCheckMatchmakingConfigurationExists(ctx, resourceName, &conf),
+					acctest.CheckResourceDisappears(ctx, acctest.Provider, tfgamelift.ResourceMatchMakingConfiguration(), resourceName),
 				),
 				ExpectNonEmptyPlan: true,
 			},
@@ -137,7 +142,7 @@ func TestAccMatchmakingConfiguration_disappears(t *testing.T) {
 	})
 }
 
-func testAccCheckMatchmakingConfigurationExists(n string, res *gamelift.MatchmakingConfiguration) resource.TestCheckFunc {
+func testAccCheckMatchmakingConfigurationExists(ctx context.Context, n string, res *gamelift.MatchmakingConfiguration) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 
 		rs, ok := s.RootModule().Resources[n]
@@ -149,10 +154,10 @@ func testAccCheckMatchmakingConfigurationExists(n string, res *gamelift.Matchmak
 			return fmt.Errorf("no Gamelift Matchmaking Configuration Name is set")
 		}
 
-		conn := acctest.Provider.Meta().(*conns.AWSClient).GameLiftConn
+		conn := acctest.Provider.Meta().(*conns.AWSClient).GameLiftConn()
 
 		name := rs.Primary.Attributes["name"]
-		out, err := conn.DescribeMatchmakingConfigurations(&gamelift.DescribeMatchmakingConfigurationsInput{
+		out, err := conn.DescribeMatchmakingConfigurationsWithContext(ctx, &gamelift.DescribeMatchmakingConfigurationsInput{
 			Names: aws.StringSlice([]string{name}),
 		})
 
