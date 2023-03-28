@@ -119,11 +119,11 @@ func resourceMatchmakingRuleSetRead(ctx context.Context, d *schema.ResourceData,
 	}
 
 	if err := d.Set("tags", tags.RemoveDefaultConfig(defaultTagsConfig).Map()); err != nil {
-		return diag.Errorf("error setting tags: %w", err)
+		return diag.Errorf("error setting tags: %v", err)
 	}
 
 	if err := d.Set("tags_all", tags.Map()); err != nil {
-		return diag.Errorf("error setting tags_all: %w", err)
+		return diag.Errorf("error setting tags_all: %v", err)
 	}
 
 	return nil
