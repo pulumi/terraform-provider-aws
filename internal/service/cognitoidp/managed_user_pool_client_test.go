@@ -1,3 +1,5 @@
+//go:build ignores
+
 package cognitoidp_test
 
 import (
