@@ -1133,6 +1133,12 @@ func flattenTargetGroupFailover(attributes []*elbv2.TargetGroupAttribute) []inte
 		}
 	}
 
+	// Workaround for https://github.com/pulumi/pulumi-aws/issues/2517
+	// Don't return single empty map. Return empty list instead.
+	if len(m) == 0 {
+		return []interface{}{}
+	}
+
 	return []interface{}{m}
 }
 
