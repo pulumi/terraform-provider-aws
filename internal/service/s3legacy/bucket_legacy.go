@@ -672,7 +672,7 @@ func ResourceBucketLegacy() *schema.Resource {
 }
 
 func resourceBucketLegacyCreate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-	conn := meta.(*conns.AWSClient).S3Conn()
+	conn := meta.(*conns.AWSClient).S3Conn(ctx)
 
 	// Get the bucket and acl
 	var bucket string
@@ -745,7 +745,7 @@ func resourceBucketLegacyCreate(ctx context.Context, d *schema.ResourceData, met
 }
 
 func resourceBucketLegacyUpdate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-	conn := meta.(*conns.AWSClient).S3Conn()
+	conn := meta.(*conns.AWSClient).S3Conn(ctx)
 
 	if d.HasChange("tags_all") {
 		o, n := d.GetChange("tags_all")
@@ -853,7 +853,7 @@ func resourceBucketLegacyUpdate(ctx context.Context, d *schema.ResourceData, met
 }
 
 func resourceBucketLegacyRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-	conn := meta.(*conns.AWSClient).S3Conn()
+	conn := meta.(*conns.AWSClient).S3Conn(ctx)
 	defaultTagsConfig := meta.(*conns.AWSClient).DefaultTagsConfig
 	ignoreTagsConfig := meta.(*conns.AWSClient).IgnoreTagsConfig
 
@@ -1364,7 +1364,7 @@ func resourceBucketLegacyRead(ctx context.Context, d *schema.ResourceData, meta 
 	}
 
 	// Add website_endpoint as an attribute
-	websiteEndpoint, err := websiteLegacyEndpoint(meta.(*conns.AWSClient), d)
+	websiteEndpoint, err := websiteLegacyEndpoint(ctx, meta.(*conns.AWSClient), d)
 	if err != nil {
 		return diag.FromErr(err)
 	}
@@ -1414,7 +1414,7 @@ func resourceBucketLegacyRead(ctx context.Context, d *schema.ResourceData, meta 
 }
 
 func resourceBucketLegacyDelete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-	conn := meta.(*conns.AWSClient).S3Conn()
+	conn := meta.(*conns.AWSClient).S3Conn(ctx)
 
 	log.Printf("[DEBUG] S3 Delete Bucket: %s", d.Id())
 	_, err := conn.DeleteBucket(&s3.DeleteBucketInput{
@@ -1430,7 +1430,7 @@ func resourceBucketLegacyDelete(ctx context.Context, d *schema.ResourceData, met
 			// Use a S3 service client that can handle multiple slashes in URIs.
 			// While aws_s3_bucket_object resources cannot create these object
 			// keys, other AWS services and applications using the S3 Bucket can.
-			conn = meta.(*conns.AWSClient).S3ConnURICleaningDisabled()
+			conn = meta.(*conns.AWSClient).S3ConnURICleaningDisabled(ctx)
 
 			// bucket may have things delete them
 			log.Printf("[DEBUG] S3 Bucket attempting to forceDestroy %+v", err)
@@ -1752,7 +1752,7 @@ func resourceBucketLegacyWebsiteDelete(conn *s3.S3, d *schema.ResourceData) erro
 	return nil
 }
 
-func websiteLegacyEndpoint(client *conns.AWSClient, d *schema.ResourceData) (*S3WebsiteLegacy, error) {
+func websiteLegacyEndpoint(ctx context.Context, client *conns.AWSClient, d *schema.ResourceData) (*S3WebsiteLegacy, error) {
 	// If the bucket doesn't have a website configuration, return an empty
 	// endpoint
 	if _, ok := d.GetOk("website"); !ok {
@@ -1764,7 +1764,7 @@ func websiteLegacyEndpoint(client *conns.AWSClient, d *schema.ResourceData) (*S3
 	// Lookup the region for this bucket
 
 	locationResponse, err := retryOnAWSCode(s3.ErrCodeNoSuchBucket, func() (interface{}, error) {
-		return client.S3Conn().GetBucketLocation(
+		return client.S3Conn(ctx).GetBucketLocation(
 			&s3.GetBucketLocationInput{
 				Bucket: aws.String(bucket),
 			},
