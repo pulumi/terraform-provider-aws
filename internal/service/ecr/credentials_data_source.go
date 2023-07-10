@@ -1,6 +1,7 @@
 package ecr
 
 import (
+	"context"
 	"log"
 	"time"
 
@@ -39,7 +40,8 @@ func DataSourceCredentials() *schema.Resource {
 }
 
 func dataSourceAwsEcrCredentialsRead(d *schema.ResourceData, meta interface{}) error {
-	conn := meta.(*conns.AWSClient).ECRConn()
+	ctx := context.Background()
+	conn := meta.(*conns.AWSClient).ECRConn(ctx)
 
 	registryID := d.Get("registry_id").(string)
 	log.Printf("[DEBUG] Reading ECR repository credentials %s", registryID)

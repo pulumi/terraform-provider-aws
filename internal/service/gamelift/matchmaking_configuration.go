@@ -146,7 +146,7 @@ func ResourceMatchMakingConfiguration() *schema.Resource {
 }
 
 func resourceMatchmakingConfigurationCreate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-	conn := meta.(*conns.AWSClient).GameLiftConn()
+	conn := meta.(*conns.AWSClient).GameLiftConn(ctx)
 	defaultTagsConfig := meta.(*conns.AWSClient).DefaultTagsConfig
 	tags := defaultTagsConfig.MergeTags(tftags.New(ctx, d.Get("tags").(map[string]interface{})))
 
@@ -201,7 +201,7 @@ func resourceMatchmakingConfigurationCreate(ctx context.Context, d *schema.Resou
 }
 
 func resourceMatchmakingConfigurationRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-	conn := meta.(*conns.AWSClient).GameLiftConn()
+	conn := meta.(*conns.AWSClient).GameLiftConn(ctx)
 	defaultTagsConfig := meta.(*conns.AWSClient).DefaultTagsConfig
 	ignoreTagsConfig := meta.(*conns.AWSClient).IgnoreTagsConfig
 
@@ -249,7 +249,7 @@ func resourceMatchmakingConfigurationRead(ctx context.Context, d *schema.Resourc
 	d.Set("rule_set_arn", configuration.RuleSetArn)
 	d.Set("rule_set_name", configuration.RuleSetName)
 
-	tags, err := ListTags(ctx, conn, arn)
+	tags, err := listTags(ctx, conn, arn)
 
 	if err != nil {
 		return diag.Errorf("error listing tags for GameLift Matchmaking Configuration (%s): %s", arn, err)
@@ -270,7 +270,7 @@ func resourceMatchmakingConfigurationRead(ctx context.Context, d *schema.Resourc
 }
 
 func resourceMatchmakingConfigurationUpdate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-	conn := meta.(*conns.AWSClient).GameLiftConn()
+	conn := meta.(*conns.AWSClient).GameLiftConn(ctx)
 
 	log.Printf("[INFO] Updating GameLift Matchmaking Configuration: %s", d.Id())
 
@@ -325,7 +325,7 @@ func resourceMatchmakingConfigurationUpdate(ctx context.Context, d *schema.Resou
 	if d.HasChange("tags_all") {
 		o, n := d.GetChange("tags_all")
 
-		if err := UpdateTags(ctx, conn, arn, o, n); err != nil {
+		if err := updateTags(ctx, conn, arn, o, n); err != nil {
 			return diag.Errorf("error updating GameLift Matchmaking Configuration (%s) tags: %s", arn, err)
 		}
 	}
@@ -334,7 +334,7 @@ func resourceMatchmakingConfigurationUpdate(ctx context.Context, d *schema.Resou
 }
 
 func resourceMatchmakingConfigurationDelete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-	conn := meta.(*conns.AWSClient).GameLiftConn()
+	conn := meta.(*conns.AWSClient).GameLiftConn(ctx)
 	log.Printf("[INFO] Deleting GameLift Matchmaking Configuration: %s", d.Id())
 	_, err := conn.DeleteMatchmakingConfiguration(&gamelift.DeleteMatchmakingConfigurationInput{
 		Name: aws.String(d.Id()),

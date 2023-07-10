@@ -142,7 +142,7 @@ func resourceSecurityGroupRead(ctx context.Context, d *schema.ResourceData, meta
 
 func resourceSecurityGroupUpdate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	var diags diag.Diagnostics
-	conn := meta.(*conns.AWSClient).RDSConn()
+	conn := meta.(*conns.AWSClient).RDSConn(ctx)
 
 	if d.HasChange("ingress") {
 		sg, err := resourceSecurityGroupRetrieve(ctx, d, meta)
@@ -185,7 +185,7 @@ func resourceSecurityGroupUpdate(ctx context.Context, d *schema.ResourceData, me
 
 func resourceSecurityGroupDelete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	var diags diag.Diagnostics
-	conn := meta.(*conns.AWSClient).RDSConn()
+	conn := meta.(*conns.AWSClient).RDSConn(ctx)
 
 	log.Printf("[DEBUG] DB Security Group destroy: %v", d.Id())
 
@@ -203,7 +203,7 @@ func resourceSecurityGroupDelete(ctx context.Context, d *schema.ResourceData, me
 }
 
 func resourceSecurityGroupRetrieve(ctx context.Context, d *schema.ResourceData, meta interface{}) (*rds.DBSecurityGroup, error) {
-	conn := meta.(*conns.AWSClient).RDSConn()
+	conn := meta.(*conns.AWSClient).RDSConn(ctx)
 
 	opts := rds.DescribeDBSecurityGroupsInput{
 		DBSecurityGroupName: aws.String(d.Id()),
