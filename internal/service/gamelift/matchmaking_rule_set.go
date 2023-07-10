@@ -58,7 +58,7 @@ func ResourceMatchmakingRuleSet() *schema.Resource {
 }
 
 func resourceMatchmakingRuleSetCreate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-	conn := meta.(*conns.AWSClient).GameLiftConn()
+	conn := meta.(*conns.AWSClient).GameLiftConn(ctx)
 	defaultTagsConfig := meta.(*conns.AWSClient).DefaultTagsConfig
 	tags := defaultTagsConfig.MergeTags(tftags.New(ctx, d.Get("tags").(map[string]interface{})))
 
@@ -79,7 +79,7 @@ func resourceMatchmakingRuleSetCreate(ctx context.Context, d *schema.ResourceDat
 }
 
 func resourceMatchmakingRuleSetRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-	conn := meta.(*conns.AWSClient).GameLiftConn()
+	conn := meta.(*conns.AWSClient).GameLiftConn(ctx)
 	defaultTagsConfig := meta.(*conns.AWSClient).DefaultTagsConfig
 
 	log.Printf("[INFO] Describing GameLift Matchmaking Rule Set: %s", d.Id())
@@ -112,7 +112,7 @@ func resourceMatchmakingRuleSetRead(ctx context.Context, d *schema.ResourceData,
 	d.Set("name", ruleSet.RuleSetName)
 	d.Set("rule_set_body", ruleSet.RuleSetBody)
 
-	tags, err := ListTags(ctx, conn, arn)
+	tags, err := listTags(ctx, conn, arn)
 
 	if err != nil {
 		return diag.Errorf("error listing tags for GameLift Matchmaking Rule Set (%s): %s", arn, err)
@@ -130,7 +130,7 @@ func resourceMatchmakingRuleSetRead(ctx context.Context, d *schema.ResourceData,
 }
 
 func resourceMatchmakingRuleSetUpdate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-	conn := meta.(*conns.AWSClient).GameLiftConn()
+	conn := meta.(*conns.AWSClient).GameLiftConn(ctx)
 
 	log.Printf("[INFO] Updating GameLift Matchmaking Rule Set: %s", d.Id())
 
@@ -138,7 +138,7 @@ func resourceMatchmakingRuleSetUpdate(ctx context.Context, d *schema.ResourceDat
 	if d.HasChange("tags_all") {
 		o, n := d.GetChange("tags_all")
 
-		if err := UpdateTags(ctx, conn, arn, o, n); err != nil {
+		if err := updateTags(ctx, conn, arn, o, n); err != nil {
 			return diag.Errorf("error updating GameLift Matchmaking Rule Set (%s) tags: %s", arn, err)
 		}
 	}
@@ -147,7 +147,7 @@ func resourceMatchmakingRuleSetUpdate(ctx context.Context, d *schema.ResourceDat
 }
 
 func resourceMatchmakingRuleSetDelete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-	conn := meta.(*conns.AWSClient).GameLiftConn()
+	conn := meta.(*conns.AWSClient).GameLiftConn(ctx)
 	log.Printf("[INFO] Deleting GameLift Matchmaking Rule Set: %s", d.Id())
 	_, err := conn.DeleteMatchmakingRuleSet(&gamelift.DeleteMatchmakingRuleSetInput{
 		Name: aws.String(d.Id()),
